@@ -5,6 +5,8 @@ stages:
 build:
   stage: build
   image: texlive/texlive:latest
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
   script:
     - latexmk
   artifacts:
