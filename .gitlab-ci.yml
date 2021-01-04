@@ -1,0 +1,23 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: texlive/texlive:latest
+  script:
+    - latexmk
+  artifacts:
+    paths:
+      - main.pdf
+    expire_in: 1 week
+
+pages:
+  stage: deploy
+  image: ubuntu
+  script:
+    - mkdir public
+    - mv main.pdf public/numerical-analysis-note.pdf
+  artifacts:
+    paths:
+      - public
