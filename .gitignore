@@ -302,3 +302,7 @@ TSWLatexianTemp*
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,latex
+
+### Additional Files to Ignore ###
+# output
+main.pdf
