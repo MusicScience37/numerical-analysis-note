@@ -1,0 +1,61 @@
+\documentclass[a4j,dvipdfmx,
+%,draft%
+]{jsarticle}
+
+%% 表題の設定
+\makeatletter
+% 1ページ用
+\newcommand\ktitle{数値解析ノート}
+% 途中で表示するとき用（1行）
+\newcommand\ktitles{\ktitle}
+\makeatother
+
+\input{settings.tex} % 設定を読みこむ
+
+\begin{document}
+
+\maketitle
+\pagestyle{kentaf}
+
+\vskip20pt
+
+数値解析について調査したことをまとめる。
+
+\vskip20pt
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+\clearpage
+
+\pagestyle{kenta}
+
+\section{テスト}
+
+テスト
+
+\begin{equation}
+    e^{ix} = \cos{x} + i \sin{x}
+\end{equation}
+
+\begin{lstlisting}[caption=テスト, language={C++}]
+int main() {
+    return 0; // 日本語コメント
+}
+\end{lstlisting}
+
+\begin{algorithm}
+    \caption{テスト}
+    \begin{algorithmic}
+        \Procedure{Test}{$x, y$}\Comment{テスト}
+        \State $x = y$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\cite{Hirayama2014}
+
+\bibliographystyle{junsrt}
+\bibliography{articles.bib}
+
+\end{document}

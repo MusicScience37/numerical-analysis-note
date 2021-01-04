@@ -1,0 +1,79 @@
+\ProvidesPackage{kmacro}
+
+\RequirePackage{longtable}
+\RequirePackage{xcolor}
+
+\newif\ifkmacro@nolongtable
+\kmacro@nolongtablefalse
+\DeclareOption{nolongtable}{\kmacro@nolongtabletrue}
+
+\ProcessOptions\relax
+
+%%大きい改行
+\newcommand\lpar{\vspace{1em}\par}
+
+%%文字数カウンタ
+% 初期化
+\newcount\@kwwords
+\@kwwords\z@
+% カウント
+\def\kwcount#1{%
+   \@tempcnta\z@%
+   \@tfor \@tempa:=#1\do{\advance\@tempcnta\@ne}%
+   \advance\@kwwords by \@tempcnta%
+   #1%
+}
+% 表示
+\def\kwwords{%
+   \the\@kwwords%
+}
+% リセット
+\def\kwreset{%
+   \@kwwords\z@%
+}
+
+%%説明付きのリストの環境
+\ifkmacro@nolongtable
+\newenvironment{explainlist}{%
+\begin{tabular}[l]{@{\hspace{2em}\labelitemi\hspace{0.5em}}l@{\hspace{2em}}l}%
+}{%
+\end{tabular}}%
+\else
+\newenvironment{explainlist}{%
+\begin{longtable}[l]{@{\hspace{2em}\labelitemi\hspace{0.5em}}l@{\hspace{2em}}l}%
+}{%
+\end{longtable}%
+}
+\fi
+
+%%TODO
+\newcommand\TODO[1]{\colorbox{yellow}{\textcolor{red}{\textbf{TODO: #1}}}}
+
+%%小さな箇条書き
+\newenvironment{itemizea}{%
+\vspace{-0.5\baselineskip}
+\begin{itemize}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\parskip}{1pt plus 1pt minus 1pt}
+}{
+\end{itemize}
+\vspace{-0.5\baselineskip}
+}
+
+\newenvironment{enumeratea}{%
+\vspace{-0.5\baselineskip}
+\begin{enumerate}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\parskip}{1pt plus 1pt minus 1pt}
+}{
+\end{enumerate}
+\vspace{-0.5\baselineskip}
+}
+
+\endinput

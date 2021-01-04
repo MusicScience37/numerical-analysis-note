@@ -1,0 +1,104 @@
+% !TEX root = main.tex
+%
+
+% チェック
+\RequirePackage[l2tabu, orthodox]{nag}
+
+%% パッケージ
+%図
+\usepackage{color}\usepackage{xcolor}
+\usepackage[hiresbb]{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup{subrefformat=parens}
+\usepackage{float}%hyperrefの前
+\usepackage{wrapfig}%%\floatの後
+\usepackage{afterpage}
+%数式
+\usepackage{amsmath}
+\usepackage[all, warning]{onlyamsmath}
+\allowdisplaybreaks
+\def\equation{\gather}%%hyperref対応
+\def\endequation{\endgather}%%hyperref対応
+\usepackage{amssymb}
+\usepackage{amsthm}
+\newcommand{\hmmax}{0}
+\newcommand{\bmmax}{0}
+\usepackage{bm}
+%SI単位系
+\usepackage{siunitx}
+%表
+\usepackage{array,multirow,booktabs,bigstrut,longtable}
+%アルゴリズム
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+%ソースコード
+\usepackage{listings,extern/plistings/plistings}
+\lstset{
+    numbers=left,
+    numberstyle=\footnotesize,
+    basicstyle=\footnotesize,
+    breaklines=true,
+    frame={tb},
+    flexiblecolumns=true
+}
+%コメント
+\usepackage{comment}
+%ヘッダーとフッター
+\usepackage{fancyhdr}
+%smallerとlarger
+\usepackage{relsize}
+%複数の列を作るとき用
+\usepackage[]{multicol}
+%URL
+\usepackage{url}
+\urlstyle{rm}
+%しおり
+\usepackage{bookmark}
+%引用
+\usepackage{cite}%下の3行がない限りhyperrefとは同時に使わない．
+\makeatletter
+\def\NAT@parse{\typeout{This is a fake Natbib command to fool Hyperref.}}
+\makeatother
+%ハイパーリンク
+\usepackage{hyperref}%なるべく後
+\usepackage{pxjahyper}%日本語対応
+\renewcommand\UrlFont{\rmfamily}
+%フォント（※順番を変えない．）
+\usepackage[nomath]{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{newtxmath}
+%自分のパッケージ（他のパッケージに依存するから最後にする）
+\usepackage[many]{kmath}
+\usepackage{kmacro}
+\usepackage{kdesign}
+
+%タイトル
+\title{\ktitle}
+\author{椛島 健太}
+\西暦
+%hypersetup用の設定
+\hypersetup{%
+bookmarksnumbered=true,%
+setpagesize=false,%
+pdftitle={\ktitles},%
+pdfauthor={椛島 健太},%
+pdfsubject={},%
+pdfkeywords={},%
+hidelinks,%
+pdfstartview=FitH,%
+pdfremotestartview=FitH%
+}
+
+%参考文献
+\def\bibname{参考文献}
+
+%数式の番号（数式が多すぎるとき用）
+%\makeatletter
+%\renewcommand{\theequation}{%
+%\arabic{section}.\arabic{equation}%
+%}
+%\@addtoreset{equation}{section}
+%\makeatother
