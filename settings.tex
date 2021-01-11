@@ -6,14 +6,9 @@
 
 %% パッケージ
 %図
-\usepackage{color}\usepackage{xcolor}
 \usepackage[hiresbb]{graphicx}
 \usepackage{caption}
-\usepackage{subcaption}
-\captionsetup{subrefformat=parens}
-\usepackage{float}%hyperrefの前
-\usepackage{wrapfig}%%\floatの後
-\usepackage{afterpage}
+\usepackage[subrefformat=parens]{subcaption}
 %数式
 \usepackage{amsmath}
 \usepackage[all, warning]{onlyamsmath}
@@ -28,7 +23,7 @@
 %SI単位系
 \usepackage{siunitx}
 %表
-\usepackage{array,multirow,booktabs,bigstrut,longtable}
+\usepackage{longtable}
 %アルゴリズム
 \usepackage{algorithm}
 \usepackage{algorithmicx}
@@ -43,14 +38,6 @@
     frame={tb},
     flexiblecolumns=true
 }
-%コメント
-\usepackage{comment}
-%ヘッダーとフッター
-\usepackage{fancyhdr}
-%smallerとlarger
-\usepackage{relsize}
-%複数の列を作るとき用
-\usepackage[]{multicol}
 %URL
 \usepackage{url}
 \urlstyle{rm}
@@ -73,7 +60,6 @@
 %自分のパッケージ（他のパッケージに依存するから最後にする）
 \usepackage[many]{kmath}
 \usepackage{kmacro}
-\usepackage{kdesign}
 
 %タイトル
 \title{\ktitle}
@@ -81,15 +67,15 @@
 \西暦
 %hypersetup用の設定
 \hypersetup{%
-bookmarksnumbered=true,%
-setpagesize=false,%
-pdftitle={\ktitles},%
-pdfauthor={椛島 健太},%
-pdfsubject={},%
-pdfkeywords={},%
-hidelinks,%
-pdfstartview=FitH,%
-pdfremotestartview=FitH%
+    bookmarksnumbered=true,%
+    setpagesize=false,%
+    pdftitle={\ktitles},%
+    pdfauthor={椛島 健太},%
+    pdfsubject={},%
+    pdfkeywords={},%
+    hidelinks,%
+    pdfstartview=FitH,%
+    pdfremotestartview=FitH%
 }
 
 %参考文献
