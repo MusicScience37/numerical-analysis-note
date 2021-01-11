@@ -28,7 +28,6 @@ http://creativecommons.org/licenses/by-sa/4.0/.
 | algpseudocode | アルゴリズムの表記             | The Latex Project Public License 1.3c                                   |
 | listings      | ソースコードの表記             | The Latex Project Public License 1.3c                                   |
 | plistings     | ソースコードの表記の日本語対応 | MIT License                                                             |
-| fancyhdr      | ヘッダの変更                   | The Latex Project Public License 1.3                                    |
 | url           | URL の表記                     | The Latex Project Public License                                        |
 | bookmark      | PDF へのしおりの追加           | The Latex Project Public License 1.3c                                   |
 | cite          | 参考文献の記述                 | [独自](https://ftp.kddilabs.jp/CTAN/macros/latex/contrib/cite/cite.pdf) |
