@@ -12,6 +12,7 @@ http://creativecommons.org/licenses/by-sa/4.0/.
 
 | 名称          | 用途                           | ライセンス                                                              |
 | :------------ | :----------------------------- | :---------------------------------------------------------------------- |
+| plautopatch   | 日本語対応のパッケージ読み込み | 3-clause BSD License                                                    |
 | nag           | 古いコマンドのチェック         | The Latex Project Public License                                        |
 | graphicx      | 画像の取り込み                 | The Latex Project Public License 1.3c                                   |
 | caption       | キャプションの調整             | The Latex Project Public License 1.3                                    |
