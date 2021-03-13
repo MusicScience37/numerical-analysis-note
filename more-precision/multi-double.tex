@@ -67,11 +67,11 @@ Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化�
     \label{more-precision_multi-double_algo_TwoProd}
     \begin{algorithmic}
         \Procedure{TwoProd}{$a, b$}
-        \State $s \gets a \otimes b$
+        \State $p \gets a \otimes b$
         \State $(a_h, a_l) \gets \text{Split}(a)$
         \State $(b_h, b_l) \gets \text{Split}(b)$
         \State $e \gets ((a_h \otimes b_h \ominus p) \oplus a_h \otimes b_l \oplus a_l \otimes b_h) \oplus a_l \otimes b_l$
-        \State \Return $(s, e)$
+        \State \Return $(p, e)$
         \EndProcedure
     \end{algorithmic}
     \begin{algorithmic}
