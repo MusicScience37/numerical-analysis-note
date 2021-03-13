@@ -1,0 +1,98 @@
+% !TEX root = ../main.tex
+%
+
+\section{倍精度浮動小数点数による多倍長浮動小数点数}
+
+倍精度浮動小数点数を用いて四倍精度、八倍精度といったより高い精度の演算を行う手法が考えられている
+\cite{Hirayama2014,Hida2001}。
+それぞれ 2 つ、4 つの倍精度浮動小数点数の和で小数を表現し、
+仮数の桁が被らないように演算することで高い精度を実現する。
+
+\subsection{記号}
+
+本節で使用する記号を以下に示す。
+
+\begin{explainlist}
+    $\oplus$ & 倍精度浮動小数点数の加算 \\
+    $\ominus$ & 倍精度浮動小数点数の減算 \\
+    $\otimes$ & 倍精度浮動小数点数の乗算 \\
+    $\oslash$ & 倍精度浮動小数点数の除算 \\
+\end{explainlist}
+
+\subsection{基本演算}
+
+倍精度浮動小数点数による四倍精度、八倍精度演算の既存文献\cite{Hida2001}で使用される
+基本的な演算を以下にまとめる。
+
+まず、$|a| \ge |b|$ となる倍精度浮動小数点数 $a$, $b$ について
+$s = a \oplus b$, $a + b = s + e$ が成り立つ倍精度浮動小数点数 $s$, $e$ を
+算出するアルゴリズムを Algorithm \ref{more-precision_multi-double_algo_QuickTwoSum} に示す。
+なお、$a$, $b$ の大小が不明な場合は
+Algorithm \ref{more-precision_multi-double_algo_TwoSum} を使用する。
+
+\begin{algorithm}[t]
+    \caption{大小の明確な倍精度浮動小数点数の加算と誤差計算\cite[Algorithm 3]{Hida2001}}
+    \label{more-precision_multi-double_algo_QuickTwoSum}
+    \begin{algorithmic}
+        \Procedure{QuickTwoSum}{$a, b$}
+        \State $s \gets a \oplus b$
+        \State $e \gets b \ominus (s \ominus a)$
+        \State \Return $(s, e)$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t]
+    \caption{大小の不明な倍精度浮動小数点数の加算と誤差計算\cite[Algorithm 4]{Hida2001}}
+    \label{more-precision_multi-double_algo_TwoSum}
+    \begin{algorithmic}
+        \Procedure{TwoSum}{$a, b$}
+        \State $s \gets a \oplus b$
+        \State $v \gets s \ominus a$
+        \State $e \gets (a \ominus (s \ominus v)) \oplus (b \ominus v)$
+        \State \Return $(s, e)$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+また、乗算についても
+$s = a \otimes b$, $a \times b = s + e$ となる
+倍精度浮動小数点数 $s$, $e$ を算出する
+Algorithm \ref{more-precision_multi-double_algo_TwoProd} が存在する。
+ただし、fused multiply-add (FMA) 命令が存在する CPU では、
+Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化が期待できる。
+
+\begin{algorithm}[t]
+    \caption{倍精度浮動小数点数の乗算と誤差計算\cite[Algorithm 5, 6]{Hida2001}}
+    \label{more-precision_multi-double_algo_TwoProd}
+    \begin{algorithmic}
+        \Procedure{TwoProd}{$a, b$}
+        \State $s \gets a \otimes b$
+        \State $(a_h, a_l) \gets \text{Split}(a)$
+        \State $(b_h, b_l) \gets \text{Split}(b)$
+        \State $e \gets ((a_h \otimes b_h \ominus p) \oplus a_h \otimes b_l \oplus a_l \otimes b_h) \oplus a_l \otimes b_l$
+        \State \Return $(s, e)$
+        \EndProcedure
+    \end{algorithmic}
+    \begin{algorithmic}
+        \Procedure{Split}{$a$}
+        \State $t \gets (2^{27} + 1) \otimes a$
+        \State $a_h \gets t \ominus (t \ominus a)$
+        \State $a_l \gets a \ominus a_h$
+        \State \Return $(a_h, a_l)$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t]
+    \caption{倍精度浮動小数点数の乗算と誤差計算（FMA 命令を使用する場合）\cite[Algorithm 7]{Hida2001}}
+    \label{more-precision_multi-double_algo_TwoProdFMA}
+    \begin{algorithmic}
+        \Procedure{TwoProdFMA}{$a, b$}
+        \State $s \gets a \otimes b$
+        \State $e \gets \text{FMA}(a, b, -p)$
+        \Comment{$\text{FMA}(a, b, c)$ は $a \times b + c$ を $a \times b$ を途中で丸めずに計算する。}
+        \State \Return $(s, e)$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
