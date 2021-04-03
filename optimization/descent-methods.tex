@@ -123,7 +123,7 @@ Newton 法の収束性については \cite[Section 9.5.3, 9.6.4]{Boyd2004} に�
 
 \subsubsection{共役勾配法}
 
-共役勾配法では、
+共役勾配法では，
 \begin{align}
     \bm{d}_1 &= -\nabla f(\bm{x}_{i-1}) \\
     \bm{d}_i &= -\nabla f(\bm{x}_{i-1}) + \gamma_i \bm{d}_{i-1} \\
@@ -132,10 +132,10 @@ Newton 法の収束性については \cite[Section 9.5.3, 9.6.4]{Boyd2004} に�
         {\|\nabla f(\bm{x}_{i-2})\|_2^2}
 \end{align}
 のように更新方向を算出する
-\cite[Section 8.6]{Luenberger2003}。
-$\gamma_i$ については複数の形式があるが、
+\cite[Section 8.6]{Luenberger2003}．
+$\gamma_i$ については複数の形式があるが，
 ここで示している Polak-Ribiere 法は一般により良い結果が得られるという
-\cite[Section 8.6]{Luenberger2003}, \cite[Section 10.8]{Press2007}。
-Newton 法では計算量の多い逆行列の計算が必要だが、
-共役勾配法では計算量が変数の次元のオーダーに収まるため、
-各反復の計算時間を抑えられる。
+\cite[Section 8.6]{Luenberger2003}, \cite[Section 10.8]{Press2007}．
+Newton 法では計算量の多い逆行列の計算が必要だが，
+共役勾配法では計算量が変数の次元のオーダーに収まるため，
+各反復の計算時間を抑えられる．
