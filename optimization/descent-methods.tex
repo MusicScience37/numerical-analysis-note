@@ -33,6 +33,11 @@ Algorithm \ref{optimization_unconstrained_descent-methods_general-descent-method
 \subsubsection{直線探索}
 
 まずは、直線探索の方法をまとめる。
+直線探索では
+$\nabla f(\bm{x}_{i-1})^\top \bm{d}_i < 0$ となっている
+（つまり、$\bm{d}_i$ は目的関数が減少する方向になっている）
+ことを前提とする。
+
 直線探索の方法として、以下のような方法が挙げられる。
 
 \begin{itemize}
@@ -71,13 +76,12 @@ Armijo の条件 \cite[Section 7.5]{Luenberger2003}
     \label{optimization_unconstrained_descent-methods_Armijo-rule}
 \end{equation}
 を利用する。
-ここで、$\alpha$ は $\alpha \in (0,1)$ を満たす定数であるが、
-Backtracking Line Search においては、$\alpha \in (0, 1/2)$ とする
-（この場合の条件は Goldstein Test \cite[Section 7.5]{Luenberger2003} と呼ばれる）。
+ここで、$\alpha$ は $\alpha \in (0,1)$ を満たす定数であり、
 Armijo の条件は、
 図\ref{optimization_unconstrained_descent-methods_Armijo-rule-image}のように
 十分小さい $t_i$ を選択するための条件となっている。
 Backtracking Line Search では、
+$\alpha \in (0, 1/2)$ とし、
 Algorithm \ref{optimization_unconstrained_descent-methods_BacktrackingLineSearch}
 のように
 $t_i$ を初期値 1 から $\beta \in (0, 1)$ 倍していき、
