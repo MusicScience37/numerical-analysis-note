@@ -30,7 +30,7 @@ $s = a \oplus b$, $a + b = s + e$ が成り立つ倍精度浮動小数点数 $s$
 なお、$a$, $b$ の大小が不明な場合は
 Algorithm \ref{more-precision_multi-double_algo_TwoSum} を使用する。
 
-\begin{algorithm}[p]
+\begin{algorithm}[tp]
     \caption{大小の明確な倍精度浮動小数点数の加算と誤差計算\cite[Algorithm 3]{Hida2001}}
     \label{more-precision_multi-double_algo_QuickTwoSum}
     \begin{algorithmic}
@@ -42,7 +42,7 @@ Algorithm \ref{more-precision_multi-double_algo_TwoSum} を使用する。
     \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[p]
+\begin{algorithm}[tp]
     \caption{大小の不明な倍精度浮動小数点数の加算と誤差計算\cite[Algorithm 4]{Hida2001}}
     \label{more-precision_multi-double_algo_TwoSum}
     \begin{algorithmic}
@@ -62,7 +62,7 @@ Algorithm \ref{more-precision_multi-double_algo_TwoProd} が存在する。
 ただし、fused multiply-add (FMA) 命令が存在する CPU では、
 Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化が期待できる。
 
-\begin{algorithm}[p]
+\begin{algorithm}[tp]
     \caption{倍精度浮動小数点数の乗算と誤差計算\cite[Algorithm 5, 6]{Hida2001}}
     \label{more-precision_multi-double_algo_TwoProd}
     \begin{algorithmic}
@@ -84,7 +84,7 @@ Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化�
     \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[p]
+\begin{algorithm}[tp]
     \caption{倍精度浮動小数点数の乗算と誤差計算（FMA 命令を使用する場合）\cite[Algorithm 7]{Hida2001}}
     \label{more-precision_multi-double_algo_TwoProdFMA}
     \begin{algorithmic}
@@ -116,7 +116,7 @@ Algorithm \ref{more-precision_multi-double_algo_QuadAddSimple} の方が
 示されている\cite{Naoya2012}。
 減算も加算と同様にして行うことができる。
 
-\begin{algorithm}[p]
+\begin{algorithm}[tp]
     \caption{四倍精度の加算（正確な演算）\cite{Hisashi2006}}
     \label{more-precision_multi-double_algo_QuadAddPrecisely}
     \begin{algorithmic}
@@ -132,7 +132,7 @@ Algorithm \ref{more-precision_multi-double_algo_QuadAddSimple} の方が
     \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[p]
+\begin{algorithm}[tp]
     \caption{四倍精度の加算（簡潔な演算）\cite{Naoya2012,Hirayama2014}}
     \label{more-precision_multi-double_algo_QuadAddSimple}
     \begin{algorithmic}
@@ -149,7 +149,7 @@ Algorithm \ref{more-precision_multi-double_algo_QuadAddSimple} の方が
 Algorithm \ref{more-precision_multi-double_algo_QuadMultiply} のようにすることで
 102 ビットの精度で算出できることが示されている\cite{Naoya2012}。
 
-\begin{algorithm}[p]
+\begin{algorithm}[tp]
     \caption{四倍精度の乗算\cite{Hisashi2006,Naoya2012}}
     \label{more-precision_multi-double_algo_QuadMultiply}
     \begin{algorithmic}
@@ -166,7 +166,7 @@ Algorithm \ref{more-precision_multi-double_algo_QuadMultiply} のようにする
 Algorithm \ref{more-precision_multi-double_algo_QuadDivide} のようにすることで
 算出できる\cite{Naoya2012s}。
 
-\begin{algorithm}[p]
+\begin{algorithm}[tp]
     \caption{四倍精度の除算\cite{Naoya2012s}}
     \label{more-precision_multi-double_algo_QuadDivide}
     \begin{algorithmic}
