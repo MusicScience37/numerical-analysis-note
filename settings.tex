@@ -25,7 +25,7 @@
 %表
 \usepackage{longtable}
 %アルゴリズム
-\usepackage{algorithm}
+\usepackage[chapter]{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
 %ソースコード
@@ -81,10 +81,11 @@
 %参考文献
 \def\bibname{参考文献}
 
-%数式の番号（数式が多すぎるとき用）
-%\makeatletter
-%\renewcommand{\theequation}{%
-%\arabic{section}.\arabic{equation}%
-%}
-%\@addtoreset{equation}{section}
-%\makeatother
+%数式の番号（章番号を使うようにする。）
+\makeatletter
+\renewcommand{\theequation}{%
+\arabic{chapter}.\arabic{equation}%
+}
+\@removefromreset{equation}{section}
+\@addtoreset{equation}{chapter}
+\makeatother
