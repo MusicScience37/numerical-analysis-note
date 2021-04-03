@@ -3,7 +3,7 @@
 
 \subsection{勾配を用いた最適化}
 
-ここでは、勾配を用いた最適化アルゴリズムをまとめる。
+ここでは，勾配を用いた最適化アルゴリズムをまとめる．
 
 \begin{algorithm}[tp]
     \caption{勾配による最適化}
@@ -23,31 +23,31 @@
     \end{algorithmic}
 \end{algorithm}
 
-勾配を用いた最適化アルゴリズムでは、
+勾配を用いた最適化アルゴリズムでは，
 一般に
 Algorithm \ref{optimization_unconstrained_descent-methods_general-descent-method}
-のような手順で反復的に最適化を進めていく。
-更新方向の算出方法により、
-最急降下法、ニュートン法、共役勾配法のような様々なアルゴリズムが存在する。
+のような手順で反復的に最適化を進めていく．
+更新方向の算出方法により，
+最急降下法，ニュートン法，共役勾配法のような様々なアルゴリズムが存在する．
 
 \subsubsection{直線探索}
 
-まずは、直線探索の方法をまとめる。
+まずは，直線探索の方法をまとめる．
 直線探索では
 $\nabla f(\bm{x}_{i-1})^\top \bm{d}_i < 0$ となっている
-（つまり、$\bm{d}_i$ は目的関数が減少する方向になっている）
-ことを前提とする。
+（つまり，$\bm{d}_i$ は目的関数が減少する方向になっている）
+ことを前提とする．
 
-直線探索の方法として、以下のような方法が挙げられる。
+直線探索の方法として，以下のような方法が挙げられる．
 
 \begin{itemize}
     \item 厳密直線探索
     \item Backtracking line search
 \end{itemize}
 
-厳密直線探索は、更新後の目的関数の値
+厳密直線探索は，更新後の目的関数の値
 $f(\bm{x}_{i-1} + t_i \bm{d}_i)$
-が最小となる $t_i$ を探索する。
+が最小となる $t_i$ を探索する．
 
 \begin{algorithm}[tp]
     \caption{Backtracking Line Search \cite[Section 9.2]{Boyd2004}}
@@ -75,17 +75,17 @@ Armijo の条件 \cite[Section 7.5]{Luenberger2003}
     f(\bm{x}_{i-1} + t_i \bm{d}_i) \le f(\bm{x}_{i-1}) + \alpha t_i \nabla f(\bm{x}_{i-1})^\top \bm{d}_i
     \label{optimization_unconstrained_descent-methods_Armijo-rule}
 \end{equation}
-を利用する。
-ここで、$\alpha$ は $\alpha \in (0,1)$ を満たす定数であり、
-Armijo の条件は、
+を利用する．
+ここで，$\alpha$ は $\alpha \in (0,1)$ を満たす定数であり，
+Armijo の条件は，
 図\ref{optimization_unconstrained_descent-methods_Armijo-rule-image}のように
-十分小さい $t_i$ を選択するための条件となっている。
-Backtracking Line Search では、
-$\alpha \in (0, 1/2)$ とし、
+十分小さい $t_i$ を選択するための条件となっている．
+Backtracking Line Search では，
+$\alpha \in (0, 1/2)$ とし，
 Algorithm \ref{optimization_unconstrained_descent-methods_BacktrackingLineSearch}
 のように
-$t_i$ を初期値 1 から $\beta \in (0, 1)$ 倍していき、
-式 \eqref{optimization_unconstrained_descent-methods_Armijo-rule} を満たすものを探索する。
-一般に、パラメータ $\alpha$, $\beta$ は
+$t_i$ を初期値 1 から $\beta \in (0, 1)$ 倍していき，
+式 \eqref{optimization_unconstrained_descent-methods_Armijo-rule} を満たすものを探索する．
+一般に，パラメータ $\alpha$, $\beta$ は
 $\alpha \in [0.01, 0.3]$, $\beta \in [0.1, 0.8]$ の範囲で設定される
-\cite[Section 9.2]{Boyd2004}。
+\cite[Section 9.2]{Boyd2004}．

@@ -3,14 +3,14 @@
 
 \section{倍精度浮動小数点数による多倍長浮動小数点数}
 
-倍精度浮動小数点数を用いて四倍精度、八倍精度といったより高い精度の演算を行う手法が考えられている
-\cite{Hirayama2014,Hida2001}。
-それぞれ 2 つ、4 つの倍精度浮動小数点数の和で小数を表現し、
-仮数の桁が被らないように演算することで高い精度を実現する。
+倍精度浮動小数点数を用いて四倍精度，八倍精度といったより高い精度の演算を行う手法が考えられている
+\cite{Hirayama2014,Hida2001}．
+それぞれ 2 つ，4 つの倍精度浮動小数点数の和で小数を表現し，
+仮数の桁が被らないように演算することで高い精度を実現する．
 
 \subsection{記号}
 
-本節で使用する記号を以下に示す。
+本節で使用する記号を以下に示す．
 
 \begin{explainlist}
     $\oplus$ & 倍精度浮動小数点数の加算 \\
@@ -21,14 +21,14 @@
 
 \subsection{基本演算}
 
-倍精度浮動小数点数による四倍精度、八倍精度演算の既存文献\cite{Hida2001}で使用される
-基本的な演算を以下にまとめる。
+倍精度浮動小数点数による四倍精度，八倍精度演算の既存文献\cite{Hida2001}で使用される
+基本的な演算を以下にまとめる．
 
-まず、$|a| \ge |b|$ となる倍精度浮動小数点数 $a$, $b$ について
+まず，$|a| \ge |b|$ となる倍精度浮動小数点数 $a$, $b$ について
 $s = a \oplus b$, $a + b = s + e$ が成り立つ倍精度浮動小数点数 $s$, $e$ を
-算出するアルゴリズムを Algorithm \ref{more-precision_multi-double_algo_QuickTwoSum} に示す。
-なお、$a$, $b$ の大小が不明な場合は
-Algorithm \ref{more-precision_multi-double_algo_TwoSum} を使用する。
+算出するアルゴリズムを Algorithm \ref{more-precision_multi-double_algo_QuickTwoSum} に示す．
+なお，$a$, $b$ の大小が不明な場合は
+Algorithm \ref{more-precision_multi-double_algo_TwoSum} を使用する．
 
 \begin{algorithm}[tp]
     \caption{大小の明確な倍精度浮動小数点数の加算と誤差計算\cite[Algorithm 3]{Hida2001}}
@@ -55,12 +55,12 @@ Algorithm \ref{more-precision_multi-double_algo_TwoSum} を使用する。
     \end{algorithmic}
 \end{algorithm}
 
-また、乗算についても
+また，乗算についても
 $s = a \otimes b$, $a \times b = s + e$ となる
 倍精度浮動小数点数 $s$, $e$ を算出する
-Algorithm \ref{more-precision_multi-double_algo_TwoProd} が存在する。
-ただし、fused multiply-add (FMA) 命令が存在する CPU では、
-Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化が期待できる。
+Algorithm \ref{more-precision_multi-double_algo_TwoProd} が存在する．
+ただし，fused multiply-add (FMA) 命令が存在する CPU では，
+Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化が期待できる．
 
 \begin{algorithm}[tp]
     \caption{倍精度浮動小数点数の乗算と誤差計算\cite[Algorithm 5, 6]{Hida2001}}
@@ -91,7 +91,7 @@ Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化�
         \Procedure{TwoProdFMA}{$a, b$}
         \State $s \gets a \otimes b$
         \State $e \gets \text{FMA}(a, b, -p)$
-        \Comment{$\text{FMA}(a, b, c)$ は $a \times b + c$ を $a \times b$ を途中で丸めずに計算する。}
+        \Comment{$\text{FMA}(a, b, c)$ は $a \times b + c$ を $a \times b$ を途中で丸めずに計算する．}
         \State \Return $(s, e)$
         \EndProcedure
     \end{algorithmic}
@@ -102,19 +102,19 @@ Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化�
 \subsection{倍精度浮動小数点数による四倍精度演算}
 
 四倍精度浮動小数点数を $a = a_h + a_l$, $|a_l| \le (1/2) \ulp(|a_h|)$ となる
-倍精度浮動小数点数 $a_h$, $a_l$ で表現する。
+倍精度浮動小数点数 $a_h$, $a_l$ で表現する．
 
 \subsubsection{四則演算}
 
-このとき、加算は
+このとき，加算は
 Algorithm \ref{more-precision_multi-double_algo_QuadAddPrecisely},
 \ref{more-precision_multi-double_algo_QuadAddSimple}
-のようなアルゴリズムで行うことができる。
+のようなアルゴリズムで行うことができる．
 Algorithm \ref{more-precision_multi-double_algo_QuadAddSimple} の方が
-簡潔な演算手法だが、
+簡潔な演算手法だが，
 倍精度浮動小数点数の 2 倍の 104 ビットの精度で演算できることが
-示されている\cite{Naoya2012}。
-減算も加算と同様にして行うことができる。
+示されている\cite{Naoya2012}．
+減算も加算と同様にして行うことができる．
 
 \begin{algorithm}[tp]
     \caption{四倍精度の加算（正確な演算）\cite{Hisashi2006}}
@@ -145,9 +145,9 @@ Algorithm \ref{more-precision_multi-double_algo_QuadAddSimple} の方が
     \end{algorithmic}
 \end{algorithm}
 
-また、乗算は
+また，乗算は
 Algorithm \ref{more-precision_multi-double_algo_QuadMultiply} のようにすることで
-102 ビットの精度で算出できることが示されている\cite{Naoya2012}。
+102 ビットの精度で算出できることが示されている\cite{Naoya2012}．
 
 \begin{algorithm}[tp]
     \caption{四倍精度の乗算\cite{Hisashi2006,Naoya2012}}
@@ -164,7 +164,7 @@ Algorithm \ref{more-precision_multi-double_algo_QuadMultiply} のようにする
 
 残りの四則演算である除算は
 Algorithm \ref{more-precision_multi-double_algo_QuadDivide} のようにすることで
-算出できる\cite{Naoya2012s}。
+算出できる\cite{Naoya2012s}．
 
 \begin{algorithm}[tp]
     \caption{四倍精度の除算\cite{Naoya2012s}}

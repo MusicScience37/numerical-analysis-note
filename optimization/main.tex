@@ -3,9 +3,9 @@
 
 \chapter{最適化}
 
-ここでは、最適化のアルゴリズムをまとめる。
+ここでは，最適化のアルゴリズムをまとめる．
 
-最適化問題は一般に次のように書ける。
+最適化問題は一般に次のように書ける．
 
 \begin{align}\label{optimization_general_problem}
     \text{minimize} \hspace{1em} & f(\bm{x})                 \\
@@ -13,25 +13,25 @@
                                  & \bm{h}(\bm{x}) = \bm{0}
 \end{align}
 
-ここで、
+ここで，
 $\bm{x} \in \setR^n$,
 $f : \setR^n \to \setR$,
 $\bm{g} : \setR^n \to \setR^m$,
 $\bm{h} : \setR^n \to \setR^r$
-とする。
-また、ベクトル同士の「$\le$」による比較は
-全ての要素において「$\le$」の関係が成り立つことを意味する。
+とする．
+また，ベクトル同士の「$\le$」による比較は
+全ての要素において「$\le$」の関係が成り立つことを意味する．
 
-問題\eqref{optimization_general_problem}において、
-関数$f$は目的関数、
-$\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ばれ、
-制約条件を満たす中で目的関数を最小化する問題を示している。
-最小化でなく最大化で定式化する場合もあるが、
-ここでは最小化に統一して説明する。
+問題\eqref{optimization_general_problem}において，
+関数$f$は目的関数，
+$\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ばれ，
+制約条件を満たす中で目的関数を最小化する問題を示している．
+最小化でなく最大化で定式化する場合もあるが，
+ここでは最小化に統一して説明する．
 
 \section{記号}
 
-本章で使用する記号を以下に示す。
+本章で使用する記号を以下に示す．
 
 \begin{explainlist}
     $\setR$ & 実数の集合 \\
@@ -51,7 +51,7 @@ $\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ば�
         f\left(\alpha \bm{x} + (1-\alpha) \bm{y}\right)
         \le \alpha f(\bm{x}) + (1-\alpha) f(\bm{y})
     \end{equation}
-    を満たす場合、関数 $f$ を凸関数（convex function）と呼ぶ。
+    を満たす場合，関数 $f$ を凸関数（convex function）と呼ぶ．
 \end{definition}
 
 \begin{theorem}[{\cite[Section 6.4]{Luenberger2003}},{\cite[Section 3.1.3]{Boyd2004}}]
@@ -60,7 +60,7 @@ $\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ば�
     \begin{equation}
         f(\bm{y}) \ge f(\bm{x}) + \nabla f(\bm{x})^\top (\bm{y} - \bm{x})
     \end{equation}
-    が成り立つことである。
+    が成り立つことである．
 \end{theorem}
 
 \begin{theorem}[{\cite[Section 6.4]{Luenberger2003}},{\cite[Section 3.1.3]{Boyd2004}}]
@@ -69,7 +69,7 @@ $\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ば�
     \begin{equation}
         \nabla^2 f(\bm{x}) \succeq O
     \end{equation}
-    が成り立つことである。
+    が成り立つことである．
 \end{theorem}
 
 \begin{definition}[{\cite[Section 6.4]{Luenberger2003}},{\cite[Section 3.1.1]{Boyd2004}}]
@@ -79,7 +79,7 @@ $\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ば�
         f\left(\alpha \bm{x} + (1-\alpha) \bm{y}\right)
         < \alpha f(\bm{x}) + (1-\alpha) f(\bm{y})
     \end{equation}
-    を満たす場合、関数 $f$ は狭義凸関数（strictly convex function）であるという。
+    を満たす場合，関数 $f$ は狭義凸関数（strictly convex function）であるという．
 \end{definition}
 
 \input{optimization/unconstrained.tex}
