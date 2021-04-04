@@ -121,6 +121,50 @@ $\nabla f(\bm{x}_{i-1})^\top \bm{d}_i = -\nabla f(\bm{x}_{i-1})^\top \nabla^2 f(
 となり，目的関数が減少する方向になっていることを確認できる．
 Newton 法の収束性については \cite[Section 9.5.3, 9.6.4]{Boyd2004} にて議論されている．
 
+\subsubsection{準 Newton 法}
+
+Newton 法では，
+Hessian $\nabla^2 f(\bm{x}_{i-1})$ の逆行列が必要になるが，
+$x^4$ のように 2 階微分が 0 になる点があったり，
+Hessian の逆行列を安定的に計算できない点があったりする場合には使用できない．
+そこで，Newton 法の更新方向
+$\bm{d}_i = -\nabla^2 f(\bm{x}_{i-1})^{-1} \nabla f(\bm{x}_{i-1})$
+における Hessian を
+$\bm{d}_i = -H_{i-1} \nabla f(\bm{x}_{i-1})$
+のように Hessian の代わりの行列で置き換える準 Newton 法と呼ばれるアルゴリズムがある．
+
+準 Newton 法のうち，
+Davidon-Fletcher-Powell (DFP) 公式では次のように $H_i$ を算出する
+\cite[Section 9.3]{Luenberger2003}, \cite[Section 10.9]{Press2007}．
+\begin{align}
+    H_{i+1} &= H_i + \frac{\bm{p}_i \bm{p}_i^\top}{\bm{p}_i^\top \bm{q}_i}
+        - \frac{H_i \bm{q}_i \bm{q}_i^\top H_i}{\bm{q}_i^\top H_i \bm{q}_i} \\
+    \bm{p}_i &= \bm{x}_{i+1} - \bm{x}_i \\
+    \bm{q}_i &= \nabla f(\bm{x}_{i+1}) - \nabla f(\bm{x}_i)
+\end{align}
+初期値 $H_0$ を対称な正定値の行列にしておけば，
+全ての $H_i$ が帰納的に正定値になる
+\cite[Section 9.3]{Luenberger2003}．
+$H_i$ が正定値であれば，更新方向 $\bm{d}_i$ は目的関数の減少する方向になる．
+
+また，同様の性質を持つ公式の 1 つとして，
+Broyden-Fletcher-Goldfarb-Shanno (BFGS) 公式が存在する
+\cite[Section 9.4]{Luenberger2003}．
+\begin{align}
+    H_i &= B_i^{-1} \\
+    B_{i+1} &= B_i + \frac{\bm{q}_i \bm{q}_i^\top}{\bm{q}_i^\top \bm{p}_i}
+        - \frac{B_i \bm{p}_i \bm{p}_i^\top B_i}{\bm{p}_i^\top B_i \bm{p}_i}
+\end{align}
+逆行列を計算することで次のようにも書くことができる
+\cite[Section 10.9]{Press2007}．
+\begin{align}
+    H_{i+1} &= H_i + \frac{\bm{p}_i \bm{p}_i^\top}{\bm{p}_i^\top \bm{q}_i}
+        - \frac{H_i \bm{q}_i \bm{q}_i^\top H_i}{\bm{q}_i^\top H_i \bm{q}_i}
+        + \bm{q}_i^\top H_i \bm{q}_i \bm{v}_i \bm{v}_i^\top \\
+    \bm{v}_i &= \frac{\bm{p}_i}{\bm{p}_i^\top \bm{q}_i}
+        - \frac{H_i \bm{q}_i}{\bm{q}_i^\top H_i \bm{q}_i}
+\end{align}
+
 \subsubsection{共役勾配法}
 
 共役勾配法では，
