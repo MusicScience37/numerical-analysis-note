@@ -1,0 +1,49 @@
+% !TEX root = ../main.tex
+%
+
+\subsection{1 次元における解法}
+
+1 次元の変数 $x \in \setR$ における関数 $f : \setR \to \setR$ の最小化においては、
+比較的簡単なアルゴリズムが存在する。
+
+\subsubsection{黄金比探索}
+
+黄金比探索 (golden section search, \cite[10.2]{Press2007}) では、
+区間を黄金比で分割していきながら最適解を探索する。
+
+まず、区間 $[a,b]$ に対して中間点 $c$ を
+\begin{equation}
+    \frac{c - a}{b - a} = \omega
+\end{equation}
+の比でとる（$0 < \omega < 1/2$）。そして、$c$ と対称な位置に点 $d$ をとる。つまり、
+\begin{equation}
+    \frac{b - d}{b - a} = \omega
+\end{equation}
+とする。このとき、
+\begin{equation}
+    \frac{d - a}{b - a} = 1 - \frac{b - d}{b - a} = 1 - \omega
+\end{equation}
+である。ここで、
+\begin{itemize}
+    \item $f(c) < f(d)$ となった場合、最適解を探索する区間を $[a, b]$ から $[a, d]$ に更新する。
+    \item $f(c) > f(d)$ となった場合、最適解を探索する区間を $[a, b]$ から $[c, b]$ に更新する。
+\end{itemize}
+のようにし、更新後の区間における中間点の相対位置が
+区間 $[a, b]$ における点 $c$ と変わらないようにするため以下の方程式を立てる。
+\begin{align}
+    \frac{d - c}{d - a} &= \omega, &
+    \frac{d - c}{b - c} &= \omega
+\end{align}
+$b - a$ に対する比を用いることで、どちらも
+\begin{align}
+    \frac{1 - 2\omega}{1 - \omega} &= \omega
+\end{align}
+と変形でき、これを $0 < \omega < 1/2$ の制限のもとで解くと
+\begin{equation}
+    \omega = \frac{3 - \sqrt{5}}{2} \approx 0.3819660112501052
+\end{equation}
+となる。
+なお、このアルゴリズムの区間の分割において、以下のように黄金比が登場する。
+\begin{equation}
+    \frac{b - a}{b - c} = \frac{1}{1 - \omega} = \frac{1 + \sqrt{5}}{2} \approx 1.618033988749895
+\end{equation}
