@@ -1,16 +1,16 @@
 % !TEX root = ../main.tex
 %
 
-\section{倍精度浮動小数点数による多倍長浮動小数点数}
+\chapter{倍精度浮動小数点数による多倍長浮動小数点数}
 
 倍精度浮動小数点数を用いて四倍精度，八倍精度といったより高い精度の演算を行う手法が考えられている
 \cite{Hirayama2014,Hida2001}．
 それぞれ 2 つ，4 つの倍精度浮動小数点数の和で小数を表現し，
 仮数の桁が被らないように演算することで高い精度を実現する．
 
-\subsection{記号}
+\section{記号}
 
-本節で使用する記号を以下に示す．
+本章で使用する記号を以下に示す．
 
 \begin{explainlist}
     $\oplus$ & 倍精度浮動小数点数の加算 \\
@@ -19,7 +19,7 @@
     $\oslash$ & 倍精度浮動小数点数の除算 \\
 \end{explainlist}
 
-\subsection{基本演算}
+\section{基本演算}
 
 倍精度浮動小数点数による四倍精度，八倍精度演算の既存文献\cite{Hida2001}で使用される
 基本的な演算を以下にまとめる．
@@ -99,12 +99,12 @@ Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化�
 
 \clearpage
 
-\subsection{倍精度浮動小数点数による四倍精度演算}
+\section{倍精度浮動小数点数による四倍精度演算}
 
 四倍精度浮動小数点数を $a = a_h + a_l$, $|a_l| \le (1/2) \ulp(|a_h|)$ となる
 倍精度浮動小数点数 $a_h$, $a_l$ で表現する．
 
-\subsubsection{四則演算}
+\subsection{四則演算}
 
 このとき，加算は
 Algorithm \ref{more-precision_multi-double_algo_QuadAddPrecisely},
