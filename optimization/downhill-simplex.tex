@@ -1,7 +1,7 @@
 % !TEX root = ../main.tex
 %
 
-\section{Downhill Simplex 法}
+\chapter{Downhill Simplex 法（勾配を用いない局所的な制約なし最適化）}
 
 \begin{algorithm}[tp]
     \caption{Downhill simplex 法}
@@ -35,6 +35,7 @@
 \end{algorithm}
 
 Downhill simplex 法 \cite{Press2007} では，
+制約なし最適化を対象とし，
 Algorithm \ref{alg:optimization_unconstrained_downhill-simplex_downhill-simplex} のように
 変数の空間における単体 (simplex) をルールに沿って反復的に動かしていくことで
 関数の最小値を求める手法である．

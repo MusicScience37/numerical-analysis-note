@@ -1,7 +1,7 @@
 % !TEX root = ../main.tex
 %
 
-\section{勾配を用いた最適化}
+\chapter{勾配を用いた制約なし最適化}
 
 ここでは，勾配を用いた最適化アルゴリズムをまとめる．
 
@@ -30,7 +30,7 @@ Algorithm \ref{alg:optimization_unconstrained_descent-methods_general-descent-me
 更新方向の算出方法により，
 最急降下法，Newton 法，共役勾配法のような様々なアルゴリズムが存在する．
 
-\subsection{直線探索}
+\section{直線探索}
 
 まずは，直線探索の方法をまとめる．
 直線探索では
@@ -90,7 +90,7 @@ $t_i$ を初期値 1 から $\beta \in (0, 1)$ 倍していき，
 $\alpha \in [0.01, 0.3]$, $\beta \in [0.1, 0.8]$ の範囲で設定される
 \cite[Section 9.2]{Boyd2004}．
 
-\subsection{最急降下法}
+\section{最急降下法}
 
 最急降下法では，更新方向を $\bm{d}_i = -\nabla f(\bm{x}_{i-1})$ とする．
 確実に目的関数の減少する方向を示しており，
@@ -99,7 +99,7 @@ $\alpha \in [0.01, 0.3]$, $\beta \in [0.1, 0.8]$ の範囲で設定される
 最適解への収束が証明されている
 \cite[Section 9.3.1]{Boyd2004}．
 
-\subsection{Newton 法}
+\section{Newton 法}
 
 Newton 法では，
 目的関数が狭義凸関数である（つまり，Hessian $\nabla^2 f(\bm{x}_{i-1})$ が正定値である）場合を対象とし，
@@ -121,7 +121,7 @@ $\nabla f(\bm{x}_{i-1})^\top \bm{d}_i = -\nabla f(\bm{x}_{i-1})^\top \nabla^2 f(
 となり，目的関数が減少する方向になっていることを確認できる．
 Newton 法の収束性については \cite[Section 9.5.3, 9.6.4]{Boyd2004} にて議論されている．
 
-\subsection{準 Newton 法}
+\section{準 Newton 法}
 
 Newton 法では，
 Hessian $\nabla^2 f(\bm{x}_{i-1})$ の逆行列が必要になるが，
@@ -165,7 +165,7 @@ Broyden-Fletcher-Goldfarb-Shanno (BFGS) 公式が存在する
         - \frac{H_i \bm{q}_i}{\bm{q}_i^\top H_i \bm{q}_i}
 \end{align}
 
-\subsection{共役勾配法}
+\section{共役勾配法}
 
 共役勾配法では，
 \begin{align}

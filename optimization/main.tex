@@ -35,6 +35,9 @@ $\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ば�
 なお，最小化でなく最大化で定式化する場合もあるが，
 ここでは最小化に統一して説明する．
 
+最適化のアルゴリズムは、
+対称とする問題に制約条件があるものとないものに分けられる。
+
 \chapter{記号}\label{chapter:optimization_symbols}
 
 本部で使用する記号を以下に示す．
@@ -116,4 +119,7 @@ $\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ば�
     関数 $f$ が最小となる $\bm{x} \in \setR^n$ は一意的に定まる．
 \end{theorem}
 
-\input{optimization/unconstrained.tex}
+\input{optimization/one-dim-section-search.tex}
+\input{optimization/descent-unconstrained-optimization.tex}
+\input{optimization/downhill-simplex.tex}
+\input{optimization/global-optimization.tex}
