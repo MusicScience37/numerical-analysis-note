@@ -7,7 +7,7 @@
 
 \begin{algorithm}[tp]
     \caption{勾配による最適化}
-    \label{optimization_unconstrained_descent-methods_general-descent-method}
+    \label{alg:optimization_unconstrained_descent-methods_general-descent-method}
     \begin{algorithmic}
         \Procedure{DescentMethod}{$f, \bm{x}_0$}
             \For{$i = 1,2,\ldots$}
@@ -25,7 +25,7 @@
 
 勾配を用いた最適化アルゴリズムでは，
 一般に
-Algorithm \ref{optimization_unconstrained_descent-methods_general-descent-method}
+Algorithm \ref{alg:optimization_unconstrained_descent-methods_general-descent-method}
 のような手順で反復的に最適化を進めていく．
 更新方向の算出方法により，
 最急降下法，Newton 法，共役勾配法のような様々なアルゴリズムが存在する．
@@ -51,7 +51,7 @@ $f(\bm{x}_{i-1} + t_i \bm{d}_i)$
 
 \begin{algorithm}[tp]
     \caption{Backtracking Line Search \cite[Section 9.2]{Boyd2004}}
-    \label{optimization_unconstrained_descent-methods_BacktrackingLineSearch}
+    \label{alg:optimization_unconstrained_descent-methods_BacktrackingLineSearch}
     \begin{algorithmic}
         \Procedure{BacktrackingLineSearch}{$f, \bm{x}_{i-1}, \bm{d}_i$}
             \State $t_i \gets 1$
@@ -66,26 +66,26 @@ $f(\bm{x}_{i-1} + t_i \bm{d}_i)$
     \centering
     \includegraphics[width=0.7\linewidth]{optimization/Armijo-rule-image.pdf}
     \caption{Armijo の条件（式\eqref{optimization_unconstrained_descent-methods_Armijo-rule}）のイメージ}
-    \label{optimization_unconstrained_descent-methods_Armijo-rule-image}
+    \label{fig::optimization_unconstrained_descent-methods_Armijo-rule-image}
 \end{figure}
 
 Backtracking Line Search \cite[Section 9.2]{Boyd2004} は
 Armijo の条件 \cite[Section 7.5]{Luenberger2003}
 \begin{equation}
     f(\bm{x}_{i-1} + t_i \bm{d}_i) \le f(\bm{x}_{i-1}) + \alpha t_i \nabla f(\bm{x}_{i-1})^\top \bm{d}_i
-    \label{optimization_unconstrained_descent-methods_Armijo-rule}
+    \label{eq:optimization_unconstrained_descent-methods_Armijo-rule}
 \end{equation}
 を利用する．
 ここで，$\alpha$ は $\alpha \in (0,1)$ を満たす定数であり，
 Armijo の条件は，
-図\ref{optimization_unconstrained_descent-methods_Armijo-rule-image}のように
+図\ref{fig:optimization_unconstrained_descent-methods_Armijo-rule-image}のように
 十分小さい $t_i$ を選択するための条件となっている．
 Backtracking Line Search では，
 $\alpha \in (0, 1/2)$ とし，
-Algorithm \ref{optimization_unconstrained_descent-methods_BacktrackingLineSearch}
+Algorithm \ref{alg:optimization_unconstrained_descent-methods_BacktrackingLineSearch}
 のように
 $t_i$ を初期値 1 から $\beta \in (0, 1)$ 倍していき，
-式 \eqref{optimization_unconstrained_descent-methods_Armijo-rule} を満たすものを探索する．
+式 \eqref{eq:optimization_unconstrained_descent-methods_Armijo-rule} を満たすものを探索する．
 一般に，パラメータ $\alpha$, $\beta$ は
 $\alpha \in [0.01, 0.3]$, $\beta \in [0.1, 0.8]$ の範囲で設定される
 \cite[Section 9.2]{Boyd2004}．
