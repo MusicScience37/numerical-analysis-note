@@ -1,0 +1,41 @@
+% !TEX root = ../main.tex
+%
+
+\section{Downhill Simplex 法}
+
+\begin{algorithm}[tp]
+    \caption{Downhill simplex 法}
+    \label{optimization_unconstrained_downhill-simplex_downhill-simplex}
+    \begin{algorithmic}
+        \Procedure{DownhillSimplex}{$f, \bm{x}_0$}
+            \State 変数の次元を $n$ とし，$n$ 次元の単体を構成する
+                $n + 1$ 個の点 $\bm{x}_0, \ldots, \bm{x}_{n}$ を決定する．
+            \Loop
+                \State 単体における最大値以外の点からなる超面に対して対称な位置に最大値の点を移動する
+                \Comment Reflection
+                \If{移動した点の関数値が他の全ての点より小さい場合}
+                    \State 最大値の点を超面から離す
+                    \Comment Reflection and expansion
+                \ElsIf{移動した点がまだ最大値のままである場合}
+                    \State 最大値の点を超面に近づける
+                    \Comment Contraction
+                    \If{移動した点がまだ最大値のままである場合}
+                        \State 最小値以外の全ての点を最小値に近づける
+                        \Comment Multiple contraction
+                    \EndIf
+                \Else
+                    \State Reflection のみでこの反復における移動を完了する
+                \EndIf
+                \If{停止条件を満たしている場合}
+                    \State \Return
+                \EndIf
+            \EndLoop
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+Downhill simplex 法 \cite{Press2007} では，
+Algorithm \ref{optimization_unconstrained_downhill-simplex_downhill-simplex} のように
+変数の空間における単体 (simplex) をルールに沿って反復的に動かしていくことで
+関数の最小値を求める手法である．
+関数値の大小のみで決まるため，関数の微分がなくとも最適化ができる．
