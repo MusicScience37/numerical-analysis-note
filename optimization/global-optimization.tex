@@ -9,7 +9,7 @@
 そこで、大域最適解を求める大域最適化のアルゴリズムが考えられている。
 本章では大域最適化のアルゴリズムについてまとめる。
 
-\section{Dividing Rectangles (DIRECT) 法}
+\section{Dividing Rectangles (DIRECT) 法}\label{sec:optimization_direct}
 
 Dividing Rectangles (DIRECT) 法 \cite{Jones1993} では、
 黄金比探索（第 \ref{sec:optimization_golden-section-search} 節）と同様に
@@ -119,3 +119,48 @@ DIRECT 法の派生としては以下のようなものが挙げられる。
 \begin{itemize}
     \item 各局所最適解への収束に重点をおいた DIRECT-l \cite{Gablonsky2001}
 \end{itemize}
+
+\section{Adaptive Diagonal Curves 法}
+
+Adaptive Diagonal Curves 法 \cite{Sergeyev2006} は
+DIRECT 法（第 \ref{sec:optimization_direct} 節）と同様に
+単位超立方体の探索領域を超短形に分割していくアルゴリズムである。
+しかし、分割する超短形を決定するために必要な目的関数の値は、
+超短形の中心でなく対角にある頂点でとる。
+目的関数の値をとる頂点が隣り合う超短形の間で共有できるように
+分割を行っていく手法 \cite{Sergeyev2000} を用いており、
+DIRECT 法よりも目的関数の値をとる点の数を減らすことができる。
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.7\linewidth]{optimization/ADC-partitions-image.pdf}
+    \caption{文献 \cite{Sergeyev2000} で提案された領域分割と目的関数の値をとる頂点の例}
+    \label{fig:optimization_adc_partitions-image}
+\end{figure}
+
+文献 \cite{Sergeyev2000} では、
+図 \ref{fig:optimization_adc_partitions-image} のように
+互い違いに対角上にある頂点における目的関数の値をとる。
+そこで、各超短形において対角上にある 2 つの頂点から
+超短形上で取り得る最小値を計算する必要がある。
+目的関数が Lipschitz 定数 $K$ を持つ場合、
+\begin{align}
+    f(\bm{a}) - f(\bm{x}^*) &\le K \|\bm{a} - \bm{x}^*\|_2 \\
+    f(\bm{b}) - f(\bm{x}^*) &\le K \|\bm{b} - \bm{x}^*\|_2
+\end{align}
+となる。ここで、$\bm{a}$, $\bm{b}$ は対角上にある頂点、
+$\bm{x}^*$ は超短形上で目的関数が最小となる点である。
+これらに加えて、
+\begin{equation}
+    \max_{\bm{x}^* \in \text{超短形}}{(\|\bm{a} - \bm{x}^*\|_2 + \|\bm{b} - \bm{x}^*\|_2)} \le \sqrt{2} \|\bm{a} - \bm{b}\|_2
+\end{equation}
+が成り立つこと \cite[Lemma 2.]{Molinaro2001} を用いると、
+$\tilde{K} \ge \sqrt{2} K$ となる $\tilde{K}$ について
+\begin{equation}
+    f(\bm{x}^*) \ge \frac{f(\bm{a}) + f(\bm{b})}{2} - \tilde{K} \frac{\|\bm{a} - \bm{b}\|_2}{2}
+\end{equation}
+が成り立つことを示せる\cite[Theorem 2.1]{Sergeyev2006}。
+この式の右辺を
+式 \eqref{eq:optimization_direct_potentially-optimal_smaller-than-others}
+の両辺の代わりに用いることで、
+Lipschitz 定数が $\tilde{K}$ の場合に最小値を取り得る超短形を探索できる。
