@@ -4,4 +4,4 @@
 
 ## 最新版
 
-- [master ブランチの最新版の PDF](https://musicscience37.gitlab.io/numerical-analysis-note/numerical-analysis-note.pdf)
+- [master ブランチの最新版の PDF](https://numanalnote.musicscience37.com/numerical-analysis-note.pdf)
