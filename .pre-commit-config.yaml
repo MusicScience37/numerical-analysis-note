@@ -11,8 +11,8 @@ repos:
   - repo: local
     hooks:
       - id: check_tex_files
-        name: check_tex_files
-        entry: pipenv run python check_tex_files.py
+        name: Check TeX files
+        entry: pipenv run python fix_ten_maru.py
         language: system
         files: "\\.tex$"
         exclude: "extern"
