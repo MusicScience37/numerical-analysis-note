@@ -3,15 +3,15 @@
 
 \chapter{Newton-Raphson 法}
 
-Newton-Raphson 法は、
-次の式のような更新式で反復的に方程式 $f(x) = 0$ の根を求める手法である。
+Newton-Raphson 法は，
+次の式のような更新式で反復的に方程式 $f(x) = 0$ の根を求める手法である．
 \begin{equation}
     x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
 \end{equation}
 
 \section{1 次元の方程式の場合}
 
-1 次元の方程式 $f(x) = 0$ ($f: \setR \to \setR$) の場合、
+1 次元の方程式 $f(x) = 0$ ($f: \setR \to \setR$) の場合，
 1 次近似
 \begin{equation}
     f(x_{n+1}) \approx f(x_n) + f'(x_n) (x_{n+1} - x_n)
@@ -21,13 +21,13 @@ Newton-Raphson 法は、
     x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
     \label{eq:root-finding_newton-raphson_one-dim-update-law}
 \end{equation}
-と更新式が導かれる。
+と更新式が導かれる．
 
 \subsection{平方根の算出}
 
-ここでは、平方根の算出に Newton-Raphson 法を適用してみる。
+ここでは，平方根の算出に Newton-Raphson 法を適用してみる．
 
-$a>0$ について $\sqrt{a}$ を算出する場合、次の関数 $f$ の正の根を求めれば良い。
+$a>0$ について $\sqrt{a}$ を算出する場合，次の関数 $f$ の正の根を求めれば良い．
 \begin{equation}
     f(x) = x^2 - a
 \end{equation}
@@ -35,8 +35,8 @@ $a>0$ について $\sqrt{a}$ を算出する場合、次の関数 $f$ の正の
 \begin{equation}
     f'(x) = 2x
 \end{equation}
-となる。
-よって、更新式は次のようになる。
+となる．
+よって，更新式は次のようになる．
 \begin{align}
     x_{n+1} & = x_n - \frac{f(x_n)}{f'(x_n)}                \\
             & = x_n - \frac{x_n^2 - a}{2x_n}                \\
@@ -45,17 +45,17 @@ $a>0$ について $\sqrt{a}$ を算出する場合、次の関数 $f$ の正の
 \end{align}
 
 \begin{theorem}
-    式 \eqref{eq:root-finding_newton-raphson_sqrt-update-law} の更新式は、
-    初期値 $x_0$ が $x_0 > 0$ を満たす場合、
-    平方根 $\sqrt{a}$ に収束する。
+    式 \eqref{eq:root-finding_newton-raphson_sqrt-update-law} の更新式は，
+    初期値 $x_0$ が $x_0 > 0$ を満たす場合，
+    平方根 $\sqrt{a}$ に収束する．
 \end{theorem}
 \begin{proof}
     $x_0 = \sqrt{a}$ の場合は
-    $k = 1, 2, \ldots$ において $x_k = \sqrt{a}$ が成り立つ。
-    つまり、平方根 $\sqrt{a}$ に収束している。
-    そこで、以下では $x_0 \neq \sqrt{a}$ とする。
+    $k = 1, 2, \ldots$ において $x_k = \sqrt{a}$ が成り立つ．
+    つまり，平方根 $\sqrt{a}$ に収束している．
+    そこで，以下では $x_0 \neq \sqrt{a}$ とする．
 
-    更新後の値 $x_{n+1}$ と平方根 $\sqrt{a}$ の差は次のようになる。
+    更新後の値 $x_{n+1}$ と平方根 $\sqrt{a}$ の差は次のようになる．
     \begin{align}
           & x_{n+1} - \sqrt{a}                                                      \\
         = & \frac{1}{2} (x_n - \sqrt{a}) + \frac{1}{2} \frac{a - \sqrt{a} x_n}{x_n} \\
@@ -64,13 +64,13 @@ $a>0$ について $\sqrt{a}$ を算出する場合、次の関数 $f$ の正の
         \label{eq:root-finding_newton-raphson_sqrt-error-update}
     \end{align}
 
-    $x_0 > 0$ かつ $x_0 \neq \sqrt{a}$ の場合、
+    $x_0 > 0$ かつ $x_0 \neq \sqrt{a}$ の場合，
     式 \eqref{eq:root-finding_newton-raphson_sqrt-error-update} より
-    $x_1 - \sqrt{a} > 0$ が成り立つ。
-    さらに、$k = 2, 3, \ldots$ において $x_k - \sqrt{a} > 0$ であることも帰納的に成り立つ。
-    よって、$k = 1, 2, \ldots$ において $x_k - \sqrt{a} > 0$ である。
+    $x_1 - \sqrt{a} > 0$ が成り立つ．
+    さらに，$k = 2, 3, \ldots$ において $x_k - \sqrt{a} > 0$ であることも帰納的に成り立つ．
+    よって，$k = 1, 2, \ldots$ において $x_k - \sqrt{a} > 0$ である．
 
-    また、$a > 0$ より $\sqrt{a} > 0$ であることを用いると、
+    また，$a > 0$ より $\sqrt{a} > 0$ であることを用いると，
     \begin{align}
           & x_{n+1} - \sqrt{a}                           \\
         = & \frac{1}{2x_n} (x_n - \sqrt{a})^2            \\
@@ -78,11 +78,11 @@ $a>0$ について $\sqrt{a}$ を算出する場合、次の関数 $f$ の正の
         < & \frac{x_n}{2x_n} (x_n - \sqrt{a})            \\
         = & \frac{1}{2} (x_n - \sqrt{a})
     \end{align}
-    となる。
+    となる．
 
-    以上から、
+    以上から，
     \begin{equation}
         0 < x_{n+1} - \sqrt{a} < \frac{1}{2} (x_n - \sqrt{a})
     \end{equation}
-    が成り立ち、$x_n$ の列が平方根 $\sqrt{a}$ へ収束する。
+    が成り立ち，$x_n$ の列が平方根 $\sqrt{a}$ へ収束する．
 \end{proof}

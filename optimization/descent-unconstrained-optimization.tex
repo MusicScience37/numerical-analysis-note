@@ -171,7 +171,7 @@ Broyden-Fletcher-Goldfarb-Shanno (BFGS) 公式が存在する
 \begin{align}
     \bm{d}_1 &= -\nabla f(\bm{x}_{i-1}) \\
     \bm{d}_i &= -\nabla f(\bm{x}_{i-1}) + \gamma_i \bm{d}_{i-1} \\
-    \gamma_i &= 
+    \gamma_i &=
         \frac{(\nabla f(\bm{x}_{i-1}) - \nabla f(\bm{x}_{i-2}))^\top \nabla f(\bm{x}_{i-1})}
         {\|\nabla f(\bm{x}_{i-2})\|_2^2}
 \end{align}
