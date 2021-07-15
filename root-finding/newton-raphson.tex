@@ -38,8 +38,8 @@ $a>0$ について $\sqrt{a}$ を算出する場合，次の関数 $f$ の正の
 となる．
 よって，更新式は次のようになる．
 \begin{align}
-    x_{n+1} & = x_n - \frac{f(x_n)}{f'(x_n)}                \\
-            & = x_n - \frac{x_n^2 - a}{2x_n}                \\
+    x_{n+1} & = x_n - \frac{f(x_n)}{f'(x_n)}          \notag \\
+            & = x_n - \frac{x_n^2 - a}{2x_n}          \notag \\
             & = \frac{1}{2}\left(x_n + \frac{a}{x_n}\right)
     \label{eq:root-finding_newton-raphson_sqrt-update-law}
 \end{align}
@@ -57,9 +57,9 @@ $a>0$ について $\sqrt{a}$ を算出する場合，次の関数 $f$ の正の
 
     更新後の値 $x_{n+1}$ と平方根 $\sqrt{a}$ の差は次のようになる．
     \begin{align}
-          & x_{n+1} - \sqrt{a}                                                      \\
-        = & \frac{1}{2} (x_n - \sqrt{a}) + \frac{1}{2} \frac{a - \sqrt{a} x_n}{x_n} \\
-        = & \frac{1}{2} (x_n - \sqrt{a}) \left(1 - \frac{\sqrt{a}}{x_n}\right)      \\
+          & x_{n+1} - \sqrt{a}                                                      \notag \\
+        = & \frac{1}{2} (x_n - \sqrt{a}) + \frac{1}{2} \frac{a - \sqrt{a} x_n}{x_n} \notag \\
+        = & \frac{1}{2} (x_n - \sqrt{a}) \left(1 - \frac{\sqrt{a}}{x_n}\right)      \notag \\
         = & \frac{1}{2x_n} (x_n - \sqrt{a})^2
         \label{eq:root-finding_newton-raphson_sqrt-error-update}
     \end{align}
@@ -72,10 +72,10 @@ $a>0$ について $\sqrt{a}$ を算出する場合，次の関数 $f$ の正の
 
     また，$a > 0$ より $\sqrt{a} > 0$ であることを用いると，
     \begin{align}
-          & x_{n+1} - \sqrt{a}                           \\
-        = & \frac{1}{2x_n} (x_n - \sqrt{a})^2            \\
-        = & \frac{x_n - \sqrt{a}}{2x_n} (x_n - \sqrt{a}) \\
-        < & \frac{x_n}{2x_n} (x_n - \sqrt{a})            \\
+          & x_{n+1} - \sqrt{a}                           \notag \\
+        = & \frac{1}{2x_n} (x_n - \sqrt{a})^2            \notag \\
+        = & \frac{x_n - \sqrt{a}}{2x_n} (x_n - \sqrt{a}) \notag \\
+        < & \frac{x_n}{2x_n} (x_n - \sqrt{a})            \notag \\
         = & \frac{1}{2} (x_n - \sqrt{a})
     \end{align}
     となる．
@@ -85,4 +85,135 @@ $a>0$ について $\sqrt{a}$ を算出する場合，次の関数 $f$ の正の
         0 < x_{n+1} - \sqrt{a} < \frac{1}{2} (x_n - \sqrt{a})
     \end{equation}
     が成り立ち，$x_n$ の列が平方根 $\sqrt{a}$ へ収束する．
+\end{proof}
+
+\subsection{べき根の算出}
+
+一般に $r$ 乗根（$r = 2, 3, \ldots$）を算出することを考える．
+
+$a>0$ について $\sqrt[r]{a}$ を算出する場合，次の関数 $f$ の正の根を求めれば良い．
+\begin{equation}
+    f(x) = x^r - a
+\end{equation}
+この関数を微分すると
+\begin{equation}
+    f'(x) = rx^{r-1}
+\end{equation}
+となる．
+よって，更新式は次のようになる．
+\begin{align}
+    x_{n+1} & = x_n - \frac{f(x_n)}{f'(x_n)}             \notag \\
+            & = x_n - \frac{x_n^r - a}{rx_n^{r-1}}       \notag \\
+            & = \frac{r-1}{r} x_n + \frac{a}{rx_n^{r-1}}
+    \label{eq:root-finding_newton-raphson_rth-root-update-law}
+\end{align}
+
+\begin{theorem}
+    式 \eqref{eq:root-finding_newton-raphson_rth-root-update-law} の更新式は，
+    初期値 $x_0$ が $x_0 > 0$ を満たす場合，
+    べき根 $\sqrt[r]{a}$ に収束する．
+\end{theorem}
+\begin{proof}
+    $x_0 = \sqrt[r]{a}$ の場合は
+    $k = 1, 2, \ldots$ において $x_k = \sqrt[r]{a}$ が成り立つ．
+    つまり，平方根 $\sqrt[r]{a}$ に収束している．
+    そこで，以下では $x_0 \neq \sqrt[r]{a}$ とする．
+
+    更新後の値 $x_{n+1}$ とべき根 $\sqrt[r]{a}$ の差は次のようになる．
+    \begin{align}
+          & x_{n+1} - \sqrt[r]{a}                                    \notag \\
+        = & \frac{r-1}{r} \left(x_n - \sqrt[r]{a}\right)
+        + \frac{1}{r} \left(\frac{a}{x_n^{r-1}} - \sqrt[r]{a}\right) \notag \\
+        = & \frac{r-1}{r} \left(x_n - \sqrt[r]{a}\right)
+        -\frac{\sqrt[r]{a}}{r} \left(1 - \left(\frac{\sqrt[r]{a}}{x_n}\right)^{r-1}\right)
+    \end{align}
+    これに等比級数の公式
+    \begin{equation}
+        \sum_{k = 1}^n x^{k-1} = \frac{1 - x^n}{1 - x}
+    \end{equation}
+    を適用すると，
+    \begin{align}
+          & x_{n+1} - \sqrt[r]{a}                                                \notag     \\
+        = & \frac{r-1}{r} \left(x_n - \sqrt[r]{a}\right)
+        -\frac{\sqrt[r]{a}}{r} \left(1 - \frac{\sqrt[r]{a}}{x_n}\right)
+        \sum_{k = 1}^{r - 1} \left(\frac{\sqrt[r]{a}}{x_n}\right)^{k - 1}        \notag     \\
+        = & \frac{r-1}{r} \left(x_n - \sqrt[r]{a}\right)
+        -\frac{1}{r} \left(x_n - \sqrt[r]{a}\right)
+        \sum_{k = 1}^{r - 1} \left(\frac{\sqrt[r]{a}}{x_n}\right)^k              \notag     \\
+        = & \frac{1}{r} \left(x_n - \sqrt[r]{a}\right)
+        \left(r - 1 - \sum_{k = 1}^{r - 1} \left(\frac{\sqrt[r]{a}}{x_n}\right)^k\right)
+        \label{eq:root-finding_newton-raphson_rth-root-error-update-linear}                 \\
+        = & \frac{1}{r} \left(x_n - \sqrt[r]{a}\right)
+        \sum_{k = 1}^{r - 1} \left(1 - \left(\frac{\sqrt[r]{a}}{x_n}\right)^k\right) \notag \\
+        = & \frac{1}{r} \left(x_n - \sqrt[r]{a}\right)
+        \left(1 - \frac{\sqrt[r]{a}}{x_n}\right)
+        \sum_{k = 1}^{r - 1} \sum_{l = 1}^{k}
+        \left(\frac{\sqrt[r]{a}}{x_n}\right)^{l - 1}                                 \notag \\
+        = & \frac{1}{rx_n} \left(x_n - \sqrt[r]{a}\right)^2
+        \sum_{k = 1}^{r - 1} \sum_{l = 1}^{k}
+        \left(\frac{\sqrt[r]{a}}{x_n}\right)^{l - 1}
+        \label{eq:root-finding_newton-raphson_rth-root-error-update-quadratic}
+    \end{align}
+    となる．
+
+    $x_0 > 0$ かつ $x_0 \neq \sqrt[r]{a}$ の場合，
+    式 \eqref{eq:root-finding_newton-raphson_rth-root-error-update-quadratic} より
+    $x_1 - \sqrt[r]{a} > 0$ が成り立つ．
+    さらに，$k = 2, 3, \ldots$ において $x_k - \sqrt[r]{a} > 0$ であることも帰納的に成り立つ．
+    よって，$k = 1, 2, \ldots$ において $x_k - \sqrt[r]{a} > 0$ である．
+
+    さらに，$x_n > \sqrt[r]{a} > 0$ であることから
+    $\sqrt[r]{a} / x_n > 0$ が成り立つから，
+    式 \eqref{eq:root-finding_newton-raphson_rth-root-error-update-linear} より
+    \begin{align}
+          & x_{n+1} - \sqrt[r]{a}                          \notag \\
+        < & \frac{r - 1}{r} \left(x_n - \sqrt[r]{a}\right)
+    \end{align}
+    となる．
+
+    以上から，
+    \begin{equation}
+        0 < x_{n+1} - \sqrt[r]{a} < \frac{r - 1}{r} \left(x_n - \sqrt[r]{a}\right)
+        \label{eq:root-finding_newton-raphson_rth-root-error-convergence}
+    \end{equation}
+    が成り立ち，$x_n$ の列がべき根 $\sqrt[r]{a}$ へ収束する．
+\end{proof}
+
+$r$ が奇数の場合，
+負の数 $a < 0$ に対してべき根 $\sqrt[r]{a} < 0$ が存在する．
+この場合についてもべき根の算出を考える．
+
+\begin{theorem}
+    $r = 3, 5, 7, \ldots$ かつ $a < 0$ の場合を考える．
+    式 \eqref{eq:root-finding_newton-raphson_rth-root-update-law} の更新式は，
+    初期値 $x_0$ が $x_0 < 0$ を満たす場合，
+    べき根 $\sqrt[r]{a}$ に収束する．
+\end{theorem}
+\begin{proof}
+    $x_0 = \sqrt[r]{a}$ の場合は
+    $k = 1, 2, \ldots$ において $x_k = \sqrt[r]{a}$ が成り立つ．
+    つまり，平方根 $\sqrt[r]{a}$ に収束している．
+    そこで，以下では $x_0 \neq \sqrt[r]{a}$ とする．
+
+    $x_0 < 0$ かつ $x_0 \neq \sqrt[r]{a}$ の場合，
+    式 \eqref{eq:root-finding_newton-raphson_rth-root-error-update-quadratic} より
+    $x_1 - \sqrt[r]{a} < 0$ が成り立つ．
+    さらに，$k = 2, 3, \ldots$ において $x_k - \sqrt[r]{a} < 0$ であることも帰納的に成り立つ．
+    よって，$k = 1, 2, \ldots$ において $x_k - \sqrt[r]{a} < 0$ である．
+
+    さらに，$x_n < \sqrt[r]{a} < 0$ であることから
+    $\sqrt[r]{a} / x_n > 0$ が成り立つから，
+    式 \eqref{eq:root-finding_newton-raphson_rth-root-error-update-linear} より
+    \begin{align}
+          & x_{n+1} - \sqrt[r]{a}                          \notag \\
+        > & \frac{r - 1}{r} \left(x_n - \sqrt[r]{a}\right)
+    \end{align}
+    となる．
+
+    以上から，
+    \begin{equation}
+        \frac{r - 1}{r} \left(x_n - \sqrt[r]{a}\right) < x_{n+1} - \sqrt[r]{a} < 0
+        \label{eq:root-finding_newton-raphson_rth-root-error-convergence}
+    \end{equation}
+    が成り立ち，$x_n$ の列がべき根 $\sqrt[r]{a}$ へ収束する．
 \end{proof}
