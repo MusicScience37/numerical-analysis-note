@@ -1,0 +1,148 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{Runge-Kutta 法}
+
+Runge-Kutta 法 (Runge-Kutta method) では次のような形式の初期値問題を数値的に解く
+\cite{Mitsui1993}．
+\begin{equation}
+    \begin{cases}
+        \dot{\bm{y}} = \bm{f}(t, \bm{y}) \\
+        \bm{y}(0) = \bm{y}_0
+    \end{cases}
+\end{equation}
+
+Runge-Kutta 法は，時刻 $t$ における変数 $\bm{y}(t)$ の値から，
+次のような形式で時刻 $t + h$ における変数 $\bm{y}(t + h)$ の計算を行う．
+\begin{align}
+    \bm{k}_i      & = \bm{f}\left(t + c_i h, \bm{y}(t) + h \sum_{j = 1}^s a_{ij} \bm{k}_j \right)
+                  & \text{for $i = 1, 2, \ldots, s$}
+    \label{eq:ode_runge-kutta_k-law}                                                              \\
+    \bm{y}(t + h) & = \bm{y}(t) + \sum_{i=1}^s b_i \bm{k}_i
+    \label{eq:ode_runge-kutta_y-law}
+\end{align}
+
+ここで，時間の更新幅 $h$ はステップ幅と呼ばれる．
+Runge-Kutta 法には，
+整数 $s$ （段数と呼ばれる）と係数 $a_{ij}$, $b_i$, $c_i$ の異なる様々な公式が存在する．
+係数 $a_{ij}$, $b_i$, $c_i$ は
+表 \ref{table:ode_runge-kutta_butcher-array-general} のような
+Butcher 配列と呼ばれる形式で記載される．
+
+\begin{table}[tb]
+    \caption{Butcher 配列における係数の並べ方}
+    \label{table:ode_runge-kutta_butcher-array-general}
+    \centering
+    \begin{tabular}{c|ccccc}
+        $c_1$    & $a_{11}$ & $a_{12}$ & $a_{13}$ & $\cdots$ & $a_{1s}$ \\
+        $c_2$    & $a_{21}$ & $a_{22}$ & $a_{23}$ & $\cdots$ & $a_{2s}$ \\
+        $c_3$    & $a_{31}$ & $a_{32}$ & $a_{33}$ & $\cdots$ & $a_{3s}$ \\
+        $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
+        $c_s$    & $a_{s1}$ & $a_{s2}$ & $a_{s3}$ & $\cdots$ & $a_{ss}$ \\
+        \hline
+                 & $b_1$    & $b_2$    & $b_3$    & $\cdots$ & $b_s$
+    \end{tabular}
+\end{table}
+
+Runge-Kutta 法の公式は次のように分類される．
+
+\begin{description}
+    \item[陽的 Runge-Kutta 法] $j \ge i$ について $a_{ij} = 0$ となっている場合，
+          $\bm{k}i$ は $\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s$
+          の順に式 \eqref{eq:ode_runge-kutta_k-law} の右辺を評価することで計算できる．
+          このような場合は陽的 Runge-Kutta 法と呼ばれる．
+    \item[半陰的 Runge-Kutta 法] $j > i$ について $a_{ij} = 0$ となっている場合，
+          $\bm{k}i$ は $\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s$
+          の順に式 \eqref{eq:ode_runge-kutta_k-law} を $\bm{k}_i$ について解くことで計算できる．
+          このような場合は半陰的 Runge-Kutta 法と呼ばれる．
+    \item[陰的 Runge-Kutta 法] $j > i$ でも $a_{ij} \neq 0$ となる係数が存在する場合，
+          $\bm{k}i$ は $i = 1, 2, \ldots, s$ について連立した
+          式 \eqref{eq:ode_runge-kutta_k-law} を $\bm{k}_i$ について解くことで計算する．
+          このような場合は陰的 Runge-Kutta 法と呼ばれる．
+\end{description}
+
+陽的 Runge-Kutta 法の方が計算は単純だが，
+陰的 Runge-Kutta 法は硬い系と呼ばれる比較的不安定な微分方程式でも
+解が安定しやすいという特徴を持つ．
+そのため，解が安定するようにステップ幅を調整した場合，
+陰的 Runge-Kutta 法の方がステップ幅を大きくとることができ，
+目的の時刻 $t$ までの解を得るために必要な計算時間は少なくなる場合がある．
+
+また，Runge-Kutta 法の公式の精度を示す数値として次数が存在する．
+変数の近似値 $\bm{y}(t + h)$ の精度が $h^p$ オーダーの場合，
+その公式は $p$ 次といい，$p$ は次数と呼ばれる．
+
+\section{埋め込み型公式}
+
+Runge-Kutta 法の公式の中には，複数の $b_i$ の組を持つものがある
+（表 \ref{table:ode_runge-kutta_butcher-array-rkf45} の例を参照）．
+そのような公式では，次のような 2 つの近似値を得ることができる．
+\begin{align}
+    \bm{y}(t + h)   & = \bm{y}(t) + \sum_{i=1}^s b_i \bm{k}_i     \\
+    \bm{y}^*(t + h) & = \bm{y}^*(t) + \sum_{i=1}^s b_i^* \bm{k}_i
+\end{align}
+これらの差により誤差の近似値を求めることができる．
+\begin{align}
+    \bm{y}(t + h) - \bm{y}^*(t + h) & = \sum_{i=1}^s (b_i - b_i^*) \bm{k}_i
+\end{align}
+
+これを用いると，現在のステップ幅から次のステップ幅 $\hat{h}$ の適正値を推定できる．
+まず，$b_i$ と $b_i^*$ のうち次数が低い方の次数を $p$ とすると，
+\begin{align}
+    \left| \bm{y}(t + h) - \bm{y}^*(t + h) \right| \approx |Ah^p|
+\end{align}
+のように書ける．
+そこで，誤差の許容量を $\epsilon_{tol}$ としたとき，次の方程式が成り立つようにする．
+\begin{equation}
+    \frac{\hat{h}^p}{h^p} = \frac{\epsilon_{tol}}{\left| \bm{y}(t + h) - \bm{y}^*(t + h) \right|}
+\end{equation}
+これを $\hat{h}$ について解くと，次のようになる．
+\begin{equation}
+    \hat{h} = h \left(\frac{\epsilon_{tol}}{\left| \bm{y}(t + h) - \bm{y}^*(t + h) \right|}\right)^{\frac{1}{p}}
+\end{equation}
+
+\section{古典的 Runge-Kutta 法}
+
+\begin{table}[tb]
+    \caption{古典的 Runge-Kutta 法 （RK4 公式）の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-rk4}
+    \centering
+    \begin{tabular}{c|cccc}
+        $0$           &               &               &               &               \\
+        $\frac{1}{2}$ & $\frac{1}{2}$ &               &               &               \\
+        $\frac{1}{2}$ & $0$           & $\frac{1}{2}$ &               &               \\
+        $1$           & $0$           & $0$           & $1$           &               \\
+        \hline
+                      & $\frac{1}{6}$ & $\frac{1}{3}$ & $\frac{1}{3}$ & $\frac{1}{6}$
+    \end{tabular}
+\end{table}
+
+古典的 Runge-Kutta 法と呼ばれる公式では，
+表 \ref{table:ode_runge-kutta_butcher-array-rk4} のような係数を用いる
+\cite[3.3 節]{Mitsui1993}．
+単純な係数で次数 4 を達成できる．
+
+\section{RKF45 公式}
+
+\begin{table}[tb]
+    \caption{RKF45 公式の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-rkf45}
+    \centering
+    \begin{tabular}{c|ccccccc}
+        $0$             &                     &                      &                      &                       &                  &                &          \\
+        $\frac{1}{4}$   & $\frac{1}{4}$       &                      &                      &                       &                  &                &          \\
+        $\frac{3}{8}$   & $\frac{3}{32}$      & $\frac{9}{32}$       &                      &                       &                  &                &          \\
+        $\frac{12}{13}$ & $\frac{1932}{2197}$ & $-\frac{7200}{2197}$ & $\frac{7296}{2197}$  &                       &                  &                &          \\
+        $1$             & $\frac{439}{216}$   & $-8$                 & $\frac{3680}{513}$   & $-\frac{845}{4104}$   &                  &                &          \\
+        $\frac{1}{2}$   & $-\frac{8}{27}$     & $2$                  & $-\frac{3544}{2565}$ & $\frac{1859}{4104}$   & $-\frac{11}{40}$ &                &          \\
+        \hline
+                        & $\frac{16}{135}$    & $0$                  & $\frac{6656}{12825}$ & $\frac{28561}{56430}$ & $-\frac{9}{50}$  & $\frac{2}{55}$ & （5 次） \\
+                        & $\frac{25}{216}$    & $0$                  & $\frac{1408}{2565}$  & $\frac{2197}{4104}$   & $-\frac{1}{5}$   & $0$            & （4 次）
+    \end{tabular}
+\end{table}
+
+RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
+表 \ref{table:ode_runge-kutta_butcher-array-rkf45} のような係数を用いる
+\cite[4.1 節 (a)]{Mitsui1993}, \cite[Section 9.5]{Mathews2004}．
+この埋め込み型公式では，$\bm{k}_i$ から $\bm{y}(t + h)$ を算出する係数に
+5 次の精度を持つ組と 4 次の精度を持つ組が存在する．

@@ -1,0 +1,29 @@
+% !TEX root = ../main.tex
+%
+
+\part{常微分方程式の数値解法}
+
+\chapter{導入}
+
+この部では，常微分方程式 (ordinary differential equation, ODE) の数値解法をまとめる．
+
+関数 $\bm{y}(t)$ の常微分方程式は一般に
+\begin{equation}
+    \bm{f}(t, \bm{y}, \dot{\bm{y}}, \ddot{\bm{y}}, \dddot{\bm{y}}, \ddddot{\bm{y}}, \ldots) = \bm{0}
+\end{equation}
+のように書ける．
+
+\chapter{記号}
+
+本部で使用する記号を以下に示す．
+
+\begin{explainlist}
+    $\setR$ & 実数の集合 \\
+    $\|\bm{x}\|_2$ & ベクトル $\bm{x}$ の 2-ノルム \\
+    $\dot{\bm{y}}$ & 関数 $\bm{y}(t)$ の一階微分 \\
+    $\ddot{\bm{y}}$ & 関数 $\bm{y}(t)$ の二階微分 \\
+    $\dddot{\bm{y}}$ & 関数 $\bm{y}(t)$ の三階微分 \\
+    $\ddddot{\bm{y}}$ & 関数 $\bm{y}(t)$ の四階微分 \\
+\end{explainlist}
+
+\input{ode/runge-kutta.tex}
