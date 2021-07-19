@@ -200,7 +200,9 @@ Jacobian を固定することの効果はより大きくなる
 \footnote{$d$ 次元の常微分方程式に対して $s$ 段公式を使用すると，%
     Jacobian は $ds$ 次元の正方行列となる．}．
 
-\section{古典的 Runge-Kutta 法}
+\section{陽的公式の例}
+
+\subsection{古典的 Runge-Kutta 法}
 
 \begin{table}[bp]
     \caption{古典的 Runge-Kutta 法 （RK4 公式）の Butcher 配列}
@@ -221,7 +223,7 @@ Jacobian を固定することの効果はより大きくなる
 \cite[3.3 節]{Mitsui1993}．
 単純な係数で次数 4 を達成できる．
 
-\section{RKF45 公式}
+\subsection{RKF45 公式}
 
 \begin{table}[bp]
     \caption{RKF45 公式の Butcher 配列}
@@ -248,7 +250,30 @@ RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
 \footnote{挙げた 2 件の文献のうち，%
     文献 \cite{Mitsui1993} では係数が一カ所誤っていたため注意が必要．}．
 
-\section{田中 Formula}
+\subsection{Euler 法}
+
+\begin{table}[bp]
+    \caption{Euler 法の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-explicit-euler}
+    \centering
+    \begin{tabular}{c|c}
+        $1$ &     \\
+        \hline
+            & $1$
+    \end{tabular}
+\end{table}
+
+常微分方程式の解法としては最も基本的な Euler 法は形式的に Runge-Kutta 法とみなすことができる．
+Euler 法は
+\begin{equation}
+    \bm{y}(t + h) \approx \bm{y}(t) + h \bm{f}(t, \bm{y}(t))
+\end{equation}
+のように書かれるが，
+その Butcher 配列は表 \ref{table:ode_runge-kutta_butcher-array-explicit-euler} に示す通りである．
+
+\section{半陰的公式の例}
+
+\subsection{田中 Formula}
 
 \begin{table}[bp]
     \caption{田中 Formula1 公式の Butcher 配列}
@@ -290,7 +315,9 @@ RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
 \footnote{利用する際には高い次数の係数との差を見るように実装するため，%
     次数の低い方の係数だけ単純でも計算コストへの影響はない．}．
 
-\section{Butcher-Kuntzmann 公式}
+\section{陰的公式の例}
+
+\subsection{Butcher-Kuntzmann 公式}
 
 \begin{table}[bp]
     \caption{2 段 Butcher-Kuntzmann 公式の Butcher 配列}
@@ -312,23 +339,3 @@ $s$ 段 Butcher-Kuntzmann 公式と呼ばれる．
 2 段 Butcher-Kuntzmann 公式を表
 \ref{table:ode_runge-kutta_butcher-array-2stage-butcher-kuntzmann}
 に示す（前述の通り 4 次の精度を持つ）．
-
-\section{Euler 法}
-
-\begin{table}[bp]
-    \caption{Euler 法の Butcher 配列}
-    \label{table:ode_runge-kutta_butcher-array-explicit-euler}
-    \centering
-    \begin{tabular}{c|c}
-        $1$ &     \\
-        \hline
-            & $1$
-    \end{tabular}
-\end{table}
-
-常微分方程式の解法としては最も基本的な Euler 法
-\begin{equation}
-    \bm{y}(t + h) \approx \bm{y}(t) + h \bm{f}(t, \bm{y}(t))
-\end{equation}
-は形式的に Runge-Kutta 法とみなすことができる．
-Butcher 配列は表 \ref{table:ode_runge-kutta_butcher-array-explicit-euler} に示す通りである．
