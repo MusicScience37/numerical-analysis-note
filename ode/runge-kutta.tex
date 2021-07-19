@@ -108,6 +108,98 @@ Runge-Kutta 法の公式の中には，複数の $b_i$ の組を持つものが�
     \hat{h} = h \left(\frac{\epsilon_{tol}}{\left| \bm{y}(t + h) - \bm{y}^*(t + h) \right|}\right)^{\frac{1}{p}}
 \end{equation}
 
+\section{陰的 Runge-Kutta 法における方程式の解法}
+
+陰的 Runge-Kutta 法においては，
+式 \eqref{eq:ode_runge-kutta_k-law} を方程式として解く必要がある．
+数値解法に頼りたくなるような状況下において関数 $\bm{f}$ は非線形であるため
+\footnote{関数 $\bm{f}$ が線形な場合，行列の指数関数による一般解が存在し，%
+    固有値分解により簡単に解を得ることが可能であるため，%
+    あえて Runge-Kutta 法を使用する必要はない．}，
+Newton-Raphson 法（\ref{chap:root-finding_newton-raphson} 章）のような
+非線形方程式の数値解法を用いる必要がある．
+
+\subsection{半陰的公式の場合}
+
+半陰的公式の場合，$i = 1, 2, \ldots, s$ のそれぞれについて以下の方程式を解く必要がある．
+\begin{equation}
+    \bm{F}_i(\bm{k}_i)
+    \equiv \bm{k}_i - \bm{f}\left(t + c_i h, \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j \right)
+    = \bm{0}
+\end{equation}
+
+この方程式の数値解法として
+Newton-Raphson 法を用いる場合，Jacobian
+\begin{equation}
+    \left. \frac{\partial \bm{F}_i}{\partial \bm{k}_i} \right|_{\bm{k}_i = \bm{k}_i}
+    = I - h a_{ii}
+    \left. \frac{\partial \bm{f}}{\partial \bm{y}}
+    \right|_{t = t + c_i h, \bm{y} = \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j}
+\end{equation}
+を使用する必要がある．
+Newton-Raphson 法における更新式は次のようになる．
+\begin{equation}
+    (\bm{k}_i)_{n+1} = (\bm{k}_i)_{n}
+    - \left(\left. \frac{\partial \bm{F}_i}{\partial \bm{k}_i} \right|_{\bm{k}_i = \bm{k}_i}\right)^{-1}
+    \bm{F}_i(\bm{k}_i)
+\end{equation}
+Newton-Raphson 法の各反復ごとに更新された Jacobian の LU 分解を求める必要がある．
+
+ステップ幅を十分小さくとっている場合，
+Jacobian の $\bm{k}_i$ に応じた変化量は少ないため，
+Jacobian を $\bm{k}_i = \bm{0}$ のときの
+\begin{equation}
+    J \equiv I - h a_{ii}
+    \left. \frac{\partial \bm{f}}{\partial \bm{y}}
+    \right|_{t = t + c_i h, \bm{y} = \bm{y}(t)}
+\end{equation}
+に固定するという近似もあり得る
+\cite[6.2 節 (c)]{Mitsui1993}．
+この場合，1 ステップに 1 回だけ Jacobian とその LU 分解を計算すれば良い
+\footnote{$d$ 次元の LU 分解において，係数行列が更新された場合は $d^3$ オーダーの時間がかかり，%
+    係数行列が変わらず適応先のベクトルのみが更新された場合は $d^2$ オーダーの時間で済む．%
+    対象とする常微分方程式の自由度の数が多いほど効果が大きくなる．}．
+
+\subsection{陰的公式の場合}
+
+半陰的公式でなく陰的公式の場合，
+必要な方程式は次元が増えた次のようなものになる．
+\begin{equation}
+    \bm{F}_i(\bm{k}_i)
+    \equiv
+    \begin{pmatrix}
+        \bm{k}_1 - \bm{f}\left(t + c_1 h, \bm{y}(t) + h \sum_{j = 1}^s a_{1j} \bm{k}_j \right) \\
+        \bm{k}_2 - \bm{f}\left(t + c_2 h, \bm{y}(t) + h \sum_{j = 1}^s a_{2j} \bm{k}_j \right) \\
+        \vdots                                                                                 \\
+        \bm{k}_s - \bm{f}\left(t + c_s h, \bm{y}(t) + h \sum_{j = 1}^s a_{sj} \bm{k}_j \right) \\
+    \end{pmatrix}
+    = \bm{0}
+\end{equation}
+
+Jacobian は次のようになる．
+\begin{align}
+    \left. \frac{\partial \bm{F}_i}{\partial (\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s)}
+    \right|_{\bm{k}_i = \bm{k}_i}
+    = I -
+    \begin{pmatrix}
+        J_{11} & J_{12} & \cdots & J_{1s} \\
+        J_{21} & J_{22} & \cdots & J_{2s} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        J_{s1} & J_{s2} & \cdots & J_{ss}
+    \end{pmatrix}
+    \\
+    J_{ij} = h a_{ij} \left. \frac{\partial \bm{f}}{\partial \bm{y}}
+    \right|_{t = t + c_i h, \bm{y} = \bm{y}(t) + h \sum_{l = 1}^i a_{il} \bm{k}_l}
+\end{align}
+
+半陰的公式と同様に，
+上記の Jacobian を $\bm{k}_i = \bm{0}$ のときのものに固定することで
+計算時間を減らすことが考えられる．
+陰的公式では Jacobian のサイズが大きくなるため，
+Jacobian を固定することの効果はより大きくなる
+\footnote{$d$ 次元の常微分方程式に対して $s$ 段公式を使用すると，%
+    Jacobian は $ds$ 次元の正方行列となる．}．
+
 \section{古典的 Runge-Kutta 法}
 
 \begin{table}[bp]
@@ -156,7 +248,7 @@ RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
 \footnote{挙げた 2 件の文献のうち，%
     文献 \cite{Mitsui1993} では係数が一カ所誤っていたため注意が必要．}．
 
-\section{田中公式}
+\section{田中 Formula}
 
 \begin{table}[bp]
     \caption{田中 Formula1 公式の Butcher 配列}
