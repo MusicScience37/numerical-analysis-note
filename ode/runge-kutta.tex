@@ -339,3 +339,26 @@ $s$ 段 Butcher-Kuntzmann 公式と呼ばれる．
 2 段 Butcher-Kuntzmann 公式を表
 \ref{table:ode_runge-kutta_butcher-array-2stage-butcher-kuntzmann}
 に示す（前述の通り 4 次の精度を持つ）．
+
+\subsection{陰的 Euler 法}
+
+\begin{table}[bp]
+    \caption{陰的 Euler 法の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-implicit-euler}
+    \centering
+    \begin{tabular}{c|c}
+        $1$ & $1$ \\
+        \hline
+            & $1$
+    \end{tabular}
+\end{table}
+
+常微分方程式の解法として，（陽的）Euler 法と同様に基本的な陰的 Euler 法も
+形式的に Runge-Kutta 法とみなすことができる．
+陰的 Euler 法は
+\begin{equation}
+    \bm{y}(t + h) \approx \bm{y}(t) + h \bm{f}(t, \bm{y}(t + h))
+\end{equation}
+のように書かれるが，
+その Butcher 配列は表 \ref{table:ode_runge-kutta_butcher-array-implicit-euler} に示す通りである．
+この 1 段 2 次公式は陰的公式とも半陰的公式ともとることができる．
