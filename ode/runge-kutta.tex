@@ -198,6 +198,29 @@ RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
 \footnote{利用する際には高い次数の係数との差を見るように実装するため，%
     次数の低い方の係数だけ単純でも計算コストへの影響はない．}．
 
+\section{Butcher-Kuntzmann 公式}
+
+\begin{table}[bp]
+    \caption{2 段 Butcher-Kuntzmann 公式の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-2stage-butcher-kuntzmann}
+    \centering
+    \begin{tabular}{c|cc}
+        $\frac{1}{2} + \frac{\sqrt{3}}{6}$ & $\frac{1}{4}$                      & $\frac{1}{4} + \frac{\sqrt{3}}{6}$ \\
+        $\frac{1}{2} - \frac{\sqrt{3}}{6}$ & $\frac{1}{4} - \frac{\sqrt{3}}{6}$ & $\frac{1}{4}$                      \\
+        \hline
+                                           & $\frac{1}{2}$                      & $\frac{1}{2}$
+    \end{tabular}
+\end{table}
+
+文献 \cite[5.2 節 (b)]{Mitsui1993} によると，
+陰的 Runge-Kutta 法では，$s$ 段公式で $2s$ 次を超えることができないと証明されており，
+その限界の $2s$ 次の公式が存在することも証明されている．
+特に Legendre 関数の零点を用いて係数を決める種類の公式は，
+$s$ 段 Butcher-Kuntzmann 公式と呼ばれる．
+2 段 Butcher-Kuntzmann 公式を表
+\ref{table:ode_runge-kutta_butcher-array-2stage-butcher-kuntzmann}
+に示す（前述の通り 4 次の精度を持つ）．
+
 \section{Euler 法}
 
 \begin{table}[bp]
