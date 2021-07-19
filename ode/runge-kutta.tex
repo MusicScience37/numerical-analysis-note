@@ -29,7 +29,7 @@ Runge-Kutta 法には，
 表 \ref{table:ode_runge-kutta_butcher-array-general} のような
 Butcher 配列と呼ばれる形式で記載される．
 
-\begin{table}[tb]
+\begin{table}[bp]
     \caption{Butcher 配列における係数の並べ方}
     \label{table:ode_runge-kutta_butcher-array-general}
     \centering
@@ -62,8 +62,15 @@ Runge-Kutta 法の公式は次のように分類される．
 \end{description}
 
 陽的 Runge-Kutta 法の方が計算は単純だが，
-陰的 Runge-Kutta 法は硬い系と呼ばれる比較的不安定な微分方程式でも
-解が安定しやすいという特徴を持つ．
+陰的 Runge-Kutta 法は
+
+\begin{itemize}
+    \item 硬い系と呼ばれる比較的不安定な微分方程式で解が安定しやすい．
+    \item 陽的 Runge-Kutta 法よりも少ない段数でより高い次数を出せる．
+          （後述する公式の実例を見ると分かる．）
+\end{itemize}
+
+といった利点を持つ．
 そのため，解が安定するようにステップ幅を調整した場合，
 陰的 Runge-Kutta 法の方がステップ幅を大きくとることができ，
 目的の時刻 $t$ までの解を得るために必要な計算時間は少なくなる場合がある．
@@ -103,7 +110,7 @@ Runge-Kutta 法の公式の中には，複数の $b_i$ の組を持つものが�
 
 \section{古典的 Runge-Kutta 法}
 
-\begin{table}[tb]
+\begin{table}[bp]
     \caption{古典的 Runge-Kutta 法 （RK4 公式）の Butcher 配列}
     \label{table:ode_runge-kutta_butcher-array-rk4}
     \centering
@@ -124,7 +131,7 @@ Runge-Kutta 法の公式の中には，複数の $b_i$ の組を持つものが�
 
 \section{RKF45 公式}
 
-\begin{table}[tb]
+\begin{table}[bp]
     \caption{RKF45 公式の Butcher 配列}
     \label{table:ode_runge-kutta_butcher-array-rkf45}
     \centering
@@ -146,3 +153,40 @@ RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
 \cite[4.1 節 (a)]{Mitsui1993}, \cite[Section 9.5]{Mathews2004}．
 この埋め込み型公式では，$\bm{k}_i$ から $\bm{y}(t + h)$ を算出する係数に
 5 次の精度を持つ組と 4 次の精度を持つ組が存在する．
+
+\section{田中公式}
+
+\begin{table}[bp]
+    \caption{田中 Formula1 公式の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-tanaka-formula1}
+    \centering
+    \begin{tabular}{c|ccc}
+        $\frac{13}{20}$ & $\frac{13}{20}$    &                  &          \\
+        $-\frac{1}{18}$ & $-\frac{127}{180}$ & $\frac{13}{20}$  &          \\
+        \hline
+                        & $\frac{100}{127}$  & $\frac{27}{127}$ & （3 次） \\
+                        & $1$                &                  & （1 次）
+    \end{tabular}
+\end{table}
+
+\begin{table}[bp]
+    \caption{田中 Formula2 公式の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-tanaka-formula2}
+    \centering
+    \begin{tabular}{c|cccc}
+        $\frac{133}{100}$ & $\frac{133}{100}$     &                       &                      &          \\
+        $\frac{1}{2}$     & $-\frac{5400}{18167}$ & $\frac{28967}{36334}$ &                      &          \\
+        $-\frac{33}{100}$ & $\frac{133}{50}$      & $-\frac{108}{25}$     & $\frac{133}{100}$    &          \\
+        \hline
+                          & $\frac{1250}{20667}$  & $\frac{18167}{20667}$ & $\frac{1250}{20667}$ & （4 次） \\
+                          & $0$                   & $1$                   &                      & （2 次）
+    \end{tabular}
+\end{table}
+
+文献 \cite{Togawa2007} では，田中正次氏が考案した半陰的・陰的公式がいくつか示されている．
+そのうち埋め込み型の半陰的公式を表
+\ref{table:ode_runge-kutta_butcher-array-tanaka-formula1},
+\ref{table:ode_runge-kutta_butcher-array-tanaka-formula2}
+に示す
+\footnote{文献 \cite{Togawa2007} には完全に陰的な 4 段 7 次の公式もあるが，%
+    係数がかなり複雑なため省略した．}．
