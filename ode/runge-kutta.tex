@@ -152,7 +152,9 @@ RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
 表 \ref{table:ode_runge-kutta_butcher-array-rkf45} のような係数を用いる
 \cite[4.1 節 (a)]{Mitsui1993}, \cite[Section 9.5]{Mathews2004}．
 この埋め込み型公式では，$\bm{k}_i$ から $\bm{y}(t + h)$ を算出する係数に
-5 次の精度を持つ組と 4 次の精度を持つ組が存在する．
+5 次の精度を持つ組と 4 次の精度を持つ組が存在する
+\footnote{挙げた 2 件の文献のうち，%
+    文献 \cite{Mitsui1993} では係数が一カ所誤っていたため注意が必要．}．
 
 \section{田中公式}
 
@@ -190,3 +192,28 @@ RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
 に示す
 \footnote{文献 \cite{Togawa2007} には完全に陰的な 4 段 7 次の公式もあるが，%
     係数がかなり複雑なため省略した．}．
+
+段数の多い陽的公式と同程度の精度を少ない段数で出すことができていることを確認できる．
+また，埋め込み型の 2 つの係数のうち次数の低い方の係数が単純になっている
+\footnote{利用する際には高い次数の係数との差を見るように実装するため，%
+    次数の低い方の係数だけ単純でも計算コストへの影響はない．}．
+
+\section{Euler 法}
+
+\begin{table}[bp]
+    \caption{Euler 法の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-explicit-euler}
+    \centering
+    \begin{tabular}{c|c}
+        $1$ &     \\
+        \hline
+            & $1$
+    \end{tabular}
+\end{table}
+
+常微分方程式の解法としては最も基本的な Euler 法
+\begin{equation}
+    \bm{y}(t + h) \approx \bm{y}(t) + h \bm{f}(t, \bm{y}(t))
+\end{equation}
+は形式的に Runge-Kutta 法とみなすことができる．
+Butcher 配列は表 \ref{table:ode_runge-kutta_butcher-array-explicit-euler} に示す通りである．
