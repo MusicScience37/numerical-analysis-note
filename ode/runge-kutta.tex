@@ -15,10 +15,10 @@ Runge-Kutta 法 (Runge-Kutta method) では次のような形式の初期値問�
 Runge-Kutta 法は，時刻 $t$ における変数 $\bm{y}(t)$ の値から，
 次のような形式で時刻 $t + h$ における変数 $\bm{y}(t + h)$ の計算を行う．
 \begin{align}
-    \bm{k}_i      & = \bm{f}\left(t + c_i h, \bm{y}(t) + h \sum_{j = 1}^s a_{ij} \bm{k}_j \right)
+    \bm{k}_i      & = \bm{f}\left(t + b_i h, \bm{y}(t) + h \sum_{j = 1}^s a_{ij} \bm{k}_j \right)
                   & \text{for $i = 1, 2, \ldots, s$}
     \label{eq:ode_runge-kutta_k-law}                                                              \\
-    \bm{y}(t + h) & = \bm{y}(t) + \sum_{i=1}^s b_i \bm{k}_i
+    \bm{y}(t + h) & = \bm{y}(t) + \sum_{i=1}^s c_i \bm{k}_i
     \label{eq:ode_runge-kutta_y-law}
 \end{align}
 
@@ -34,13 +34,13 @@ Butcher 配列と呼ばれる形式で記載される．
     \label{table:ode_runge-kutta_butcher-array-general}
     \centering
     \begin{tabular}{c|ccccc}
-        $c_1$    & $a_{11}$ & $a_{12}$ & $a_{13}$ & $\cdots$ & $a_{1s}$ \\
-        $c_2$    & $a_{21}$ & $a_{22}$ & $a_{23}$ & $\cdots$ & $a_{2s}$ \\
-        $c_3$    & $a_{31}$ & $a_{32}$ & $a_{33}$ & $\cdots$ & $a_{3s}$ \\
+        $b_1$    & $a_{11}$ & $a_{12}$ & $a_{13}$ & $\cdots$ & $a_{1s}$ \\
+        $b_2$    & $a_{21}$ & $a_{22}$ & $a_{23}$ & $\cdots$ & $a_{2s}$ \\
+        $b_3$    & $a_{31}$ & $a_{32}$ & $a_{33}$ & $\cdots$ & $a_{3s}$ \\
         $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ \\
-        $c_s$    & $a_{s1}$ & $a_{s2}$ & $a_{s3}$ & $\cdots$ & $a_{ss}$ \\
+        $b_s$    & $a_{s1}$ & $a_{s2}$ & $a_{s3}$ & $\cdots$ & $a_{ss}$ \\
         \hline
-                 & $b_1$    & $b_2$    & $b_3$    & $\cdots$ & $b_s$
+                 & $c_1$    & $c_2$    & $c_3$    & $\cdots$ & $c_s$
     \end{tabular}
 \end{table}
 
@@ -85,12 +85,12 @@ Runge-Kutta 法の公式の中には，複数の $b_i$ の組を持つものが�
 （表 \ref{table:ode_runge-kutta_butcher-array-rkf45} の例を参照）．
 そのような公式では，次のような 2 つの近似値を得ることができる．
 \begin{align}
-    \bm{y}(t + h)   & = \bm{y}(t) + \sum_{i=1}^s b_i \bm{k}_i     \\
-    \bm{y}^*(t + h) & = \bm{y}^*(t) + \sum_{i=1}^s b_i^* \bm{k}_i
+    \bm{y}(t + h)   & = \bm{y}(t) + \sum_{i=1}^s c_i \bm{k}_i     \\
+    \bm{y}^*(t + h) & = \bm{y}^*(t) + \sum_{i=1}^s c_i^* \bm{k}_i
 \end{align}
 これらの差により誤差の近似値を求めることができる．
 \begin{align}
-    \bm{y}(t + h) - \bm{y}^*(t + h) & = \sum_{i=1}^s (b_i - b_i^*) \bm{k}_i
+    \bm{y}(t + h) - \bm{y}^*(t + h) & = \sum_{i=1}^s (c_i - c_i^*) \bm{k}_i
 \end{align}
 
 これを用いると，現在のステップ幅から次のステップ幅 $\hat{h}$ の適正値を推定できる．
@@ -124,7 +124,7 @@ Newton-Raphson 法（\ref{chap:root-finding_newton-raphson} 章）のような
 半陰的公式の場合，$i = 1, 2, \ldots, s$ のそれぞれについて以下の方程式を解く必要がある．
 \begin{equation}
     \bm{F}_i(\bm{k}_i)
-    \equiv \bm{k}_i - \bm{f}\left(t + c_i h, \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j \right)
+    \equiv \bm{k}_i - \bm{f}\left(t + b_i h, \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j \right)
     = \bm{0}
 \end{equation}
 
@@ -134,7 +134,7 @@ Newton-Raphson 法を用いる場合，Jacobian
     \left. \frac{\partial \bm{F}_i}{\partial \bm{k}_i} \right|_{\bm{k}_i = \bm{k}_i}
     = I - h a_{ii}
     \left. \frac{\partial \bm{f}}{\partial \bm{y}}
-    \right|_{t = t + c_i h, \bm{y} = \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j}
+    \right|_{t = t + b_i h, \bm{y} = \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j}
 \end{equation}
 を使用する必要がある．
 Newton-Raphson 法における更新式は次のようになる．
@@ -151,7 +151,7 @@ Jacobian を $\bm{k}_i = \bm{0}$ のときの
 \begin{equation}
     J \equiv I - h a_{ii}
     \left. \frac{\partial \bm{f}}{\partial \bm{y}}
-    \right|_{t = t + c_i h, \bm{y} = \bm{y}(t)}
+    \right|_{t = t + b_i h, \bm{y} = \bm{y}(t)}
 \end{equation}
 に固定するという近似もあり得る
 \cite[6.2 節 (c)]{Mitsui1993}．
@@ -168,10 +168,10 @@ Jacobian を $\bm{k}_i = \bm{0}$ のときの
     \bm{F}_i(\bm{k}_i)
     \equiv
     \begin{pmatrix}
-        \bm{k}_1 - \bm{f}\left(t + c_1 h, \bm{y}(t) + h \sum_{j = 1}^s a_{1j} \bm{k}_j \right) \\
-        \bm{k}_2 - \bm{f}\left(t + c_2 h, \bm{y}(t) + h \sum_{j = 1}^s a_{2j} \bm{k}_j \right) \\
+        \bm{k}_1 - \bm{f}\left(t + b_1 h, \bm{y}(t) + h \sum_{j = 1}^s a_{1j} \bm{k}_j \right) \\
+        \bm{k}_2 - \bm{f}\left(t + b_2 h, \bm{y}(t) + h \sum_{j = 1}^s a_{2j} \bm{k}_j \right) \\
         \vdots                                                                                 \\
-        \bm{k}_s - \bm{f}\left(t + c_s h, \bm{y}(t) + h \sum_{j = 1}^s a_{sj} \bm{k}_j \right) \\
+        \bm{k}_s - \bm{f}\left(t + b_s h, \bm{y}(t) + h \sum_{j = 1}^s a_{sj} \bm{k}_j \right) \\
     \end{pmatrix}
     = \bm{0}
 \end{equation}
