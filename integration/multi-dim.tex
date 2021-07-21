@@ -1,0 +1,110 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{多次元の数値積分}
+
+\section{三角形上の数値積分}
+
+2 次元平面上のメッシュや，
+3 次元空間内の曲面を表すメッシュなど，
+三角形が必要になる場面はしばしば存在する．
+そのような三角形での使用を目的とした数値積分手法の 1 つを紹介する．
+
+三点 $\bm{a}, \bm{b}, \bm{c}$ からなる三角形
+\footnote{何次元空間の三角形かは問わない．}
+において，
+三角形上の点 $\bm{p}$ を重心 $\bm{g}$ を用いて，
+\begin{equation}
+    \bm{p} = \xi_1 (\bm{a} - \bm{g}) + \xi_2 (\bm{b} - \bm{g}) + \xi_3 (\bm{c} - \bm{g}) + \bm{g}
+\end{equation}
+のように
+$\xi_1 \ge 0$,
+$\xi_2 \ge 0$,
+$\xi_3 \ge 0$,
+$\xi_1 + \xi_2 + \xi_3 \le 1$
+なる $\xi_1$, $\xi_2$, $\xi_3$ の組で示すことができる．
+この原点を中心とした座標系は barycentric coordinates と呼ばれる．
+文献 \cite{Laurie1982} では，
+この barycentric coordinates を用いた対照的な積分公式を算出している．
+
+文献 \cite{Laurie1982} における積分公式は次のように計算する．
+\begin{align}
+    I_5[f]     & = \Delta \sum_{i=0}^2 w_5^{(i)} I^{(i)}[f] \\
+    I_8[f]     & = \Delta \sum_{i=0}^5 w_8^{(i)} I^{(i)}[f] \\
+    I^{(i)}[f] & = \frac{1}{6} \sum_{\substack{k = 1, 2, 3  \\ l = 1, 2, 3 \\ k \neq l}}
+    f(\xi_k^{(i)}, \xi_l^{(i)})
+\end{align}
+ここで，
+$I_5[f]$, $I_8[f]$ はそれぞれ関数 $f$ の 5, 8 次精度の積分となっている．
+$\Delta$ は三角形の面積であり，
+パラメータ $w_5^{(i)}$, $w_8^{(i)}$, $\xi_k^{(i)}$ は
+表 \ref{table:integration_multi-dim_cubtri-parameters} のようになっている．
+
+\begin{table}[bp]
+    \caption{CUBTRI \cite{Laurie1982} のパラメータ（$\phi = \sqrt{15}$, $\sigma = \sqrt{7}$）}
+    \label{table:integration_multi-dim_cubtri-parameters}
+    \centering
+    \begin{tabular}{c|ccc}
+        $i$                                                   &
+        $\xi_1^{(i)}$                                         &
+        $\xi_2^{(i)}$                                         &
+        $\xi_3^{(i)}$                                           \\
+        \hline
+        0                                                     &
+        $1 / 3$                                               &
+        $1 / 3$                                               &
+        $1 / 3$                                                 \\
+        1                                                     &
+        $3 / 7 + 2 \phi / 21$                                 &
+        $2 / 7 - \phi / 21$                                   &
+        $2 / 7 - \phi / 21$                                     \\
+        2                                                     &
+        $3 / 7 - 2 \phi / 21$                                 &
+        $2 / 7 + \phi / 21$                                   &
+        $2 / 7 + \phi / 21$                                     \\
+        3                                                     &
+        $4 / 9 + \phi / 9 + \sigma / 9 - \sigma \phi / 45$    &
+        $5 / 18 - \phi / 18 - \sigma / 18 + \sigma \phi / 90$ &
+        $5 / 18 - \phi / 18 - \sigma / 18 + \sigma \phi / 90$   \\
+        4                                                     &
+        $4 / 9 - \phi / 9 + \sigma / 9 + \sigma \phi / 45$    &
+        $5 / 18 + \phi / 18 - \sigma / 18 - \sigma \phi / 90$ &
+        $5 / 18 + \phi / 18 - \sigma / 18 - \sigma \phi / 90$   \\
+        5                                                     &
+        $5 / 18 - \phi / 18 - \sigma / 18 + \sigma \phi / 90$ &
+        $5 / 18 + \phi / 18 - \sigma / 18 - \sigma \phi / 90$ &
+        $4 / 9 + \sigma / 9$
+    \end{tabular}
+    \begin{tabular}{c|c}
+        $i$ &
+        $w_5^{(i)}$            \\
+        \hline
+        0   &
+        $9 / 40$               \\
+        1   &
+        $31 / 80 - \phi / 400$ \\
+        2   &
+        $31 / 80 + \phi / 400$ \\
+    \end{tabular}
+    \begin{tabular}{c|c}
+        $i$ &
+        $w_8^{(i)}$                                                        \\
+        \hline
+        0   &
+        $7137 / 62720 - 45 \sigma / 1568$                                  \\
+        1   &
+        $-9301697 / 4695040 - 13517313 \phi / 23475200
+            + 764885 \sigma / 939008 + 198763 \phi \sigma / 939008$        \\
+        2   &
+        $-9301697 / 4695040 + 13517313 \phi / 23475200
+            + 764885 \sigma / 939008 - 198763 \phi \sigma / 939008$        \\
+        3   &
+        $102791225 / 59157504 + 23876225 \phi / 59157504
+            - 34500875 \sigma / 59157504 - 9914825 \phi \sigma / 59157504$ \\
+        4   &
+        $102791225 / 59157504 - 23876225 \phi / 59157504
+            - 34500875 \sigma / 59157504 + 9914825 \phi \sigma / 59157504$ \\
+        5   &
+        $11075 / 8064 - 125 \sigma / 288$                                  \\
+    \end{tabular}
+\end{table}
