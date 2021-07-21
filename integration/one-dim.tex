@@ -1,0 +1,40 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{1 次元の数値積分}
+
+本章では，
+1 次元における積分
+\begin{equation}
+    \int_{a}^{b} f(x) dx
+\end{equation}
+に対する数値積分の手法についてまとめる．
+
+\section{Gauss 積分公式}
+
+1 次元における積分に対する数値積分の手法の 1 つに Gauss 積分公式がある．
+（$a$, $b$ は $-\infty$, $\infty$ でも良い．）
+
+Gauss 積分公式では，次のように $x_1, x_2, \ldots, x_n$ 上での関数値の重み付き平均を用いる
+\cite{Mori1993}．
+\begin{equation}
+    \int_{a}^{b} f(x) w(x) dx = \sum_{k = 1}^n w_k f(x_k)
+\end{equation}
+分点 $x_1, x_2, \ldots, x_n$ と重み $w_1, w_2, \ldots, w_n$ は，
+区間 $(a, b)$ と重み関数 $w(x)$ に応じて決まる．
+
+\subsection{Gauss-Legendre 公式}
+
+$a$, $b$ が有限な場合に利用できる Gauss-Legendre 公式では，
+Legendre 関数 $P_n(x)$ の $n$ 個の零点を分点 $x_k$ に用い，
+重み関数は次のように算出する\cite{Mori1993}．
+\begin{equation}
+    w_k = \frac{2(1 - x_k^2)}{(n P_{n-1}(x_k))^2}
+\end{equation}
+分点 $x_k$ の算出には Newton-Raphson 法（\ref{chap:root-finding_newton-raphson} 章）を用いることができる．
+初期値には
+\begin{equation}
+    x_k \approx \cos{\frac{\pi (k - 0.25)}{n + 0.5}}
+\end{equation}
+を使用すると良い\cite{Mori1993}．
+また，$s_k = -x_{n-k}, w_k = w_{n-k}$ を用いて計算量を半減させることができる．
