@@ -38,3 +38,113 @@ Legendre 関数 $P_n(x)$ の $n$ 個の零点を分点 $x_k$ に用い，
 \end{equation}
 を使用すると良い\cite{Mori1993}．
 また，$s_k = -x_{n-k}, w_k = w_{n-k}$ を用いて計算量を半減させることができる．
+
+\section{二重指数関数型公式}
+
+1 次元の数値積分において，
+Gauss 公式よりも効率の良い積分手法として，
+二重指数関数型公式（Double Exponential Formula, DE Formula）が存在する
+\cite[6.1 節 (b)]{Mori1993}, \cite[Section 4.5]{Press2007}．
+二重指数関数型公式では，
+区間 $(a, b)$ 上での積分において次の式による変数変換を行い，
+区間 $(-\infty, \infty)$ 上での積分にする．
+\begin{equation}
+    x = \frac{1}{2}(a + b) + \frac{1}{2}(b - a) \tanh \left(\frac{\pi}{2} \sinh{t}\right)
+\end{equation}
+$\tanh$, $\sinh$ はどちらも指数関数で定義されるため，
+名前通り二重の指数関数による積分となっている．
+
+二重指数関数型公式は，
+無限積分
+\begin{equation}
+    \int_{-\infty}^{\infty} f(x) dx
+\end{equation}
+が有限和
+\begin{equation}
+    h \sum_{k = -\infty}^{\infty} f(kh)
+\end{equation}
+でよく近似できるということに基づいている\cite[6.1 節 (b)]{Mori1993}．
+
+\subsection{有限区間上の積分}
+
+1 次元の有限区間上の積分
+\begin{equation}
+    I = \int_{a}^{b} f(x) dx
+\end{equation}
+を考える．変数変換
+\begin{equation}
+    x = \phi(t) \equiv \frac{1}{2}(a + b) + \frac{1}{2}(b - a) \tanh \left(\frac{\pi}{2} \sinh{t}\right)
+\end{equation}
+を適用する場合，
+\begin{equation}
+    \frac{dx}{dt} = \phi'(t)
+    = \frac{\pi}{4} (b - a) \frac{\cosh{t}}{\cosh^2 \left(\frac{\pi}{2} \sinh{t}\right)}
+\end{equation}
+を用いて
+\begin{equation}
+    I = \int_{a}^{b} f(x) dx
+    = \int_{-\infty}^{\infty} f(\phi(t)) \phi'(t)
+\end{equation}
+のように近似でき，
+\begin{equation}
+    T_h = h \sum_{k = -N}^{N} f(\phi(kh)) \phi'(kh)
+\end{equation}
+で近似できる．
+ここで，パラメータ $c$ は $1$ か $\pi/2$ とする場合が多い\cite[Section 4.5]{Press2007}．
+また，パラメータ $h$ の最適値は
+\begin{equation}
+    h \approx \frac{\log(2 \pi N)}{N}
+\end{equation}
+であり，この場合の数値積分の誤差のオーダーは
+\begin{equation}
+    |T_h - I| \approx \exp(-kN / \log{N})
+\end{equation}
+となる\cite[Section 4.5]{Press2007}．
+点数 $N$ を 2 倍にすると有効桁数が約 2 倍になる．
+
+なお，実装時はオーバーフローしないように
+\begin{align}
+    \phi'(t)
+     & = \frac{\pi}{4} (b - a) \frac{\cosh{t}}{\cosh^2 \left(\frac{\pi}{2} \sinh{t}\right)}                                              \\
+     & = \frac{\pi}{4} (b - a) \frac{4 \cosh{t}}{(\exp\left(\frac{\pi}{2} \sinh{t}\right) + \exp\left(-\frac{\pi}{2} \sinh{t}\right))^2} \\
+     & = \pi (b - a) \frac{\cosh{t} \exp(-\pi \sinh{t})}{(1 + \exp(-\pi \sinh{t}))^2}
+\end{align}
+とすると良い\cite[Section 4.5.2]{Press2007}．
+
+\subsection{半無限区間上の積分}
+
+1 次元の半無限区間上の積分
+\begin{equation}
+    I = \int_{0}^{\infty} f(x) dx
+\end{equation}
+を考える．
+これに対する二重指数関数型公式の変数変換は
+\begin{equation}
+    x = \phi(t) \equiv \exp(\pi \sinh{t})
+\end{equation}
+である\cite[Section 4.5.3]{Press2007}．
+微分すると
+\begin{equation}
+    \frac{dx}{dt} = \phi'(t)
+    = \pi \exp(\pi \sinh{t}) \cosh{t}
+\end{equation}
+となる．
+
+\subsection{無限区間上の積分}
+
+1 次元の無限区間上の積分
+\begin{equation}
+    I = \int_{-\infty}^{\infty} f(x) dx
+\end{equation}
+を考える．
+これに対する二重指数関数型公式の変数変換は
+\begin{equation}
+    x = \phi(t) \equiv \sinh \left(\frac{\pi}{2} \sinh{t}\right)
+\end{equation}
+である\cite[Section 4.5.3]{Press2007}．
+微分すると
+\begin{equation}
+    \frac{dx}{dt} = \phi'(t)
+    = \frac{\pi}{2} \cosh \left(\frac{\pi}{2} \sinh{t}\right) \cosh{t}
+\end{equation}
+となる．
