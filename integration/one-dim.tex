@@ -42,7 +42,7 @@ Legendre 関数 $P_n(x)$ の $n$ 個の零点を分点 $x_k$ に用い，
 \section{二重指数関数型公式}
 
 1 次元の数値積分において，
-Gauss 公式よりも効率の良い積分手法として，
+Gauss 公式よりも困難な積分へ対応できる手法として，
 二重指数関数型公式（Double Exponential Formula, DE Formula）が存在する
 \cite[6.1 節 (b)]{Mori1993}, \cite[Section 4.5]{Press2007}．
 二重指数関数型公式では，
@@ -64,6 +64,16 @@ $\tanh$, $\sinh$ はどちらも指数関数で定義されるため，
     h \sum_{k = -\infty}^{\infty} f(kh)
 \end{equation}
 でよく近似できるということに基づいている\cite[6.1 節 (b)]{Mori1993}．
+二重指数関数型公式では，
+積分領域の端で被積分関数が発散する
+\begin{equation}
+    \int_{-1}^{1} \frac{1}{\sqrt{1-x^2}} dx
+\end{equation}
+のような積分でも，
+積分領域の端を無限遠へ移すことにより，
+Gauss-Legendre 積分公式よりも安定して数値積分を行うことができる．
+ただし，指数関数を何度も計算する必要があるため，
+二重指数関数型公式の方が計算時間は長くなる可能性がある．
 
 \subsection{有限区間上の積分}
 
