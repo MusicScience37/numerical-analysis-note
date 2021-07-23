@@ -3,12 +3,14 @@
 
 \section{Legendre 関数}\label{sec:special-function_legendre-function}
 
-Legendre 関数は，$n=0,1,\ldots$ について次の式で書ける．
+Legendre 関数は，$n=0,1,\ldots$ について次の式で表される
+\cite[Section 5.2]{Morse1953}．
 \begin{equation}
     P_n(x) = \frac{1}{2^n n!} \frac{d^n}{dx^n} (x - 1)^n
 \end{equation}
 
-Legendre 関数は $n$ 次多項式で，区間 $[-1, 1]$ において次のような直交性を持つ．
+Legendre 関数は $n$ 次多項式で，区間 $[-1, 1]$ において次のような直交性を持つ
+\cite[Section 6.3]{Morse1953}．
 \begin{equation}
     \int_{-1}^{1} P_n(x) P_m(x) = \frac{2}{2n + 1} \delta_{nm}
 \end{equation}
@@ -17,7 +19,7 @@ Legendre 関数は $n$ 次多項式で，区間 $[-1, 1]$ において次のよ�
     \int_{-1}^{1} P_n(x) f(x) = 0
 \end{equation}
 
-計算には次のような公式を用いる．
+計算には次のような公式を用いる\cite[Section6.3]{Morse1953}．
 \begin{gather}
     P_{n+1}(x) = \frac{2n+1}{n+1} x P_n(x) - \frac{n}{n+1} P_{n-1}(x) \\
     (1-x^2) P_n'(x) = n(P_{n-1}(x) - x P_n(x))
