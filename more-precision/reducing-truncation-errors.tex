@@ -1,0 +1,95 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{加算による丸め誤差の低減}
+
+大きさのことなる数値を大量に加算していくにあたって，
+丸め誤差の影響で総和の誤差が大きくなる場合がある．
+例えば，
+\begin{equation}
+    \sum_{k = 1}^{\infty} \frac{1}{k^2}
+    = \frac{1}{1^2} + \frac{1}{2^2} + \frac{1}{3^2} + \ldots
+    = \frac{\pi^2}{6}
+\end{equation}
+のような総和を前から順に加算していく場合，
+後に加算する数値は下の方の桁が総和へ加算されないという問題がある．
+この誤差は積み残しと呼ばれている \cite[4.4 節]{Togawa2007}．
+
+このような積み残しの問題を避ける簡単な方法は，
+できる限り小さい数値から順に加算していくようにすることである．
+しかし，
+\begin{equation}
+    \exp(x) = \sum_{k = 0}^{\infty} \frac{x^k}{k!}
+    = 1 + \frac{x^1}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots
+\end{equation}
+のように前から順に加算する数値が求まっていく場合に
+後ろの方の値が小さい項から加算していくのは効率が悪い．
+また，適応積分（\ref{chap:adaptive-integration} 章）のように
+ランダムに大きさの異なる数値を加算していく場合もある．
+そこで，加算の仕方を工夫することにより
+積み残しによる誤差を少なくする手法について示す．
+
+\section{Kahan Summation}
+
+Kahan Summation \cite{Kahan1965} は
+積み残しを保持するための変数を用意することで
+積み残しの誤差を低減する手法の 1 つである．
+Algorithm \ref{alg:more-precision_reducing-truncation-errors_kahan-summation}
+のように計算を行う．
+
+\begin{algorithm}[tbp]
+    \caption{Kahan Summation \cite{Kahan1965}}
+    \label{alg:more-precision_reducing-truncation-errors_kahan-summation}
+    \begin{algorithmic}
+        \Procedure{PerformKahanSummation}{$y_1, y_2, \ldots, y_n$}
+        \State $s \gets 0$
+        \Comment 総和を保持する変数
+        \State $r \gets 0$
+        \Comment 積み残しを保持する変数
+        \For{$i = 1, 2, \ldots, n$}
+        \State $r \gets r + y_i$
+        \State $t \gets s + r$
+        \Comment 一旦加算してみる
+        \State $r \gets r - (t - s)$
+        \Comment 積み残しを更新
+        \State $s \gets t$
+        \Comment 総和を更新
+        \EndFor
+        \State \Return $s$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\section{敗者復活算法}
+
+敗者復活算法 \cite{Togawa2007} も
+積み残しを保持するための変数を用意することで
+積み残しの誤差を低減する手法の 1 つである．
+Algorithm \ref{alg:more-precision_reducing-truncation-errors_repechange-arithmetic}
+のように計算を行う．
+Kahan Summation (Algorithm \ref{alg:more-precision_reducing-truncation-errors_kahan-summation})
+と少し手順が異なるものの，
+計算される値は同じである．
+
+\begin{algorithm}[tbp]
+    \caption{敗者復活算法 \cite{Togawa2007}}
+    \label{alg:more-precision_reducing-truncation-errors_repechange-arithmetic}
+    \begin{algorithmic}
+        \Procedure{PerformRepechangeArithmetic}{$y_1, y_2, \ldots, y_n$}
+        \State $s \gets 0$
+        \Comment 総和を保持する変数
+        \State $r \gets 0$
+        \Comment 積み残しを保持する変数
+        \For{$i = 1, 2, \ldots, n$}
+        \State $t \gets s + r + y_i$
+        \Comment 一旦加算してみる
+        \State $d \gets t - s$
+        \State $r \gets r + y_i - d$
+        \Comment 積み残しを更新
+        \State $s \gets t$
+        \Comment 総和を更新
+        \EndFor
+        \State \Return $s$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
