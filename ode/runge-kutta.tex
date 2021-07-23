@@ -81,7 +81,7 @@ Runge-Kutta 法の公式は次のように分類される．
 
 \section{埋め込み型公式}
 
-Runge-Kutta 法の公式の中には，複数の $b_i$ の組を持つものがある
+Runge-Kutta 法の公式の中には，複数の $c_i$ の組を持つものがある
 （表 \ref{table:ode_runge-kutta_butcher-array-rkf45} の例を参照）．
 そのような公式では，次のような 2 つの近似値を得ることができる．
 \begin{align}
@@ -92,9 +92,11 @@ Runge-Kutta 法の公式の中には，複数の $b_i$ の組を持つものが�
 \begin{align}
     \bm{y}(t + h) - \bm{y}^*(t + h) & = \sum_{i=1}^s (c_i - c_i^*) \bm{k}_i
 \end{align}
+2 つの異なる公式を用いることによっても同じことはできるが，
+埋め込み型の公式の方が $\bm{k}_i$ を共有できて効率が良い．
 
 これを用いると，現在のステップ幅から次のステップ幅 $\hat{h}$ の適正値を推定できる．
-まず，$b_i$ と $b_i^*$ のうち次数が低い方の次数を $p$ とすると，
+まず，$c_i$ と $c_i^*$ のうち次数が低い方の次数を $p$ とすると，
 \begin{align}
     \left| \bm{y}(t + h) - \bm{y}^*(t + h) \right| \approx |Ah^p|
 \end{align}

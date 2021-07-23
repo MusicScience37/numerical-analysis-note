@@ -18,7 +18,8 @@
 Gauss 積分公式では，次のように $x_1, x_2, \ldots, x_n$ 上での関数値の重み付き平均を用いる
 \cite{Mori1993}．
 \begin{equation}
-    \int_{a}^{b} f(x) w(x) dx = \sum_{k = 1}^n w_k f(x_k)
+    \int_{a}^{b} f(x) w(x) dx \approx \sum_{k = 1}^n w_k f(x_k)
+    \label{eq:integration_one-dim_gauss-general}
 \end{equation}
 分点 $x_1, x_2, \ldots, x_n$ と重み $w_1, w_2, \ldots, w_n$ は，
 区間 $(a, b)$ と重み関数 $w(x)$ に応じて決まる．
@@ -38,6 +39,26 @@ Legendre 関数 $P_n(x)$ の $n$ 個の零点を分点 $x_k$ に用い，
 \end{equation}
 を使用すると良い\cite{Mori1993}．
 また，$s_k = -x_{n-k}, w_k = w_{n-k}$ を用いて計算量を半減させることができる．
+
+\subsection{Gauss-Kronrod 積分公式}\label{sec:integration_one-dim_gauss-kronrod}
+
+数値積分した際に，計算結果の誤差を評価したい場合がある．
+そこで，異なる近似値 2 つを用意し，その 2 つの差を誤差のオーダーの評価に用いる．
+同じ積分公式で次数を変えた 2 種類の分点 $x_k$ と重み $w_k$ を用いても良いが，
+計算効率を上げるため分点 $x_k$ を使い回せるように考えられた「埋め込み型の公式」が存在する．
+埋め込み型の公式では，同じ分点で次のような 2 種類の近似値を求めることができる．
+\begin{align}
+    I   & = \sum_{k = 1}^n w_k f(x_k)   \\
+    I^* & = \sum_{k = 1}^n w_k^* f(x_k)
+\end{align}
+この 2 つの値の差を利用して誤差の評価を行う．
+
+Gauss 積分公式において，追加の分点を加えることで追加の近似値を算出する手法として，
+Gauss-Kronrod 積分公式が考えられており，
+行列演算により追加の分点と重みを算出する方法も考えられている
+\cite{Laurie1997}．
+細かいアルゴリズムについては文献 \cite{Laurie1997} や
+Gauss-Legendre 公式に対する適応例 \cite{NumericalCollectionCpp} を参照．
 
 \section{二重指数関数型公式}
 
