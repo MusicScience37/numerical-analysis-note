@@ -37,6 +37,11 @@ Kahan Summation \cite{Kahan1965} は
 Algorithm \ref{alg:more-precision_reducing-truncation-errors_kahan-summation}
 のように計算を行う．
 
+なお，実装時に一時変数のオーバーヘッドを減らしやすいように変数を入れ替えると，
+Algorithm \ref{alg:more-precision_reducing-truncation-errors_kahan-summation-revised}
+のようになる．
+計算される値自体は変わらない．
+
 \begin{algorithm}[tbp]
     \caption{Kahan Summation \cite{Kahan1965}}
     \label{alg:more-precision_reducing-truncation-errors_kahan-summation}
@@ -54,6 +59,30 @@ Algorithm \ref{alg:more-precision_reducing-truncation-errors_kahan-summation}
         \Comment 積み残しを更新
         \State $s \gets t$
         \Comment 総和を更新
+        \EndFor
+        \State \Return $s$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[tbp]
+    \caption{Algorithm \ref{alg:more-precision_reducing-truncation-errors_kahan-summation}%
+        を一時変数が少なくなるよう変更したもの}
+    \label{alg:more-precision_reducing-truncation-errors_kahan-summation-revised}
+    \begin{algorithmic}
+        \Procedure{PerformKahanSummation}{$y_1, y_2, \ldots, y_n$}
+        \State $s \gets 0$
+        \Comment 総和を保持する変数
+        \State $r \gets 0$
+        \Comment 積み残しを保持する変数
+        \For{$i = 1, 2, \ldots, n$}
+        \State $p \gets s$
+        \Comment 加算前の総和を保持する変数
+        \State $r \gets r + y_i$
+        \State $s \gets s + r$
+        \Comment 総和を更新
+        \State $r \gets r - (s - p)$
+        \Comment 積み残しを更新
         \EndFor
         \State \Return $s$
         \EndProcedure
