@@ -1,0 +1,63 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{適応積分}
+
+積分に対して，積分公式を 1 回だけ適用して
+\begin{equation}
+    \int_D f(\bm{x}) dV \approx \sum_{i = 1}^N w_k f(\bm{x}_k)
+\end{equation}
+のように近似しただけでは十分な精度で計算できない場合がある．
+近似の精度が足りない場合に，
+精度の高い積分公式へ変更することで精度を上げることはできる．
+しかし，
+\begin{equation}
+    \int_{-1}^{1} \sqrt{1 - x^2} dx
+\end{equation}
+のように積分領域の一部で大きな変動がある関数の積分をする場合は，
+変動が大きい箇所に対してより多くの分点 $\bm{x}_k$ を置いて詳細に計算を行った方が
+より良い近似値を得られると考えられる．
+そのような判断を自動で行って精度の高い近似値を得る手法として，
+適応積分が挙げられる．
+
+\begin{algorithm}[tbp]
+    \caption{適応積分}
+    \label{alg:integration_adaptive-integration_adaptive-integration}
+    \begin{algorithmic}
+        \Procedure{AdaptivelyIntegrate}{$f, D$}
+        \Comment 関数 $f$ を領域 $D$ 上で適応積分する
+        \State 領域 $D$ 全体で積分公式を適用する
+        \State 求められた近似値の誤差を評価する
+        \If{誤差が十分小さい，または領域が十分小さい}
+        \State \Return 近似値
+        \Else
+        \State 領域 $D$ を分割する
+        \State 分割された個々の領域に対して AdaptivelyIntegrate を適用する
+        \State 各領域における積分の近似値を足し合わせる
+        \State \Return 近似値の合計
+        \EndIf
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+適応積分では，近似誤差の推定値を見て必要に応じて
+\begin{equation}
+    \int_{0}^{1} f(x) dx = \int_{0}^{0.5} f(x) dx + \int_{0.5}^{1} f(x) dx
+\end{equation}
+のような領域の分割を行い，
+分割された個々の積分に対して積分公式を当てはめるという処理を繰り返すことにより，
+精度の出しにくい領域により多くの分点を配置した精度の良い近似値が得られるようにする
+\cite[Section 4.7]{Press2007}．
+この処理は Algorithm \ref{alg:integration_adaptive-integration_adaptive-integration} のように書ける．
+
+なお，積分領域を分割していくことを前提としているため，
+積分公式自体の精度は高くなくても良い．
+ただし，積分公式の精度を下げすぎると，
+領域の分割を細かくする必要があり，
+時間がかかる可能性がある．
+積分公式の精度を選択できる場合は，
+全体の計算時間が短くなるちょうど良い精度を探しておくと良い．
+
+適応積分における近似誤差の評価は，
+Gauss-Kronrod 積分公式（\ref{sec:integration_one-dim_gauss-kronrod}）のような
+埋め込み型の公式の重要な適用例の 1 つである．
