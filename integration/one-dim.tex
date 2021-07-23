@@ -42,7 +42,8 @@ Legendre 関数 $P_n(x)$ の $n$ 個の零点を分点 $x_k$ に用い，
 
 \subsection{Gauss-Kronrod 積分公式}\label{sec:integration_one-dim_gauss-kronrod}
 
-数値積分した際に，計算結果の誤差を評価したい場合がある．
+数値積分した際に，計算結果の誤差を評価したい場合がある
+\footnote{利用例は適応積分（\ref{chap:adaptive-integration} 章）を参照．}．
 そこで，異なる近似値 2 つを用意し，その 2 つの差を誤差のオーダーの評価に用いる．
 同じ積分公式で次数を変えた 2 種類の分点 $x_k$ と重み $w_k$ を用いても良いが，
 計算効率を上げるため分点 $x_k$ を使い回せるように考えられた「埋め込み型の公式」が存在する．
