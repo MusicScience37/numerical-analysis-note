@@ -76,8 +76,9 @@ Runge-Kutta 法の公式は次のように分類される．
 目的の時刻 $t$ までの解を得るために必要な計算時間は少なくなる場合がある．
 
 また，Runge-Kutta 法の公式の精度を示す数値として次数が存在する．
-変数の近似値 $\bm{y}(t + h)$ の精度が $h^p$ オーダーの場合，
+変数の近似値 $\bm{y}(t + h)$ が厳密解の Tailor 展開が $p$ じまで一致する場合，
 その公式は $p$ 次といい，$p$ は次数と呼ばれる．
+変数の近似値 $\bm{y}(t + h)$ の精度は $h^{p+1}$ オーダーとなる．
 
 \section{埋め込み型公式}
 
@@ -95,20 +96,105 @@ Runge-Kutta 法の公式の中には，複数の $c_i$ の組を持つものが�
 2 つの異なる公式を用いることによっても同じことはできるが，
 埋め込み型の公式の方が $\bm{k}_i$ を共有できて効率が良い．
 
-これを用いると，現在のステップ幅から次のステップ幅 $\hat{h}$ の適正値を推定できる．
+これを用いると，次のように現在のステップ幅から次のステップ幅 $\hat{h}$ の適正値を推定できる
+\cite[4.1 節 (a)]{Mitsui1993}．
 まず，$c_i$ と $c_i^*$ のうち次数が低い方の次数を $p$ とすると，
 \begin{align}
-    \left| \bm{y}(t + h) - \bm{y}^*(t + h) \right| \approx |Ah^p|
+    \left| \bm{y}(t + h) - \bm{y}^*(t + h) \right| \approx |Ah^{p+1}|
+    \label{eq:ode_runge-kutta_error-using-embedded-formula}
 \end{align}
 のように書ける．
 そこで，誤差の許容量を $\epsilon_{tol}$ としたとき，次の方程式が成り立つようにする．
 \begin{equation}
-    \frac{\hat{h}^p}{h^p} = \frac{\epsilon_{tol}}{\left| \bm{y}(t + h) - \bm{y}^*(t + h) \right|}
+    \frac{\hat{h}^{p+1}}{h^{p+1}}
+    = \frac{\epsilon_{tol}}{\left| \bm{y}(t + h) - \bm{y}^*(t + h) \right|}
 \end{equation}
 これを $\hat{h}$ について解くと，次のようになる．
 \begin{equation}
-    \hat{h} = h \left(\frac{\epsilon_{tol}}{\left| \bm{y}(t + h) - \bm{y}^*(t + h) \right|}\right)^{\frac{1}{p}}
+    \hat{h} = h
+    \left(\frac{\epsilon_{tol}}{\left| \bm{y}(t + h) - \bm{y}^*(t + h) \right|}\right)^{\frac{1}{p+1}}
+    \label{eq:ode_runge-kutta_auto-next-step-size}
 \end{equation}
+
+以上を元に，
+Algorithm \ref{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
+のように自動でステップサイズを決定することができる．
+また，単純化した
+Algorithm \ref{alg:ode_runge-kutta_auto-step-size-simple}
+のような手法も存在する．
+
+\begin{algorithm}[tbp]
+    \caption{式 \eqref{eq:ode_runge-kutta_auto-next-step-size} を利用したステップサイズの自動決定 \cite[4.1 節 (a)]{Mitsui1993}}
+    \label{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
+    \begin{algorithmic}
+        \Procedure{StepWithAutoStepSize}{$\bm{f}, t, \bm{y}(t), h$}
+        \Loop
+        \State 現在のステップ幅 $h$ で 1 ステップ計算し，推定値 $\bm{y}(t + h)$, $\bm{y}^*(t+h)$ を計算する
+        \If{$|\bm{y}(t + h) - \bm{y}^*(t + h)| < \epsilon_{tol}$}
+        \State 式 \eqref{eq:ode_runge-kutta_auto-next-step-size} でステップサイズ $h$ を更新する
+        \State \Return $h$, $\bm{y}(t + h)$
+        \EndIf
+        \State $h \gets r h$ \Comment 比率 $r \in (0, 1)$ でステップサイズを縮小する
+        \EndLoop
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[tbp]
+    \caption{簡易的なステップサイズの自動決定 \cite[4.1 節 (a)]{Mitsui1993}}
+    \label{alg:ode_runge-kutta_auto-step-size-simple}
+    \begin{algorithmic}
+        \Procedure{StepWithAutoStepSize}{$\bm{f}, t, \bm{y}(t), h$}
+        \Loop
+        \State 現在のステップ幅 $h$ で 1 ステップ計算し，推定値 $\bm{y}(t + h)$, $\bm{y}^*(t+h)$ を計算する
+        \If{$|\bm{y}(t + h) - \bm{y}^*(t + h)| < \epsilon_{tol}$}
+        \If{$|\bm{y}(t + h) - \bm{y}^*(t + h)| < \frac{1}{2^{p+1}} \epsilon_{tol}$}
+        \Comment ステップサイズを 2 倍にしても許容誤差の範囲内になる
+        \State $h \gets 2 h$
+        \EndIf
+        \State \Return $h$, $\bm{y}(t + h)$
+        \EndIf
+        \State $h \gets r h$ \Comment 比率 $r \in (0, 1)$ でステップサイズを縮小する
+        \EndLoop
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\section{埋め込み型でない公式による誤差の評価}
+
+埋め込み型でない公式でも
+式 \eqref{eq:ode_runge-kutta_error-using-embedded-formula} のように
+誤差の評価を行い
+Algorithm \ref{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
+のようにステップサイズを自動決定することを考える．
+
+次のように Runge-Kutta 法を適用する演算子を考える．
+\begin{equation}
+    F[\bm{f}, t, \bm{y}(t), h] \equiv \bm{y}(t) + \sum_{i=1}^s c_i \bm{k}_i
+\end{equation}
+使用した公式の次数が $p$ であれば，厳密解 $\overline{\bm{y}(t + h)}$ との誤差は
+\begin{equation}
+    F[\bm{f}, t, \bm{y}(t), h] - \overline{\bm{y}(t + h)} = A h^{p+1} + O(h^{p+2})
+\end{equation}
+のようになる．ステップサイズを半分にして 2 ステップ解くと
+\begin{align}
+    F\left[\bm{f}, t, \bm{y}(t), \frac{1}{2}h\right] - \overline{\bm{y}\left(t + \frac{1}{2}h\right)}
+     & = \frac{1}{2^{p+1}} A h^{p+1} + O(h^{p+2})
+    \\
+    F\left[\bm{f}, t + \frac{h}{2}, F\left[\bm{f}, t, \bm{y}(t), \frac{1}{2}h\right], \frac{1}{2}h\right]
+    - \overline{\bm{y}(t + h)}
+     & = \frac{1}{2^{p+1}} (A + A') h^{p+1} + O(h^{p+2})
+\end{align}
+のようになる．よって，
+\begin{equation}
+    F[\bm{f}, t, \bm{y}(t), h]
+    - F\left[\bm{f}, t + \frac{h}{2}, F\left[\bm{f}, t, \bm{y}(t), \frac{1}{2}h\right], \frac{1}{2}h\right]
+    = \left(A + \frac{1}{2^{p+1}} (A + A')\right) h^{p+1}
+\end{equation}
+となる．
+これを用いると，埋め込み型の公式と同様に
+Algorithm \ref{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
+を用いることができる．
 
 \section{陰的 Runge-Kutta 法における方程式の解法}
 
