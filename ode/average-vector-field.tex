@@ -6,9 +6,17 @@
 エネルギー保存則を満たす系の運動方程式を解くことを目的とした手法の 1 つとして，
 平均ベクトル場法（Average vector field method, AVF method） \cite{Quispel2008} がある．
 
-座標 $\bm{q}$ に対して，
-運動エネルギーが $T = \bm{p}^\top \dot{\bm{q}} / 2$ で表現されるようにモーメント $\bm{p}$ を定める．
-さらに位置エネルギー $V$ を座標 $\bm{q}$ で表現することで，
+座標 $\bm{q} \in \setR^d$ と位置エネルギー
+\begin{equation}
+    T(\bm{q}, \dot{\bm{q}}) = \frac{1}{2} \sum_{i=1}^d \sum_{j=1}^d a_{ij}(\bm{q}) \dot{q}_i \dot{q}_j
+\end{equation}
+に対して，
+モーメント
+\begin{equation}
+    \bm{p} = \frac{\partial T}{\partial \dot{\bm{q}}}
+\end{equation}
+を定める．
+さらに運動エネルギー $T$ と位置エネルギー $V$ を座標 $\bm{q}$, $\bm{p}$ で表現することで，
 全エネルギーの和を表現した関数 $H(\bm{q}, \bm{p}) = T + V$ を
 ハミルトニアン（Hamiltonian）と呼ぶ
 \cite[Section 3.2]{Morse1953}．
