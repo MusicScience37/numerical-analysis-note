@@ -1,0 +1,144 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{平均ベクトル場法}
+
+エネルギー保存則を満たす系の運動方程式を解くことを目的とした手法の 1 つとして，
+平均ベクトル場法（Average vector field method, AVF method） \cite{Quispel2008} がある．
+
+座標 $\bm{q}$ に対して，
+運動エネルギーが $T = \bm{p}^\top \dot{\bm{q}} / 2$ で表現されるようにモーメント $\bm{p}$ を定める．
+さらに位置エネルギー $V$ を座標 $\bm{q}$ で表現することで，
+全エネルギーの和を表現した関数 $H(\bm{q}, \bm{p}) = T + V$ を
+ハミルトニアン（Hamiltonian）と呼ぶ
+\cite[Section 3.2]{Morse1953}．
+このとき，運動方程式は次の式で表現される．
+\begin{align}
+    \dot{\bm{q}} & = \frac{\partial H}{\partial \bm{p}}  \\
+    \dot{\bm{p}} & = -\frac{\partial H}{\partial \bm{q}}
+\end{align}
+この式は変数 $\bm{y} = (\bm{q}^\top, \bm{p}^\top)^\top$ を用いて次のように書くこともできる．
+\begin{equation}
+    \dot{\bm{y}} = \bm{f}(\bm{y}) \equiv S \nabla H(\bm{y})
+\end{equation}
+文献 \cite{Quispel2008} はこの形式の微分方程式を前提として
+次のような数値解法を提案している．
+\begin{equation}
+    \frac{\bm{y}_{n+1} - \bm{y}_n}{h}
+    = \int_{0}^{1} \bm{f}((1 - \xi) \bm{y}_n + \xi \bm{y}_{n+1}) d \xi
+    \label{eq:ode_average-vector-field_update-2-order}
+\end{equation}
+
+この手法がエネルギーを保存することを示す．
+まず，$\bm{f}(\bm{y}) \equiv S \nabla H(\bm{y})$ より
+\begin{equation}
+    \frac{\bm{y}_{n+1} - \bm{y}_n}{h}
+    = S \int_{0}^{1} \nabla H((1 - \xi) \bm{y}_n + \xi \bm{y}_{n+1}) d \xi
+    \label{eq:ode_average-vector-field_update-with-hamiltonian}
+\end{equation}
+である．ここで，$S$ は
+\begin{equation}
+    S =
+    \begin{pmatrix}
+        O  & I \\
+        -I & O
+    \end{pmatrix}
+\end{equation}
+であるため
+\footnote{このような行列は歪対称行列と呼ばれる．}
+，任意のベクトル $\bm{y} = (\bm{q}^\top, \bm{p}^\top)^\top$ において，
+\begin{equation}
+    \bm{y}^\top S \bm{y} =
+    \begin{pmatrix}
+        \bm{q}^\top & \bm{p}^\top
+    \end{pmatrix}
+    \begin{pmatrix}
+        O  & I \\
+        -I & O
+    \end{pmatrix}
+    \begin{pmatrix}
+        \bm{q} \\ \bm{p}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \bm{q}^\top & \bm{p}^\top
+    \end{pmatrix}
+    \begin{pmatrix}
+        \bm{p} \\ -\bm{q}
+    \end{pmatrix}
+    = \bm{0}
+\end{equation}
+となる．よって，
+式 \eqref{eq:ode_average-vector-field_update-with-hamiltonian}
+の両辺と
+$\int_{0}^{1} \nabla H((1 - \xi) \bm{y}_n + \xi \bm{y}_{n+1}) d \xi$ の内積をとると
+\begin{equation}
+    \frac{\bm{y}_{n+1} - \bm{y}_n}{h}
+    \int_{0}^{1} \nabla H((1 - \xi) \bm{y}_n + \xi \bm{y}_{n+1}) d \xi
+    = 0
+\end{equation}
+となる．さらに左辺は
+\begin{align}
+      & \frac{\bm{y}_{n+1} - \bm{y}_n}{h}
+    \int_{0}^{1} \nabla H((1 - \xi) \bm{y}_n + \xi \bm{y}_{n+1}) d \xi         \\
+    = & \frac{1}{h}
+    \int_{0}^{1} \frac{d}{d\xi} H((1 - \xi) \bm{y}_n + \xi \bm{y}_{n+1}) d \xi \\
+    = & \frac{H(\bm{y}_{n+1}) - H()\bm{y}_{n})}{h}
+\end{align}
+と変形できるから，次のようにエネルギーの保存が示される．
+\begin{equation}
+    H(\bm{y}_{n+1}) - H(\bm{y}_{n}) = 0
+\end{equation}
+
+式 \eqref{eq:ode_average-vector-field_update-2-order} は 2 次の精度だが，
+3 次と 4 次の公式も文献 \cite{Quispel2008} で示されている．
+それらは次の式で与えられる．
+\begin{equation}
+    \frac{\bm{y}_{n+1} - \bm{y}_n}{h}
+    = \left(I + \alpha h^2
+    \left(\left. \frac{\partial \bm{f}}{\partial \bm{y}} \right|_{\bm{y} = \hat{\bm{y}}}\right)^2
+    \right)
+    \int_{0}^{1} \bm{f}((1 - \xi) \bm{y}_n + \xi \bm{y}_{n+1}) d \xi
+\end{equation}
+パラメータと次数は次のようになる．
+\begin{itemize}
+    \item $\alpha = 0$ とすると 2 次精度の更新式
+          \eqref{eq:ode_average-vector-field_update-2-order}
+          が得られる．
+    \item $\alpha = -1/12$, $\hat{\bm{y}} = \bm{y}_n$ とすると
+          3 次精度の更新式が得られる．
+    \item $\alpha = -1/12$, $\hat{\bm{y}} = (\bm{y}_n + \bm{y}_{n+1})/2$ とすると
+          4 次精度の更新式が得られる．
+\end{itemize}
+
+この手法の更新式は次数に依らず陰的で，
+次数が上がるごとに計算が複雑になっていく．
+ここで，次数 2 のときの方程式
+\begin{equation}
+    F(\bm{y}_{n+1}) \equiv
+    \frac{\bm{y}_{n+1} - \bm{y}_n}{h} -
+    \int_{0}^{1} \bm{f}((1 - \xi) \bm{y}_n + \xi \bm{y}_{n+1}) d \xi
+    = 0
+\end{equation}
+を考える．
+これを Newton-Raphson 法（\ref{chap:root-finding_newton-raphson} 章）で解くには，
+Jacobian が必要となる．
+Jacobian は次のようになる．
+\begin{equation}
+    \frac{\partial F}{\partial \bm{y}_{n+1}} =
+    \frac{1}{h} I -
+    \int_{0}^{1} \xi \left. \frac{\partial \bm{f}}{\partial \bm{y}} \right|_{\bm{y} = (1 - \xi) \bm{y}_n + \xi \bm{y}_{n+1}} d \xi
+\end{equation}
+さらに，Jacobian の変化が十分小さいとすると，
+\begin{align}
+            & \frac{\partial F}{\partial \bm{y}_{n+1}}                                                \\
+    \approx & \frac{1}{h} I -
+    \int_{0}^{1} \xi \left. \frac{\partial \bm{f}}{\partial \bm{y}} \right|_{\bm{y} = \bm{y}_n} d \xi \\
+    =       & \frac{1}{h} I - \frac{1}{2}
+    \left. \frac{\partial \bm{f}}{\partial \bm{y}} \right|_{\bm{y} = \bm{y}_n}
+    \label{eq:ode_average-vector-field_approx-jacobian}
+\end{align}
+のように近似できる．
+3 次と 4 次の更新式でも，Newton-Raphson 法の Jacobian においては $h^2$ の項を無視して
+式 \eqref{eq:ode_average-vector-field_approx-jacobian} で
+近似することができる．
