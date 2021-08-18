@@ -1,0 +1,253 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{Tikhonov 正則化}
+
+ここでは基本的な Tikhonov 正則化についてまとめる．
+Tikhonov 正則化では，評価関数
+\begin{equation}
+    E_{\lambda}(x) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{x}\|_2^2
+    \label{eq:regularization_tikhonov_objective}
+\end{equation}
+を最小化する．
+ここで，
+$\bm{x} \in \setC^n$,
+$\bm{y} \in \setC^m$,
+$A \in \setC^{m \times n}$
+である．
+
+\begin{theorem}\label{theorem:regularization_tikhonov_solution}
+    $\lambda > 0$ の場合，
+    評価関数 \eqref{eq:regularization_tikhonov_objective} が最小となるのは，
+    $\bm{x} = (A^* A + \lambda I)^{-1} A^* \bm{y}$ の場合である．
+\end{theorem}
+\begin{proof}
+    この場合，ノルムを展開することで，次のようになる．
+    \begin{align}
+        E_{\lambda}(x)
+         & = \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{x}\|_2^2
+        \notag                                                                                              \\
+         & = (A \bm{x} - \bm{y})^* (A \bm{x} - \bm{y}) + \lambda \bm{x}^* \bm{x}
+        \notag                                                                                              \\
+         & = \bm{x}^* (A^* A + \lambda I) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x} + \|\bm{y}\|_2^2
+    \end{align}
+    ここで，
+    $\lambda > 0$ の場合は
+    $\bm{x} \neq \bm{0}$ において
+    $\bm{x}^* (A^* A + \lambda I) \bm{x} = \|A \bm{x}\|_2^2 + \lambda \|\bm{x}\|_2^2 > 0$
+    となることから，
+    エルミート行列 $(A^* A + \lambda I)$ は正定値であり，
+    正則となる．
+    このことを用いると，さらに次のように展開できる．
+    \begin{align}
+        E_{\lambda}(x)
+         & = \bm{x}^* (A^* A + \lambda I) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x} + \|\bm{y}\|_2^2
+        \notag                                                                                              \\
+         & = \bm{x}^* (A^* A + \lambda I) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x}
+        + \bm{y}^* A (A^* A + \lambda I)^{-1} A^* \bm{y}
+        - \bm{y}^* A (A^* A + \lambda I)^{-1} A^* \bm{y}
+        + \|\bm{y}\|_2^2
+        \notag                                                                                              \\
+         & = (\bm{x} - (A^* A + \lambda I)^{-1} A^* \bm{y})^*
+        (A^* A + \lambda I)
+        (\bm{x} - (A^* A + \lambda I)^{-1} A^* \bm{y})
+        - \bm{y}^* A (A^* A + \lambda I)^{-1} A^* \bm{y}
+        + \|\bm{y}\|_2^2
+    \end{align}
+    エルミート行列 $(A^* A + \lambda I)$ が正定値であることから，
+    この式が最小となるのは
+    $(\bm{x} - (A^* A + \lambda I)^{-1} A^* \bm{y})$
+    が零ベクトルとなる場合，
+    つまり，
+    $\bm{x} = (A^* A + \lambda I)^{-1} A^* \bm{y}$
+    の場合である．
+\end{proof}
+
+ここで，$\lambda = 0$ でも，行列 $A$ のランクが $n$ の場合は $A^*A$ が正定値になるため同様に解が求まる．
+
+\section{特異値分解による解法}
+
+行列 $A$ を次のように特異値分解する．
+
+\begin{equation}
+    A = U
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    V^*
+\end{equation}
+
+ここで，$U \in \setC^{m \times m}$ と $V \in \setC^{n \times n}$ はユニタリ行列で，
+$\Sigma \in \setR^{r \times r}$ は正の実数による対角行列である．
+ただし，ランク $r$ は $m$ または $n$ に等しくても良い．
+
+この分解を用いると，
+定理 \ref{theorem:regularization_tikhonov_solution} の解は次のように変形できる．
+
+\begin{align}
+    x_{\lambda}
+     & \equiv (A^* A + \lambda I)^{-1} A^* \bm{y}
+    \notag                                        \\
+     & = \left(V
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    U^* U
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    V^* + \lambda I \right)^{-1}
+    V
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    U^* \bm{y}
+    \notag                                        \\
+     & = \left(V
+    \begin{pmatrix}
+        \Sigma^2 & O \\
+        O        & O
+    \end{pmatrix}
+    V^* + \lambda V V^* \right)^{-1}
+    V
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    U^* \bm{y}
+    \notag                                        \\
+     & = \left(V
+    \begin{pmatrix}
+        \Sigma^2 + \lambda I & O         \\
+        O                    & \lambda I
+    \end{pmatrix}
+    V^* \right)^{-1}
+    V
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    U^* \bm{y}
+    \notag                                        \\
+     & = V
+    \begin{pmatrix}
+        (\Sigma^2 + \lambda I)^{-1} & O              \\
+        O                           & \lambda^{-1} I
+    \end{pmatrix}
+    V^*
+    V
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    U^* \bm{y}
+    \notag                                        \\
+     & = V
+    \begin{pmatrix}
+        (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                  & O
+    \end{pmatrix}
+    U^* \bm{y}
+\end{align}
+
+さらに，
+$U = (\bm{u}_1, \bm{u}_2, \ldots, \bm{u}_m)$,
+$V = (\bm{v}_1, \bm{v}_2, \ldots, \bm{v}_n)$,
+$\Sigma = \diag(\sigma_1, \sigma_2, \ldots, \sigma_r)$
+とすると，次のように表記できる．
+
+\begin{align}
+    x_{\lambda}
+     & = \sum_{i = 1}^{r} \frac{\sigma_i}{\sigma_i^2 + \lambda} (\bm{u}_i^* \bm{y}) \bm{v}_i
+\end{align}
+
+特異値分解を一回行い
+$\bm{u}_i^* \bm{y}$
+を計算しておけば，
+ある正則化パラメータ $\lambda$ に対する解 $\bm{x}_{\lambda}$ は単純な線形和で求めることができる．
+
+また，
+$U_1 \equiv (\bm{u}_1, \bm{u}_2, \ldots, \bm{u}_r)$,
+$U_2 \equiv (\bm{u}_{r+1}, \bm{u}_{r+2}, \ldots, \bm{u}_m)$
+と定義した場合，$U$ がユニタリ行列であることから
+$U_1^* U_1 = I$,
+$U_1^* U_2 = O$,
+$U_2^* U_1 = O$,
+$U_2^* U_2 = I$,
+$U_1 U_1^* + U_2 U_2^* = I$
+が成り立つことを利用すると，
+正則化パラメータを評価する際にしばしば利用される評価関数内のノルムは次のように計算できる．
+
+\begin{align}
+    \|A \bm{x}_{\lambda} - \bm{y}\|_2^2
+     & = \left\| U
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    V^* V
+    \begin{pmatrix}
+        (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                  & O
+    \end{pmatrix}
+    U^* \bm{y} - \bm{y} \right\|_2^2
+    \notag                                                                                        \\
+     & = \left\|
+    \begin{pmatrix}
+        U_1 & U_2
+    \end{pmatrix}
+    \begin{pmatrix}
+        \Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                         & O
+    \end{pmatrix}
+    \begin{pmatrix}
+        U_1^* \\ U_2^*
+    \end{pmatrix}
+    \bm{y} - \bm{y} \right\|_2^2
+    \notag                                                                                        \\
+     & = \left\| U_1 \Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma U_1^* \bm{y} - \bm{y} \right\|_2^2
+    \notag                                                                                        \\
+     & = \left\| U_1 \Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma U_1^* \bm{y}
+    - U_1 U_1^* \bm{y} - U_2 U_2^* \bm{y} \right\|_2^2
+    \notag                                                                                        \\
+     & = \left\| U_1 (\Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma - I) U_1^* \bm{y}
+    - U_2 U_2^* \bm{y} \right\|_2^2
+    \notag                                                                                        \\
+     & = \left\| U_1 (\Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma - I) U_1^* \bm{y} \right\|_2^2
+    + \left\| U_2 U_2^* \bm{y} \right\|_2^2
+    \notag                                                                                        \\
+     & = \left\| (\Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma - I) U_1^* \bm{y} \right\|_2^2
+    + \left\| U_2 U_2^* \bm{y} \right\|_2^2
+    \notag                                                                                        \\
+     & = \sum_{i = 1}^r \left(\frac{\lambda}{\sigma_i^2 + \lambda}\right)^2 (\bm{u}_i^* \bm{y})^2
+    + \left\| (I - U_1 U_1^*) \bm{y} \right\|_2^2
+\end{align}
+
+\begin{align}
+    \|\bm{x}_{\lambda}\|_2^2
+     & = \left\| V
+    \begin{pmatrix}
+        (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                  & O
+    \end{pmatrix}
+    U^* \bm{y} \right\|_2^2
+    \notag                                                                                          \\
+     & = \left\|
+    \begin{pmatrix}
+        (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                  & O
+    \end{pmatrix}
+    U^* \bm{y} \right\|_2^2
+    \notag                                                                                          \\
+     & = \sum_{i = 1}^r \left(\frac{\sigma_i}{\sigma_i^2 + \lambda}\right)^2  (\bm{u}_i^* \bm{y})^2
+\end{align}
+
+どちらも正則化パラメータごとに異なる部分は $O(r)$ オーダーで計算できる．
+
+特異値分解による Tikhonov 正則化では，
+正則化パラメータを変更した際の再計算が容易なため，
+多数の正則化パラメータを試したい場合に便利である．
