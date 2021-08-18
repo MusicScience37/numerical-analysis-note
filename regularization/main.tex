@@ -1,0 +1,224 @@
+% !TEX root = ../main.tex
+%
+
+\part{正則化}
+
+\chapter{導入}
+
+この章では，正則化のアルゴリズムをまとめる．
+
+未知のパラメータ $\bm{x}$ に合わせて変動するデータ $\bm{y} = A \bm{x}$ をもとに
+パラメータ $\bm{x}$ を推定する問題は一般に逆問題と呼ばれる．
+ここで，$\bm{x}$, $\bm{y}$ はそれぞれ何らかのノルム空間 $X$, $Y$ に存在するベクトルで，
+$A$ は何らかの作用素とする．
+例えば，録音した音源をもとに音が鳴っている場所を調べたい場合，
+音が鳴っている場所が $\bm{x}$ であり，
+録音した音源は $\bm{y}$ になる．
+
+逆問題を解く単純な手法として，
+ノルム $\|A \bm{x} - \bm{y}\|$ の最小化（最小二乗法）が挙げられるが，
+作用素 $A$ の性質によっては，
+$\bm{y}$ が少し変動するだけで最小二乗法による解 $\bm{x}$ が大きく変動してしまう場合があったり，
+解が複数存在してしまう場合があったりする（ill-posed problem と呼ばれる）．
+そのような場合に，追加の情報をもとに唯一の安定な解を求められるようにする手法を正則化と呼ぶ．
+ここでは，特に次のような式を最小化する正則化手法における数値解法をまとめる．
+
+\begin{equation}
+    \|A \bm{x} - \bm{y}\|^2 + \lambda R(\bm{x})
+\end{equation}
+
+ここで，$\lambda \in [0, \infty)$ は正則化パラメータと呼ばれるパラメータで，
+$R$ は $R : X \to [0, \infty)$ のような関数である．
+この式を最小化する解 $\bm{x}_{\lambda}$ は正則化パラメータ $\lambda$ により変化する．
+$\lambda = 0$ では正則化の効果がなくなり，
+$\lambda$ を大きくすると正則化の効果が強くなる．
+$\lambda$ を大きくしすぎると残差 $\|A \bm{x} - \bm{y}\|^2$ が大きくなり，
+データ $\bm{y}$ から離れていってしまうため，
+正則化パラメータ $\lambda$ を適切に調整することが必要となる．
+
+\chapter{記号}
+
+この章で使用する記号を以下に示す．
+
+\begin{explainlist}
+    $\setR$ & 実数の集合 \\
+    $\setC$ & 複素数の集合 \\
+    $\|\bm{x}\|$ & 一般のノルム \\
+    $\|\bm{x}\|_2$ & ベクトル $\bm{x}$ の2-ノルム \\
+    $A^*$ & 行列 $A$ のエルミート転置（随伴行列），または作用素 $A$ の随伴作用素 \\
+    $A^{-*}$ & 行列 $A$ のエルミート転置の逆行列 \\
+    $A^\dagger$ & 行列 $A$ の Moore-Penrose の一般化逆行列 \\
+    $\diag(a_1, a_2, \ldots, a_n)$ & 対角要素に $a_1, a_2, \ldots, a_n$ を持つ対角行列 \\
+    $\bm{a}_i$ & 行列 $A$ の $i$ 列目 \\
+    $[A\bm{b}]_i$ & ベクトル $A\bm{b}$ の第 $i$ 要素
+\end{explainlist}
+
+\chapter{Tikhonov 正則化}
+
+ここでは基本的な Tikhonov 正則化についてまとめる．
+Tikhonov 正則化では，評価関数
+\begin{equation}
+    E_{\lambda}(x) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{x}\|_2^2
+    \label{eq:regularization_tikhonov_objective}
+\end{equation}
+を最小化する．
+ここで，
+$\bm{x} \in \setC^n$,
+$\bm{y} \in \setC^m$,
+$A \in \setC^{m \times n}$
+である．
+
+\begin{theorem}\label{theorem:regularization_tikhonov_solution}
+    $\lambda > 0$ の場合，
+    評価関数 \eqref{eq:regularization_tikhonov_objective} が最小となるのは，
+    $\bm{x} = (A^* A + \lambda I)^{-1} A^* \bm{y}$ の場合である．
+\end{theorem}
+\begin{proof}
+    この場合，ノルムを展開することで，次のようになる．
+    \begin{align}
+        E_{\lambda}(x)
+         & = \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{x}\|_2^2
+        \notag                                                                                              \\
+         & = (A \bm{x} - \bm{y})^* (A \bm{x} - \bm{y}) + \lambda \bm{x}^* \bm{x}
+        \notag                                                                                              \\
+         & = \bm{x}^* (A^* A + \lambda I) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x} + \|\bm{y}\|_2^2
+    \end{align}
+    ここで，
+    $\lambda > 0$ の場合は
+    $\bm{x} \neq \bm{0}$ において
+    $\bm{x}^* (A^* A + \lambda I) \bm{x} = \|A \bm{x}\|_2^2 + \lambda \|\bm{x}\|_2^2 > 0$
+    となることから，
+    エルミート行列 $(A^* A + \lambda I)$ は正定値であり，
+    正則となる．
+    このことを用いると，さらに次のように展開できる．
+    \begin{align}
+        E_{\lambda}(x)
+         & = \bm{x}^* (A^* A + \lambda I) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x} + \|\bm{y}\|_2^2
+        \notag                                                                                              \\
+         & = \bm{x}^* (A^* A + \lambda I) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x}
+        + \bm{y}^* A (A^* A + \lambda I)^{-1} A^* \bm{y}
+        - \bm{y}^* A (A^* A + \lambda I)^{-1} A^* \bm{y}
+        + \|\bm{y}\|_2^2
+        \notag                                                                                              \\
+         & = (\bm{x} - (A^* A + \lambda I)^{-1} A^* \bm{y})^*
+        (A^* A + \lambda I)
+        (\bm{x} - (A^* A + \lambda I)^{-1} A^* \bm{y})
+        - \bm{y}^* A (A^* A + \lambda I)^{-1} A^* \bm{y}
+        + \|\bm{y}\|_2^2
+    \end{align}
+    エルミート行列 $(A^* A + \lambda I)$ が正定値であることから，
+    この式が最小となるのは
+    $(\bm{x} - (A^* A + \lambda I)^{-1} A^* \bm{y})$
+    が零ベクトルとなる場合，
+    つまり，
+    $\bm{x} = (A^* A + \lambda I)^{-1} A^* \bm{y}$
+    の場合である．
+\end{proof}
+
+ここで，$\lambda = 0$ でも，行列 $A$ のランクが $n$ の場合は $A^*A$ が正定値になるため同様に解が求まる．
+
+\section{特異値分解による解法}
+
+行列 $A$ を次のように特異値分解する．
+
+\begin{equation}
+    A = U
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    V^*
+\end{equation}
+
+ここで，$U \in \setC^{m \times m}$ と $V \in \setC^{n \times n}$ はユニタリ行列で，
+$\Sigma \in \setR^{r \times r}$ は正の実数による対角行列である．
+ただし，ランク $r$ は $m$ または $n$ に等しくても良い．
+
+この分解を用いると，
+定理 \ref{theorem:regularization_tikhonov_solution} の解は次のように変形できる．
+
+\begin{align}
+    x_{\lambda}
+     & \equiv (A^* A + \lambda I)^{-1} A^* \bm{y}
+    \notag                                        \\
+     & = \left(V
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    U^* U
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    V^* + \lambda I \right)^{-1}
+    V
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    U^* \bm{y}
+    \notag                                        \\
+     & = \left(V
+    \begin{pmatrix}
+        \Sigma^2 & O \\
+        O        & O
+    \end{pmatrix}
+    V^* + \lambda V V^* \right)^{-1}
+    V
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    U^* \bm{y}
+    \notag                                        \\
+     & = \left(V
+    \begin{pmatrix}
+        \Sigma^2 + \lambda I & O         \\
+        O                    & \lambda I
+    \end{pmatrix}
+    V^* \right)^{-1}
+    V
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    U^* \bm{y}
+    \notag                                        \\
+     & = V
+    \begin{pmatrix}
+        (\Sigma^2 + \lambda I)^{-1} & O              \\
+        O                           & \lambda^{-1} I
+    \end{pmatrix}
+    V^*
+    V
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    U^* \bm{y}
+    \notag                                        \\
+     & = V
+    \begin{pmatrix}
+        (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                  & O
+    \end{pmatrix}
+    U^* \bm{y}
+\end{align}
+
+さらに，
+$U = (\bm{u}_1, \bm{u}_2, \ldots, \bm{u}_m)$,
+$V = (\bm{v}_1, \bm{v}_2, \ldots, \bm{v}_n)$,
+$\Sigma = \diag(\sigma_1, \sigma_2, \ldots, \sigma_r)$
+とすると，次のように表記できる．
+
+\begin{align}
+    x_{\lambda}
+     & = \sum_{i = 1}^{r} \frac{\sigma_i}{\sigma_i^2 + \lambda} (\bm{u}_i^* \bm{y}) \bm{v}_i
+\end{align}
+
+特異値分解を一回行い
+$\bm{u}_i^* \bm{y}$
+を計算しておけば，
+ある正則化パラメータ $\lambda$ に対する解 $\bm{x}_{\lambda}$ は単純な線形和で求めることができるため，
+多数の正則化パラメータを試す際に便利である．
