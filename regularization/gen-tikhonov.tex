@@ -281,3 +281,156 @@ $L=I$ のときこの式が Tikhonov 正則化の場合の
 
     以上より，$E(\bm{x})$ の最小化は $E'(\bar{\bm{x}})$ の最小化へ置き換えることができる．
 \end{proof}
+
+最後にこの変換をコンピュータ上で行う手法について
+文献 \cite{Elden1982, Hansen1994} の結果をまとめる．
+
+\subsection{行列 L が列と同じ数のランクを持つ場合の計算方法}
+
+まず，$L^*$ を QR 分解する．
+\begin{equation}
+    L^* = \begin{pmatrix}
+        V_1 & V_2
+    \end{pmatrix}\begin{pmatrix}
+        R \\ O
+    \end{pmatrix}
+\end{equation}
+
+ここで，
+$V_1 \in \setC^{n \times p}$,
+$V_2 \in \setC^{n \times (n-p)}$
+は $V = (V_1, V_2)$ がユニタリ行列になるような
+行列とし，
+$R \in \setC^{p \times p}$ は
+正則な上三角行列である．
+このとき，$L^\dagger = V_1 R^{-*}$, $LV_2 = O$ となることと，
+$A$ と $L$ の核空間の共通部分が $\bm{0}$ のみであることから，
+$AV_2$ は列と同じ数のランクを持つ．
+よって，次のように QR 分解できる．
+\begin{equation}
+    AV_2 = \begin{pmatrix}
+        Q_1 & Q_2
+    \end{pmatrix}\begin{pmatrix}
+        U \\ O
+    \end{pmatrix}
+\end{equation}
+
+これも同様に
+$Q_1 \in \setC^{m \times (n-p)}$,
+$Q_2 \in \setC^{m \times (m-n+p)}$
+は$Q = (Q_1, Q_2)$ がユニタリ行列になるような行列とし，
+$U \in \setC^{(n - p) \times (n - p)}$
+は正則な上三角行列である．
+このとき，
+\begin{align}
+    \bm{x}_0 & = \left(A (I - L^\dagger L)\right)^\dagger \bm{y} \notag \\
+             & = \left(A V_2 V_2^*\right)^\dagger \bm{y}
+\end{align}
+となる．
+
+ここで，$(AV_2V_2^*)^\dagger$ について定義に沿って考える．
+最適化問題
+\begin{align}
+    \text{minimize} \hspace{2em} & \|\bm{x}\|_2 \notag                                                                    \\
+    \text{s.t.} \hspace{2em}     & \|AV_2V_2^* \bm{x} - \bm{a}\|_2 = \min_{\bm{x}} \|AV_2V_2^* \bm{x} - \bm{a}\|_2 \notag
+\end{align}
+において，
+$\bm{x} = V_1 \bm{s}_1 + V_2 \bm{s}_2$
+とおくと，
+$\|A V_2 V_2^* \bm{x} - \bm{a}\|_2 = \|A V_2 \bm{s}_2 - \bm{a}\|_2$
+となる．
+これを最小化すると$\bm{s}_2=(AV_2)^\dagger\bm{a}$となる．
+また，
+$\|\bm{x}\|_2^2 = \|\bm{s}_1\|_2^2 + \|\bm{s}_2\|_2^2$
+となるから，
+$\bm{s}_2 = (A V_2)^\dagger \bm{a}$
+は固定された状態で
+$\|\bm{x}\|_2$
+を最小化すると
+$\bm{s}_1=\bm{0}$
+となる．
+よって，この最適化問題の解は
+$\bm{x} = V_2 (A V_2)^\dagger \bm{a}$
+となり，
+$(A V_2 V_2^*)^\dagger = V_2 (A V_2)^\dagger$
+とわかる．
+
+よって，
+\begin{align}
+    \bm{x}_0 & = \left(A (I - L^\dagger L)\right)^\dagger \bm{y} \notag \\
+             & = V_2 \left(A V_2\right)^\dagger \bm{y} \notag           \\
+             & = V_2 U^{-1} Q_1^* \bm{y}
+\end{align}
+となる．また，
+\begin{align}
+    \bar{\bm{y}} & = \bm{y} - A \bm{x}_0 \notag                \\
+                 & = \bm{y} - A V_2 U^{-1} Q_1^* \bm{y} \notag \\
+                 & = (I - Q_1 Q_1^*) \bm{y} \notag             \\
+                 & = Q_2 Q_2^* \bm{y}
+\end{align}
+と書ける．さらに，
+\begin{align}
+    L_A^\dagger & = \left(I - \left(A (I - L^\dagger L)\right)^\dagger A\right)L^\dagger \notag \\
+                & = (I - V_2 U^{-1} Q_1^* A) V_1 R^{-*}
+\end{align}
+となるから，
+\begin{align}
+    \bar{A} & = A L_A^\dagger \notag                         \\
+            & = A (I - V_2 U^{-1} Q_1^* A) V_1 R^{-*} \notag \\
+            & = (A - A V_2 U^{-1} Q_1^* A) V_1 R^{-*} \notag \\
+            & = (I - A V_2 U^{-1} Q_1^*) A V_1 R^{-*} \notag \\
+            & = (I - Q_1 U U^{-1} Q_1^*) A V_1 R^{-*} \notag \\
+            & = (I - Q_1 Q_1^*) A V_1 R^{-*} \notag          \\
+            & = Q_2 Q_2^* A V_1 R^{-*}
+\end{align}
+と変形できる．
+そして，$\bar{\bm{x}}$ から $\bm{x}$への変換は
+\begin{align}
+    \bm{x} & = L_A^\dagger \bar{\bm{x}} + \bm{x}_0 \notag                                        \\
+           & = (I - V_2 U^{-1} Q_1^* A) V_1 R^{-*} \bar{\bm{x}} + V_2 U^{-1} Q_1^* \bm{y} \notag \\
+           & = (I - V_2 U^{-1} Q_1^* A) L^\dagger \bar{\bm{x}} + V_2 U^{-1} Q_1^* \bm{y} \notag  \\
+           & = L^\dagger \bar{\bm{x}} + V_2 U^{-1} Q_1^* (\bm{y} - A L^\dagger \bar{\bm{x}})
+\end{align}
+でできる．
+さらに，$Q_2^* Q_2 = I$を用いれば，
+\begin{align}
+    \left\|\bar{A} \bar{\bm{x}} - \bar{\bm{y}}\right\|_2
+                   & = \left\|\tilde{A} \bar{\bm{x}} - \tilde{\bm{y}}\right\|_2, &
+    \tilde{A}      & = Q_2^* A V_1 R^{-*},                                       &
+    \tilde{\bm{y}} & = Q_2^* \bm{y}
+\end{align}
+のように書き換えることもできる．
+
+\subsection{行列 L が一般の行列の場合の計算方法}
+
+まず，$L$ を特異値分解する．
+\begin{equation}
+    L = W
+    \begin{pmatrix}
+        \Omega & O \\
+        O      & O
+    \end{pmatrix}
+    V^*
+\end{equation}
+ここで，$L$ はランク $r$ で
+$W \in \setC^{p \times p}$,
+$V \in \setC^{n \times n}$
+はユニタリ行列，
+$\Omega \in \setR^{r \times r}$
+は正数の対角成分による対角行列とする．
+このとき，$W = (W_1, W_2)$ なる
+行列 $W_1 \in \setC^{p \times r}$ と $W_2 \in \setC^{p \times (p-r)}$，
+$V = (V_1, V_2)$ なる
+行列 $V_1 \in \setC^{n \times r}$ と $V_2 \in \setC^{n \times (n-r)}$
+を定義する．
+
+このとき，$L$ が列と同じ数のランクを持つ場合と同様にして
+\begin{align}
+    \bm{x}_0       & = V_2 U^{-1} Q_1^* \bm{y}                        \\
+    \bar{\bm{y}}   & = Q_2 Q_2^* \bm{y}                               \\
+    L_A^\dagger    & = (I - V_2 U^{-1} Q_1^* A) V_1 \Omega^{-1} W_1^* \\
+    \bar{A}        & = Q_2 Q_2^* A V_1 \Omega^{-1} W_1^*              \\
+    \tilde{A}      & = Q_2^* A V_1 \Omega^{-1} W_1^*                  \\
+    \tilde{\bm{y}} & = Q_2^* \bm{y}
+\end{align}
+が得られる．
