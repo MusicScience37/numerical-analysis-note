@@ -151,3 +151,22 @@ $\bm{x}$ を表せる\cite{Hansen1998}．
 $L=I$ のときこの式が Tikhonov 正則化の場合の
 式 \eqref{eq:regularization_tikhonov_solution-by-svd} に一致することは
 簡単に確かめられる．
+
+\section{単純な L2 ノルムによる Tikhonov 正則化への変換}
+
+一般化 Tikhonov 正則化を通常の Tikhonov 正則化へ
+変形することもできる \cite{Hansen1998}．
+その変形では，次のように変数を置き換える．
+\begin{align}
+    \bm{x}              & = L_A^\dagger\bar{\bm{x}}+\bm{x}_0, &
+    L_A^\dagger         & = \left\{
+    I-\left(AP_L\right)^\dagger A
+    \right\} L^\dagger, &
+    \bm{x}_0            & = \left(AP_L\right)^\dagger \bm{y}
+    \label{eq_GTik_arr}
+\end{align}
+ただし，$P_L=I-L^\dagger L$とする．
+一般化 Tikhonov 正則化の問題を数値的に解く際は
+この変換で通常の Tikhonov 正則化に直して解くと
+安定かつ効率的に解が得られることが知られている \cite{Hansen1998}．
+そこで，この変換について以下に示す．
