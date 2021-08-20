@@ -6,7 +6,7 @@
 ここでは基本的な Tikhonov 正則化についてまとめる．
 Tikhonov 正則化では，評価関数
 \begin{equation}
-    E_{\lambda}(x) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{x}\|_2^2
+    E_{\lambda}(\bm{x}) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{x}\|_2^2
     \label{eq:regularization_tikhonov_objective}
 \end{equation}
 を最小化する．
@@ -29,7 +29,7 @@ $A \in \setC^{m \times n}$
 \begin{proof}
     この場合，ノルムを展開することで，次のようになる．
     \begin{align}
-        E_{\lambda}(x)
+        E_{\lambda}(\bm{x})
          & = \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{x}\|_2^2
         \notag                                                                                              \\
          & = (A \bm{x} - \bm{y})^* (A \bm{x} - \bm{y}) + \lambda \bm{x}^* \bm{x}
@@ -45,7 +45,7 @@ $A \in \setC^{m \times n}$
     正則となる．
     このことを用いると，さらに次のように展開できる．
     \begin{align}
-        E_{\lambda}(x)
+        E_{\lambda}(\bm{x})
          & = \bm{x}^* (A^* A + \lambda I) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x} + \|\bm{y}\|_2^2
         \notag                                                                                              \\
          & = \bm{x}^* (A^* A + \lambda I) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x}
@@ -168,6 +168,7 @@ $\Sigma = \diag(\sigma_1, \sigma_2, \ldots, \sigma_r)$
 \begin{align}
     x_{\lambda}
      & = \sum_{i = 1}^{r} \frac{\sigma_i}{\sigma_i^2 + \lambda} (\bm{u}_i^* \bm{y}) \bm{v}_i
+    \label{eq:regularization_tikhonov_solution-by-svd}
 \end{align}
 
 特異値分解を一回行い

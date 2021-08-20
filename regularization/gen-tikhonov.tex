@@ -1,0 +1,153 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{一般化 Tikhonov 正則化}
+
+前章の Tikhonov 正則化では，
+正則化項が $\|\bm{x}\|_2^2$ となっていたが，
+正則化項として係数行列を追加した $\|L\bm{x}\|_2^2$ を用いることも考えられる．
+例えば，変数 $\bm{x}$ の隣り合う要素の差をとるように係数行列 $L$ を決めることにより，
+解が滑らかになるような正則化を行うことができる．
+このような一般化した Tikhonov 正則化では，評価関数
+\begin{equation}
+    E_{\lambda}(\bm{x}) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|L \bm{x}\|_2^2
+    \label{eq:regularization_gen-tikhonov_objective}
+\end{equation}
+を最小化する．
+ここで，
+$\bm{x} \in \setC^n$,
+$\bm{y} \in \setC^m$,
+$A \in \setC^{m \times n}$,
+$L \in \setC^{p \times n}$
+である．
+
+ここで，正則化項の変更により注意することがある．
+Tikhonov 正則化では，$\lambda > 0$ であれば解が唯一となっていた
+（定理 \ref{theorem:regularization_tikhonov_solution}）．
+しかし，一般化 Tikhonov 正則化においては，
+$\lambda > 0$ であるからといって解が唯一になるとは限らない．
+
+\begin{theorem}
+    $A$ と $L$ の核空間の共通部分が $\bm{0}$ 以外の要素を持つ場合，
+    $\lambda > 0$ であったとしても
+    評価関数 \eqref{eq:regularization_gen-tikhonov_objective} が最小となる $\bm{x}$ が
+    唯一に定まらない．
+\end{theorem}
+\begin{proof}
+    評価関数 \eqref{eq:regularization_gen-tikhonov_objective} が最小となる
+    $\bm{x}$ の 1 つを $\bar{\bm{x}}$ とする．
+    また，$A$ と $L$ の核空間の共通部分が $\bm{0}$ 以外に持つ要素の 1 つを $\bm{x}_0$ とする．
+    このとき，
+    \begin{align}
+        E_{\lambda}(\bar{\bm{x}} + \bm{x}_0)
+         & = \|A (\bar{\bm{x}} + \bm{x}_0) - \bm{y}\|_2^2 + \lambda \|L (\bar{\bm{x}} + \bm{x}_0)\|_2^2
+        \notag                                                                                          \\
+         & = \|A \bar{\bm{x}} - \bm{y}\|_2^2 + \lambda \|L \bar{\bm{x}}\|_2^2
+        \notag                                                                                          \\
+         & = E(\bar{\bm{x}})
+    \end{align}
+    となる．
+    よって，評価関数 $E(\bm{x})$ が最小となる $\bm{x}$ は唯一に定まらない．
+\end{proof}
+
+一方，$A$ と $L$ の核空間の共通部分が $\bm{0}$ のみであれば
+$\lambda > 0$ のときに解が唯一となる．
+
+\begin{theorem}\label{theorem:regularization_gen-tikhonov_solution}
+    $A$ と $L$ の核空間の共通部分が $\bm{0}$ のみでかつ，
+    $\lambda > 0$ の場合，
+    評価関数 \eqref{eq:regularization_gen-tikhonov_objective} が最小となるのは，
+    $\bm{x} = (A^* A + \lambda L^* L)^{-1} A^* \bm{y}$ の場合である．
+\end{theorem}
+\begin{proof}
+    この場合，ノルムを展開することで，次のようになる．
+    \begin{align}
+        E_{\lambda}(\bm{x})
+         & = \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|L \bm{x}\|_2^2
+        \notag                                                                                                  \\
+         & = (A \bm{x} - \bm{y})^* (A \bm{x} - \bm{y}) + \lambda \bm{x}^* L^* L \bm{x}
+        \notag                                                                                                  \\
+         & = \bm{x}^* (A^* A + \lambda L^* L) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x} + \|\bm{y}\|_2^2
+    \end{align}
+    ここで，
+    $A$ と $L$ の核空間の共通部分が $\bm{0}$ のみでかつ
+    $\lambda > 0$ の場合は
+    $\bm{x} \neq \bm{0}$ において
+    $\bm{x}^* (A^* A + \lambda L^* L) \bm{x} = \|A \bm{x}\|_2^2 + \lambda \|L \bm{x}\|_2^2 > 0$
+    となることから，
+    エルミート行列 $(A^* A + \lambda I)$ は正定値であり，
+    正則となる．
+    このことを用いると，さらに次のように展開できる．
+    \begin{align}
+        E_{\lambda}(\bm{x})
+         & = \bm{x}^* (A^* A + \lambda L^* L) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x} + \|\bm{y}\|_2^2
+        \notag                                                                                                  \\
+         & = \bm{x}^* (A^* A + \lambda L^* L) \bm{x} - \bm{x}^* A^* \bm{y} - \bm{y}^* A \bm{x}
+        + \bm{y}^* A (A^* A + \lambda L^* L)^{-1} A^* \bm{y}
+        - \bm{y}^* A (A^* A + \lambda L^* L)^{-1} A^* \bm{y}
+        + \|\bm{y}\|_2^2
+        \notag                                                                                                  \\
+         & = (\bm{x} - (A^* A + \lambda L^* L)^{-1} A^* \bm{y})^*
+        (A^* A + \lambda L^* L)
+        (\bm{x} - (A^* A + \lambda L^* L)^{-1} A^* \bm{y})
+        - \bm{y}^* A (A^* A + \lambda L^* L)^{-1} A^* \bm{y}
+        + \|\bm{y}\|_2^2
+    \end{align}
+    エルミート行列 $(A^* A + \lambda L^* L)$ が正定値であることから，
+    この式が最小となるのは
+    $(\bm{x} - (A^* A + \lambda L^* L)^{-1} A^* \bm{y})$
+    が零ベクトルとなる場合，
+    つまり，
+    $\bm{x} = (A^* A + \lambda L^* L)^{-1} A^* \bm{y}$
+    の場合である．
+\end{proof}
+
+\section{一般化 Tikhonov 正則化}
+
+$m \ge n \ge p$ の場合は
+次のように表される一般化特異値分解を行うことができる \cite{Hansen1998}．
+
+\begin{align}
+    A       & =U
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & I
+    \end{pmatrix}
+    W^{-1}, &
+    L       & =V
+    \begin{pmatrix}
+        M & O
+    \end{pmatrix}
+    W^{-1}
+\end{align}
+
+ここで，
+$U \in \setC^{m \times n}$,
+$V \in \setC^{p \times p}$
+はユニタリ行列で，
+$W \in \setC^{n \times n}$
+は正則行列とし，
+$\Sigma = \diag(\sigma_1, \sigma_2, \ldots, \sigma_p)$,
+$M = \diag(\mu_1, \mu_2, \ldots, \mu_p)$
+は対角行列である．
+$\sigma_i$ と $\mu_i$ については
+$0 \le \sigma_1 \le \sigma_2 \le \ldots \le \sigma_p \le 1$,
+$1 \ge \mu_1 \ge \mu_2 \ge \ldots \ge \mu_p > 0$,
+$\sigma_i^2 + \mu_i^2 = 1$
+を満たすものとし，
+$\gamma_i = \sigma_i / \mu_i$
+を一般化特異値と呼ぶ．
+これを用いると，
+次のように評価関数 \eqref{eq:regularization_gen-tikhonov_objective} を最小化する
+$\bm{x}$ を表せる\cite{Hansen1998}．
+
+\begin{equation}
+    \bm{x}_\lambda =
+    \sum_{i=1}^{p} \frac{\gamma_i / \mu_i}{\gamma_i^2+\lambda}
+    (\bm{u}^*\bm{y}) \bm{w}_i
+    +\sum_{i=p+1}^n (\bm{u}_i^*\bm{y}) \bm{w}_i
+\end{equation}
+
+$L=I$ のときこの式が Tikhonov 正則化の場合の
+式 \eqref{eq:regularization_tikhonov_solution-by-svd} に一致することは
+簡単に確かめられる．
