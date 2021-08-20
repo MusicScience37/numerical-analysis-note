@@ -158,15 +158,81 @@ $L=I$ のときこの式が Tikhonov 正則化の場合の
 変形することもできる \cite{Hansen1998}．
 その変形では，次のように変数を置き換える．
 \begin{align}
-    \bm{x}              & = L_A^\dagger\bar{\bm{x}}+\bm{x}_0, &
-    L_A^\dagger         & = \left\{
-    I-\left(AP_L\right)^\dagger A
-    \right\} L^\dagger, &
-    \bm{x}_0            & = \left(AP_L\right)^\dagger \bm{y}
-    \label{eq_GTik_arr}
+    \bm{x}      & = L_A^\dagger \bar{\bm{x}} + \bm{x}_0,                     &
+    L_A^\dagger & = \left(I - \left(A P_L\right)^\dagger A\right) L^\dagger, &
+    \bm{x}_0    & = \left(A P_L\right)^\dagger \bm{y}
+    \label{eq:regularization_gen-tikhonov_change-of-variables}
 \end{align}
-ただし，$P_L=I-L^\dagger L$とする．
+ただし，$P_L = I - L^\dagger L$とする．
 一般化 Tikhonov 正則化の問題を数値的に解く際は
 この変換で通常の Tikhonov 正則化に直して解くと
 安定かつ効率的に解が得られることが知られている \cite{Hansen1998}．
 そこで，この変換について以下に示す．
+
+まず，式 \eqref{eq:regularization_gen-tikhonov_change-of-variables} の変換は
+次のような意味を持っている．
+
+\begin{lemma}[{\cite[3 節]{Elden1982}}]
+    最適化問題
+    \begin{align}
+        \text{minimize} \hspace{1.5em} & \|A \bm{x} - \bm{y}\|_2 \notag \\
+        \text{s.t.} \hspace{1.5em}     & L \bm{x} = \bar{\bm{x}} \notag
+    \end{align}
+    において，
+    行列
+    $A \in \setC^{m \times n}$,
+    $L \in \setC^{p \times n}$
+    （$m \ge n \ge p$）は
+    核空間に $\bm{0}$ 以外の共通部分を持たないものとする．
+    このとき，この問題の解は
+    \begin{equation}
+        \bm{x} = L_A^\dagger \bar{\bm{x}} + (A P_L)^\dagger\bm{y}
+    \end{equation}
+    である．
+\end{lemma}
+\begin{proof}
+    まず，$L\bm{x}=\bar{\bm{x}}$ の一般解は次のように書ける
+    （式 \eqref{eq:matrix-computation_moore-penrose_general-least-squares-solution}）．
+    \begin{equation}
+        \bm{x} = L^\dagger \bar{\bm{x}} + P_L \bm{z}
+    \end{equation}
+    これを目的関数に代入すると
+    \begin{equation}
+        \|A\bm{x} - \bm{y}\|_2
+        =\|A L^\dagger \bar{\bm{x}} + A P_L \bm{z} - \bm{y}\|_2
+        =\|(A P_L) \bm{z} - (\bm{y} - A L^\dagger \bar{\bm{x}})\|_2
+    \end{equation}
+    のように変形でき，
+    このノルムを最小化する$\bm{z}$は次のように書ける．
+    \begin{equation}
+        \bm{z} =
+        (A P_L)^\dagger (\bm{y} - A L^\dagger \bar{\bm{x}})
+        + (I - (A P_L)^\dagger (A P_L)) \bm{s}
+    \end{equation}
+    ここで，$\bm{s}$ は任意のベクトルである．
+    ここで，$P_L$ は $L$ の核空間への射影演算子であり，
+    $A$ と $L$ が核空間に $\bm{0}$ 以外の共通部分を持たないことから，
+    $A P_L$ の核空間は $L$ の核空間の直交補空間である．
+    任意のベクトル $\bm{a}$ について
+    $(A P_L)^\dagger \bm{a}$ は $A P_L$ の核空間の成分を持たないため，
+    $L$ の核空間に属していることが分かる．
+    一方，
+    $(I - (A P_L)^\dagger(A P_L)) \bm{s}$
+    は $A P_L$ の核空間に属しており，
+    $L$ の核空間に直交する．
+    よって，
+    \begin{equation}
+        P_L \bm{z} =
+        (A P_L)^\dagger (\bm{y} - A L^\dagger \bar{\bm{x}})
+    \end{equation}
+    となる．
+
+    このときの $\bm{x}$ は
+    \begin{align}
+        \bm{x} & =L^\dagger \bar{\bm{x}} + P_L \bm{z} \notag                                               \\
+               & =L^\dagger \bar{\bm{x}} +(A P_L)^\dagger (\bm{y} - A L^\dagger \bar{\bm{x}}) \notag       \\
+               & =\left(I - (A P_L)^\dagger A \right)L^\dagger \bar{\bm{x}} + (AP_L)^\dagger \bm{y} \notag \\
+               & =L_A^\dagger \bar{\bm{x}} + (A P_L)^\dagger \bm{y}
+    \end{align}
+    となり，解が得られる．
+\end{proof}
