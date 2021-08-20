@@ -1,0 +1,112 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{行列演算}
+
+本章では，基本的な行列演算についてまとめる．
+
+\section{記号}
+
+この章で使用する記号を以下に示す．
+
+\begin{explainlist}
+    $\setR$ & 実数の集合 \\
+    $\setC$ & 複素数の集合 \\
+    $\|\bm{x}\|_2$ & ベクトル $\bm{x}$ の2-ノルム \\
+    $A^*$ & 行列 $A$ のエルミート転置（随伴行列），または作用素 $A$ の随伴作用素 \\
+    $A^{-*}$ & 行列 $A$ のエルミート転置の逆行列 \\
+    $A^\dagger$ & 行列 $A$ の Moore-Penrose の一般化逆行列 \\
+    $\diag(a_1, a_2, \ldots, a_n)$ & 対角要素に $a_1, a_2, \ldots, a_n$ を持つ対角行列 \\
+\end{explainlist}
+
+\section{Moore-Penrose の一般化逆行列}
+
+最小二乗法を理論的に扱う際に，
+Moore-Penrose の一般化逆行列がしばしば使用される．
+本資料でも使用するため，以下にその定義と性質を示す．
+
+行列 $A \in \setC^{m \times n}$ と
+ベクトル $\bm{y} \in \setC^m$ に対して，
+次の最適化問題を考える．
+\begin{align}
+    \text{minimize} \hspace{2em} & \|\bm{x}\|_2
+    \notag                                                                                          \\
+    \text{s.t.} \hspace{2em}     & \|A\bm{x}-\bm{y}\|_2 =  \min_{\bm{x}} \{ \|A\bm{x}-\bm{y}\|_2 \}
+    \notag
+\end{align}
+
+この最適化問題の解は $\bm{x}=G\bm{y}$ のように
+ベクトル $\bm{y}$ に依らない行列
+$G \in \setC^{n \times m}$ を用いて表せる．
+この行列 $G$ を Moore-Penrose の一般化逆行列と呼び，
+$A^\dagger$ で表す \cite[定義3]{Rao1971}．
+$\|A \bm{x} - \bm{y}\|_2$ を最小化するだけでは
+$A$ の核空間が $\bm{0}$ 以外の要素を持つ場合に解が 1 つに定まらないが，
+$\|\bm{x}\|_2$ が最小となるものを選ぶことにより，
+解が 1 つに定まる．
+なお，定義から，$A^\dagger \bm{y}$ は $A$ の核空間の成分を持たないことが示せる．
+
+行列 $A$ がランク $n$ の場合，
+$\|A \bm{x} - \bm{y}\|_2$ を最小化する $\bm{x}$ は唯一であり，
+Moore-Penrose の一般化逆行列を用いて
+$\bm{x} = A^\dagger \bm{y}$ と表される．
+さらに，一般の行列 $A$ においては，
+任意のベクトル $z \in \setC^n$ を用いて
+\begin{equation}
+    \bm{x} = A^\dagger \bm{y} + (I - A^\dagger A) \bm{z}
+\end{equation}
+のように最小二乗解を表すことができる \cite[定理2.3.1]{Rao1971}．
+なお，$I - A^\dagger A$ は $A$ の核空間への射影行列となっている．
+
+\section{QR 分解}
+
+行列 $A \in \setC^{m \times n}$ が
+$m \ge n$ かつランク $n$ の場合に次のような分解を行うことができ，
+QR 分解と呼ばれる．
+
+\begin{equation}
+    A = Q
+    \begin{pmatrix}
+        R \\ O
+    \end{pmatrix}
+\end{equation}
+
+ここで，$Q \in \setC^{m \times m}$ はユニタリ行列であり，
+$R \in \setC^{n \times n}$ は正則な上三角行列である．
+
+行列 $Q$ を $Q = (Q_1, Q_2)$ のように
+行列 $Q_1 \in \setC^{m \times n}$ と
+行列 $Q_2 \in \setC^{m \times (n-m)}$ に分割すると
+$A = Q_1 R$ となり，
+$A^\dagger = R^{-1} Q_1^*$のように
+Moore-Penrose の一般化逆行列を求められる．
+
+\section{特異値分解}
+
+続いて，特異値分解についても触れておく．
+特異値分解には複数の定義があるが，
+ここでは行列 $A \in \setC^{m \times n}$ の特異値分解は
+\begin{equation}
+    A = U
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    V^*
+\end{equation}
+とする．
+ここで，$\Sigma \in \setR^{r \times r}$ は
+正数の対角要素による対角行列で，
+$U \in \setC^{m \times m}$ と
+$V \in \setC^{n \times n}$ はユニタリ行列とする．
+
+QR 分解と同様に
+$U = (U_1, U_2)$,
+$U_1 \in \setC^{m \times r}$,
+$U_2 \in \setC^{m \times (m-r)}$,
+$V = (V_2, V_2)$,
+$V_1 \in \setC^{n \times r}$,
+$V_2 \in \setC^{n \times (n-r)}$ のように
+行列を分割すると，
+$A = U_1 \Sigma V_1^*$となり，
+$A^\dagger = V_1 \Sigma^{-1} U_1^*$ が示せる．
