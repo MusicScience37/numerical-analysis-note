@@ -172,7 +172,7 @@ $L=I$ のときこの式が Tikhonov 正則化の場合の
 まず，式 \eqref{eq:regularization_gen-tikhonov_change-of-variables} の変換は
 次のような意味を持っている．
 
-\begin{lemma}[{\cite[3 節]{Elden1982}}]
+\begin{lemma}[{\cite[3 節]{Elden1982}}]\label{lemma:regularization_gen-tikhonov_meaning-of-change-of-variables}
     最適化問題
     \begin{align}
         \text{minimize} \hspace{1.5em} & \|A \bm{x} - \bm{y}\|_2 \notag \\
@@ -229,10 +229,55 @@ $L=I$ のときこの式が Tikhonov 正則化の場合の
 
     このときの $\bm{x}$ は
     \begin{align}
-        \bm{x} & =L^\dagger \bar{\bm{x}} + P_L \bm{z} \notag                                               \\
-               & =L^\dagger \bar{\bm{x}} +(A P_L)^\dagger (\bm{y} - A L^\dagger \bar{\bm{x}}) \notag       \\
-               & =\left(I - (A P_L)^\dagger A \right)L^\dagger \bar{\bm{x}} + (AP_L)^\dagger \bm{y} \notag \\
-               & =L_A^\dagger \bar{\bm{x}} + (A P_L)^\dagger \bm{y}
+        \bm{x} & = L^\dagger \bar{\bm{x}} + P_L \bm{z} \notag                                               \\
+               & = L^\dagger \bar{\bm{x}} +(A P_L)^\dagger (\bm{y} - A L^\dagger \bar{\bm{x}}) \notag       \\
+               & = \left(I - (A P_L)^\dagger A \right)L^\dagger \bar{\bm{x}} + (AP_L)^\dagger \bm{y} \notag \\
+               & = L_A^\dagger \bar{\bm{x}} + (A P_L)^\dagger \bm{y}
     \end{align}
     となり，解が得られる．
+\end{proof}
+
+この補題を用いることで，次のように評価関数の変換を示すことができる．
+
+\begin{theorem}[{\cite{Hansen1998}}]
+    $A$ と $L$ の核空間の共通部分が $\bm{0}$ のみである場合，
+    変数変換 \eqref{eq:regularization_gen-tikhonov_change-of-variables} により
+    評価関数 \eqref{eq:regularization_gen-tikhonov_objective} を次のように置き換えることができる．
+    \begin{equation}
+        E'(\bar{\bm{x}}) =
+        \left\|\bar{A} \bar{\bm{x}} - \bar{\bm{y}}\right\|_2^2
+        + \lambda \|\bar{\bm{x}}\|_2^2
+    \end{equation}
+    ただし，
+    \begin{align}
+        \bar{A}      & = A L_A^\dagger                     \\
+        \bar{\bm{y}} & = \bm{y} - A \bm{x}_0               \\
+        \bm{x}_0     & = \left(A P_L\right)^\dagger \bm{y}
+    \end{align}
+    である．
+\end{theorem}
+\begin{proof}
+    補題 \ref{lemma:regularization_gen-tikhonov_meaning-of-change-of-variables} より，
+    次のように変形できる．
+
+    \begin{align}
+        \min_{\bm{x}\in\setC^n} E(\bm{x})
+         & = \min_{\bm{x}\in\setC^n} \left( \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|L \bm{x}\|_2^2 \right)
+        \notag                                                                                           \\
+         & = \min_{\bar{\bm{x}} \in \setC^p}
+        \min_{\bm{x} \in \{\bm{x} \in \setC^n \mid L \bm{x} = \bar{\bm{x}} \}}
+        \left( \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|L \bm{x}\|_2^2 \right)
+        \notag                                                                                           \\
+         & = \min_{\bar{\bm{x}} \in \setC^p}
+        \left( \left\|A \left(L_A^\dagger \bar{\bm{x}} + \bm{x}_0\right) - \bm{y}\right\|_2^2
+        + \lambda \left\|\bar{\bm{x}}\right\|_2^2 \right)
+        \notag                                                                                           \\
+         & = \min_{\bar{\bm{x}} \in \setC^p}
+        \left( \left\|\bar{A} \bar{\bm{x}} - \bar{\bm{y}}\right\|_2^2
+        + \lambda \left\|\bar{\bm{x}}\right\|_2^2 \right)
+        \notag                                                                                           \\
+         & = \min_{\bar{\bm{x}} \in \setC^p} E'(\bar{\bm{x}})
+    \end{align}
+
+    以上より，$E(\bm{x})$ の最小化は $E'(\bar{\bm{x}})$ の最小化へ置き換えることができる．
 \end{proof}
