@@ -1,7 +1,7 @@
 % !TEX root = ../main.tex
 %
 
-\chapter{Tikhonov 正則化}
+\chapter{Tikhonov 正則化}\label{chap:regularization_tikhonov}
 
 ここでは基本的な Tikhonov 正則化についてまとめる．
 Tikhonov 正則化では，評価関数
@@ -233,6 +233,7 @@ $U_1 U_1^* + U_2 U_2^* = I$
     \notag                                                                                        \\
      & = \sum_{i = 1}^r \left(\frac{\lambda}{\sigma_i^2 + \lambda}\right)^2 (\bm{u}_i^* \bm{y})^2
     + \left\| (I - U_1 U_1^*) \bm{y} \right\|_2^2
+    \label{eq:regularization_tikhonov_residual-by-svd}
 \end{align}
 
 \begin{align}
@@ -252,6 +253,7 @@ $U_1 U_1^* + U_2 U_2^* = I$
     U^* \bm{y} \right\|_2^2
     \notag                                                                                          \\
      & = \sum_{i = 1}^r \left(\frac{\sigma_i}{\sigma_i^2 + \lambda}\right)^2  (\bm{u}_i^* \bm{y})^2
+    \label{eq:regularization_tikhonov_regularization-term-by-svd}
 \end{align}
 
 どちらも正則化パラメータごとに異なる部分は $O(r)$ オーダーで計算できる．
