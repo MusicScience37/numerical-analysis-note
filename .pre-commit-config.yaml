@@ -16,3 +16,8 @@ repos:
         language: system
         files: "\\.tex$"
         exclude: "extern"
+      - id: check_filenames
+        name: Check filenames
+        entry: pipenv run python check-filename.py
+        language: system
+        exclude: "extern"
