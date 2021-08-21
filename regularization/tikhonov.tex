@@ -262,3 +262,58 @@ $U_1 U_1^* + U_2 U_2^* = I$
 特異値分解による Tikhonov 正則化では，
 正則化パラメータを変更した際の再計算が容易なため，
 多数の正則化パラメータを試したい場合に便利である．
+
+\section{係数行列が横長の場合}
+
+行列 $A \in \setC^{m \times n}$ が横長，
+つまり $m \ll n$ が成り立つ場合
+\footnote{劣決定 (underdetermined) と呼ばれる．}，
+定理 \ref{theorem:regularization_tikhonov_solution} の解を
+\begin{align}
+    \bm{x} & = (A^* A + \lambda I)^{-1} A^* \bm{y} \notag \\
+           & = A^* (AA^* + \lambda I)^{-1} \bm{y}
+    \label{eq:regularization_tikhonov_exchange-mat}
+\end{align}
+のように変形することで，
+逆行列の計算の対象となる行列を
+$(A^* A + \lambda I) \in \setC^{n \times n}$ から
+$(A A^* + \lambda I) \in \setC^{m \times m}$ へ小さくできる．
+この変形は，$n \to \infty$ の場合を考えるのに便利である．
+
+この変換を導出するには，次のような性質を用いる．
+\begin{lemma}[{\cite[p.18,19]{Horn1985}}より和訳]
+    $A$, $R$を正則行列とし，
+    $X$, $Y$は$B=A+XRY$が計算できるようなサイズの行列
+    であるとする．
+    $B$が正則であれば次の式が成り立つ．
+    \begin{equation}
+        B^{-1}=
+        A^{-1}-A^{-1}X(R^{-1}+YA^{-1}X)^{-1}YA^{-1}
+    \end{equation}
+\end{lemma}
+
+これを用いると，
+次のように式 \eqref{eq:regularization_tikhonov_exchange-mat} が示せる．
+\begin{align}
+    \bm{x} & = (A^* A + \lambda I)^{-1} A^* \bm{y}
+    \notag                                                                                                   \\
+           & =\frac{1}{\lambda} \left(I + A^* \frac{1}{\lambda} I A \right)^{-1}A^* \bm{b}
+    \notag                                                                                                   \\
+           & =\frac{1}{\lambda} \left(I - I A^* \left(\lambda I + A I A^* \right)^{-1} A I \right) A^*\bm{y}
+    \notag                                                                                                   \\
+           & =\frac{1}{\lambda} \left(A^* - A^* \left(A A^* + \lambda I \right)^{-1} A A^* \right) \bm{y}
+    \notag                                                                                                   \\
+           & =\frac{1}{\lambda} A^* \left(I - (A A^* + \lambda I )^{-1} A A^* \right) \bm{y}
+    \notag                                                                                                   \\
+           & =\frac{1}{\lambda} A^* \left((A A^* + \lambda I )^{-1} (A A^* + \lambda I )
+    - (AA^* + \lambda I )^{-1}AA^* \right) \bm{y}
+    \notag                                                                                                   \\
+           & =\frac{1}{\lambda} A^* (A A^* + \lambda I )^{-1} (\lambda I) \bm{y}
+    \notag                                                                                                   \\
+           & =A^* (A A^* + \lambda I)^{-1} \bm{y}
+\end{align}
+
+なお，$A^*A$ は行列 $A$ に依らず半正定値だから，
+正定値の $\lambda I$ を足した
+$(A^*A + \lambda I)$ は正定値で逆行列を持つため，
+この式は行列 $A$ に依らず成り立つ．
