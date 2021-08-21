@@ -1,7 +1,7 @@
 % !TEX root = ../main.tex
 %
 
-\chapter{1 次元制約なし最適化}
+\chapter{1 次元制約なし最適化}\label{chap:opt_one-dim-section-search}
 
 1 次元の変数 $x \in \setR$ における関数 $f : \setR \to \setR$ の最小化においては，
 比較的簡単なアルゴリズムが存在する．
@@ -31,12 +31,12 @@
 のようにし，更新後の区間における中間点の相対位置が
 区間 $[a, b]$ における点 $c$ と変わらないようにするため以下の方程式を立てる．
 \begin{align}
-    \frac{d - c}{d - a} &= \omega, &
-    \frac{d - c}{b - c} &= \omega
+    \frac{d - c}{d - a} & = \omega, &
+    \frac{d - c}{b - c} & = \omega
 \end{align}
 $b - a$ に対する比を用いることで，どちらも
 \begin{align}
-    \frac{1 - 2\omega}{1 - \omega} &= \omega
+    \frac{1 - 2\omega}{1 - \omega} & = \omega
 \end{align}
 と変形でき，これを $0 < \omega < 1/2$ の制限のもとで解くと
 \begin{equation}

@@ -25,6 +25,7 @@ $\bm{y}$ が少し変動するだけで最小二乗法による解 $\bm{x}$ が�
 
 \begin{equation}
     \|A \bm{x} - \bm{y}\|^2 + \lambda R(\bm{x})
+    \label{eq:regularization_intro_general-regularization}
 \end{equation}
 
 ここで，$\lambda \in [0, \infty)$ は正則化パラメータと呼ばれるパラメータで，
@@ -55,3 +56,4 @@ $\lambda$ を大きくしすぎると残差 $\|A \bm{x} - \bm{y}\|^2$ が大き�
 
 \input{regularization/tikhonov.tex}
 \input{regularization/gen-tikhonov.tex}
+\input{regularization/l-curve.tex}
