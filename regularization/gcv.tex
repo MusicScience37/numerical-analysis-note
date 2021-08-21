@@ -138,3 +138,92 @@ $\tr P_A(\lambda)/n$
 $\bm{y}$
 の回転に影響されない評価関数を作ると，
 GCVの評価関数 \eqref{eq:regularization_gcv_gdv-evaluation-function} が得られる．
+
+\section{Tikhonov 正則化の場合の計算方法}
+
+Tikhonov 正則化（\ref{chap:regularization_tikhonov} 章）の場合，
+残差項は式 \eqref{eq:regularization_tikhonov_residual-by-svd} で計算できる．
+そこで，influence matrix の計算について考える．
+
+\ref{chap:regularization_tikhonov} 章と同様に
+行列 $A$ の特異値分解
+\begin{equation}
+    A = U
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    V^*
+\end{equation}
+を行い，その場合の解（式 \eqref{eq:regularization_tikhonov_solution-by-svd-matrices}）
+\begin{equation}
+    x_{\lambda} = V
+    \begin{pmatrix}
+        (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                  & O
+    \end{pmatrix}
+    U^* \bm{y}
+\end{equation}
+を利用すると，
+\begin{align}
+    A A_\lambda^\# \bm{y}
+     & = U
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    V^* V
+    \begin{pmatrix}
+        (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                  & O
+    \end{pmatrix}
+    U^* \bm{y}
+    \notag \\
+     & = U
+    \begin{pmatrix}
+        \Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                         & O
+    \end{pmatrix}
+    U^* \bm{y}
+\end{align}
+となる．
+よって，influence matrix は
+\begin{align}
+    P_A(\lambda)
+     & = \frac{\partial A A_\lambda^\# \bm{y}}{\partial \bm{y}}
+    \notag                                                      \\
+     & = U
+    \begin{pmatrix}
+        \Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                         & O
+    \end{pmatrix}
+    U^*
+\end{align}
+であり，そのトレースは
+\begin{align}
+    \tr{P_A(\lambda)}
+     & = \tr\left(U
+    \begin{pmatrix}
+            \Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+            O                                         & O
+        \end{pmatrix}
+    U^*\right)
+    \notag                                                      \\
+     & = \tr\left(
+    \begin{pmatrix}
+            \Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+            O                                         & O
+        \end{pmatrix}
+    U^* U\right)
+    \notag                                                      \\
+     & = \tr
+    \begin{pmatrix}
+        \Sigma (\Sigma^2 + \lambda I)^{-1} \Sigma & O \\
+        O                                         & O
+    \end{pmatrix}
+    \notag                                                      \\
+     & = \sum_{i = 1}^r \frac{\sigma_i^2}{\sigma_i^2 + \lambda}
+\end{align}
+と計算できる
+\cite{Hansen1998}
+\footnote{$\sigma_i^2 / (\sigma_i^2 + \lambda)$ は filter factor と呼ばれる．}．
