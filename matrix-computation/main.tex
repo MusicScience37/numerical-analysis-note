@@ -59,6 +59,20 @@ $\bm{x} = A^\dagger \bm{y}$ と表される．
 のように最小二乗解を表すことができる \cite[定理2.3.1]{Rao1971}．
 なお，$I - A^\dagger A$ は $A$ の核空間への射影行列となっている．
 
+Moore-Penrose の一般化逆行列は，
+ランクが $m$ または $n$ の場合に通常の逆行列を用いて次のように表現できる．
+
+\begin{itemize}
+    \item $A \in \setC^{m \times n}$ がランク $m$ の場合
+          \begin{equation}
+              A^\dagger = A^* (A A^*)^{-1}
+          \end{equation}
+    \item $A \in \setC^{m \times n}$ がランク $n$ の場合
+          \begin{equation}
+              A^\dagger = (A^* A)^{-1} A^*
+          \end{equation}
+\end{itemize}
+
 \section{QR 分解}
 
 行列 $A \in \setC^{m \times n}$ が
