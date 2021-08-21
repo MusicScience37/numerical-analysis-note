@@ -1,0 +1,140 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{Generalized Cross Validation}
+
+正則化パラメータを求めるための手法の 1 つに
+Generalized Cross Validation (GCV) がある．
+GCV では，次の式の最小化を行う
+\cite{Wahba1990}．
+
+\begin{equation}
+    V(\lambda)
+    = \frac{\frac{1}{m} \|A \bm{x}_\lambda - \bm{y}\|^2}
+    {\left|\frac{1}{m} \tr\{I - P_A(\lambda)\}\right|^2}
+    \label{eq:regularization_gcv_gdv-evaluation-function}
+\end{equation}
+
+ここで，$\bm{x}_\lambda$ は
+正則化の式 \eqref{eq:regularization_intro_general-regularization} を最小化する
+$\bm{x}$であり，
+$P_A(\lambda)$ は influence matrix と呼ばれるもので，
+データ $\bm{y}$ から解 $\bm{x}_\lambda$ を求める作用素を $A_\lambda^\#$ としたときに，
+\begin{equation}
+    P_A(\lambda) \equiv
+    \frac{\partial A A_\lambda^\# \bm{y}}{\partial \bm{y}}
+    \label{eq:regularization_gcv_influence-matrix}
+\end{equation}
+のように定義される．
+
+\section{導出}
+
+まず，GCV の基になっている Ordinary Cross Validation (OCV) を
+文献 \cite{Wahba1990} に沿って示す．
+
+OCV では次の関数を考える．
+\begin{equation}
+    V_0(\lambda) \equiv
+    \frac{1}{m} \sum_{i=1}^m
+    \left|y_i - A_i \bm{x}_\lambda^{(i)}\right|^2
+    \label{eq:regularization_gcv_ocv-evaluation-function}
+\end{equation}
+ただし，$\bm{x}_\lambda^{(i)}$ は $y_i$ 以外のデータから求めた解で，
+$A_i$ は解からデータ $y_i$ を推定する作用素である．
+
+ここで次の補題が成り立つ．
+\begin{lemma}[文献 {\cite{Wahba1990}} の補題 4.2.1 より, leaving-out-one lemma]
+    評価関数
+    \begin{equation}
+        \frac{1}{m} \left(\left|z - A_k \bm{x}\right|^2
+        + \sum_{i \neq k} \left|y_i - A_i \bm{x}\right|^2\right)
+        + \lambda R(\bm{x})
+    \end{equation}
+    を最小化するような $\bm{x}$ を $\bm{h}_\lambda[k,z]$ とし，
+    評価関数
+    \begin{equation}
+        \frac{1}{m}
+        \sum_{i \neq k} \left|y_i - A_i \bm{x}\right|^2
+        + \lambda R(\bm{x})
+    \end{equation}
+    を最小化するような $\bm{x}$ を $\bm{x}_\lambda^{(k)}$ としたとき，
+    $h_\lambda[k, A_k \bm{x}_\lambda^{(k)}] = \bm{x}_\lambda^{(k)}$
+    が成り立つ．
+\end{lemma}
+\begin{proof}
+    $\tilde{y}_k = A_k \bm{x}_\lambda^{(k)}$とし，
+    $\bm{x} \neq \bm{x}_\lambda^{(k)}$とする．
+    このとき，
+    \begin{align}
+         & \hphantom{=}
+        \frac{1}{m} \left(\left|\tilde{y}_k - A_k \bm{x}_\lambda^{(k)}\right|^2
+        + \sum_{i \neq k} \left|y_i - A_i \bm{x}_\lambda^{(k)}\right|^2\right)
+        + \lambda R(\bm{x}_\lambda^{(k)})
+        \notag                                                                         \\
+         & = \frac{1}{m} \sum_{i \neq k} \left|y_i - A_i \bm{x}_\lambda^{(k)}\right|^2
+        + \lambda R(\bm{x}_\lambda^{(k)})
+        \notag                                                                         \\
+         & < \frac{1}{m} \sum_{i \neq k} \left|y_i - A_i \bm{x}\right|^2
+        + \lambda R(\bm{x})
+        \notag                                                                         \\
+         & \le \frac{1}{m} \left(\left|\tilde{y}_k - A_k \bm{x}\right|^2
+        +\sum_{i \neq k} \left|y_i - A_i \bm{x}\right|^2\right)
+        + \lambda R(\bm{x})
+    \end{align}
+    のように変形できる．
+    よって，
+    $h_\lambda[k, A_k \bm{x}_\lambda^{(k)}] = \bm{x}_\lambda^{(k)}$
+    である．
+\end{proof}
+
+これを用い，次の量を考える．
+\begin{equation}
+    \tilde{p}_{kk}(\lambda)
+    \equiv \frac{A_k \bm{x}_\lambda - A_k \bm{x}_\lambda^{(k)}}
+    {y_k - A_k \bm{x}_\lambda^{(k)}}
+\end{equation}
+まず，定義から，
+\begin{equation}
+    y_k - A_k \bm{x}_\lambda^{(k)} =
+    \frac{y_k - A_k \bm{x}_\lambda}{1 - \tilde{p}_{kk}(\lambda)}
+\end{equation}
+が成り立つ．
+また，補題から
+\begin{equation}
+    \tilde{p}_{kk}(\lambda)
+    = \frac{A_k h[k,y_k] - A_k h[k,\tilde{y}_k]}{y_k - \tilde{y}_k}
+\end{equation}
+が成り立つ．
+さらに，これは 1 次近似により
+\begin{equation}
+    \tilde{p}_{kk}(\lambda)
+    \approx \frac{\partial A_k h[k,y_k]}{\partial y_k}
+    =\frac{\partial A_k \bm{x}_\lambda}{\partial y_k}
+    =\frac{\partial A_k A_\lambda^\# \bm{y}}{\partial y_k}
+    =p_{kk}(\lambda)
+\end{equation}
+と書ける．
+ただし，$p_{kk}(\lambda)$ は
+influence matrix $P_A(\lambda)$ の $(k,k)$ 成分である．
+
+このことを利用して OCV の評価関数
+\eqref{eq:regularization_gcv_ocv-evaluation-function}
+を変形すると，
+\begin{equation}
+    V_0(\lambda)=
+    \frac{1}{m} \sum_{i=1}^m
+    \left|y_i - A_i \bm{x}_\lambda^{(i)}\right|^2
+    \approx
+    \frac{1}{m} \sum_{i=1}^m
+    \frac{\left|y_i - A_i \bm{x}_\lambda\right|^2}
+    {\left|1 - p_{kk}(\lambda)\right|^2}
+\end{equation}
+のように書ける．
+
+$p_{kk}(\lambda)$
+の代わりに，influence matrix の対角成分の平均値
+$\tr P_A(\lambda)/n$
+を用い，
+$\bm{y}$
+の回転に影響されない評価関数を作ると，
+GCVの評価関数 \eqref{eq:regularization_gcv_gdv-evaluation-function} が得られる．
