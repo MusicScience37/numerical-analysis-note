@@ -83,3 +83,23 @@ Tikhonov 正則化（\ref{chap:regularization_tikhonov} 章）の場合，
 \eqref{eq:regularization_tikhonov_residual-by-svd},
 \eqref{eq:regularization_tikhonov_regularization-term-by-svd}
 から求めることができる．
+
+\section{一般の場合}
+
+前節のように残差項と正則化項の微分を解析的に計算できれば簡単に曲率の計算ができるが，
+必ずしも正則化項を簡単に計算できるとは限らない．
+$\xi(\lambda)$ と $\eta(\lambda)$
+の微分を解析的に計算できない場合は，
+サンプル点に対する 3 次の自然スプラインによる補間を用いて L-curve の曲率を計算できる．
+ただし，このときは $(\xi(\lambda),\eta(\lambda))$ を
+$\lambda$ の関数として補間するのではなく，
+$(\lambda(t), \xi(\lambda(t)), \eta(\lambda(t)))$
+のような媒介変数 $t$ を用いた
+3 次元データを補間しなければ上手くいかない
+\cite{Hansen1998,Hansen1993}
+\footnote{例えば，サンプル点の距離を用いて長さのパラメータを作り，それを $t$ にすることが考えられる．}．
+また，スプラインの計算において
+$(\xi(\lambda(t)), \eta(\lambda(t)))$
+の近いサンプル点があると
+最終的な曲率に影響が出る場合があるため，
+そのような点を省いて計算を行う必要がある．
