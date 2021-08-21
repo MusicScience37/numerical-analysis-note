@@ -12,7 +12,7 @@ repos:
     hooks:
       - id: check_tex_files
         name: Check TeX files
-        entry: pipenv run python fix_ten_maru.py
+        entry: pipenv run python fix-ten-maru.py
         language: system
         files: "\\.tex$"
         exclude: "extern"
