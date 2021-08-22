@@ -288,6 +288,8 @@ Tikhonov 正則化の場合の
 
 \subsection{行列 L が列と同じ数のランクを持つ場合の計算方法}
 
+ここでは，$L \in \setC^{p \times n}$ が $p > n$ でランク $n$ である場合を扱う．
+
 まず，$L^*$ を QR 分解する．
 \begin{equation}
     L^* = \begin{pmatrix}
@@ -401,6 +403,30 @@ $(A V_2 V_2^*)^\dagger = V_2 (A V_2)^\dagger$
     \tilde{\bm{y}} & = Q_2^* \bm{y}
 \end{align}
 のように書き換えることもできる．
+
+\subsection{行列 L が正則な正方行列の場合の計算方法}
+
+行列 $L$ が正則な場合，$L^\dagger = L^{-1}$ となるため，
+式がかなり単純になる．
+
+まず，$P_L$ は
+\begin{equation}
+    P_L = I - L^\dagger L = I - L^{-1} L = O
+\end{equation}
+となる．これを用いると，$L_A^\dagger$ は
+\begin{equation}
+    L_A^\dagger = \left(I - \left(A P_L\right)^\dagger A\right) L^\dagger
+    = \left(I - O^{\dagger} A\right) L^{-1}
+    = \left(I - O A\right) L^{-1}
+    = L^{-1}
+\end{equation}
+となる．これらにより，変換の公式は以下のようになる．
+
+\begin{align}
+    \bm{x}       & = L^{-1} \bar{\bm{x}} \\
+    \bar{A}      & = A L^{-1}            \\
+    \bar{\bm{y}} & = \bm{y}
+\end{align}
 
 \subsection{行列 L が一般の行列の場合の計算方法}
 
