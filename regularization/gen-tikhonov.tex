@@ -144,13 +144,14 @@ $\bm{x}$ を表せる\cite{Hansen1998}．
 \begin{equation}
     \bm{x}_\lambda =
     \sum_{i=1}^{p} \frac{\gamma_i / \mu_i}{\gamma_i^2+\lambda}
-    (\bm{u}^*\bm{y}) \bm{w}_i
+    (\bm{u}_i^*\bm{y}) \bm{w}_i
     +\sum_{i=p+1}^n (\bm{u}_i^*\bm{y}) \bm{w}_i
 \end{equation}
 
-$L=I$ のときこの式が Tikhonov 正則化の場合の
-式 \eqref{eq:regularization_tikhonov_solution-by-svd} に一致することは
-簡単に確かめられる．
+$L=I$ のときは，
+$p = n$, $\mu_i = 1$ となり，
+Tikhonov 正則化の場合の
+式 \eqref{eq:regularization_tikhonov_solution-by-svd} に一致する．
 
 \section{単純な L2 ノルムによる Tikhonov 正則化への変換}
 
