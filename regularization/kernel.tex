@@ -1,0 +1,41 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{カーネルによる補間への応用}
+
+\ref{sec:regularization_tikhonov_underdetermined} 節で示した変形は，
+カーネルによる補間に応用できる．
+
+関数 $f : X \to \setC$ を
+サンプル点 $(\bm{r}_i, y_i) \in X \times \setC$ ($i = 1, 2, \ldots, m$) から補間することを考える．
+カーネルを用いた補間では，カーネル $K : X \times X \to \setC$ を用いて
+\begin{equation}
+    f(\bm{r}) = \sum_{i=1}^m c_i K(\bm{r}, \bm{r}_i)
+\end{equation}
+のようにおき，$y_i = f(\bm{r}_i)$ となるように係数 $c_i$ を決める．
+
+\section{導出}
+
+まず，カーネルによる補間の導出を行う．
+
+関数 $f$ はある関数空間 $\mathcal{H}$ に属するものとし，
+その関数空間 $\mathcal{H}$ には基底となる
+関数 $\alpha_1(\bm{r}), \alpha_2(\bm{r}), \ldots, \alpha_N(\bm{r})$ が存在するものとする
+\footnote{この時点ではまだ $N$ が有限であるとする．}．
+それらの基底を用いて関数 $f$ を次のようにおく．
+\begin{equation}
+    f(\bm{r}) = \sum_{i = 1}^{N} x_i \alpha_i(\bm{r})
+\end{equation}
+ここで，
+$A_{ij} = \alpha_j(\bm{r}_i)$ となる行列 $A \in \setC^{m \times N}$ を考えると，
+最小二乗法の評価関数は
+\begin{equation}
+    \|A \bm{x} - \bm{y}\|_2
+\end{equation}
+となる．
+これに Tikhonov 正則化を適用すると，
+式 \eqref{eq:regularization_tikhonov_exchange-mat} より最適解は
+\begin{align}
+    \bm{x} & = A^* (AA^* + \lambda I)^{-1} \bm{y}
+\end{align}
+となる．
