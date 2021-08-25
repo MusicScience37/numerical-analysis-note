@@ -94,26 +94,27 @@ $\bm{\mu}_m$ は $[\bm{\mu}_m]_i = \mu(\bm{r}_i)$ なるベクトルであり，
 $K_m$ は $[K_m]_{ij} = K(\bm{r}_i, \bm{r}_j)$ なる行列である．
 Gaussian Process は関数における正規分布のようなものである．
 
-関数 $f$ が平均 $0$，分散 $K(\bm{r}, \bm{r}')$ の Gaussian Process に従っており，
+関数 $f$ が平均 $0$，分散 $\tau K(\bm{r}, \bm{r}')$ の Gaussian Process に従っており，
 関数 $f$ に対するノイズ入りのサンプルが $y_i = f(\bm{r}_i) + \epsilon_i$ のように得られているとする．
 ただし，$\epsilon_i$ は独立に正規分布 $\mathcal{N}(0, \sigma^2)$ に従うものとする．
+また，$\tau > 0$ は分散の大きさを示すパラメータである．
 このとき，ベクトル $(y_1, y_2, \ldots, y_m, f(\bm{r}))$ は
 次のような正規分布に従う．
 \begin{equation}
     \mathcal{N}\left(\bm{0},
     \begin{pmatrix}
-        K_m + \sigma^2   & \bm{k}(\bm{r})    \\
-        \bm{k}(\bm{r})^T & K(\bm{r}, \bm{r})
+        \tau K_m + \sigma^2   & \tau \bm{k}(\bm{r})    \\
+        \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
     \end{pmatrix}
     \right)
 \end{equation}
 このとき，確率密度関数 $p(y_1, y_2, \ldots, y_m, f(\bm{r}))$ は次のように書ける．
 \begin{equation}
     p(y_1, y_2, \ldots, y_m, f(\bm{r}))
-    = \frac{1}{\sqrt{(2\pi)^m \det{
+    = \frac{1}{\sqrt{(2\pi)^{m+1} \det{
                 \begin{pmatrix}
-                    K_m + \sigma^2   & \bm{k}(\bm{r})    \\
-                    \bm{k}(\bm{r})^T & K(\bm{r}, \bm{r})
+                    \tau K_m + \sigma^2   & \tau \bm{k}(\bm{r})    \\
+                    \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
                 \end{pmatrix}
             }}}
     \exp\left(-\frac{1}{2}
@@ -121,8 +122,8 @@ Gaussian Process は関数における正規分布のようなものである．
         \bm{y} \\ f(\bm{r})
     \end{pmatrix}^T
     \begin{pmatrix}
-        K_m + \sigma^2   & \bm{k}(\bm{r})    \\
-        \bm{k}(\bm{r})^T & K(\bm{r}, \bm{r})
+        \tau K_m + \sigma^2   & \tau \bm{k}(\bm{r})    \\
+        \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
     \end{pmatrix}
     \begin{pmatrix}
         \bm{y} \\ f(\bm{r})
