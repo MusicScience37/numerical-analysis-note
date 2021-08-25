@@ -19,7 +19,7 @@
 まず，カーネルによる補間の導出を行う．
 
 関数 $f$ はある関数空間 $\mathcal{H}$ に属するものとし，
-その関数空間 $\mathcal{H}$ には基底となる
+その関数空間 $\mathcal{H}$ には正規直交基底となる
 関数 $\alpha_1(\bm{r}), \alpha_2(\bm{r}), \ldots, \alpha_N(\bm{r})$ が存在するものとする
 \footnote{この時点ではまだ $N$ が有限であるとする．}．
 それらの基底を用いて関数 $f$ を次のようにおく．
@@ -33,9 +33,64 @@ $A_{ij} = \alpha_j(\bm{r}_i)$ となる行列 $A \in \setC^{m \times N}$ を考�
     \|A \bm{x} - \bm{y}\|_2
 \end{equation}
 となる．
-これに Tikhonov 正則化を適用すると，
+
+これに Tikhonov 正則化（\ref{chap:regularization_tikhonov} 章）を適用する．
+関数空間 $\mathcal{H}$ のノルムを $\|\cdot\|_{\mathcal{H}}$ とすると，
+$\alpha_i$ が $\mathcal{H}$ の正規直交基底であることから，
+\begin{align}
+    \|f\|_{\mathcal{H}}^2
+     & = \sum_{i = 1}^{N} |x_i|^2 \notag \\
+     & = \|\bm{x}\|_2^2
+\end{align}
+となる．
+よって，Tikhonov 正則化の評価関数は
+式 \eqref{eq:regularization_tikhonov_objective} のように書ける．
+
 式 \eqref{eq:regularization_tikhonov_exchange-mat} より最適解は
 \begin{align}
     \bm{x} & = A^* (AA^* + \lambda I)^{-1} \bm{y}
 \end{align}
 となる．
+ここで，行列 $AA^*$ の $(i, j)$ 要素は
+\begin{equation}
+    [AA^*]_{ij} = \sum_{k = 1}^{N} \alpha_k(\bm{r}_i) \overline{\alpha_k(\bm{r}_j)}
+\end{equation}
+となる．それをもとに次のように関数 $K : X \times X \to \setC$ を定義する．
+\begin{equation}
+    K(\bm{r}, \bm{r}') = \sum_{k = 1}^{N} \alpha_k(\bm{r}) \overline{\alpha_k(\bm{r}')}
+\end{equation}
+この関数がカーネルである．
+また，行列 $K_m \in \setC^{m \times m}$ を
+$K_m = AA^*$ のようにおく．
+なお，この行列はエルミート行列である．
+
+ここで，変数 $\bm{c} \in \setC^m$ を
+\begin{equation}
+    \bm{c} = (K_m + \lambda I)^{-1} \bm{y}
+\end{equation}
+のようにおく．
+このとき，$\bm{x} = A^* \bm{c}$ だから，
+\begin{align}
+    f(\bm{r})
+     & = \sum_{i = 1}^{N} x_i \alpha_i(\bm{r}) \notag                                                \\
+     & = \sum_{i = 1}^{N} \sum_{j = 1}^{m} \overline{A_{ji}} c_j \alpha_i(\bm{r}) \notag             \\
+     & = \sum_{i = 1}^{N} \sum_{j = 1}^{m} \overline{\alpha_i(\bm{r}_j)} c_j \alpha_i(\bm{r}) \notag \\
+     & = \sum_{j = 1}^{m} c_j K(\bm{r}, \bm{r}_j)
+\end{align}
+となる．
+
+\section{RBF 補間}
+
+カーネル $K(\bm{r}, \bm{r}')$ の値が距離 $\|\bm{r} - \bm{r}'\|_"$ に依存する場合，
+そのもとになる関数は Radial Basis Function (RBF) と呼ばれる．
+RBF $\phi : [0, \infty) \to \setR$ によるカーネルは
+\begin{equation}
+    K(\bm{r}, \bm{r}') = \phi\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)
+\end{equation}
+のように書ける．
+代表的な RBF として以下が挙げられる．
+\begin{itemize}
+    \item $\phi(r) = \exp(-r^2)$
+\end{itemize}
+
+\TODO{参考文献を見て書く．}
