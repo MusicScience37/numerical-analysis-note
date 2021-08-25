@@ -103,7 +103,7 @@ Gaussian Process は関数における正規分布のようなものである．
 \begin{equation}
     \mathcal{N}\left(\bm{0},
     \begin{pmatrix}
-        \tau K_m + \sigma^2   & \tau \bm{k}(\bm{r})    \\
+        \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
         \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
     \end{pmatrix}
     \right)
@@ -113,7 +113,7 @@ Gaussian Process は関数における正規分布のようなものである．
     p(y_1, y_2, \ldots, y_m, f(\bm{r}))
     = \frac{1}{\sqrt{(2\pi)^{m+1} \det{
                 \begin{pmatrix}
-                    \tau K_m + \sigma^2   & \tau \bm{k}(\bm{r})    \\
+                    \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
                     \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
                 \end{pmatrix}
             }}}
@@ -122,16 +122,114 @@ Gaussian Process は関数における正規分布のようなものである．
         \bm{y} \\ f(\bm{r})
     \end{pmatrix}^T
     \begin{pmatrix}
-        \tau K_m + \sigma^2   & \tau \bm{k}(\bm{r})    \\
+        \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
         \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
-    \end{pmatrix}
+    \end{pmatrix}^{-1}
     \begin{pmatrix}
         \bm{y} \\ f(\bm{r})
     \end{pmatrix}
     \right)
 \end{equation}
 
-\TODO{ブロック行列の行列式と逆行列の公式をもとに変形する．}
+ここで，
+\begin{align}
+    \sigma_K(\bm{r})
+     & \equiv \tau K(\bm{r}, \bm{r})
+    - \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \\
+     & = \tau K(\bm{r}, \bm{r})
+    - \tau \bm{k}(\bm{r})^T (K_m + \sigma^2 I)^{-1} \bm{k}(\bm{r})
+\end{align}
+とおくと，
+\begin{align}
+    \det{
+        \begin{pmatrix}
+            \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
+            \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
+        \end{pmatrix}
+    }
+     & = \sigma_K(\bm{r}) \det(\tau K_m + \sigma^2 I)
+\end{align}
+となる．
+また，
+\begin{align}
+     & \hphantom{=}
+    \begin{pmatrix}
+        \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
+        \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
+    \end{pmatrix}^{-1}
+    \notag          \\
+     & =
+    \begin{pmatrix}
+        (\tau K_m + \sigma^2 I)^{-1}
+        + (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1}
+         &
+        - (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K(\bm{r})^{-1}
+        \\
+        - \sigma_K(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1}
+         &
+        \sigma_K(\bm{r})^{-1}
+    \end{pmatrix}
+\end{align}
+であり，
+\begin{align}
+     & \hphantom{=}
+    \begin{pmatrix}
+        \bm{y} \\ f(\bm{r})
+    \end{pmatrix}^T
+    \begin{pmatrix}
+        \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
+        \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        \bm{y} \\ f(\bm{r})
+    \end{pmatrix}
+    \notag                                            \\
+     & = \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    + \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    \notag                                            \\ & \hspace{2em}
+    - f(\bm{r}) \sigma_K(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    - \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K(\bm{r})^{-1} f(\bm{r})
+    \notag                                            \\ & \hspace{2em}
+    + f(\bm{r}) \sigma_K(\bm{r})^{-1} f(\bm{r})
+    \notag                                            \\
+     & = \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    + \sigma_K(\bm{r})^{-1} \left(f(\bm{r}) - \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}\right)^2
+\end{align}
+となる．
+よって，確率密度関数は次のように分割できる．
+\begin{align}
+    p(y_1, y_2, \ldots, y_m, f(\bm{r}))
+     & = p_{\bm{y}}(\bm{y}) p_f(f(\bm{r}))
+    \\
+    p_{\bm{y}}(\bm{y})
+     & = \frac{1}{\sqrt{(2\pi)^{m} \det(\tau K_m + \sigma^2 I)}}
+    \exp\left(-\frac{1}{2} \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y} \right)
+    \\
+    p_f(f(\bm{r}))
+     & = \frac{1}{\sqrt{(2\pi)^{m} \sigma_K(\bm{r})}}
+    \exp\left(-\frac{1}{2} \sigma_K(\bm{r})^{-1} \left(f(\bm{r}) - \mu_K(\bm{r})\right)^2\right)
+    \\
+    \mu_K(\bm{r})
+     & = \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+\end{align}
+分割したあとの
+$p_{\bm{y}}$ は $\bm{y}$ に関する正規分布 $\mathcal{N}(\bm{0}, \tau K_m + \sigma^2 I)$ であり，
+$p_f$ は $f(\bm{r})$ に関する正規分布 $\mathcal{N}(\mu_K(\bm{r}), \sigma_K(\bm{r}))$ である．
+$\lambda = \sigma^2 / \tau$ とおくと，
+\begin{align}
+    \mu_K(\bm{r})
+     & = \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    \notag                                                                               \\
+     & = \bm{k}(\bm{r})^T (K_m + \lambda I)^{-1} \bm{y}
+    \notag                                                                               \\
+     & = \sum_{i = 1}^m K(\bm{r}, \bm{r}_i) \left[(K_m + \lambda I)^{-1} \bm{y}\right]_i
+\end{align}
+のように前節と同様の公式が得られる．
+
+Gaussian Process を用いた表現では分散 $\sigma_K(\bm{r})$ も得られるため，
+補間された関数のどの部分に誤差が多い可能性が高いか評価するのにも役立つ．
+また，パラメータ推定において確率の最大化を行うといった応用もある
+（\TODO{パラメータ推定について書く．}）．
 
 \section{RBF 補間}
 
