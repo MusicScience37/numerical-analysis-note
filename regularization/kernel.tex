@@ -14,7 +14,7 @@
 \end{equation}
 のようにおき，$y_i = f(\bm{r}_i)$ となるように係数 $c_i$ を決める．
 
-\section{導出}
+\section{Tikhonov 正則化による導出}
 
 まず，カーネルによる補間の導出を行う．
 
@@ -79,9 +79,62 @@ $K_m = AA^*$ のようにおく．
 \end{align}
 となる．
 
+\section{Gaussian Process}
+
+カーネルによる補間は，
+Gaussian Process と呼ばれる確率分布から導くこともできる
+\cite{Brochu2010}．
+ただし，データとカーネル関数は実数とする．
+
+平均 $\mu(\bm{r})$，分散 $K(\bm{r}, \bm{r}')$ の Gaussian Process に従う関数 $f$ は，
+関数値のベクトル $(f(\bm{r}_1), f(\bm{r}_2), \ldots, f(\bm{r}_m))$ が
+正規分布 $\mathcal{N}(\bm{\mu}_m, K_m)$ に従う．
+ここで，
+$\bm{\mu}_m$ は $[\bm{\mu}_m]_i = \mu(\bm{r}_i)$ なるベクトルであり，
+$K_m$ は $[K_m]_{ij} = K(\bm{r}_i, \bm{r}_j)$ なる行列である．
+Gaussian Process は関数における正規分布のようなものである．
+
+関数 $f$ が平均 $0$，分散 $K(\bm{r}, \bm{r}')$ の Gaussian Process に従っており，
+関数 $f$ に対するノイズ入りのサンプルが $y_i = f(\bm{r}_i) + \epsilon_i$ のように得られているとする．
+ただし，$\epsilon_i$ は独立に正規分布 $\mathcal{N}(0, \sigma^2)$ に従うものとする．
+このとき，ベクトル $(y_1, y_2, \ldots, y_m, f(\bm{r}))$ は
+次のような正規分布に従う．
+\begin{equation}
+    \mathcal{N}\left(\bm{0},
+    \begin{pmatrix}
+        K_m + \sigma^2   & \bm{k}(\bm{r})    \\
+        \bm{k}(\bm{r})^T & K(\bm{r}, \bm{r})
+    \end{pmatrix}
+    \right)
+\end{equation}
+このとき，確率密度関数 $p(y_1, y_2, \ldots, y_m, f(\bm{r}))$ は次のように書ける．
+\begin{equation}
+    p(y_1, y_2, \ldots, y_m, f(\bm{r}))
+    = \frac{1}{\sqrt{(2\pi)^m \det{
+                \begin{pmatrix}
+                    K_m + \sigma^2   & \bm{k}(\bm{r})    \\
+                    \bm{k}(\bm{r})^T & K(\bm{r}, \bm{r})
+                \end{pmatrix}
+            }}}
+    \exp\left(-\frac{1}{2}
+    \begin{pmatrix}
+        \bm{y} \\ f(\bm{r})
+    \end{pmatrix}^T
+    \begin{pmatrix}
+        K_m + \sigma^2   & \bm{k}(\bm{r})    \\
+        \bm{k}(\bm{r})^T & K(\bm{r}, \bm{r})
+    \end{pmatrix}
+    \begin{pmatrix}
+        \bm{y} \\ f(\bm{r})
+    \end{pmatrix}
+    \right)
+\end{equation}
+
+\TODO{ブロック行列の行列式と逆行列の公式をもとに変形する．}
+
 \section{RBF 補間}
 
-カーネル $K(\bm{r}, \bm{r}')$ の値が距離 $\|\bm{r} - \bm{r}'\|_"$ に依存する場合，
+カーネル $K(\bm{r}, \bm{r}')$ の値が距離 $\|\bm{r} - \bm{r}'\|_2$ に依存する場合，
 そのもとになる関数は Radial Basis Function (RBF) と呼ばれる．
 RBF $\phi : [0, \infty) \to \setR$ によるカーネルは
 \begin{equation}
