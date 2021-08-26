@@ -79,7 +79,7 @@ $K_m = AA^*$ のようにおく．
 \end{align}
 となる．
 
-\section{Gaussian Process}
+\section{Gaussian Process}\label{sec:regularization_kernel_gaussian-process}
 
 カーネルによる補間は，
 Gaussian Process と呼ばれる確率分布から導くこともできる
@@ -229,7 +229,7 @@ $\lambda = \sigma^2 / \tau$ とおくと，
 Gaussian Process を用いた表現では分散 $\sigma_K(\bm{r})$ も得られるため，
 補間された関数のどの部分に誤差が多い可能性が高いか評価するのにも役立つ．
 また，パラメータ推定において確率の最大化を行うといった応用もある
-（\TODO{パラメータ推定について書く．}）．
+（\ref{sec:regularization_kernel_param-est} 節）．
 
 \section{RBF 補間}
 
@@ -238,8 +238,64 @@ Gaussian Process を用いた表現では分散 $\sigma_K(\bm{r})$ も得られ�
 RBF $\phi : [0, \infty) \to \setR$ によるカーネルは
 \begin{equation}
     K(\bm{r}, \bm{r}') = \phi\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)
+    \label{eq:regularization_kernel_kernel-of-rbf}
 \end{equation}
 のように書ける．
 代表的な RBF としては Gaussian
 $\phi(r) = \exp(-r^2)$
 が挙げられる\cite{Brochu2010}．
+
+\section{パラメータ推定}\label{sec:regularization_kernel_param-est}
+
+式 \eqref{eq:regularization_kernel_kernel-of-rbf} の定数 $c$ のように
+カーネルがパラメータを持っている場合がある．
+そのようなパラメータの推定を
+\cite[Remark 3 (Connection to spatial statistics)]{Scheuerer2011}
+に沿って考える．
+
+Gaussian Process （\ref{sec:regularization_kernel_gaussian-process} 節）より，
+データ $\bm{y}$ の確率密度関数は
+\begin{equation}
+    p(\bm{y}) = \frac{1}{\sqrt{(2\pi)^{m} \det(\tau K_m + \sigma^2 I)}}
+    \exp\left(-\frac{1}{2} \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y} \right)
+\end{equation}
+であり，その対数を取ると
+\begin{equation}
+    \log{p(\bm{y})}
+    = -\frac{m}{2}\log(2\pi)
+    - \frac{1}{2} \log{\det(\tau K_m + \sigma^2 I)}
+    - \frac{1}{2} \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+\end{equation}
+となる．
+これを最大化するようにパラメータを決定する．
+
+$\lambda = \sigma^2 / \tau$ を固定すると，
+\begin{equation}
+    \log{p(\bm{y})}
+    = -\frac{m}{2}\log(2\pi)
+    - \frac{m}{2} \log{\tau}
+    - \frac{1}{2} \log{\det(K_m + \lambda I)}
+    - \frac{1}{2\tau} \bm{y}^T (K_m + \lambda I)^{-1} \bm{y}
+\end{equation}
+となる．
+これを最大化するように $\tau$ を決定すると，
+\begin{equation}
+    \tau = \frac{1}{m} \bm{y}^T (K_m + \lambda I)^{-1} \bm{y}
+\end{equation}
+となり，そのときの $\log{p(\bm{y})}$ は
+\begin{equation}
+    \log{p(\bm{y})}
+    = -\frac{m}{2}\log(2\pi)
+    + \frac{m}{2} \log{m}
+    - \frac{m}{2} \log(\bm{y}^T (K_m + \lambda I)^{-1} \bm{y})
+    - \frac{1}{2} \log{\det(K_m + \lambda I)}
+    - \frac{m}{2}
+\end{equation}
+となる．
+$m$ はサンプルの数であり，定数だから，
+パラメータ推定では
+\begin{equation}
+    m \log(\bm{y}^T (K_m + \lambda I)^{-1} \bm{y})
+    + \log{\det(K_m + \lambda I)}
+\end{equation}
+を最小化すれば良い．
