@@ -11,16 +11,21 @@
 \begin{equation}
     f(\bm{r}) = \sum_{i=1}^m c_i K(\bm{r}, \bm{r}_i)
 \end{equation}
-のようにおき，$y_i = f(\bm{r}_i)$ となるように係数 $c_i$ を決める．
+のようにおき，$y_i = f(\bm{r}_i)$ となるように係数 $c_i$ を決める
+\cite{Fukumizu2010}．
 
 \section{Tikhonov 正則化による導出}
 
 まず，カーネルによる補間の導出を行う．
 
-関数 $f$ はある関数空間 $\mathcal{H}$ に属するものとし，
+関数 $f$ はある正規直交基底の存在する関数空間 $\mathcal{H}$
+\footnote{正確には，関数空間 $\mathcal{H}$ には%
+    再生核ヒルベルト空間 (reproducing kernel Hilbert space, RKHS)%
+    と呼ばれるものを用いる．}
+に属するものとし，
 その関数空間 $\mathcal{H}$ には正規直交基底となる
 関数 $\alpha_1(\bm{r}), \alpha_2(\bm{r}), \ldots, \alpha_N(\bm{r})$ が存在するものとする
-\footnote{この時点ではまだ $N$ が有限であるとする．}．
+\footnote{この導出では $N$ が有限であるとする．}．
 それらの基底を用いて関数 $f$ を次のようにおく．
 \begin{equation}
     f(\bm{r}) = \sum_{i = 1}^{N} x_i \alpha_i(\bm{r})
@@ -78,12 +83,23 @@ $K_m = AA^*$ のようにおく．
 \end{align}
 となる．
 
+関数 $f$ を正規直交基底で表していたことから，
+カーネル法は関数空間 $\mathcal{H}$ 全体の中で Tikhonov 正則化の評価関数
+\begin{equation}
+    \sum_{i=1}^m \left|y_i - f(\bm{r}_i)\right|^2
+    + \|f\|_{\mathcal{H}}^2
+\end{equation}
+を最小化したものを求められるということが分かる．
+また，ここでは導出において関数空間 $\mathcal{H}$ の次元を表す $N$ が有限であることを前提としていたが，
+導出されたカーネル法で用いる行列は $m \times m$ の正方行列であるため，
+$N \to \infty$ の場合にも適用できる．
+
 \section{Gaussian Process}\label{sec:regularization_kernel_gaussian-process}
 
 カーネルによる補間は，
 Gaussian Process と呼ばれる確率分布から導くこともできる
 \cite{Brochu2010}．
-ただし，データとカーネル関数は実数とする．
+ただし，データとカーネル関数の値は実数とする．
 
 平均 $\mu(\bm{r})$，分散 $K(\bm{r}, \bm{r}')$ の Gaussian Process に従う関数 $f$ は，
 関数値のベクトル $(f(\bm{r}_1), f(\bm{r}_2), \ldots, f(\bm{r}_m))$ が
@@ -250,7 +266,9 @@ $\phi(r) = \exp(-r^2)$
 カーネルがパラメータを持っている場合がある．
 そのようなパラメータの推定を
 \cite[Remark 3 (Connection to spatial statistics)]{Scheuerer2011}
-に沿って考える．
+に沿った
+maximum likelihood estimation (MLE)
+により考える．
 
 Gaussian Process （\ref{sec:regularization_kernel_gaussian-process} 節）より，
 データ $\bm{y}$ の確率密度関数は
