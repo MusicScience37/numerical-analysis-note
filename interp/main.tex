@@ -1,0 +1,35 @@
+% !TEX root = ../main.tex
+%
+
+\part{補間}
+
+\chapter{導入}
+
+この部では，補間の手法をまとめる．
+補間では，
+サンプル点 $(\bm{r}_i, y_i) \in X \times \setC$ ($i = 1, 2, \ldots, m$) について
+$f(\bm{r}_i) = y_i$
+となるような関数 $f$ を算出する．
+データがノイズを含んでいる場合は
+正則化（\ref{part:regularization} 部）を利用して
+$f(\bm{r}_i) \approx y_i$
+となるような関数 $f$ を求める場合もある．
+
+\chapter{記号}
+
+この部で使用する記号を以下に示す．
+
+\begin{explainlist}
+    $\setR$ & 実数の集合 \\
+    $\setC$ & 複素数の集合 \\
+    $\|\bm{x}\|$ & 一般のノルム \\
+    $\|\bm{x}\|_2$ & ベクトル $\bm{x}$ の2-ノルム \\
+    $A^*$ & 行列 $A$ のエルミート転置（随伴行列），または作用素 $A$ の随伴作用素 \\
+    $A^{-*}$ & 行列 $A$ のエルミート転置の逆行列 \\
+    $A^\dagger$ & 行列 $A$ の Moore-Penrose の一般化逆行列 \\
+    $\diag(a_1, a_2, \ldots, a_n)$ & 対角要素に $a_1, a_2, \ldots, a_n$ を持つ対角行列 \\
+    $\bm{a}_i$ & 行列 $A$ の $i$ 列目 \\
+    $[A\bm{b}]_i$ & ベクトル $A\bm{b}$ の第 $i$ 要素
+\end{explainlist}
+
+\input{interp/kernel.tex}
