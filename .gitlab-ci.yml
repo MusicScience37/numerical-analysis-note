@@ -6,15 +6,15 @@ stages:
 pre-commit:
   stage: test
   needs: []
-  image: musicscience37/pipenv:v1.7
+  image: musicscience37/pipenv:focal-v2.1
   script:
-    - pipenv install --dev
+    - pipenv sync --dev
     - pipenv run pre-commit run --all-files
 
 build:
   stage: build
   needs: []
-  image: texlive/texlive:latest
+  image: registry.gitlab.com/islandoftex/images/texlive:TL2021-2022-03-13-04-43
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
