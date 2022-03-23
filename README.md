@@ -1,7 +1,12 @@
 # 数値解析ノート
 
-数値解析で調査したことをまとめる。
+数値解析で調査したことをまとめる．
 
-## 最新版
+## ビルド済み PDF
 
 - [master ブランチの最新版の PDF](https://numanalnote.musicscience37.com/numerical-analysis-note.pdf)
+
+## 開発者向け
+
+[dev ディレクトリ](./dev/index.md) に
+本リポジトリの開発者向けのドキュメントを記載していく．

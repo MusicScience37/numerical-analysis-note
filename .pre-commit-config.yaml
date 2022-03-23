@@ -10,11 +10,11 @@ repos:
       - id: check-added-large-files
   - repo: local
     hooks:
-      - id: check_tex_files
-        name: Check TeX files
+      - id: check_ten_maru
+        name: Check ten and maru.
         entry: pipenv run python fix-ten-maru.py
         language: system
-        files: "\\.tex$"
+        files: "\\.(tex|md)$"
         exclude: "extern"
       - id: check_filenames
         name: Check filenames

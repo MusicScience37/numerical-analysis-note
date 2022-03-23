@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,latex,python
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,latex,python
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,tex,latex,python
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,tex,latex,python
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:
@@ -116,9 +116,16 @@ acs-*.bib
 *.glsdefs
 *.lzo
 *.lzs
+*.slg
+*.slo
+*.sls
 
 # uncomment this for glossaries-extra (will ignore makeindex's style files!)
 # *.ist
+
+# gnuplot
+*.gnuplot
+*.table
 
 # gnuplottex
 *-gnuplottex-*
@@ -194,6 +201,9 @@ _minted*
 # scrwfile
 *.wrt
 
+# svg
+svg-inkscape/
+
 # sympy
 *.sout
 *.sympy
@@ -217,6 +227,9 @@ pythontex-files-*/
 *.dpth
 *.md5
 *.auxlock
+
+# titletoc
+*.ptc
 
 # todonotes
 *.tdo
@@ -393,7 +406,14 @@ ipython_config.py
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
-Pipfile.lock
+#Pipfile.lock
+
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#poetry.lock
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
@@ -438,22 +458,179 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# PyCharm
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#.idea/
+
+### TeX ###
+
+# these rules might exclude image files for figures etc.
+# *.ps
+# *.eps
+# *.pdf
+
+
+
+
+# latexrun
+
+# algorithms
+
+# achemso
+
+# amsthm
+
+# beamer
+
+# changes
+
+# comment
+
+# cprotect
+
+# elsarticle (documentclass of Elsevier journals)
+
+# endnotes
+
+# fixme
+
+# feynmf/feynmp
+
+
+# glossaries
+
+# uncomment this for glossaries-extra (will ignore makeindex's style files!)
+# *.ist
+
+# gnuplot
+
+# gnuplottex
+
+# gregoriotex
+
+# htlatex
+
+# hyperref
+
+# knitr
+# TODO Uncomment the next line if you use knitr and want to ignore its generated tikz files
+# *.tikz
+
+# listings
+
+# luatexja-ruby
+
+# makeidx
+
+# minitoc
+
+# minted
+
+# morewrites
+
+# newpax
+
+# nomencl
+
+# pax
+
+# pdfpcnotes
+
+# sagetex
+
+# scrwfile
+
+# svg
+
+# sympy
+
+# pdfcomment
+
+# pythontex
+
+# tcolorbox
+
+# thmtools
+
+# TikZ & PGF
+
+# titletoc
+
+# todonotes
+
+# vhistory
+
+# easy-todo
+
+# xcolor
+
+# xmpincl
+
+# xindy
+
+# xypic precompiled matrices and outlines
+
+# endfloat
+
+# Latexian
+
+# WinEdt
+
+# Texpad
+
+# LyX
+
+# Kile
+
+# gummi
+
+# KBibTeX
+
+# TeXnicCenter
+
+# auto folder when using emacs and auctex
+
+# expex forward references with \gathertags
+
+# standalone packages
+
+# Makeindex log files
+
+# xwatermark package
+
+# REVTeX puts footnotes in the bibliography by default, unless the nofootinbib
+# option is specified. Footnotes are the stored in a file with suffix Notes.bib.
+# Uncomment the next line to have this generated file ignored.
+
+### TeX Patch ###
+# LIPIcs / OASIcs
+
+# glossaries
+
 ### VisualStudioCode ###
 .vscode/*
-#!.vscode/settings.json
-#!.vscode/tasks.json
-#!.vscode/launch.json
-#!.vscode/extensions.json
-*.code-workspace
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
+
+# Built Visual Studio Code Extensions
+*.vsix
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,latex,python
+# Support for Project snippet scope
 
-main.pdf
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,tex,latex,python
+
+/main.pdf

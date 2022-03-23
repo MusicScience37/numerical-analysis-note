@@ -1,0 +1,17 @@
+{
+  "build": { "dockerfile": "Dockerfile" },
+  "containerEnv": {
+    "PIPENV_VENV_IN_PROJECT": "1"
+  },
+  "extensions": [
+    "james-yu.latex-workshop",
+    "streetsidesoftware.code-spell-checker",
+    "davidanson.vscode-markdownlint",
+    "esbenp.prettier-vscode",
+    "ms-python.python",
+    "njpwerner.autodocstring",
+    "ms-azuretools.vscode-docker"
+  ],
+  "postCreateCommand": "bash ./.devcontainer/setup.bash",
+  "settings": {}
+}
