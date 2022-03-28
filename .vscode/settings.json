@@ -5,6 +5,7 @@
     "Broyden",
     "Davidon",
     "Goldfarb",
+    "latexindent",
     "Penrose",
     "Polak",
     "Raphson",
