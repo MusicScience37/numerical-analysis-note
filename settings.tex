@@ -84,7 +84,7 @@
 %数式の番号（章番号を使うようにする．）
 \makeatletter
 \renewcommand{\theequation}{%
-\arabic{chapter}.\arabic{equation}%
+    \arabic{chapter}.\arabic{equation}%
 }
 \@removefromreset{equation}{section}
 \@addtoreset{equation}{chapter}

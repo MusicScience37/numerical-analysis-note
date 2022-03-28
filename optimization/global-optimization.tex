@@ -29,8 +29,8 @@ DIRECT 法では，
 が成り立つとする．
 アルゴリズムの進行とともに探索領域は超短形
 \footnote{ここで扱う超短形 (hyper-rectangle) は%
-$[a_1, b_1] \times [a_2, b_2] \times \ldots \times [a_n, b_n]$%
-のように区間の積で示される領域である．}
+    $[a_1, b_1] \times [a_2, b_2] \times \ldots \times [a_n, b_n]$%
+    のように区間の積で示される領域である．}
 に分割されていくが，次に分割する超短形を決定するために，
 次のような「最適な可能性のある超短形」を定義する．
 
@@ -41,10 +41,10 @@ $[a_1, b_1] \times [a_2, b_2] \times \ldots \times [a_n, b_n]$%
     $j$ 番目の超短形が次の条件を満たすような定数 $\tilde{K}$ が存在する場合，
     最適な可能性のある超短形と呼ぶ．
     \begin{align}
-        f(\bm{c}_j) - \tilde{K} d_j &\le f(\bm{c}_i) - \tilde{K} d_i & \text{for all $i = 1, \ldots, m$}
+        f(\bm{c}_j) - \tilde{K} d_j & \le f(\bm{c}_i) - \tilde{K} d_i                & \text{for all $i = 1, \ldots, m$}
         \label{eq:optimization_direct_potentially-optimal_smaller-than-others}
         \\
-        f(\bm{c}_j) - \tilde{K} d_j &\le f_{\text{min}} - \epsilon |f_{\text{min}}|
+        f(\bm{c}_j) - \tilde{K} d_j & \le f_{\text{min}} - \epsilon |f_{\text{min}}|
         \label{eq:optimization_direct_potentially-optimal_smaller-than-now}
     \end{align}
     ここで，$f_{\text{min}} = \min{\{f_i \mid i = 1, \ldots, m\}}$ であり，
@@ -93,18 +93,18 @@ $j$ 番目の超短形で現状の大域最適解を
     \label{alg:optimization_direct}
     \begin{algorithmic}
         \Procedure{DIRECT}{$f, ,\epsilon$}
-            \State 単位超立方体 $[0, 1]^n$ を最初の超短形とする
-            \Loop
-                \State 凸包探索を用いて
-                    式 \eqref{eq:optimization_direct_potentially-optimal_smaller-than-others_rewritten}
-                    を満たす超短形を探索する
-                \State 式 \eqref{eq:optimization_direct_potentially-optimal_smaller-than-now}
-                    を満たさない超短形は除外する
-                \State 残った超短形を最も長い軸に沿って 3 つに分割する
-                \If{停止条件を満たす場合}
-                    \State \Return
-                \EndIf
-            \EndLoop
+        \State 単位超立方体 $[0, 1]^n$ を最初の超短形とする
+        \Loop
+        \State 凸包探索を用いて
+        式 \eqref{eq:optimization_direct_potentially-optimal_smaller-than-others_rewritten}
+        を満たす超短形を探索する
+        \State 式 \eqref{eq:optimization_direct_potentially-optimal_smaller-than-now}
+        を満たさない超短形は除外する
+        \State 残った超短形を最も長い軸に沿って 3 つに分割する
+        \If{停止条件を満たす場合}
+        \State \Return
+        \EndIf
+        \EndLoop
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
@@ -144,8 +144,8 @@ DIRECT 法よりも目的関数の値をとる点の数を減らすことがで�
 超短形上で取り得る最小値を計算する必要がある．
 目的関数が Lipschitz 定数 $K$ を持つ場合，
 \begin{align}
-    f(\bm{a}) - f(\bm{x}^*) &\le K \|\bm{a} - \bm{x}^*\|_2 \\
-    f(\bm{b}) - f(\bm{x}^*) &\le K \|\bm{b} - \bm{x}^*\|_2
+    f(\bm{a}) - f(\bm{x}^*) & \le K \|\bm{a} - \bm{x}^*\|_2 \\
+    f(\bm{b}) - f(\bm{x}^*) & \le K \|\bm{b} - \bm{x}^*\|_2
 \end{align}
 となる．ここで，$\bm{a}$, $\bm{b}$ は対角上にある頂点，
 $\bm{x}^*$ は超短形上で目的関数が最小となる点である．
