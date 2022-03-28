@@ -5,7 +5,7 @@
 
 \index{Newton-Raphson ほう@Newton-Raphson 法}
 \index{Newtonほう@Newton 法}
-Newton-Raphson 法は，
+Newton-Raphson 法（または単に「Newton 法」とも呼ばれる）は，
 次の式のような更新式で反復的に方程式 $f(x) = 0$ の根を求める手法である．
 \begin{equation}
     x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
@@ -239,7 +239,42 @@ $\bm{f}(\bm{x}) = \bm{0}$ ($\bm{f}: \setR^n \to \setR^n$) の場合，
 \end{equation}
 が得られる．
 
+\section{減速 Newton 法}
+
+\index{げんそく Newton ほう@減速 Newton 法}
+Newton-Raphson 法の更新式
+\eqref{eq:root-finding_newton-raphson_n-dim-update-law}
+は 1 次近似により導出しているため，
+近似によるずれが大きい場合は更新により方程式の解から離れてしまう可能性がある．
+そのような場合に対応するため，
+\index{すてっぷはば@ステップ幅}
+ステップ幅 $t_n > 0$ を加えた更新式
+\begin{equation}
+    \bm{x}_{n+1} = \bm{x}_n
+    - t_n \left( \left.\frac{\partial \bm{f}}{\partial \bm{x}}\right|_{\bm{x}=\bm{x}_n} \right)^{-1}
+    \bm{f}(\bm{x}_n)
+    \label{eq:root-finding_deaccelerated-newton-raphson_n-dim-update-law}
+\end{equation}
+による減速 Newton 法が考えられている
+\cite[6.6 節]{Togawa2007}．
+ステップ幅 $t_n$ の決定法については，以下のようなものが考えられている．
+\begin{itemize}
+    \item $\bm{x}_n$ に関係ない $t_n = t$ に固定する
+          \cite[6.6 節]{Togawa2007}．
+    \item 動的に決定する．
+          \begin{itemize}
+              \item $\|\bm{f}(\bm{x}_{n+1})\|_2 < \|\bm{f}(\bm{x}_{n})\|_2$
+                    となるまでステップ幅を縮小する
+                    \cite[6.6 節]{Togawa2007}．
+              \item 最適化の直線探索を適用する
+                    （\ref{sec:root-finding_newton-raphson_relation-to-optimization} 節参照）．
+          \end{itemize}
+\end{itemize}
+
+これにより，ステップ幅のない更新式よりも数値解を求められる問題の幅が広がる．
+
 \section{最適化との関係}
+\label{sec:root-finding_newton-raphson_relation-to-optimization}
 
 Newton-Raphson 法の更新式
 \eqref{eq:root-finding_newton-raphson_n-dim-update-law} は，
