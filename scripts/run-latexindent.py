@@ -6,7 +6,7 @@ import os
 
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
-TMP_DIR_PATH = THIS_DIR + "/.latexindent"
+TMP_DIR_PATH = os.path.abspath(THIS_DIR + "/../.latexindent")
 
 
 def run_latexindent(filepath: str):
