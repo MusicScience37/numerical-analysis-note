@@ -48,7 +48,8 @@ $\nabla f(\bm{x}_{i-1})^\top \bm{d}_i < 0$ となっている
 
 \begin{itemize}
     \item 厳密直線探索
-    \item Backtracking line search
+    \item Backtracking line search \cite[Section 9.2]{Boyd2004}
+    \item 補間に基づく直線探索 \cite[Section 9.7.1]{Press2007}
 \end{itemize}
 
 \index{げんみつちょくせんたんさく@厳密直線探索}
@@ -98,6 +99,62 @@ $t_i$ を初期値 1 から $\beta \in (0, 1)$ 倍していき，
 一般に，パラメータ $\alpha$, $\beta$ は
 $\alpha \in [0.01, 0.3]$, $\beta \in [0.1, 0.8]$ の範囲で設定される
 \cite[Section 9.2]{Boyd2004}．
+
+文献 \cite[Section 9.7.1]{Press2007} で示されている
+補間に基づく直線探索手法では，
+関数 $g_i(t_i) = f(\bm{x}_{i-1} + t_i \bm{d}_i)$ を補間して最小化する．
+Armijo の条件
+\eqref{eq:optimization_unconstrained_descent-methods_Armijo-rule}
+をある $t_i = \lambda_j$ に対して評価する際に算出される
+\begin{align}
+    g_i(0)         & = f(\bm{x}_{i-1})                      \\
+    g_i'(0)        & = \nabla f(\bm{x}_{i-1})^\top \bm{d}_i \\
+    g_i(\lambda_j) & = f(\bm{x}_{i-1} + \lambda_j \bm{d}_i)
+\end{align}
+を用いて $g_i(t_i)$ を 2 次関数により補間する．
+\begin{equation}
+    g_i(t_i) \approx
+    g_i(0) + g_i'(0) t_i
+    + \frac{g_i(\lambda_j) - g_i'(0) \lambda_j - g_i(0)}{\lambda_j^2} t_i^2
+\end{equation}
+これを最小化することにより新しいステップ幅の候補
+\begin{align}
+    \lambda_{j+1} & = - \frac{g_i'(0) \lambda_j^2}                       %
+    {2 \left( g_i(\lambda_j) - g_i'(0) \lambda_j - g_i(0) \right)}
+    \\
+                  & = - \frac{f(\bm{x}_{i-1})^\top \bm{d}_i \lambda_j^2} %
+    {2 \left( f(\bm{x}_{i-1} + \lambda_j \bm{d}_i) %
+        - \nabla f(\bm{x}_{i-1})^\top \bm{d}_i \lambda_j %
+        - f(\bm{x}_{i-1}) \right)}
+    \label{eq:eq:optimization_unconstrained_descent-methods_interpolating-line-search-update}
+\end{align}
+が得られる．なお，$t_i = \lambda_j$ が
+Armijo の条件
+\eqref{eq:optimization_unconstrained_descent-methods_Armijo-rule}
+を満たしていない場合，
+\begin{align}
+      & f(\bm{x}_{i-1} + \lambda_j \bm{d}_i)
+    - \nabla f(\bm{x}_{i-1})^\top \bm{d}_i \lambda_j
+    - f(\bm{x}_{i-1})
+    \notag                                                                      \\
+    > & f(\bm{x}_{i-1}) + \alpha \lambda_i \nabla f(\bm{x}_{i-1})^\top \bm{d}_i
+    - \nabla f(\bm{x}_{i-1})^\top \bm{d}_i \lambda_j
+    - f(\bm{x}_{i-1})
+    \notag                                                                      \\
+    = & (\alpha - 1) \lambda_i \nabla f(\bm{x}_{i-1})^\top \bm{d}_i
+    \\
+    > & 0
+\end{align}
+となるため，ゼロ割りは発生せず，
+\begin{equation}
+    0 < \lambda_{j+1} < \frac{\lambda_j}{2(1-\alpha)}
+\end{equation}
+となる．
+さらに，2 回目以降の反復では，
+$g_i(\lambda_{j-1})$ の情報もも加えて 3 次関数による補間を行うことができる
+\cite[Section 9.7.1]{Press2007}
+\footnote{$2 \times 2$ 行列の逆行列や 3 次関数の最小値の計算が必要になるため，容易ではない．}
+．
 
 \section{最急降下法}
 
