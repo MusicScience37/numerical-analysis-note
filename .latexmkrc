@@ -9,4 +9,4 @@ $bibtex = 'pbibtex %O %B';
 
 $dvipdf = 'dvipdfmx %O -f ptex-ipaex.map -o %D %S';
 
-$makeindex = 'mendex %O -o %D %S';
+$makeindex = 'mendex %O -s jpbase -o %D %S';

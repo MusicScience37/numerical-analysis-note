@@ -12,7 +12,8 @@
 
 \section{Gauss 積分公式}
 
-1 次元における積分に対する数値積分の手法の 1 つに Gauss 積分公式がある．
+1 次元における積分に対する数値積分の手法の 1 つに
+\index{Gaussせきぶんこうしき@Gauss 積分公式} Gauss 積分公式がある．
 （$a$, $b$ は $-\infty$, $\infty$ でも良い．）
 
 Gauss 積分公式では，次のように $x_1, x_2, \ldots, x_n$ 上での関数値の重み付き平均を用いる
@@ -26,7 +27,9 @@ Gauss 積分公式では，次のように $x_1, x_2, \ldots, x_n$ 上での関�
 
 \subsection{Gauss-Legendre 公式}
 
-$a$, $b$ が有限な場合に利用できる Gauss-Legendre 公式では，
+$a$, $b$ が有限な場合に利用できる
+\index{GaussLegendreせきぶんこうしき@Gauss-Legendre 積分公式}
+Gauss-Legendre 公式では，
 Legendre 関数 $P_n(x)$ の $n$ 個の零点を分点 $x_k$ に用い，
 重み関数は次のように算出する\cite{Mori1993}．
 \begin{equation}
@@ -55,6 +58,7 @@ Legendre 関数 $P_n(x)$ の $n$ 個の零点を分点 $x_k$ に用い，
 この 2 つの値の差を利用して誤差の評価を行う．
 
 Gauss 積分公式において，追加の分点を加えることで追加の近似値を算出する手法として，
+\index{GaussKronrodせきぶんこうしき@Gauss-Kronrod 積分公式}
 Gauss-Kronrod 積分公式が考えられており，
 行列演算により追加の分点と重みを算出する方法も考えられている
 \cite{Laurie1997}．
@@ -69,6 +73,8 @@ Gauss-Legendre 公式に対する適応例 \cite{NumericalCollectionCpp} を参�
 
 1 次元の数値積分において，
 Gauss 公式よりも困難な積分へ対応できる手法として，
+\index{にじゅうしすうかんすうがたこうしき@二重指数関数型公式}
+\index{Double Exponential Formula|see{二重指数関数型公式}}
 二重指数関数型公式（Double Exponential Formula, DE Formula）が存在する
 \cite[6.1 節 (b)]{Mori1993}, \cite[Section 4.5]{Press2007}．
 二重指数関数型公式では，

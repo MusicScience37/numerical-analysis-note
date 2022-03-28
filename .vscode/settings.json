@@ -3,13 +3,17 @@
     "Armijo",
     "BFGS",
     "Broyden",
+    "CUBTRI",
     "Davidon",
     "Goldfarb",
+    "Kronrod",
     "latexindent",
     "Penrose",
     "Polak",
     "Raphson",
     "Ribiere",
-    "Shanno"
+    "RKHS",
+    "Shanno",
+    "Tikhonov"
   ]
 }

@@ -3,6 +3,7 @@
 
 \chapter{カーネル法}
 
+\index{かーねるほう@カーネル法}
 本章では，カーネルを用いて補間を行うカーネル法についてまとめる．
 
 関数 $f : X \to \setC$ を
@@ -98,6 +99,7 @@ $N \to \infty$ の場合にも適用できる．
 \section{Gaussian Process}\label{sec:regularization_kernel_gaussian-process}
 
 カーネルによる補間は，
+\index{Gaussian Process}
 Gaussian Process と呼ばれる確率分布から導くこともできる
 \cite{Brochu2010}．
 ただし，データとカーネル関数の値は実数とする．
@@ -249,6 +251,8 @@ Gaussian Process を用いた表現では分散 $\sigma_K(\bm{r})$ も得られ�
 
 \section{RBF 補間}\label{sec:interp_kernel_rbf}
 
+\index{RBFほかん@RBF 補間}
+\index{Radial Basis Function}
 カーネル $K(\bm{r}, \bm{r}')$ の値が距離 $\|\bm{r} - \bm{r}'\|_2$ に依存する場合，
 そのもとになる関数は Radial Basis Function (RBF) と呼ばれる．
 RBF $\phi : [0, \infty) \to \setR$ によるカーネルは
@@ -268,6 +272,7 @@ $\phi(r) = \exp(-r^2)$
 そのようなパラメータの推定を
 \cite[Remark 3 (Connection to spatial statistics)]{Scheuerer2011}
 に沿った
+\index{maximum likelihood estimation}
 maximum likelihood estimation (MLE)
 により考える．
 
