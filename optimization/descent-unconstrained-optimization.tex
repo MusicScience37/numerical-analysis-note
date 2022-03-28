@@ -34,6 +34,8 @@ Algorithm \ref{alg:optimization_unconstrained_descent-methods_general-descent-me
 \section{直線探索}
 \label{sec:optimization_unconstrained_descent-methods_line-search}
 
+\index{ちょくせんたんさく@直線探索}
+\index{すてっぷはば@ステップ幅}
 まずは，
 Algorithm \ref{alg:optimization_unconstrained_descent-methods_general-descent-method}
 におけるステップ幅 $t_i$ を決定する直線探索の方法をまとめる．
@@ -49,6 +51,7 @@ $\nabla f(\bm{x}_{i-1})^\top \bm{d}_i < 0$ となっている
     \item Backtracking line search
 \end{itemize}
 
+\index{げんみつちょくせんたんさく@厳密直線探索}
 厳密直線探索は，更新後の目的関数の値
 $f(\bm{x}_{i-1} + t_i \bm{d}_i)$
 が最小となる $t_i$ を探索する．
@@ -73,7 +76,9 @@ $f(\bm{x}_{i-1} + t_i \bm{d}_i)$
     \label{fig:optimization_unconstrained_descent-methods_Armijo-rule-image}
 \end{figure}
 
+\index{Backtracking Line Search}
 Backtracking Line Search \cite[Section 9.2]{Boyd2004} は
+\index{Armijoのじょうけん@Armijo の条件}
 Armijo の条件 \cite[Section 7.5]{Luenberger2003}
 \begin{equation}
     f(\bm{x}_{i-1} + t_i \bm{d}_i) \le f(\bm{x}_{i-1}) + \alpha t_i \nabla f(\bm{x}_{i-1})^\top \bm{d}_i
@@ -96,6 +101,7 @@ $\alpha \in [0.01, 0.3]$, $\beta \in [0.1, 0.8]$ の範囲で設定される
 
 \section{最急降下法}
 
+\index{さいきゅうこうかほう@最急降下法}
 最急降下法では，更新方向を $\bm{d}_i = -\nabla f(\bm{x}_{i-1})$ とする．
 確実に目的関数の減少する方向を示しており，
 ここで示す他のアルゴリズムよりも更新方向の算出が簡単である．
@@ -105,6 +111,7 @@ $\alpha \in [0.01, 0.3]$, $\beta \in [0.1, 0.8]$ の範囲で設定される
 
 \section{Newton 法}
 
+\index{Newtonほう@Newton 法}
 Newton 法では，
 目的関数が狭義凸関数である（つまり，Hessian $\nabla^2 f(\bm{x}_{i-1})$ が正定値である）場合を対象とし，
 更新方向を
@@ -127,6 +134,7 @@ Newton 法の収束性については \cite[Section 9.5.3, 9.6.4]{Boyd2004} に�
 
 \section{準 Newton 法}
 
+\index{じゅんNewtonほう@準 Newton 法}
 Newton 法では，
 Hessian $\nabla^2 f(\bm{x}_{i-1})$ の逆行列が必要になるが，
 $x^4$ のように 2 階微分が 0 になる点があったり，
@@ -138,6 +146,8 @@ $\bm{d}_i = -H_{i-1} \nabla f(\bm{x}_{i-1})$
 のように Hessian の代わりの行列で置き換える準 Newton 法と呼ばれるアルゴリズムがある．
 
 準 Newton 法のうち，
+\index{Davidon-Fletcher-Powellこうしき@Davidon-Fletcher-Powell 公式}
+\index{DFPこうしき@DFP公式|see{Davidon-Fletcher-Powell 公式}}
 Davidon-Fletcher-Powell (DFP) 公式では次のように $H_i$ を算出する
 \cite[Section 9.3]{Luenberger2003}, \cite[Section 10.9]{Press2007}．
 \begin{align}
@@ -152,6 +162,8 @@ Davidon-Fletcher-Powell (DFP) 公式では次のように $H_i$ を算出する
 $H_i$ が正定値であれば，更新方向 $\bm{d}_i$ は目的関数の減少する方向になる．
 
 また，同様の性質を持つ公式の 1 つとして，
+\index{Broyden-Fletcher-Goldfarb-Shannoこうしき@Broyden-Fletcher-Goldfarb-Shanno 公式}
+\index{BFGSこうしき@BFGS 公式|see{Broyden-Fletcher-Goldfarb-Shanno 公式}}
 Broyden-Fletcher-Goldfarb-Shanno (BFGS) 公式が存在する
 \cite[Section 9.4]{Luenberger2003}．
 \begin{align}
@@ -171,6 +183,7 @@ Broyden-Fletcher-Goldfarb-Shanno (BFGS) 公式が存在する
 
 \section{共役勾配法}
 
+\index{きょうやくこうばいほう@共役勾配法}
 共役勾配法では，
 \begin{align}
     \bm{d}_1 & = -\nabla f(\bm{x}_{i-1})                         \\
@@ -182,7 +195,8 @@ Broyden-Fletcher-Goldfarb-Shanno (BFGS) 公式が存在する
 のように更新方向を算出する
 \cite[Section 8.6]{Luenberger2003}．
 $\gamma_i$ については複数の形式があるが，
-ここで示している Polak-Ribiere 法は一般により良い結果が得られるという
+ここで示している \index{Polak-Ribiereほう@Polak-Ribiere 法} Polak-Ribiere 法は
+一般により良い結果が得られるという
 \cite[Section 8.6]{Luenberger2003}, \cite[Section 10.8]{Press2007}．
 Newton 法では計算量の多い逆行列の計算が必要だが，
 共役勾配法では計算量が変数の次元のオーダーに収まるため，

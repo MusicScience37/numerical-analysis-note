@@ -3,6 +3,7 @@
 
 \chapter{Runge-Kutta 法}
 
+\index{Runge-Kuttaほう@Runge-Kutta 法}
 Runge-Kutta 法 (Runge-Kutta method) では次のような形式の初期値問題を数値的に解く
 \cite{Mitsui1993}．
 \begin{equation}
@@ -22,11 +23,14 @@ Runge-Kutta 法は，時刻 $t$ における変数 $\bm{y}(t)$ の値から，
     \label{eq:ode_runge-kutta_y-law}
 \end{align}
 
+\index{すてっぷはば@ステップ幅}
 ここで，時間の更新幅 $h$ はステップ幅と呼ばれる．
 Runge-Kutta 法には，
+\index{だんすう@段数}
 整数 $s$ （段数と呼ばれる）と係数 $a_{ij}$, $b_i$, $c_i$ の異なる様々な公式が存在する．
 係数 $a_{ij}$, $b_i$, $c_i$ は
 表 \ref{table:ode_runge-kutta_butcher-array-general} のような
+\index{Butcherはいれつ@Butcher 配列}
 Butcher 配列と呼ばれる形式で記載される．
 
 \begin{table}[bp]
@@ -50,22 +54,28 @@ Runge-Kutta 法の公式は次のように分類される．
     \item[陽的 Runge-Kutta 法] $j \ge i$ について $a_{ij} = 0$ となっている場合，
         $\bm{k}i$ は $\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s$
         の順に式 \eqref{eq:ode_runge-kutta_k-law} の右辺を評価することで計算できる．
-        このような場合は陽的 Runge-Kutta 法と呼ばれる．
+        このような場合は
+        \index{ようてきRunge-Kuttaほう@陽的 Runge-Kutta 法}
+        陽的 Runge-Kutta 法と呼ばれる．
     \item[半陰的 Runge-Kutta 法] $j > i$ について $a_{ij} = 0$ となっている場合，
         $\bm{k}i$ は $\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s$
         の順に式 \eqref{eq:ode_runge-kutta_k-law} を $\bm{k}_i$ について解くことで計算できる．
-        このような場合は半陰的 Runge-Kutta 法と呼ばれる．
+        このような場合は
+        \index{はんいんてきRunge-Kuttaほう@半陰的 Runge-Kutta 法}
+        半陰的 Runge-Kutta 法と呼ばれる．
     \item[陰的 Runge-Kutta 法] $j > i$ でも $a_{ij} \neq 0$ となる係数が存在する場合，
         $\bm{k}i$ は $i = 1, 2, \ldots, s$ について連立した
         式 \eqref{eq:ode_runge-kutta_k-law} を $\bm{k}_i$ について解くことで計算する．
-        このような場合は陰的 Runge-Kutta 法と呼ばれる．
+        このような場合は
+        \index{いんてきRunge-Kuttaほう@陰的 Runge-Kutta 法}
+        陰的 Runge-Kutta 法と呼ばれる．
 \end{description}
 
 陽的 Runge-Kutta 法の方が計算は単純だが，
 陰的 Runge-Kutta 法は
 
 \begin{itemize}
-    \item 硬い系と呼ばれる比較的不安定な微分方程式で解が安定しやすい．
+    \item \index{かたいけい@硬い系} 硬い系と呼ばれる比較的不安定な微分方程式で解が安定しやすい．
     \item 陽的 Runge-Kutta 法よりも少ない段数でより高い次数を出せる．
           （後述する公式の実例を見ると分かる．）
 \end{itemize}
@@ -75,6 +85,7 @@ Runge-Kutta 法の公式は次のように分類される．
 陰的 Runge-Kutta 法の方がステップ幅を大きくとることができ，
 目的の時刻 $t$ までの解を得るために必要な計算時間は少なくなる場合がある．
 
+\index{じすう@次数}
 また，Runge-Kutta 法の公式の精度を示す数値として次数が存在する．
 変数の近似値 $\bm{y}(t + h)$ が厳密解の Tailor 展開が $p$ じまで一致する場合，
 その公式は $p$ 次といい，$p$ は次数と呼ばれる．
@@ -82,6 +93,7 @@ Runge-Kutta 法の公式は次のように分類される．
 
 \section{埋め込み型公式}
 
+\index{うめこみがたのこうしき@埋め込み型の公式}
 Runge-Kutta 法の公式の中には，複数の $c_i$ の組を持つものがある
 （表 \ref{table:ode_runge-kutta_butcher-array-rkf45} の例を参照）．
 そのような公式では，次のような 2 つの近似値を得ることができる．
@@ -306,6 +318,8 @@ Jacobian を固定することの効果はより大きくなる
     \end{tabular}
 \end{table}
 
+\index{こてんてきRunge-Kuttaほう@古典的 Runge-Kutta 法}
+\index{RK4こうしき@RK4 公式}
 古典的 Runge-Kutta 法と呼ばれる公式では，
 表 \ref{table:ode_runge-kutta_butcher-array-rk4} のような係数を用いる
 \cite[3.3 節]{Mitsui1993}．
@@ -330,6 +344,7 @@ Jacobian を固定することの効果はより大きくなる
     \end{tabular}
 \end{table}
 
+\index{RKF45こうしき@RKF45 公式}
 RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
 表 \ref{table:ode_runge-kutta_butcher-array-rkf45} のような係数を用いる
 \cite[4.1 節 (a)]{Mitsui1993}, \cite[Section 9.5]{Mathews2004}．
@@ -351,6 +366,7 @@ RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
     \end{tabular}
 \end{table}
 
+\index{Eulerほう@Euler 法}
 常微分方程式の解法としては最も基本的な Euler 法は形式的に Runge-Kutta 法とみなすことができる．
 Euler 法は
 \begin{equation}
@@ -390,6 +406,8 @@ Euler 法は
     \end{tabular}
 \end{table}
 
+\index{たなかFormula@田中 Formula}
+\index{たなかFormula2@田中 Formula2}
 文献 \cite{Togawa2007} では，田中正次氏が考案した半陰的・陰的公式がいくつか示されている．
 そのうち埋め込み型の半陰的公式を表
 \ref{table:ode_runge-kutta_butcher-array-tanaka-formula1},
@@ -419,6 +437,7 @@ Euler 法は
     \end{tabular}
 \end{table}
 
+\index{Butcher-Kuntzmannこうしき@Butcher-Kuntzmann 公式}
 文献 \cite[5.2 節 (b)]{Mitsui1993} によると，
 陰的 Runge-Kutta 法では，$s$ 段公式で $2s$ 次を超えることができないと証明されており，
 その限界の $2s$ 次の公式が存在することも証明されている．
@@ -441,6 +460,7 @@ $s$ 段 Butcher-Kuntzmann 公式と呼ばれる．
     \end{tabular}
 \end{table}
 
+\index{いんてきEulerほう@陰的 Euler 法}
 常微分方程式の解法として，（陽的）Euler 法と同様に基本的な陰的 Euler 法も
 形式的に Runge-Kutta 法とみなすことができる．
 陰的 Euler 法は
@@ -453,6 +473,7 @@ $s$ 段 Butcher-Kuntzmann 公式と呼ばれる．
 
 \section{Rosenbrock 法}
 
+\index{Rosenbrockほう@Rosenbrock 法}
 陰的 Runge-Kutta 法においては，
 方程式を Newton-Raphson 法などで反復的に解く必要がある．
 これにより，最終的な解の誤差には Runge-Kutta 法の離散化誤差に加えて
@@ -509,6 +530,7 @@ Rosenbrock 法では
 どちらの手法も計算時間のオーダーは $d^3$ となるが，
 その係数は Rosenbrock 法の方が小さくなる．
 
+\index{ROS3wこうしき@ROS3w 公式}
 文献 \cite{Rang2005} の ROS3w 公式では，次のような係数を用いる．
 \begin{align}
     a_{21}      & = 6.666666666666666 \times 10^{-1}  \\

@@ -3,6 +3,9 @@
 
 \chapter{大域最適化}
 
+\index{たいいきさいてきか@大域最適化}
+\index{たいいきさいてきかい@大域最適解}
+\index{きょくしょさいてきかい@局所最適解}
 勾配を用いた最適化アルゴリズムでは，
 局所的に目的関数が周りより小さい点（局所最適解）を見つけられるが，
 目的関数が最も小さくなる点（大域最適解）を見つけられるとは限らない．
@@ -11,6 +14,8 @@
 
 \section{Dividing Rectangles (DIRECT) 法}\label{sec:optimization_direct}
 
+\index{Dividing Rectangles ほう@Dividing Rectangles 法}
+\index{DIRECT|see{Dividing Rectangles 法}}
 Dividing Rectangles (DIRECT) 法 \cite{Jones1993} では，
 黄金比探索（第 \ref{sec:optimization_golden-section-search} 節）と同様に
 領域を分割していきながら最適解を求める．
@@ -20,7 +25,7 @@ Dividing Rectangles (DIRECT) 法 \cite{Jones1993} では，
 DIRECT 法では，
 探索領域を $n$ 次元単位超立方体 $[0, 1]^n$ とし，
 その上で定義される目的関数 $f : [0, 1]^n \to \setR$ を考える．
-目的関数は Lipschitz 連続であるとする．
+目的関数は \index{Lipschitzれんぞく@Lipschitz 連続} Lipschitz 連続であるとする．
 つまり，ある定数 $K$ が存在し，
 任意の点 $\bm{x}, \bm{y} \in [0, 1]^n$ について
 \begin{equation}
@@ -121,6 +126,7 @@ DIRECT 法の派生としては以下のようなものが挙げられる．
 
 \section{Adaptive Diagonal Curves 法}
 
+\index{Adaptive Diagonal Curves}
 Adaptive Diagonal Curves 法 \cite{Sergeyev2006} は
 DIRECT 法（第 \ref{sec:optimization_direct} 節）と同様に
 単位超立方体の探索領域を超短形に分割していくアルゴリズムである．
