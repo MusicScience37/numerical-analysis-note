@@ -3,13 +3,24 @@
     "Armijo",
     "BFGS",
     "Broyden",
+    "CUBTRI",
     "Davidon",
+    "Fehlberg",
     "Goldfarb",
+    "Kahan",
+    "Kronrod",
+    "Kuntzmann",
+    "Kutta",
     "latexindent",
+    "Lipschitz",
     "Penrose",
     "Polak",
     "Raphson",
     "Ribiere",
-    "Shanno"
+    "RKHS",
+    "Rosenbrock",
+    "Runge",
+    "Shanno",
+    "Tikhonov"
   ]
 }

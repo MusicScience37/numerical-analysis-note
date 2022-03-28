@@ -5,6 +5,7 @@
 
 \chapter{導入}
 
+\index{さいてきか@最適化}
 この部では，最適化のアルゴリズムをまとめる．
 
 最適化問題は一般に次のように書ける．
@@ -25,17 +26,18 @@ $\bm{h} : \setR^n \to \setR^r$
 全ての要素において「$\le$」の関係が成り立つことを意味する．
 
 問題\eqref{eq:optimization_general_problem}において，
-関数$f$は目的関数，
-$\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ばれ，
+関数$f$は \index{もくてきかんすう@目的関数} 目的関数，
+$\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は
+\index{せいやくじょうけん@制約条件} 制約条件と呼ばれ，
 制約条件を満たす中で目的関数を最小化する問題を示している．
-最小化した結果の変数 $\bm{x}$ は最適解と呼ばれ，
-目的関数の値は最適値と呼ばれる．
+最小化した結果の変数 $\bm{x}$ は \index{さいてきかい@最適解} 最適解と呼ばれ，
+目的関数の値は \index{さいてきち@最適値} 最適値と呼ばれる．
 
 なお，最小化でなく最大化で定式化する場合もあるが，
 ここでは最小化に統一して説明する．
 
 最適化のアルゴリズムは，
-対称とする問題に制約条件があるものとないものに分けられる．
+対象とする問題に制約条件があるものとないものに分けられる．
 
 \chapter{基本的な定義と性質}
 
@@ -46,7 +48,7 @@ $\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ば�
         f\left(\alpha \bm{x} + (1-\alpha) \bm{y}\right)
         \le \alpha f(\bm{x}) + (1-\alpha) f(\bm{y})
     \end{equation}
-    を満たす場合，関数 $f$ を凸関数（convex function）と呼ぶ．
+    を満たす場合，関数 $f$ を \index{とつかんすう@凸関数} 凸関数（convex function）と呼ぶ．
 \end{definition}
 
 \begin{theorem}[{\cite[Section 6.4]{Luenberger2003}},{\cite[Section 3.1.3]{Boyd2004}}]
@@ -74,7 +76,8 @@ $\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ば�
         f\left(\alpha \bm{x} + (1-\alpha) \bm{y}\right)
         < \alpha f(\bm{x}) + (1-\alpha) f(\bm{y})
     \end{equation}
-    を満たす場合，関数 $f$ は狭義凸関数（strictly convex function）であるという．
+    を満たす場合，関数 $f$ は
+    \index{きょうぎとつかんすう@狭義凸関数} 狭義凸関数（strictly convex function）であるという．
 \end{definition}
 
 \begin{definition}[{\cite[Section 9.1.2]{Boyd2004}}]
@@ -84,7 +87,8 @@ $\bm{g}(\bm{x}) \le \bm{0}$, $\bm{h}(\bm{x}) = \bm{0}$は制約条件と呼ば�
     \begin{equation}
         \nabla^2 f(\bm{x}) \succeq m I
     \end{equation}
-    を満たす場合，関数 $f$ は強凸関数（strongly convex function）であるという．
+    を満たす場合，関数 $f$ は
+    \index{きょうとつかんすう@強凸関数} 強凸関数（strongly convex function）であるという．
 \end{definition}
 
 \begin{theorem}[{\cite[Section 9.1.2]{Boyd2004}}]

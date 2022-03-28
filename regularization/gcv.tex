@@ -3,6 +3,8 @@
 
 \chapter{Generalized Cross Validation}
 
+\index{Generalized Cross Validation}
+\index{GCV|see{Generalized Cross Validation}}
 正則化パラメータを求めるための手法の 1 つに
 Generalized Cross Validation (GCV) がある．
 GCV では，次の式の最小化を行う
@@ -18,7 +20,7 @@ GCV では，次の式の最小化を行う
 ここで，$\bm{x}_\lambda$ は
 正則化の式 \eqref{eq:regularization_intro_general-regularization} を最小化する
 $\bm{x}$であり，
-$P_A(\lambda)$ は influence matrix と呼ばれるもので，
+$P_A(\lambda)$ は \index{influence matrix} influence matrix と呼ばれるもので，
 データ $\bm{y}$ から解 $\bm{x}_\lambda$ を求める作用素を $A_\lambda^\#$ としたときに，
 \begin{equation}
     P_A(\lambda) \equiv
@@ -29,6 +31,8 @@ $P_A(\lambda)$ は influence matrix と呼ばれるもので，
 
 \section{導出}
 
+\index{Ordinary Cross Validation}
+\index{OCV|see{Ordinary Cross Validation}}
 まず，GCV の基になっている Ordinary Cross Validation (OCV) を
 文献 \cite{Wahba1990} に沿って示す．
 
@@ -43,7 +47,7 @@ OCV では次の関数を考える．
 $A_i$ は解からデータ $y_i$ を推定する作用素である．
 
 ここで次の補題が成り立つ．
-\begin{lemma}[文献 {\cite{Wahba1990}} の補題 4.2.1 より, leaving-out-one lemma]
+\begin{lemma}[文献 {\cite{Wahba1990}} の補題 4.2.1 より, \index{leaving-out-one lemma} leaving-out-one lemma]
     評価関数
     \begin{equation}
         \frac{1}{m} \left(\left|z - A_k \bm{x}\right|^2
@@ -260,6 +264,7 @@ $A$ を作用させることにより，
     \label{eq:regularization_gcv_influence-approximation-by-Deshpande}
 \end{align}
 これは文献 \cite{Girard1989} において提案された
+\index{Monte-Carlo Cross-Validation}
 Monte-Carlo Cross-Validation と呼ばれる手法のもので，
 $\bm{w}$ は各要素を独立に平均 0，分散 1 の正規分布 $\mathcal{N}(0,1)$ から
 サンプリングしたベクトルである
