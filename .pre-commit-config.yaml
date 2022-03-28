@@ -15,9 +15,13 @@ repos:
         entry: pipenv run python fix-ten-maru.py
         language: system
         files: "\\.(tex|md)$"
-        exclude: "extern"
       - id: check_filenames
         name: Check filenames
         entry: pipenv run python check-filename.py
         language: system
-        exclude: "extern"
+      - id: format_tex_files
+        name: Format TeX files
+        entry: pipenv run python run-latexindent.py
+        language: system
+        files: "\\.(tex)$"
+exclude: "extern"
