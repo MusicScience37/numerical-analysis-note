@@ -217,17 +217,69 @@ $r$ が奇数の場合，
     が成り立ち，$x_n$ の列がべき根 $\sqrt[r]{a}$ へ収束する．
 \end{proof}
 
-\section{2 次元以上の方程式の場合}
+\section{一般の次元の方程式の場合}
 
 一般に $n$ 次元（$n=1,2,\ldots$）の方程式
 $\bm{f}(\bm{x}) = \bm{0}$ ($\bm{f}: \setR^n \to \setR^n$) の場合，
 1 次近似
 \begin{equation}
     \bm{f}(\bm{x}_{n+1}) \approx
-    \bm{f}(\bm{x}_n) + \frac{\partial \bm{f}}{\partial \bm{x}} (\bm{x}_{n+1} - \bm{x}_n)
+    \bm{f}(\bm{x}_n)
+    + \left.\frac{\partial \bm{f}}{\partial \bm{x}}\right|_{\bm{x}=\bm{x}_n}
+    (\bm{x}_{n+1} - \bm{x}_n)
 \end{equation}
 をもとに更新式
 \begin{equation}
-    \bm{x}_{n+1} = \bm{x}_n - \left(\frac{\partial \bm{f}}{\partial \bm{x}}\right)^{-1} \bm{f}(\bm{x}_n)
+    \bm{x}_{n+1} = \bm{x}_n
+    - \left( \left.\frac{\partial \bm{f}}{\partial \bm{x}}\right|_{\bm{x}=\bm{x}_n} \right)^{-1}
+    \bm{f}(\bm{x}_n)
+    \label{eq:root-finding_newton-raphson_n-dim-update-law}
 \end{equation}
 が得られる．
+
+\section{最適化との関係}
+
+Newton-Raphson 法の更新式
+\eqref{eq:root-finding_newton-raphson_n-dim-update-law} は，
+最適化における勾配法
+（\ref{chap:optimization_unconstrained_descent-methods} 章）
+の枠組みでとらえることができる．
+そのことを利用すると，
+Backtracking Line Search
+(Algorithm \ref{alg:optimization_unconstrained_descent-methods_BacktrackingLineSearch})
+のような直線探索の手法を Newton-Raphson 法にも取り入れることができる．
+
+$n$ 次元（$n=1,2,\ldots$）の方程式
+$\bm{f}(\bm{x}) = \bm{0}$ ($\bm{f}: \setR^n \to \setR^n$)
+に対して最適化の目的関数
+\begin{equation}
+    g(\bm{x}) = \frac{1}{2} \| \bm{f}(\bm{x}) \|_2^2
+\end{equation}
+を考える．
+このとき，勾配は
+\begin{equation}
+    \nabla g(\bm{x}) = \bm{f}(\bm{x})^\top \frac{\partial \bm{f}}{\partial \bm{x}}
+\end{equation}
+となるため，
+Newton-Raphson 法の更新式における更新方向
+\begin{equation}
+    \bm{d} = - \left(\frac{\partial \bm{f}}{\partial \bm{x}}\right)^{-1} \bm{f}(\bm{x})
+\end{equation}
+は，$\bm{f}(\bm{x}) = 0$ でない限り
+\begin{align}
+    \nabla g(\bm{x})^\top \bm{d}
+     & = - \bm{f}(\bm{x})^\top \frac{\partial \bm{f}}{\partial \bm{x}}
+    \left(\frac{\partial \bm{f}}{\partial \bm{x}}\right)^{-1} \bm{f}(\bm{x})
+    \notag                                                             \\
+     & = - \bm{f}(\bm{x})^\top \bm{f}(\bm{x})
+    \notag                                                             \\
+     & = - \| \bm{f}(\bm{x}) \|_2^2
+    \notag                                                             \\
+     & < 0
+\end{align}
+のように目的関数の降下方向となっている．
+
+以上から，目的関数 $g(\bm{x})$ の最適化を行うものとして
+最適化の直線探索手法
+(\ref{sec:optimization_unconstrained_descent-methods_line-search} 節)
+を適用することができる．

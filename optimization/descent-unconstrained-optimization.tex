@@ -2,6 +2,7 @@
 %
 
 \chapter{勾配を用いた制約なし最適化}
+\label{chap:optimization_unconstrained_descent-methods}
 
 ここでは，勾配を用いた最適化アルゴリズムをまとめる．
 
@@ -10,15 +11,15 @@
     \label{alg:optimization_unconstrained_descent-methods_general-descent-method}
     \begin{algorithmic}
         \Procedure{DescentMethod}{$f, \bm{x}_0$}
-            \For{$i = 1,2,\ldots$}
-                \State 更新方向 $\bm{d}_i \in \setR^n$ を算出する
-                \State 直線探索により更新方向に掛ける係数 $t_i$ を決定する
-                \Comment{通常 $f(\bm{x}_{i-1} + t_i \bm{d}_i) < f(\bm{x}_{i-1})$ とする}
-                \State $\bm{x}_i \gets \bm{x}_{i-1} + t_i \bm{d}_i$
-                \If{終了条件を満たしている}
-                    \State \Return $\bm{x}_i$
-                \EndIf
-            \EndFor
+        \For{$i = 1,2,\ldots$}
+        \State 更新方向 $\bm{d}_i \in \setR^n$ を算出する
+        \State ステップ幅（更新方向に掛ける係数） $t_i$ を決定する
+        \Comment{通常 $f(\bm{x}_{i-1} + t_i \bm{d}_i) < f(\bm{x}_{i-1})$ とする}
+        \State $\bm{x}_i \gets \bm{x}_{i-1} + t_i \bm{d}_i$
+        \If{終了条件を満たしている}
+        \State \Return $\bm{x}_i$
+        \EndIf
+        \EndFor
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
@@ -31,8 +32,11 @@ Algorithm \ref{alg:optimization_unconstrained_descent-methods_general-descent-me
 最急降下法，Newton 法，共役勾配法のような様々なアルゴリズムが存在する．
 
 \section{直線探索}
+\label{sec:optimization_unconstrained_descent-methods_line-search}
 
-まずは，直線探索の方法をまとめる．
+まずは，
+Algorithm \ref{alg:optimization_unconstrained_descent-methods_general-descent-method}
+におけるステップ幅 $t_i$ を決定する直線探索の方法をまとめる．
 直線探索では
 $\nabla f(\bm{x}_{i-1})^\top \bm{d}_i < 0$ となっている
 （つまり，$\bm{d}_i$ は目的関数が減少する方向になっている）
@@ -54,10 +58,10 @@ $f(\bm{x}_{i-1} + t_i \bm{d}_i)$
     \label{alg:optimization_unconstrained_descent-methods_BacktrackingLineSearch}
     \begin{algorithmic}
         \Procedure{BacktrackingLineSearch}{$f, \bm{x}_{i-1}, \bm{d}_i$}
-            \State $t_i \gets 1$
-            \While{$f(\bm{x}_{i-1} + t_i \bm{d}_i) > f(\bm{x}_{i-1}) + \alpha t_i \nabla f(\bm{x}_{i-1})^\top \bm{d}_i$}
-                \State $t_i \gets \beta t_i$
-            \EndWhile
+        \State $t_i \gets 1$
+        \While{$f(\bm{x}_{i-1} + t_i \bm{d}_i) > f(\bm{x}_{i-1}) + \alpha t_i \nabla f(\bm{x}_{i-1})^\top \bm{d}_i$}
+        \State $t_i \gets \beta t_i$
+        \EndWhile
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
@@ -109,11 +113,11 @@ $\bm{d}_i = -\nabla^2 f(\bm{x}_{i-1})^{-1} \nabla f(\bm{x}_{i-1})$
 $\nabla^2 f(\bm{x}_{i-1})$ が正定値である場合，
 $\nabla^2 f(\bm{x}_{i-1})^{-1}$ も正定値になる
 \footnote{%
-対称行列 $A$ が正定値である場合，$A$ の固有値は正の実数である．%
-$A$ は固有値分解により $A=VDV^\top$ （$D$ は固有値による対角行列，$V$ は直交行列）と書くことができるため，%
-$A^{-1} = VD^{-1}V^\top$ となる．%
-よって，$A^{-1}$ の固有値も全て正の実数であり，%
-$A^{-1}$ は正定値である．%
+    対称行列 $A$ が正定値である場合，$A$ の固有値は正の実数である．%
+    $A$ は固有値分解により $A=VDV^\top$ （$D$ は固有値による対角行列，$V$ は直交行列）と書くことができるため，%
+    $A^{-1} = VD^{-1}V^\top$ となる．%
+    よって，$A^{-1}$ の固有値も全て正の実数であり，%
+    $A^{-1}$ は正定値である．%
 }
 ため，
 最適解でない $\bm{x}_{i-1}$ においては
@@ -137,10 +141,10 @@ $\bm{d}_i = -H_{i-1} \nabla f(\bm{x}_{i-1})$
 Davidon-Fletcher-Powell (DFP) 公式では次のように $H_i$ を算出する
 \cite[Section 9.3]{Luenberger2003}, \cite[Section 10.9]{Press2007}．
 \begin{align}
-    H_{i+1} &= H_i + \frac{\bm{p}_i \bm{p}_i^\top}{\bm{p}_i^\top \bm{q}_i}
-        - \frac{H_i \bm{q}_i \bm{q}_i^\top H_i}{\bm{q}_i^\top H_i \bm{q}_i} \\
-    \bm{p}_i &= \bm{x}_{i+1} - \bm{x}_i \\
-    \bm{q}_i &= \nabla f(\bm{x}_{i+1}) - \nabla f(\bm{x}_i)
+    H_{i+1}  & = H_i + \frac{\bm{p}_i \bm{p}_i^\top}{\bm{p}_i^\top \bm{q}_i}
+    - \frac{H_i \bm{q}_i \bm{q}_i^\top H_i}{\bm{q}_i^\top H_i \bm{q}_i}      \\
+    \bm{p}_i & = \bm{x}_{i+1} - \bm{x}_i                                     \\
+    \bm{q}_i & = \nabla f(\bm{x}_{i+1}) - \nabla f(\bm{x}_i)
 \end{align}
 初期値 $H_0$ を対称な正定値の行列にしておけば，
 全ての $H_i$ が帰納的に正定値になる
@@ -151,29 +155,29 @@ $H_i$ が正定値であれば，更新方向 $\bm{d}_i$ は目的関数の減�
 Broyden-Fletcher-Goldfarb-Shanno (BFGS) 公式が存在する
 \cite[Section 9.4]{Luenberger2003}．
 \begin{align}
-    H_i &= B_i^{-1} \\
-    B_{i+1} &= B_i + \frac{\bm{q}_i \bm{q}_i^\top}{\bm{q}_i^\top \bm{p}_i}
-        - \frac{B_i \bm{p}_i \bm{p}_i^\top B_i}{\bm{p}_i^\top B_i \bm{p}_i}
+    H_i     & = B_i^{-1}                                                    \\
+    B_{i+1} & = B_i + \frac{\bm{q}_i \bm{q}_i^\top}{\bm{q}_i^\top \bm{p}_i}
+    - \frac{B_i \bm{p}_i \bm{p}_i^\top B_i}{\bm{p}_i^\top B_i \bm{p}_i}
 \end{align}
 逆行列を計算することで次のようにも書くことができる
 \cite[Section 10.9]{Press2007}．
 \begin{align}
-    H_{i+1} &= H_i + \frac{\bm{p}_i \bm{p}_i^\top}{\bm{p}_i^\top \bm{q}_i}
-        - \frac{H_i \bm{q}_i \bm{q}_i^\top H_i}{\bm{q}_i^\top H_i \bm{q}_i}
-        + \bm{q}_i^\top H_i \bm{q}_i \bm{v}_i \bm{v}_i^\top \\
-    \bm{v}_i &= \frac{\bm{p}_i}{\bm{p}_i^\top \bm{q}_i}
-        - \frac{H_i \bm{q}_i}{\bm{q}_i^\top H_i \bm{q}_i}
+    H_{i+1}  & = H_i + \frac{\bm{p}_i \bm{p}_i^\top}{\bm{p}_i^\top \bm{q}_i}
+    - \frac{H_i \bm{q}_i \bm{q}_i^\top H_i}{\bm{q}_i^\top H_i \bm{q}_i}
+    + \bm{q}_i^\top H_i \bm{q}_i \bm{v}_i \bm{v}_i^\top                      \\
+    \bm{v}_i & = \frac{\bm{p}_i}{\bm{p}_i^\top \bm{q}_i}
+    - \frac{H_i \bm{q}_i}{\bm{q}_i^\top H_i \bm{q}_i}
 \end{align}
 
 \section{共役勾配法}
 
 共役勾配法では，
 \begin{align}
-    \bm{d}_1 &= -\nabla f(\bm{x}_{i-1}) \\
-    \bm{d}_i &= -\nabla f(\bm{x}_{i-1}) + \gamma_i \bm{d}_{i-1} \\
-    \gamma_i &=
-        \frac{(\nabla f(\bm{x}_{i-1}) - \nabla f(\bm{x}_{i-2}))^\top \nabla f(\bm{x}_{i-1})}
-        {\|\nabla f(\bm{x}_{i-2})\|_2^2}
+    \bm{d}_1 & = -\nabla f(\bm{x}_{i-1})                         \\
+    \bm{d}_i & = -\nabla f(\bm{x}_{i-1}) + \gamma_i \bm{d}_{i-1} \\
+    \gamma_i & =
+    \frac{(\nabla f(\bm{x}_{i-1}) - \nabla f(\bm{x}_{i-2}))^\top \nabla f(\bm{x}_{i-1})}
+    {\|\nabla f(\bm{x}_{i-2})\|_2^2}
 \end{align}
 のように更新方向を算出する
 \cite[Section 8.6]{Luenberger2003}．
