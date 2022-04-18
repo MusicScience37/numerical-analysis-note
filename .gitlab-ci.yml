@@ -1,4 +1,4 @@
-image: registry.gitlab.com/islandoftex/images/texlive:TL2021-2022-03-13-04-43
+image: registry.gitlab.com/musicscience37_ci/texlive-pipenv-docker:v0.1
 
 stages:
   - test
@@ -9,9 +9,6 @@ pre-commit:
   stage: test
   needs: []
   script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends python3-pip python3-venv
-    - pip3 install pipenv
     - pipenv sync --dev
     - pipenv run pre-commit run --all-files
 
