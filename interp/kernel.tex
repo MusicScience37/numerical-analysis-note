@@ -151,7 +151,7 @@ Gaussian Process は関数における正規分布のようなものである．
 
 ここで，
 \begin{align}
-    \sigma_K(\bm{r})
+    \sigma_K^2(\bm{r})
      & \equiv \tau K(\bm{r}, \bm{r})
     - \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \\
      & = \tau K(\bm{r}, \bm{r})
@@ -165,7 +165,7 @@ Gaussian Process は関数における正規分布のようなものである．
             \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
         \end{pmatrix}
     }
-     & = \sigma_K(\bm{r}) \det(\tau K_m + \sigma^2 I)
+     & = \sigma_K^2(\bm{r}) \det(\tau K_m + \sigma^2 I)
 \end{align}
 となる．
 また，
@@ -179,13 +179,13 @@ Gaussian Process は関数における正規分布のようなものである．
      & =
     \begin{pmatrix}
         (\tau K_m + \sigma^2 I)^{-1}
-        + (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1}
+        + (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K^2(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1}
          &
-        - (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K(\bm{r})^{-1}
+        - (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K^2(\bm{r})^{-1}
         \\
-        - \sigma_K(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1}
+        - \sigma_K^2(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1}
          &
-        \sigma_K(\bm{r})^{-1}
+        \sigma_K^2(\bm{r})^{-1}
     \end{pmatrix}
 \end{align}
 であり，
@@ -203,15 +203,15 @@ Gaussian Process は関数における正規分布のようなものである．
     \end{pmatrix}
     \notag                                            \\
      & = \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
-    + \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    + \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K^2(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
     \notag                                            \\ & \hspace{2em}
-    - f(\bm{r}) \sigma_K(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
-    - \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K(\bm{r})^{-1} f(\bm{r})
+    - f(\bm{r}) \sigma_K^2(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    - \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K^2(\bm{r})^{-1} f(\bm{r})
     \notag                                            \\ & \hspace{2em}
-    + f(\bm{r}) \sigma_K(\bm{r})^{-1} f(\bm{r})
+    + f(\bm{r}) \sigma_K^2(\bm{r})^{-1} f(\bm{r})
     \notag                                            \\
      & = \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
-    + \sigma_K(\bm{r})^{-1} \left(f(\bm{r}) - \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}\right)^2
+    + \sigma_K^2(\bm{r})^{-1} \left(f(\bm{r}) - \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}\right)^2
 \end{align}
 となる．
 よって，確率密度関数は次のように分割できる．
@@ -224,15 +224,15 @@ Gaussian Process は関数における正規分布のようなものである．
     \exp\left(-\frac{1}{2} \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y} \right)
     \\
     p_f(f(\bm{r}))
-     & = \frac{1}{\sqrt{(2\pi)^{m} \sigma_K(\bm{r})}}
-    \exp\left(-\frac{1}{2} \sigma_K(\bm{r})^{-1} \left(f(\bm{r}) - \mu_K(\bm{r})\right)^2\right)
+     & = \frac{1}{\sqrt{(2\pi)^{m} \sigma_K^2(\bm{r})}}
+    \exp\left(-\frac{1}{2} \sigma_K^2(\bm{r})^{-1} \left(f(\bm{r}) - \mu_K(\bm{r})\right)^2\right)
     \\
     \mu_K(\bm{r})
      & = \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
 \end{align}
 分割したあとの
 $p_{\bm{y}}$ は $\bm{y}$ に関する正規分布 $\mathcal{N}(\bm{0}, \tau K_m + \sigma^2 I)$ であり，
-$p_f$ は $f(\bm{r})$ に関する正規分布 $\mathcal{N}(\mu_K(\bm{r}), \sigma_K(\bm{r}))$ である．
+$p_f$ は $f(\bm{r})$ に関する正規分布 $\mathcal{N}(\mu_K(\bm{r}), \sigma_K^2(\bm{r}))$ である．
 $\lambda = \sigma^2 / \tau$ とおくと，
 \begin{align}
     \mu_K(\bm{r})
@@ -244,7 +244,7 @@ $\lambda = \sigma^2 / \tau$ とおくと，
 \end{align}
 のように前節と同様の公式が得られる．
 
-Gaussian Process を用いた表現では分散 $\sigma_K(\bm{r})$ も得られるため，
+Gaussian Process を用いた表現では分散 $\sigma_K^2(\bm{r})$ も得られるため，
 補間された関数のどの部分に誤差が多い可能性が高いか評価するのにも役立つ．
 また，パラメータ推定において確率の最大化を行うといった応用もある
 （\ref{sec:regularization_kernel_param-est} 節）．
@@ -261,9 +261,25 @@ RBF $\phi : [0, \infty) \to \setR$ によるカーネルは
     \label{eq:regularization_kernel_kernel-of-rbf}
 \end{equation}
 のように書ける．
-代表的な RBF としては Gaussian
-$\phi(r) = \exp(-r^2)$
-が挙げられる\cite{Brochu2010}．
+RBF としては表
+\ref{table:interp_kernel_example-rbfs}
+のようなものが挙げられる
+\cite{Brochu2010,Fornberg2015}．
+
+\begin{table}[bp]
+    \caption{RBF の例 \cite{Brochu2010,Fornberg2015}}
+    \label{table:interp_kernel_example-rbfs}
+    \centering
+    \begin{tabular}{ll}
+        名称                      & 関数                         \\
+        \hline
+        Gaussian                & $e^{-r^2}$                 \\
+        Multi-quadric           & $\sqrt{1 + r^2}$           \\
+        Inverse Multi-quadric   & $1/\sqrt{1 + r^2}$         \\
+        Inverse Quadric         & $1 / (1 + r^2)$            \\
+        Bessel ($d=1,2,\ldots$) & $J_{d/2-1}(r) / r^{d/2-1}$
+    \end{tabular}
+\end{table}
 
 \section{パラメータ推定}\label{sec:regularization_kernel_param-est}
 
@@ -385,3 +401,36 @@ $D = \diag(\lambda_1, \lambda_2, \ldots, \lambda_m)$
     + \sum_{i=1}^m \log(\lambda_i + \lambda)
 \end{align}
 のように書ける．
+
+\section{大域最適解への応用}
+
+Gaussian Process （\ref{sec:regularization_kernel_gaussian-process} 節）を利用した
+大域最適解のアルゴリズムが考案されている
+\cite{Srinivas2010}．
+
+領域 $D \in \setR^d$ 上で関数 $f : D \to \setR$ を最小化する
+制約なし最適化の問題を考える
+\footnote{文献 \cite{Srinivas2010} では最大化を前提としているが，%
+    ここでは \ref{part:optimization} 部に合わせて最小化を考える．}．
+文献 \cite{Srinivas2010} のアルゴリズムにおいては，
+各反復ごとにこれまでに算出したサンプル点
+$(\bm{x}_i, f(\bm{x}_i))$ ($i = 1,2,\ldots,T$)
+に対して Gaussian Process による補間を行い，
+Gaussian Process の平均 $\mu_T(\bm{x})$ と標準偏差 $\sigma_T(\bm{x})$ を算出できるようにする．
+そして，反復ごとに変化する係数 $\beta_t$ を用いて定義される目的関数
+\begin{equation}
+    F_T(\bm{x}) = \mu_T(\bm{x}) - \sqrt{\beta_{T+1}} \sigma_T(\bm{x})
+\end{equation}
+を最小化するような $\bm{x}$ を次のサンプル点として選択する．
+係数 $\beta_t$ は
+\begin{itemize}
+    \item $\beta_t = 2 \log(|D| t^2 \pi^2 / 6 \delta)$,
+          $\delta \in (0, 1)$
+          \cite{Srinivas2010}
+    \item $\beta_t = 2 \log(t^{d/2+2} \pi^2 /3 \delta)$,
+          $\delta \in (0, 1)$
+          \cite{Brochu2010}
+\end{itemize}
+のように与えられる．
+関数 $F_T$ を最小化するために別の大域最適解のアルゴリズムが必要となるが，
+元の目的関数 $f$ の値を得るのに時間がかかる場合には有効なアルゴリズムである．
