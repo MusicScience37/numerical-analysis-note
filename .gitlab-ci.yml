@@ -1,4 +1,4 @@
-image: registry.gitlab.com/musicscience37/texlive-pipenv-docker:tl2022-v0.3
+image: registry.gitlab.com/musicscience37/texlive-pipenv-docker:tl2022
 
 stages:
   - test
@@ -35,4 +35,4 @@ pages:
     paths:
       - public
   only:
-    - master
+    - main

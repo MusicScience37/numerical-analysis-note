@@ -4,7 +4,7 @@
 
 ## ビルド済み PDF
 
-- [master ブランチの最新版の PDF](https://numanalnote.musicscience37.com/numerical-analysis-note.pdf)
+- [main ブランチの最新版の PDF](https://numanalnote.musicscience37.com/numerical-analysis-note.pdf)
 
 ## 開発者向け
 

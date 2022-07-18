@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/musicscience37/texlive-pipenv-docker:tl2022-v0.3
+FROM registry.gitlab.com/musicscience37/texlive-pipenv-docker:tl2022
 
 ENV PATH="${PATH}:/root/.local/bin"
 RUN apt-get update && \
@@ -7,4 +7,5 @@ RUN apt-get update && \
     gnupg2 \
     vim nano && \
     apt-get autoremove -y && \
-    apt-get autoclean
+    apt-get autoclean && \
+    rm -r /var/lib/apt/lists/*
