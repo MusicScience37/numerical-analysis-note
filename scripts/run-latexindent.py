@@ -18,14 +18,18 @@ def run_latexindent(filepath: str):
 
     os.makedirs(TMP_DIR_PATH, exist_ok=True)
 
-    subprocess.run([
-        "latexindent",
-        "-w",  # 上書きする。
-        "-l",  # ローカルの設定ファイルを読み込む。
-        "-s",  # フォーマット結果を標準出力しない。
-        "-c", TMP_DIR_PATH,  # 一時ファイルを .latexindent に出力する。
-        filepath,
-    ], check=True)
+    subprocess.run(
+        [
+            "latexindent",
+            "-w",  # 上書きする。
+            "-l",  # ローカルの設定ファイルを読み込む。
+            "-s",  # フォーマット結果を標準出力しない。
+            "-c",
+            TMP_DIR_PATH,  # 一時ファイルを .latexindent に出力する。
+            filepath,
+        ],
+        check=True,
+    )
 
 
 if __name__ == "__main__":
