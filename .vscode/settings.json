@@ -30,5 +30,6 @@
     "Tikhonov"
   ],
   "python.formatting.provider": "black",
-  "hadolint.cliOptions": ["--ignore", "DL3008", "--no-color"]
+  "hadolint.cliOptions": ["--ignore", "DL3008", "--no-color"],
+  "plantuml.exportOutDir": "."
 }

@@ -11,7 +11,8 @@
     "esbenp.prettier-vscode",
     "ms-python.python",
     "njpwerner.autodocstring",
-    "ms-azuretools.vscode-docker"
+    "ms-azuretools.vscode-docker",
+    "jebbs.plantuml"
   ],
   "postCreateCommand": "bash ./.devcontainer/setup.bash",
   "settings": {}
