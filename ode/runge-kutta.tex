@@ -108,7 +108,9 @@ Runge-Kutta 法の公式の中には，複数の $c_i$ の組を持つものが�
 2 つの異なる公式を用いることによっても同じことはできるが，
 埋め込み型の公式の方が $\bm{k}_i$ を共有できて効率が良い．
 
-これを用いると，次のように現在のステップ幅から次のステップ幅 $\hat{h}$ の適正値を推定できる
+\subsection{ステップ幅の自動更新}
+
+埋め込み型公式を用いると，次のように現在のステップ幅から次のステップ幅 $\hat{h}$ の適正値を推定できる
 \cite[4.1 節 (a)]{Mitsui1993}．
 まず，$c_i$ と $c_i^*$ のうち次数が低い方の次数を $p$ とすると，
 \begin{align}
@@ -131,19 +133,49 @@ Runge-Kutta 法の公式の中には，複数の $c_i$ の組を持つものが�
 以上を元に，
 Algorithm \ref{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
 のように自動でステップサイズを決定することができる．
-また，単純化した
-Algorithm \ref{alg:ode_runge-kutta_auto-step-size-simple}
-のような手法も存在する．
+Algorithm \ref{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
+における係数 $f_{safe}$ は安全係数で
+$f_{safe} = 0.8, 0.9, (0.25)^{1/(p+1)}, (0.38)^{1/(p+1)}$
+といった値が用いられ，
+ステップ幅の倍率の最大値 $f_{max}$ は
+1.5 から 5 までの値が用いられる
+\cite[Section II.4]{Hairer1993}．
+なお，解のベクトルの各次元について誤差の許容量を指定する場合，解の次元を $d$ として
+\begin{equation}
+    err = \sqrt{\frac{1}{d} \sum_{i=1}^d \left(\frac{[\bm{y}(t + h) - \bm{y}^*(t + h)]_i}{[\epsilon_{tol}]_i} \right)^2}
+    \label{eq:ode_runge-kutta_auto-next-step-size-multi-dimension-error}
+\end{equation}
+のように平均をとり，式 \eqref{eq:ode_runge-kutta_auto-next-step-size} の代わりに
+\begin{equation}
+    \hat{h} = h
+    \left(\frac{1}{err}\right)^{\frac{1}{p+1}}
+    \label{eq:ode_runge-kutta_auto-next-step-size-multi-dimension}
+\end{equation}
+を用いる方法も考えられている
+\cite[Section II.4]{Hairer1993}．
 
 \begin{algorithm}[tbp]
-    \caption{式 \eqref{eq:ode_runge-kutta_auto-next-step-size} を利用したステップサイズの自動決定 \cite[4.1 節 (a)]{Mitsui1993}}
+    \caption{式 \eqref{eq:ode_runge-kutta_auto-next-step-size} を利用したステップサイズの自動決定 %
+        \cite[4.1 節 (a)]{Mitsui1993}, \cite[Section II.4]{Hairer1993}}
     \label{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
     \begin{algorithmic}
         \Procedure{StepWithAutoStepSize}{$\bm{f}, t, \bm{y}(t), h$}
         \Loop
         \State 現在のステップ幅 $h$ で 1 ステップ計算し，推定値 $\bm{y}(t + h)$, $\bm{y}^*(t+h)$ を計算する
         \If{$|\bm{y}(t + h) - \bm{y}^*(t + h)| < \epsilon_{tol}$}
-        \State 式 \eqref{eq:ode_runge-kutta_auto-next-step-size} でステップサイズ $h$ を更新する
+        \State $f_{h} \gets \left(\epsilon_{tol} / \left| \bm{y}(t + h) - \bm{y}^*(t + h) \right|\right)^{\frac{1}{p+1}}$
+        \Comment 式 \eqref{eq:ode_runge-kutta_auto-next-step-size} における倍率
+        \State $f_h \gets f_{safe} f_h$
+        \Comment $f_{safe}$ は安全係数 \cite[4.1 節 (a)]{Mitsui1993}, \cite[Section II.4]{Hairer1993}
+        \If{$f_h > f_{max}$}
+        \Comment 小さい推定誤差によりステップ幅が大きくなりすぎることを防ぐ \cite[Section II.4]{Hairer1993}
+        \State $f_h \gets f_{max}$
+        \EndIf
+        \If{$f_h < f_{min}$}
+        \Comment 倍率に下限を持たせることも有用 \cite[Section II.4]{Hairer1993}
+        \State $f_h \gets f_{min}$
+        \EndIf
+        \State $h \gets f_h h$
         \State \Return $h$, $\bm{y}(t + h)$
         \EndIf
         \State $h \gets r h$ \Comment 比率 $r \in (0, 1)$ でステップサイズを縮小する
@@ -151,6 +183,55 @@ Algorithm \ref{alg:ode_runge-kutta_auto-step-size-simple}
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
+
+\subsection{PI 制御によるステップ幅の自動更新}
+
+\index{PI せいぎょ@PI 制御}
+ステップ幅を更新する方法として，前節の式
+\eqref{eq:ode_runge-kutta_auto-next-step-size-multi-dimension}
+を制御に用いられる PI 制御により改良した手法が考案されている
+\cite[Section IV.2]{Hairer1991}．
+
+$n$ 回目の反復におけるステップ幅を $h_n$，
+式 \eqref{eq:ode_runge-kutta_auto-next-step-size-multi-dimension-error}
+の相対的な推定誤差の比率を $err_n$ とする．
+そこで，入力 $C = \log{h_n}$ を適切に変更することにより
+出力 $\theta = \log{err_n}$ を制御することを考える
+\footnote{前節と表記の整合を取るため，%
+    元の文献 \cite[Section IV.2]{Hairer1991} とは少し異なる式になっている．}．
+このとき，PI 制御の式
+\footnote{右辺第一項は積分項 （Integral feedback），%
+    右辺第二項は比例項（Proportional feedback）であり，%
+    2 つの頭文字から PI 制御と呼ばれる．}
+\begin{equation}
+    -\dot{C} = n_1 \theta + n_2 \dot{\theta}
+\end{equation}
+に対して次のような近似が考えられる．
+\begin{equation}
+    -(\log{h_{n+1}} - \log{h_n}) = n_1 \log{err_n} + n_2 (\log{err_{n}} - \log{err_{n-1}})
+\end{equation}
+
+$\alpha = n_1 + n_2$, $\beta = n_2$ として式を整理すると次のようになる．
+\begin{equation}
+    h_{n+1} = h_n \frac{(err_{n-1})^\beta}{(err_n)^\alpha}
+    \label{eq:ode_runge-kutta_auto-next-step-size-pi}
+\end{equation}
+これを用いて
+Algorithm \ref{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
+のようにステップ幅の自動更新を行う．
+パラメータ $\alpha$, $\beta$ には次のような値が用いられる
+\cite[Section IV.2]{Hairer1991}．
+\begin{itemize}
+    \item $\alpha = 1 / (p + 1)$, $\beta = 0.08$
+    \item $\alpha = 0.7 / (p + 1)$, $\beta = 0.4 / (p + 1)$
+\end{itemize}
+
+\subsection{ステップ幅の簡易的な自動更新}
+
+推定誤差をもとにしたステップ幅の更新方法としては，
+単純化した
+Algorithm \ref{alg:ode_runge-kutta_auto-step-size-simple}
+のような手法も存在する．
 
 \begin{algorithm}[tbp]
     \caption{簡易的なステップサイズの自動決定 \cite[4.1 節 (a)]{Mitsui1993}}
@@ -178,7 +259,9 @@ Algorithm \ref{alg:ode_runge-kutta_auto-step-size-simple}
 式 \eqref{eq:ode_runge-kutta_error-using-embedded-formula} のように
 誤差の評価を行い
 Algorithm \ref{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
-のようにステップサイズを自動決定することを考える．
+のようにステップサイズを自動決定を行う方法が考えられており，
+Milne's device \cite[4.1 節 (b)]{Mitsui1993} と呼ばれる．
+\index{Milne's device}
 
 次のように Runge-Kutta 法を適用する演算子を考える．
 \begin{equation}
