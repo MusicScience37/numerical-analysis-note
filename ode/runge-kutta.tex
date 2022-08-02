@@ -28,10 +28,10 @@ Runge-Kutta 法は，時刻 $t$ における変数 $\bm{y}(t)$ の値から，
 Runge-Kutta 法には，
 \index{だんすう@段数}
 整数 $s$ （段数と呼ばれる）と係数 $a_{ij}$, $b_i$, $c_i$ の異なる様々な公式が存在する．
-係数 $a_{ij}$, $b_i$, $c_i$ は
+段数が増えるにつれて数を増していく係数 $a_{ij}$, $b_i$, $c_i$ は
 表 \ref{table:ode_runge-kutta_butcher-array-general} のような
 \index{Butcherはいれつ@Butcher 配列}
-Butcher 配列と呼ばれる形式で記載される．
+Butcher 配列と呼ばれる形式で記載されることが多い．
 
 \begin{table}[bp]
     \caption{Butcher 配列における係数の並べ方}
@@ -253,6 +253,50 @@ Algorithm \ref{alg:ode_runge-kutta_auto-step-size-simple}
     \end{algorithmic}
 \end{algorithm}
 
+\subsection{初回のステップ幅の自動決定}
+
+ここまでに示した方法では
+何らかのステップ幅が与えられている状態を前提としているが，
+初期値問題における最初のステップでは人間が適当なステップ幅を与えない限り
+ステップ幅が存在しない状態から始めることになる．
+そこで，初回のステップ幅を自動決定する方法について
+文献 \cite[Section II.4]{Hairer1993} で示されている方法を
+Algorithm \ref{alg:ode_runge-kutta_auto-step-size-init}
+に示しておく．
+
+\begin{algorithm}[tbp]
+    \caption{初期ステップサイズの自動決定 \cite[Section II.4]{Hairer1993}}
+    \label{alg:ode_runge-kutta_auto-step-size-init}
+    \begin{algorithmic}
+        \Procedure{DetermineInitialStepSize}{$\bm{f}, \bm{y}(0)$}
+        \State $d_0 \gets \|\bm{y}_0\|_{tol}$
+        \Comment ノルム $\| \cdot \|_{tol}$ は
+        式 \eqref{eq:ode_runge-kutta_auto-next-step-size-multi-dimension-error} によるもの
+        \State $d_1 \gets \|\bm{f}(0, \bm{y}_0)\|_{tol}$
+        \If{$d_0 \ge 10^{-5}$ and $d_1 \ge 10^{-5}$}
+        \State $h_0 \gets 0.01 d_0 / d_1$
+        \Comment 陽的 Euler 法（\ref{sec:ode_runge-kutta_explicit-euler} 節）における変化量を小さくする
+        \Else
+        \State $h_0 \gets 10^{-6}$
+        \EndIf
+        %
+        \State $\bm{y}_1 \gets \bm{y}_0 + h_0 \bm{f}(0, \bm{y}_0)$
+        \Comment 陽的 Euler 法の 1 ステップ分の計算を行う
+        %
+        \State $d_2 \gets \|\bm{f}(h_0, \bm{y}_1) - \bm{f}(0, \bm{y}_0)\|_{tol} / h_0$
+        \Comment 2 階導関数の評価値
+        %
+        \If{$\max{\{d_1, d_2\}} > 10^{-15}$}
+        \State $h_1 \gets \sqrt[p+1]{0.01 / \max{\{d_1, d_2\}}}$
+        \Else
+        \State $h_1 \gets \max{\{10^{-6}, 10^{-3} h_0\}}$
+        \EndIf
+        %
+        \State $h \gets \min{\{100 h_0, h_1\}}$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
 \section{埋め込み型でない公式による誤差の評価}
 
 埋め込み型でない公式でも
@@ -436,7 +480,7 @@ RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
 \footnote{挙げた 2 件の文献のうち，%
     文献 \cite{Mitsui1993} では係数が一カ所誤っていたため注意が必要．}．
 
-\subsection{Euler 法}
+\subsection{Euler 法}\label{sec:ode_runge-kutta_explicit-euler}
 
 \begin{table}[bp]
     \caption{Euler 法の Butcher 配列}
