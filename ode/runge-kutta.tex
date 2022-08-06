@@ -219,11 +219,10 @@ $\alpha = n_1 + n_2$, $\beta = n_2$ として式を整理すると次のよう�
 これを用いて
 Algorithm \ref{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
 のようにステップ幅の自動更新を行う．
-パラメータ $\alpha$, $\beta$ には次のような値が用いられる
-\cite[Section IV.2]{Hairer1991}．
+パラメータ $\alpha$, $\beta$ には次のような値が用いられる．
 \begin{itemize}
-    \item $\alpha = 1 / (p + 1)$, $\beta = 0.08$
-    \item $\alpha = 0.7 / (p + 1)$, $\beta = 0.4 / (p + 1)$
+    \item $\alpha = 1 / (p + 1)$, $\beta = 0.08$. \cite[Section IV.2]{Hairer1991}
+    \item $\alpha = 0.7 / (p + 1)$, $\beta = 0.4 / (p + 1)$. \cite{Gustafsson1991}
 \end{itemize}
 
 \subsection{ステップ幅の簡易的な自動更新}
