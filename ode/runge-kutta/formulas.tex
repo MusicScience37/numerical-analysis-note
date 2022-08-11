@@ -124,6 +124,7 @@ Euler 法は
 
 \subsection{SDIRK}
 
+\index{SDIRK}
 表 \ref{table:ode_runge-kutta_butcher-array-sdirk-4} のように
 半陰的公式で $a_{ii}$ が全て等しい値になっている場合は
 Singly Diagonally Implicit Runge-Kutta (SDIRK) 法と呼ばれる．
@@ -158,6 +159,7 @@ stiffly accurate （\ref{sec:ode_runge-kutta_another-implicit-stage-solving} 節
 
 \subsection{ESDIRK}
 
+\index{ESDIRK}
 SDIRK のように $a_{ii}$ が $i = 2, 3, \ldots, s$ では等しい値になっている上に，
 $a_{11} = 0$ となるような公式は
 Explicit Singly Diagonally Implicit Runge-Kutta (ESDIRK) と呼ばれる
@@ -312,3 +314,11 @@ Rosenbrock 法では
 \end{align}
 $c_i$ の係数は 3 次の精度を持ち，
 埋め込みの $c_i^*$ の係数は 2 次の精度を持つ．
+さらに，4 次の精度を持つ埋め込み型公式も提案されている
+\cite{Steinebach2022,Rang2015}
+\footnote{文献 \cite{Steinebach2022} は RODASP という公式を提案者本人が実装したものであり，%
+    提案された元の文献ではない．%
+    しかし，元の文献を入手できないためこの実装例を参考文献に挙げている．}
+\footnote{これらの公式は%
+    \cite{NumericalCollectionCpp} で実装した公式の中でも特に性能が良かったが，%
+    係数が多いため省略する．}．
