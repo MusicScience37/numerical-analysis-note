@@ -5,6 +5,7 @@
     "Broyden",
     "CUBTRI",
     "Davidon",
+    "ESDIRK",
     "Fehlberg",
     "Goldfarb",
     "Hairer",
@@ -25,6 +26,7 @@
     "RKHS",
     "Rosenbrock",
     "Runge",
+    "SDIRK",
     "Shanno",
     "texlive",
     "Tikhonov"

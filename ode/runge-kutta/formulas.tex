@@ -1,0 +1,314 @@
+% !TEX root = ../../main.tex
+%
+
+\section{陽的公式の例}
+
+\subsection{古典的 Runge-Kutta 法}
+
+\begin{table}[bp]
+    \caption{古典的 Runge-Kutta 法 （RK4 公式）の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-rk4}
+    \centering
+    \begin{tabular}{c|cccc}
+        $0$           &               &               &               &               \\
+        $\frac{1}{2}$ & $\frac{1}{2}$ &               &               &               \\
+        $\frac{1}{2}$ & $0$           & $\frac{1}{2}$ &               &               \\
+        $1$           & $0$           & $0$           & $1$           &               \\
+        \hline
+                      & $\frac{1}{6}$ & $\frac{1}{3}$ & $\frac{1}{3}$ & $\frac{1}{6}$
+    \end{tabular}
+\end{table}
+
+\index{こてんてきRunge-Kuttaほう@古典的 Runge-Kutta 法}
+\index{RK4こうしき@RK4 公式}
+古典的 Runge-Kutta 法と呼ばれる公式では，
+表 \ref{table:ode_runge-kutta_butcher-array-rk4} のような係数を用いる
+\cite[3.3 節]{Mitsui1993}．
+単純な係数で次数 4 を達成できる．
+
+\subsection{RKF45 公式}
+
+\begin{table}[bp]
+    \caption{RKF45 公式の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-rkf45}
+    \centering
+    \begin{tabular}{c|ccccccc}
+        $0$             &                     &                      &                      &                       &                  &                &       \\
+        $\frac{1}{4}$   & $\frac{1}{4}$       &                      &                      &                       &                  &                &       \\
+        $\frac{3}{8}$   & $\frac{3}{32}$      & $\frac{9}{32}$       &                      &                       &                  &                &       \\
+        $\frac{12}{13}$ & $\frac{1932}{2197}$ & $-\frac{7200}{2197}$ & $\frac{7296}{2197}$  &                       &                  &                &       \\
+        $1$             & $\frac{439}{216}$   & $-8$                 & $\frac{3680}{513}$   & $-\frac{845}{4104}$   &                  &                &       \\
+        $\frac{1}{2}$   & $-\frac{8}{27}$     & $2$                  & $-\frac{3544}{2565}$ & $\frac{1859}{4104}$   & $-\frac{11}{40}$ &                &       \\
+        \hline
+                        & $\frac{16}{135}$    & $0$                  & $\frac{6656}{12825}$ & $\frac{28561}{56430}$ & $-\frac{9}{50}$  & $\frac{2}{55}$ & （5 次） \\
+                        & $\frac{25}{216}$    & $0$                  & $\frac{1408}{2565}$  & $\frac{2197}{4104}$   & $-\frac{1}{5}$   & $0$            & （4 次）
+    \end{tabular}
+\end{table}
+
+\index{RKF45こうしき@RKF45 公式}
+RKF45 公式（RKF は Runge-Kutta-Fehlberg のこと）では，
+表 \ref{table:ode_runge-kutta_butcher-array-rkf45} のような係数を用いる
+\cite[4.1 節 (a)]{Mitsui1993}, \cite[Section 9.5]{Mathews2004}．
+この埋め込み型公式では，$\bm{k}_i$ から $\bm{y}(t + h)$ を算出する係数に
+5 次の精度を持つ組と 4 次の精度を持つ組が存在する
+\footnote{挙げた 2 件の文献のうち，%
+    文献 \cite{Mitsui1993} では係数が一カ所誤っていたため注意が必要．}．
+
+\subsection{Euler 法}\label{sec:ode_runge-kutta_explicit-euler}
+
+\begin{table}[bp]
+    \caption{Euler 法の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-explicit-euler}
+    \centering
+    \begin{tabular}{c|c}
+        $1$ &     \\
+        \hline
+            & $1$
+    \end{tabular}
+\end{table}
+
+\index{Eulerほう@Euler 法}
+常微分方程式の解法としては最も基本的な Euler 法は形式的に Runge-Kutta 法とみなすことができる．
+Euler 法は
+\begin{equation}
+    \bm{y}(t + h) \approx \bm{y}(t) + h \bm{f}(t, \bm{y}(t))
+\end{equation}
+のように書かれるが，
+その Butcher 配列は表 \ref{table:ode_runge-kutta_butcher-array-explicit-euler} に示す通りである．
+
+\section{半陰的公式の例}
+
+\subsection{田中 Formula}
+
+\begin{table}[bp]
+    \caption{田中 Formula1 公式の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-tanaka-formula1}
+    \centering
+    \begin{tabular}{c|ccc}
+        $\frac{13}{20}$ & $\frac{13}{20}$    &                  &       \\
+        $-\frac{1}{18}$ & $-\frac{127}{180}$ & $\frac{13}{20}$  &       \\
+        \hline
+                        & $\frac{100}{127}$  & $\frac{27}{127}$ & （3 次） \\
+                        & $1$                &                  & （1 次）
+    \end{tabular}
+\end{table}
+
+\begin{table}[bp]
+    \caption{田中 Formula2 公式の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-tanaka-formula2}
+    \centering
+    \begin{tabular}{c|cccc}
+        $\frac{133}{100}$ & $\frac{133}{100}$     &                       &                      &       \\
+        $\frac{1}{2}$     & $-\frac{5400}{18167}$ & $\frac{28967}{36334}$ &                      &       \\
+        $-\frac{33}{100}$ & $\frac{133}{50}$      & $-\frac{108}{25}$     & $\frac{133}{100}$    &       \\
+        \hline
+                          & $\frac{1250}{20667}$  & $\frac{18167}{20667}$ & $\frac{1250}{20667}$ & （4 次） \\
+                          & $0$                   & $1$                   &                      & （2 次）
+    \end{tabular}
+\end{table}
+
+\index{たなかFormula@田中 Formula}
+\index{たなかFormula2@田中 Formula2}
+文献 \cite{Togawa2007} では，田中正次氏が考案した半陰的・陰的公式がいくつか示されている．
+そのうち埋め込み型の半陰的公式を表
+\ref{table:ode_runge-kutta_butcher-array-tanaka-formula1},
+\ref{table:ode_runge-kutta_butcher-array-tanaka-formula2}
+に示す
+\footnote{文献 \cite{Togawa2007} には完全に陰的な 4 段 7 次の公式もあるが，%
+    係数がかなり複雑なため省略した．}．
+
+段数の多い陽的公式と同程度の精度を少ない段数で出すことができていることを確認できる．
+また，埋め込み型の 2 つの係数のうち次数の低い方の係数が単純になっている
+\footnote{利用する際には高い次数の係数との差を見るように実装するため，%
+    次数の低い方の係数だけ単純でも計算コストへの影響はない．}．
+
+\subsection{SDIRK}
+
+表 \ref{table:ode_runge-kutta_butcher-array-sdirk-4} のように
+半陰的公式で $a_{ii}$ が全て等しい値になっている場合は
+Singly Diagonally Implicit Runge-Kutta (SDIRK) 法と呼ばれる．
+SDIRK では，各段の計算を
+\ref{sec:ode_runge-kutta_semi-implicit-equation-solving}
+節のように Newton-Raphson 法で行う際に解く方程式の係数行列
+\begin{equation}
+    I - h a_{ii}
+    \left. \frac{\partial \bm{f}}{\partial \bm{y}}
+    \right|_{t = t + b_i h, \bm{y} = \bm{y}(t)}
+\end{equation}
+が 1 ステップの中では共有できるようになり，
+計算量の多い LU 分解の回数を減らすことができる．
+なお，表 \ref{table:ode_runge-kutta_butcher-array-sdirk-4} の公式は
+stiffly accurate （\ref{sec:ode_runge-kutta_another-implicit-stage-solving} 節）である．
+
+\begin{table}[bp]
+    \caption{4 次の SDIRK の例 \cite[Section IV.6.]{Hairer1991}}
+    \label{table:ode_runge-kutta_butcher-array-sdirk-4}
+    \centering
+    \begin{tabular}{c|cccccc}
+        $\frac{1}{4}$   & $\frac{1}{4}$      &                     &                  &                  &               &       \\
+        $\frac{3}{4}$   & $\frac{1}{2}$      & $\frac{1}{4}$       &                  &                  &               &       \\
+        $\frac{11}{20}$ & $\frac{17}{50}$    & $-\frac{1}{25}$     & $\frac{1}{4}$    &                  &               &       \\
+        $\frac{1}{2}$   & $\frac{371}{1360}$ & $-\frac{137}{2720}$ & $\frac{15}{544}$ & $\frac{1}{4}$    &               &       \\
+        $1$             & $\frac{25}{24}$    & $-\frac{49}{48}$    & $\frac{125}{16}$ & $-\frac{85}{12}$ & $\frac{1}{4}$ &       \\
+        \hline
+                        & $\frac{25}{24}$    & $-\frac{49}{48}$    & $\frac{125}{16}$ & $-\frac{85}{12}$ & $\frac{1}{4}$ & （4 次） \\
+                        & $\frac{59}{48}$    & $-\frac{17}{96}$    & $\frac{225}{32}$ & $-\frac{85}{12}$ & $0$           & （3 次）
+    \end{tabular}
+\end{table}
+
+\subsection{ESDIRK}
+
+SDIRK のように $a_{ii}$ が $i = 2, 3, \ldots, s$ では等しい値になっている上に，
+$a_{11} = 0$ となるような公式は
+Explicit Singly Diagonally Implicit Runge-Kutta (ESDIRK) と呼ばれる
+\cite{Jorgensen2018}．
+
+表 \ref{table:ode_runge-kutta_butcher-array-ark436l2sa-esdirk} に
+\cite{Kennedy2003} で示されている ESDIRK の公式の例を示す
+\footnote{\cite{Kennedy2003} では同じ次数の陽的公式とセットで何種類かの異なる次数の公式が示されている．}．
+
+\begin{table}[bp]
+    \caption{4 次の ESDIRK の例（ARK4(3)6L[2]SA-ESDIRK \cite{Kennedy2003}）}
+    \label{table:ode_runge-kutta_butcher-array-ark436l2sa-esdirk}
+    \centering
+    \begin{tabular}{c|ccccccc}
+        $0$              &                                    &                               &                               &                                &                             &                        &       \\
+        $\frac{1}{2}$    & $\frac{1}{4}$                      & $\frac{1}{4}$                 &                               &                                &                             &                        &       \\
+        $\frac{83}{250}$ & $\frac{8611}{62500}$               & $-\frac{1743}{31250}$         & $\frac{1}{4}$                 &                                &                             &                        &       \\
+        $\frac{31}{50}$  & $\frac{5012029}{34652500}$         & $-\frac{654441}{2922500}$     & $\frac{174375}{388108}$       & $\frac{1}{4}$                  &                             &                        &       \\
+        $\frac{17}{20}$  & $\frac{15267082809}{155376265600}$ & $-\frac{71443401}{120774400}$ & $\frac{730878875}{902184768}$ & $\frac{2285395}{8070912}$      & $\frac{1}{4}$               &                        &       \\
+        $1$              & $\frac{82889}{524892}$             & $0$                           & $\frac{15625}{83664}$         & $\frac{69875}{102672}$         & $-\frac{2260}{8211}$        & $\frac{1}{4}$          &       \\
+        \hline
+                         & $\frac{82889}{524892}$             & $0$                           & $\frac{15625}{83664}$         & $\frac{69875}{102672}$         & $-\frac{2260}{8211}$        & $\frac{1}{4}$          & （4 次） \\
+                         & $\frac{4586570599}{29645900160}$   & $0$                           & $\frac{178811875}{945068544}$ & $\frac{814220225}{1159782912}$ & $-\frac{3700637}{11593932}$ & $\frac{61727}{225920}$ & （3 次）
+    \end{tabular}
+\end{table}
+\section{陰的公式の例}
+
+\subsection{Butcher-Kuntzmann 公式}
+
+\begin{table}[bp]
+    \caption{2 段 Butcher-Kuntzmann 公式の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-2stage-butcher-kuntzmann}
+    \centering
+    \begin{tabular}{c|cc}
+        $\frac{1}{2} + \frac{\sqrt{3}}{6}$ & $\frac{1}{4}$                      & $\frac{1}{4} + \frac{\sqrt{3}}{6}$ \\
+        $\frac{1}{2} - \frac{\sqrt{3}}{6}$ & $\frac{1}{4} - \frac{\sqrt{3}}{6}$ & $\frac{1}{4}$                      \\
+        \hline
+                                           & $\frac{1}{2}$                      & $\frac{1}{2}$
+    \end{tabular}
+\end{table}
+
+\index{Butcher-Kuntzmannこうしき@Butcher-Kuntzmann 公式}
+文献 \cite[5.2 節 (b)]{Mitsui1993} によると，
+陰的 Runge-Kutta 法では，$s$ 段公式で $2s$ 次を超えることができないと証明されており，
+その限界の $2s$ 次の公式が存在することも証明されている．
+特に Legendre 関数の零点を用いて係数を決める種類の公式は，
+$s$ 段 Butcher-Kuntzmann 公式と呼ばれる．
+2 段 Butcher-Kuntzmann 公式を表
+\ref{table:ode_runge-kutta_butcher-array-2stage-butcher-kuntzmann}
+に示す（前述の通り 4 次の精度を持つ）．
+
+\subsection{陰的 Euler 法}
+
+\begin{table}[bp]
+    \caption{陰的 Euler 法の Butcher 配列}
+    \label{table:ode_runge-kutta_butcher-array-implicit-euler}
+    \centering
+    \begin{tabular}{c|c}
+        $1$ & $1$ \\
+        \hline
+            & $1$
+    \end{tabular}
+\end{table}
+
+\index{いんてきEulerほう@陰的 Euler 法}
+常微分方程式の解法として，（陽的）Euler 法と同様に基本的な陰的 Euler 法も
+形式的に Runge-Kutta 法とみなすことができる．
+陰的 Euler 法は
+\begin{equation}
+    \bm{y}(t + h) \approx \bm{y}(t) + h \bm{f}(t, \bm{y}(t + h))
+\end{equation}
+のように書かれるが，
+その Butcher 配列は表 \ref{table:ode_runge-kutta_butcher-array-implicit-euler} に示す通りである．
+この 1 段 2 次公式は陰的公式とも半陰的公式ともとることができる．
+
+\section{Rosenbrock 法}
+
+\index{Rosenbrockほう@Rosenbrock 法}
+陰的 Runge-Kutta 法においては，
+方程式を Newton-Raphson 法などで反復的に解く必要がある．
+これにより，最終的な解の誤差には Runge-Kutta 法の離散化誤差に加えて
+Newton-Raphson 法の反復の打ち切りによる誤差も含まれるという問題がある．
+この問題を解決するための手法として，
+文献 \cite{Rosenbrock1963} において Rosenbrock 法が考案された．
+
+半陰的公式では
+\begin{equation}
+    \bm{k}_i = \bm{f}\left(t + b_i h, \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j \right)
+\end{equation}
+のような更新式を用いるが，右辺を $\bm{k}_i$ について 1 次近似すると
+\begin{equation}
+    \bm{k}_i \approx \bm{f}\left(t + b_i h, \bm{y}(t) + h \sum_{j = 1}^{i-1} a_{ij} \bm{k}_j \right)
+    + h a_{ii}
+    \left. \frac{\partial \bm{f}}{\partial \bm{y}}
+    \right|_{\bm{y} = \bm{y}(t) + h \sum_{j = 1}^{i-1} a_{ij} \bm{k}_j}
+    \bm{k}_i
+\end{equation}
+のように書ける \cite{Rosenbrock1963}．
+さらに，Jacobian と $\bm{k}_i$ の係数行列の LU 分解の計算回数を減らすため，
+Jacobian を固定し，$a_ii$ を $i$ に依らない値にすることも考えられており，
+文献 \cite{Rang2005} では次の形式の計算式を用いる
+\footnote{文献 \cite{Rang2005} 中の数式では時間微分の項も存在するが，%
+    提案されていた公式において時間微分の項は無視されていたため，省略する．}．
+\begin{align}
+    \bm{k}_i
+     & = \bm{f}\left(t + b_i h, \bm{y}(t) + h \sum_{j = 1}^{i - 1} a_{ij} \bm{k}_j \right)
+    + h
+    \left. \frac{\partial \bm{f}}{\partial \bm{y}} \right|_{\bm{y} = \bm{y}(t)}
+    \left( \sum_{j = i}^{i - 1} \gamma_{ij} \bm{k}_j + \gamma \bm{k}_i \right)
+     & \text{for $i = 1, 2, \ldots, s$}
+    \label{eq:ode_rosenbrock_k-law}                                                        \\
+    \bm{y}(t + h)
+     & = \bm{y}(t) + \sum_{i=1}^{s} c_i \bm{k}_i
+    \label{eq:ode_rosenbrock_y-law}
+\end{align}
+
+$\bm{k}_i$ の係数行列は $i$ に依らず，
+$\bm{y}_(t)$ とステップ幅のみに依存するため，
+1 ステップごとに一度だけ Jacobian を計算し，
+$\bm{k}_i$ の係数行列の LU 分解を求めれば良い．
+さらに，陰的 Runge-Kutta 法と異なり，
+方程式は $\bm{k}_i$ について線形になっているため，
+Newton-Raphson 法の反復を行う必要はない．
+
+半陰的 Runge-Kutta 法では
+各ステップの各 $i = 1, 2, \ldots, s$ ごとに LU 分解をやり直して
+Newton-Raphson 法の反復を行う必要があったが，
+Rosenbrock 法では
+各ステップの最初に LU 分解を行ったあと，
+各 $i = 1, 2, \ldots, s$ ごとに一度だけ LU 分解の結果をもとにした線形方程式の解を求めれば良い．
+対象となる常微分方程式の自由度を $d$ としたとき，
+どちらの手法も計算時間のオーダーは $d^3$ となるが，
+その係数は Rosenbrock 法の方が小さくなる．
+
+\index{ROS3wこうしき@ROS3w 公式}
+文献 \cite{Rang2005} の ROS3w 公式では，次のような係数を用いる．
+\begin{align}
+    a_{21}      & = 6.666666666666666 \times 10^{-1}  \\
+    a_{31}      & = 6.666666666666666 \times 10^{-1}  \\
+    a_{32}      & = 0                                 \\
+    \gamma      & = 4.358665215084590 \times 10^{-1}  \\
+    \gamma_{21} & = 3.635068368900681 \times 10^{-1}  \\
+    \gamma_{31} & = −8.996866791992636 \times 10^{-1} \\
+    \gamma_{32} & = −1.537997822626885 \times 10^{-1} \\
+    c_1         & = 2.5 \times 10^{-1}                \\
+    c_2         & = 2.5 \times 10^{-1}                \\
+    c_3         & = 5 \times 10^{-1}                  \\
+    c_1^*       & = 7.467047032740110 \times 10^{-1}  \\
+    c_2^*       & = 1.144064078371002 \times 10^{-1}  \\
+    c_3^*       & = 1.388888888888889 \times 10^{-1}  \\
+    b_i         & = \sum_{j = 1}^{i - 1} a_{ij}
+\end{align}
+$c_i$ の係数は 3 次の精度を持ち，
+埋め込みの $c_i^*$ の係数は 2 次の精度を持つ．
