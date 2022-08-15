@@ -1,0 +1,183 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{シンプレクティック積分法}
+
+\index{しんぷれくてぃっくせきぶんほう@シンプレクティック積分法}
+平均ベクトル場法（\ref{chap:ode_avf} 章）と同様に，
+位置 $\bm{q}$，モーメント $\bm{p}$ に対する
+ハミルトニアン $H(\bm{q}, \bm{p})$ から得られる運動方程式
+\begin{align}
+    \dot{\bm{q}} & = \frac{\partial H}{\partial \bm{p}}  \\
+    \dot{\bm{p}} & = -\frac{\partial H}{\partial \bm{q}}
+\end{align}
+を解くための手法の 1 つに
+シンプレクティック積分法 (symplectic integrator) と呼ばれる手法がある
+\cite[Section II.16.]{Hairer1993}．
+シンプレクティック積分法は，
+時間変化に伴う点 $(\bm{q}, \bm{p})$ の変化により
+\begin{equation}
+    \omega^2 = \sum_{i=1}^{n} dp_i \wedge dq_i
+\end{equation}
+という量が変化しないという特性を持つ．
+そのため，周期運動をする自励系において長時間に渡るシミュレーションを行っても
+ステップ幅を固定していればエネルギーの誤差が増大しないという利点がある
+\cite{Yoshida2013}
+\footnote{ステップ幅を固定しない場合はエネルギーが増大し，%
+    解が不安定になることが実験で確認されている%
+    \cite[Section II.16.]{Hairer1993}．}．
+
+ここでは，シンプレクティックな Runge-Kutta 法を示す．
+
+\section{陰的 Runge-Kutta 法}
+
+陰的 Runge-Kutta 法の中にはシンプレクティックとなっているものが存在する．
+例えば，表 \ref{table:ode_runge-kutta_butcher-array-2stage-butcher-kuntzmann} のような
+$s$ 段 Butcher-Kuntzmann 公式はシンプレクティックである
+\cite[Section II.16.]{Hairer1993}．
+
+\section{可分ハミルトニアンに対する陽的な分離型 Runge-Kutta 法}
+
+通常の陽的 Runge-Kutta 法はシンプレクティックになり得ないことが証明されているが，
+ハミルトニアンが可分
+（$H(\bm{q}) = T(\bm{p}) + V(\bm{q})$ のように
+$\bm{q}$ の項と $\bm{p}$ の項に分割可能）な場合，
+$\bm{q}$ と $\bm{p}$ を交互に更新する以下のような分離型 Runge-Kutta 法を考えることにより，
+陽的でシンプレクティックな積分公式を得ることができる
+\cite[Section II.16.]{Hairer1993}．
+
+\begin{align}
+    \bm{P}_i    & = \bm{p}(t) + h \sum_{j} a_{ij} \bm{k}_j,                                                                    &
+    \bm{Q}_i    & = \bm{q}(t) + h \sum_{j} \hat{a}_{ij} \bm{l}_j                                                                 \\
+    \bm{p}(t+h) & = \bm{p}(t) + h \sum_{j} b_{j} \bm{k}_j,                                                                     &
+    \bm{q}(t+h) & = \bm{q}(t) + h \sum_{j} \hat{b}_{j} \bm{l}_j,                                                                 \\
+    \bm{k}_i    & = -\frac{\partial H}{\partial \bm{q}} (\bm{P}_i, \bm{Q}_i) = -\frac{\partial V}{\partial \bm{q}} (\bm{Q}_i), &
+    \bm{l}_i    & = \frac{\partial H}{\partial \bm{p}} (\bm{P}_i, \bm{Q}_i) = \frac{\partial T}{\partial \bm{p}} (\bm{P}_i)
+\end{align}
+
+ここで，
+$a_{ij} = 0$ ($i < j$), $\hat{a}_{ij} = 0$ ($i \le j$)
+とすると，
+シンプレクティックであるための条件は
+$a_{ij} = b_j$ ($i \le j$), $\hat{a}_{ij} = \hat{b}_j$ ($i > j$)
+であることが示されており \cite[Section II.16.]{Hairer1993}，
+$\bm{P}_i$ と $\bm{Q}_i$ は次のようになる．
+
+\begin{align}
+    \bm{P}_i & = \bm{P}_{i-1} + h b_i \bm{k}_j = \bm{P}_{i-1} - h b_i \frac{\partial V}{\partial \bm{q}} (\bm{Q}_i),                                 &
+    \bm{P}_0 & = \bm{p}(t)                                                                                                                             \\
+    \bm{Q}_i & = \bm{Q}_{i - 1} + h \hat{b}_{i-1} \bm{l}_{i-1} = \bm{Q}_{i - 1} + h \hat{b}_{i-1} \frac{\partial T}{\partial \bm{p}} (\bm{P}_{i-1}), &
+    \bm{Q}_1 & = \bm{q}(t)
+\end{align}
+
+このとき，$\bm{P}_i$ と $\bm{Q}_i$ は以下のように交互に計算できる．
+
+\begin{enumerate}
+    \item $\bm{P}_0$ と $\bm{Q}_1$ から $\bm{P}_1$ を算出する．
+    \item $\bm{P}_1$ と $\bm{Q}_1$ から $\bm{Q}_2$ を算出する．
+    \item $\bm{P}_1$ と $\bm{Q}_2$ から $\bm{P}_2$ を算出する．
+    \item $\bm{P}_2$ と $\bm{Q}_2$ から $\bm{Q}_3$ を算出する．
+    \item 以降同様に続ける．
+\end{enumerate}
+
+これらをまとめると，Algorithm \ref{alg:ode_symplectic_explicit-runge-kutta} となる．
+
+\begin{algorithm}[tbp]
+    \caption{可分ハミルトニアンに対する陽的な分離型 Runge-Kutta 法 \cite[Section II.16.]{Hairer1993}}
+    \label{alg:ode_symplectic_explicit-runge-kutta}
+    \begin{algorithmic}
+        \Procedure{SynplecticExplicitRungeKutta}{$\frac{\partial V}{\partial \bm{q}}, \frac{\partial T}{\partial \bm{p}}, t, \bm{q}(t), \bm{p}(t), h$}
+        \State $\bm{Q} \gets \bm{q}(t)$ \Comment{$\bm{Q}_1$}
+        \State $\bm{P} \gets \bm{p}(t)$ \Comment{$\bm{P}_0$}
+        \For{$i \gets 1, s$} \Comment{$s$ は段数}
+        \State $\bm{P} \gets \bm{P} - h b_i \frac{\partial V}{\partial \bm{q}} (\bm{Q})$
+        \Comment{$\bm{P}_{i-1}$ と $\bm{Q}_i$ から $\bm{P}_i$ を算出}
+        \State $\bm{Q} \gets \bm{Q} + h \hat{b}_i \frac{\partial T}{\partial \bm{p}} (\bm{P})$
+        \Comment{$\bm{P}_{i}$ と $\bm{Q}_i$ から $\bm{Q}_{i+1}$ を算出}
+        \EndFor
+        \State $q(t + h) \gets \bm{Q}$
+        \State $p(t + h) \gets \bm{P}$
+        \State \Return $(q(t + h), p(t + h))$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+この手法における係数 $b_i$, $\hat{b}_i$ を
+表 \ref{table:ode_symplectic_explicit-runge-kutta-notation} のようにまとめたものが，
+表
+\ref{table:ode_symplectic_explicit-runge-kutta-1},
+\ref{table:ode_symplectic_explicit-runge-kutta-2},
+\ref{table:ode_symplectic_explicit-runge-kutta-3},
+\ref{table:ode_symplectic_explicit-runge-kutta-4a},
+\ref{table:ode_symplectic_explicit-runge-kutta-4b}
+である．
+
+\begin{table}[bp]
+    \caption{陽的シンプレクティック積分法の係数の表記}
+    \label{table:ode_symplectic_explicit-runge-kutta-notation}
+    \centering
+    \begin{tabular}{c|cccc}
+        $b$       & $b_1$       & $b_2$       & $\ldots$ & $b_s$       \\
+        $\hat{b}$ & $\hat{b}_1$ & $\hat{b}_2$ & $\ldots$ & $\hat{b}_s$
+    \end{tabular}
+\end{table}
+
+\begin{table}[p]
+    \caption{1 段 1 次の陽的シンプレクティック積分法 \cite[Section II.16.]{Hairer1993}}
+    \label{table:ode_symplectic_explicit-runge-kutta-1}
+    \centering
+    \begin{tabular}{c|c}
+        $b$       & $1$ \\
+        $\hat{b}$ & $1$
+    \end{tabular}
+\end{table}
+
+\begin{table}[p]
+    \caption{2 段 2 次の陽的シンプレクティック積分法（Leap-frog 法） \cite{Forest1990}}
+    \label{table:ode_symplectic_explicit-runge-kutta-2}
+    \centering
+    \begin{tabular}{c|cc}
+        $b$       & $\frac{1}{2}$ & $\frac{1}{2}$ \\
+        $\hat{b}$ & $1$           & $0$
+    \end{tabular}
+\end{table}
+
+\begin{table}[p]
+    \caption{3 段 3 次の陽的シンプレクティック積分法 \cite[Section II.16.]{Hairer1993}}
+    \label{table:ode_symplectic_explicit-runge-kutta-3}
+    \centering
+    \begin{tabular}{c|ccc}
+        $b$       & $\frac{7}{24}$ & $\frac{3}{4}$  & $-\frac{1}{24}$ \\
+        $\hat{b}$ & $\frac{2}{3}$  & $-\frac{2}{3}$ & $-1$
+    \end{tabular}
+\end{table}
+
+\begin{table}[p]
+    \caption{6 段 4 次の陽的シンプレクティック積分法 \cite[Section II.16.]{Hairer1993}}
+    \label{table:ode_symplectic_explicit-runge-kutta-4a}
+    \centering
+    \begin{tabular}{c|cccccc}
+        $b$       & $\frac{7}{48}$ & $\frac{3}{8}$  & $-\frac{1}{48}$ & $-\frac{1}{48}$ & $\frac{3}{8}$ & $\frac{7}{48}$ \\
+        $\hat{b}$ & $\frac{1}{3}$  & $-\frac{1}{3}$ & $1$             & $-\frac{1}{3}$  & $\frac{1}{3}$ & $0$
+    \end{tabular}
+\end{table}
+
+\begin{table}[p]
+    \caption{4 段 4 次の陽的シンプレクティック積分法（$\alpha = 1 - 2^{1/3}$） \cite{Forest1990}}
+    \label{table:ode_symplectic_explicit-runge-kutta-4b}
+    \centering
+    \begin{tabular}{c|cccc}
+        $b$       & $\frac{1}{2(1+\alpha)}$ & $\frac{\alpha}{2(1+\alpha)}$ & $\frac{\alpha}{2(1+\alpha)}$ & $\frac{1}{2(1+\alpha)}$ \\
+        $\hat{b}$ & $\frac{1}{1+\alpha}$    & $\frac{\alpha-1}{1+\alpha}$  & $\frac{1}{1+\alpha}$         & $0$
+    \end{tabular}
+\end{table}
+
+ここで，4 次の公式のうち
+表\ref{table:ode_symplectic_explicit-runge-kutta-4a}
+は
+表\ref{table:ode_symplectic_explicit-runge-kutta-3}
+の公式を 2 つ結合して得られたものであるのに対し，
+表\ref{table:ode_symplectic_explicit-runge-kutta-4b}
+は代数的に 4 次の公式を算出したものとなっている．
+同様に代数的に得られた 4 段 4 次の公式が
+文献 \cite{Candy1991} に示されている．

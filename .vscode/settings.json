@@ -29,6 +29,7 @@
     "Runge",
     "SDIRK",
     "Shanno",
+    "symplectic",
     "texlive",
     "Tikhonov"
   ],
