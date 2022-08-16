@@ -355,6 +355,7 @@ Newton-Raphson 法（\ref{chap:root-finding_newton-raphson} 章）のような
     \bm{F}_i(\bm{k}_i)
     \equiv \bm{k}_i - \bm{f}\left(t + b_i h, \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j \right)
     = \bm{0}
+    \label{eq:ode_runge-kutta_semi-implicit-equation}
 \end{equation}
 
 この方程式の数値解法として
@@ -403,6 +404,7 @@ Jacobian を $\bm{k}_i = \bm{0}$ のときの
         \bm{k}_s - \bm{f}\left(t + b_s h, \bm{y}(t) + h \sum_{j = 1}^s a_{sj} \bm{k}_j \right) \\
     \end{pmatrix}
     = \bm{0}
+    \label{eq:ode_runge-kutta_implicit-equation}
 \end{equation}
 
 Jacobian は次のようになる．
@@ -442,6 +444,7 @@ Jacobian を固定することの効果はより大きくなる
 のような変数を導入し，方程式
 \begin{equation}
     \bm{z}_i = h \sum_{j = 1}^s a_{ij} \bm{f}\left(t + b_j h, \bm{y}(t) + \bm{z}_j \right)
+    \label{eq:ode_runge-kutta_implicit-equation-for-differences}
 \end{equation}
 を解くこともできる \cite[Section IV.8.]{Hairer1991}．
 
@@ -458,3 +461,80 @@ stiffly accurate \index{stiffly accurate} であると言われる
 \footnote{stiffly accurate な公式は，ただ計算が楽になるというだけでなく，%
     追加の条件を満たしていれば L 安定と呼ばれる安定性を満たす\cite[Section IV.3.]{Hairer1991}．}
 ．
+
+\subsection{Jacobian の計算が困難な場合}
+
+問題の次元の数が大きく Jacobian のメモリ容量が大きすぎる場合や，
+Jacobian の計算式を用意するのが困難な場合など，
+Jacobian を用いて Newton 法を実装するのが困難な場合がある．
+そのような場合でも Newton 法で式
+\eqref{eq:ode_runge-kutta_semi-implicit-equation},
+\eqref{eq:ode_runge-kutta_implicit-equation},
+\eqref{eq:ode_runge-kutta_implicit-equation-for-differences}
+のような方程式を解くために
+後述の GMRES (Generalized Minimal Residual) \index{GMRES} 法を組み合わせた
+Newton-GMRES 法が用いられている
+\cite{Blom2016, Blom2013}．
+
+GMRES 法は Algorithm \ref{alg:ode_runge-kutta_gmres} のようにして解を計算する．
+$H_m \in \setR^{(m + 1) \times m}$ に QR 分解を適用できる程度に小さい $m$ を用いることで，
+解きたい方程式の次元が大きい場合でも方程式の近似解を計算することができる．
+さらに，GMRES 法を複数回適用することで
+解の精度を高めていくことができる
+\cite{Golub2013,Blom2013}．
+ここで問題となるのは $\bm{r}_k = A \bm{q}_k$ の計算だが，
+Newton 法においては $A$ が Jacobian になるため，
+\begin{equation}
+    A \bm{q}_k
+    =
+    \frac{\partial \bm{F}}{\partial \bm{y}}
+    \bm{q}_k
+    \approx
+    \frac{\bm{F}(\bm{y} + \epsilon \bm{q}_k) - \bm{F}(\bm{y})}{\epsilon}
+\end{equation}
+または，
+\begin{equation}
+    A \bm{q}_k
+    =
+    \frac{\partial \bm{F}}{\partial \bm{y}}
+    \bm{q}_k
+    \approx
+    \frac{\bm{F}(\bm{y} + \epsilon \bm{q}_k) - \bm{F}(\bm{y} - \epsilon \bm{q}_k)}{2 \epsilon}
+\end{equation}
+のような近似を用いて実際の Jacobian の計算を回避する
+\cite{Blom2016, Blom2013}．
+なお，$\epsilon$ はマシンイプシロン $\epsilon_{machine}$ に対して
+\begin{equation}
+    \epsilon = \frac{\sqrt{\epsilon_{machine}}}{\|\bm{q}_k\|_2}
+\end{equation}
+のように選択する
+\cite{Blom2016, Blom2013}．
+
+\begin{algorithm}[tp]
+    \caption{GMRES (Generalized Minimal Residual) \cite{Golub2013,Blom2013}}
+    \label{alg:ode_runge-kutta_gmres}
+    \begin{algorithmic}
+        \Procedure{GMRES}{$A \in \setR^{n \times n}, \bm{b} \in \setR^n, \bm{x}_0 \in \setR^n, m \in \{1, 2, \ldots, n\}$}
+        \State $k \gets 0$
+        \State $\bm{r}_0 \gets \bm{b} - A \bm{x}_0$
+        \State $\beta_0 \gets \|\bm{r}_0\|_2$
+        \While{$\beta_k > 0$ and $k < m$}
+        \State $\bm{q}_{k+1} \gets \frac{\bm{r}_k}{\beta_k}$
+        \State $k \gets k + 1$
+        \State $\bm{r}_k \gets A \bm{q}_k$
+        \For{$i = 1, k$}
+        \State $h_{ij} \gets \bm{q}_i^\top \bm{r}_k$
+        \State $\bm{r}_k \gets \bm{r}_k - h_{ik} \bm{q}_i$
+        \EndFor
+        \State $\beta_k \gets \|\bm{r}_k\|_2$
+        \State $h_{k+1,k} \gets \beta_k$
+        \EndWhile
+        \State Compute $\bm{y}_k = \min_{\bm{y} \in \setR^m} \|\beta_0 \bm{e}_1 - H_k \bm{y}\|_2$
+        for $H_k = \{h_{ij}\}_{1 \le k + 1, 1 \le j \le k}$.
+        \Comment $\bm{e}_1 = (1, 0, 0, \ldots, 0)$
+        \State $\bm{x} \gets \bm{x}_0 + Q_k \bm{y}_k$
+        \Comment $Q_k = (\bm{q}_1, \bm{q}_2, \ldots, \bm{q}_k) \in \setR^{n \times k}$
+        \State \Return $\bm{x}$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
