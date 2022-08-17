@@ -590,5 +590,9 @@ GMRES 法を適用するにあたってはステップサイズが大きくな�
     \label{fig:ode_runge-kutta_gmres_subspace-dimension-to-processing-time}
 \end{figure}
 
+ここでは，Jacobian の計算自体が困難な場合を扱ってきたが，
+Jacobian の疎行列表現であれば計算が可能な場合，
+GMRES 法よりも高速に線形方程式を解くことのできる BiCGstab 法 \cite{Golub2013} が適用可能である．
+
 % 話題を切り替える前に一旦全てを出力しておく．
 \clearpage
