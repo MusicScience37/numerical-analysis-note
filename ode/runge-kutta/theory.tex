@@ -523,7 +523,7 @@ Newton 法においては $A$ が Jacobian になるため，
         \State $k \gets k + 1$
         \State $\bm{r}_k \gets A \bm{q}_k$
         \For{$i = 1, k$}
-        \State $h_{ij} \gets \bm{q}_i^\top \bm{r}_k$
+        \State $h_{ik} \gets \bm{q}_i^\top \bm{r}_k$
         \State $\bm{r}_k \gets \bm{r}_k - h_{ik} \bm{q}_i$
         \EndFor
         \State $\beta_k \gets \|\bm{r}_k\|_2$
