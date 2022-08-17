@@ -157,7 +157,7 @@ $f_{safe} = 0.8, 0.9, (0.25)^{1/(p+1)}, (0.38)^{1/(p+1)}$
 を用いる方法も考えられている
 \cite[Section II.4]{Hairer1993}．
 
-\begin{algorithm}[tbp]
+\begin{algorithm}[tp]
     \caption{式 \eqref{eq:ode_runge-kutta_auto-next-step-size} を利用したステップサイズの自動決定 %
         \cite[4.1 節 (a)]{Mitsui1993}, \cite[Section II.4]{Hairer1993}}
     \label{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
@@ -235,7 +235,7 @@ Algorithm \ref{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
 Algorithm \ref{alg:ode_runge-kutta_auto-step-size-simple}
 のような手法も存在する．
 
-\begin{algorithm}[tbp]
+\begin{algorithm}[tp]
     \caption{簡易的なステップサイズの自動決定 \cite[4.1 節 (a)]{Mitsui1993}}
     \label{alg:ode_runge-kutta_auto-step-size-simple}
     \begin{algorithmic}
@@ -266,7 +266,7 @@ Algorithm \ref{alg:ode_runge-kutta_auto-step-size-simple}
 Algorithm \ref{alg:ode_runge-kutta_auto-step-size-init}
 に示しておく．
 
-\begin{algorithm}[tbp]
+\begin{algorithm}[tp]
     \caption{初期ステップサイズの自動決定 \cite[Section II.4]{Hairer1993}}
     \label{alg:ode_runge-kutta_auto-step-size-init}
     \begin{algorithmic}
@@ -538,3 +538,57 @@ Newton 法においては $A$ が Jacobian になるため，
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
+
+GMRES 法にはアルゴリズムで使用する部分空間の次元数を示すパラメータ $m$ が存在するが
+\footnote{詳細な理論については \cite[Section 11.4.3]{Golub2013} を参照．}，
+このパラメータ $m$ を大きくすると
+大抵の場合 1 回 GMRES 法を適用することにより得られる解の精度が上がるものの，
+計算時間が増加する．
+そのため，複数回 GMRES 法を適用することにより所望の精度の結果を得る場合，
+$m$ が小さすぎると GMRES 法の適用回数を増やすことになり，
+大きすぎると GMRES 法 1 回の計算時間を増やすことになる．
+また，$m$ を大きくすることでいつでも GMRES 法の収束が速くなるとは限らないことが示されている
+\cite{Blom2013}．
+そこで，
+Newton 法における係数行列 $I - h a J$ をイメージした係数行列
+\begin{align}
+    A      & =
+    \begin{pmatrix}
+        1      & 0      & 0      & 0      & \cdots & 0      & 0      & 0      \\
+        \alpha & 1      & \alpha & 0      & \cdots & 0      & 0      & 0      \\
+        0      & \alpha & 1      & \alpha & \cdots & 0      & 0      & 0      \\
+        \vdots & \ddots & \ddots & \ddots & \ddots & \ddots & \ddots & \vdots \\
+        0      & 0      & 0      & 0      & \cdots & \alpha & 1      & \alpha \\
+        0      & 0      & 0      & 0      & \cdots & 0      & 0      & 1      \\
+    \end{pmatrix}
+    ,      &
+    \alpha & = 0.01
+\end{align}
+を持つ方程式に対して GMRES 法を
+$\|A\bm{x} - \bm{b}\|_2 / \|\bm{b}\|_2 < 10^{-8}$
+となるまで適用し，計算時間を計測した．
+その結果が図 \ref{fig:ode_runge-kutta_gmres_subspace-dimension-to-processing-time} である
+\footnote{計算に使用したマシンの CPU は Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz であり，%
+    コンパイラは Clang 14.0.6 を用いた．%
+    ソースコードは，リポジトリ \cite{NumericalCollectionCpp} の%
+    コミット \texttt{e7cddd677dbd031f2b2c2e8e8622a8c318f7b31b} 時点における%
+    ファイル \texttt{test/bench/ode/sparse\_linear\_equation\_test.cpp} を使用している．}．
+この例では，部分空間の次元数 $m$ を 2 にした場合に最も良い性能が得られている．
+なお，最初は $\alpha$ を小さくない 1 にしていたが，
+その場合は解の収束が極めて遅かった
+\footnote{1000 回反復しても残差 $\|A\bm{x} - \bm{b}\|_2 / \|\bm{b}\|_2$ の割合のオーダーが%
+    0.1 程度になるという状況で，%
+    収束するまでの計算時間の計測を行えていない．}．
+GMRES 法を適用するにあたってはステップサイズが大きくなりすぎて
+係数行列 $I - h a J$ の非対角項が大きくならないように注意する必要がある．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{ode/experiments/gmres/dimension_to_time.pdf}
+    \caption{繰り返し GMRES（Algorithm \ref{alg:ode_runge-kutta_gmres}）を適用して%
+        線形方程式を解くのにかかった時間}
+    \label{fig:ode_runge-kutta_gmres_subspace-dimension-to-processing-time}
+\end{figure}
+
+% 話題を切り替える前に一旦全てを出力しておく．
+\clearpage
