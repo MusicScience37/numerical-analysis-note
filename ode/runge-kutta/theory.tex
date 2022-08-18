@@ -563,6 +563,7 @@ Newton 法における係数行列 $I - h a J$ をイメージした係数行列
     \end{pmatrix}
     ,      &
     \alpha & = 0.01
+    \label{eq:ode_runge-kutta_gmres_sample-coeff-matrix}
 \end{align}
 を持つ方程式に対して GMRES 法を
 $\|A\bm{x} - \bm{b}\|_2 / \|\bm{b}\|_2 < 10^{-8}$
@@ -597,6 +598,11 @@ GMRES の代わりに使用できる．
 BiCGstab (Algorithm \ref{alg:ode_runge-kutta_bicgstab})
 \footnote{実装を意識して一部記法の変更を加えている．}
 を使用することができる．
+BiCGstab を使用して同様に
+式 \eqref{eq:ode_runge-kutta_gmres_sample-coeff-matrix} の
+係数行列を持つ方程式を解く時間を計測した結果が
+図 \ref{fig:ode_runge-kutta_bicgstab_subspace-dimension-to-processing-time} である．
+GMRES で最も速かった $m=2$ の場合よりもさらに速くなっている．
 
 \begin{algorithm}[tp]
     \caption{BiCGstab \cite{Golub2013}}
@@ -628,6 +634,14 @@ BiCGstab (Algorithm \ref{alg:ode_runge-kutta_bicgstab})
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{ode/experiments/bicgstab/dimension-to-time.pdf}
+    \caption{BiCGstab（Algorithm \ref{alg:ode_runge-kutta_bicgstab}）を使用して%
+        線形方程式を解くのにかかった時間}
+    \label{fig:ode_runge-kutta_bicgstab_subspace-dimension-to-processing-time}
+\end{figure}
 
 % 話題を切り替える前に一旦全てを出力しておく．
 \clearpage
