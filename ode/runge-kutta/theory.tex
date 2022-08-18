@@ -590,5 +590,44 @@ GMRES 法を適用するにあたってはステップサイズが大きくな�
     \label{fig:ode_runge-kutta_gmres_subspace-dimension-to-processing-time}
 \end{figure}
 
+文献 \cite{Blom2016, Blom2013} では GMRES 法を用いているが，
+係数行列を列ベクトルに左から作用させる以外の使い方をしないアルゴリズムであれば
+GMRES の代わりに使用できる．
+例えば，
+BiCGstab (Algorithm \ref{alg:ode_runge-kutta_bicgstab})
+\footnote{実装を意識して一部記法の変更を加えている．}
+を使用することができる．
+
+\begin{algorithm}[tp]
+    \caption{BiCGstab \cite{Golub2013}}
+    \label{alg:ode_runge-kutta_bicgstab}
+    \begin{algorithmic}
+        \Procedure{BiCGstab}{$A \in \setR^{n \times n}, \bm{b} \in \setR^n, \bm{x}_0 \in \setR^n$}
+        \State $\bm{r} \gets \bm{b} - A \bm{x}_0$
+        \State $\tilde{\bm{r}}_0$ を零ベクトルでない値に設定
+        \Comment 残差 $\bm{r}$ にしておけば良い．
+        \State $\bm{x} \gets \bm{x}_0$
+        \State $\bm{p} \gets \bm{r}$
+        \State $\rho \gets \tilde{\bm{r}}_0^\top \bm{r}$
+        \Loop
+        \State $\bm{p}' \gets A \bm{p}$
+        \State $\mu \gets \frac{\tilde{\bm{r}}_0^\top \bm{r}}{\tilde{\bm{r}}_0^\top \bm{p}'}$
+        \State $\bm{s} \gets \bm{r} - \mu \bm{p}'$
+        \State $\bm{s}' \gets A \bm{s}$
+        \State $\omega \gets \frac{\bm{s}^\top \bm{s}'}{\|\bm{s}'\|_2^2}$
+        \State $\bm{x} \gets \bm{x} + \mu \bm{p} + \omega \bm{s}$
+        \State $\bm{r} \gets \bm{s} - \omega \bm{s}'$
+        \If{$\|\bm{r}\|_2 < tolerance$}
+        \State \Return $\bm{x}$
+        \EndIf
+        \State $\rho_{old} \gets \rho$
+        \State $\rho \gets \tilde{\bm{r}}_0^\top \bm{r}$
+        \State $\tau \gets \frac{\rho \mu}{\rho_{old} \omega}$
+        \State $\bm{p} \gets \bm{r} + \tau(\bm{p} - \omega \bm{p}')$
+        \EndLoop
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
 % 話題を切り替える前に一旦全てを出力しておく．
 \clearpage
