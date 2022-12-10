@@ -6,5 +6,5 @@ Docker イメージの変更時は以下を更新する．
 - `.devcontainer/Dockerfile`
 
 使用している TeXLive の Docker イメージは，
-[TeXLive の Container Registry](https://gitlab.com/islandoftex/images/texlive/container_registry/)
+[TeXLive 用の Docker イメージ](https://gitlab.com/MusicScience37Projects/docker/texlive-pipenv-docker/container_registry/)
 から選択している．
