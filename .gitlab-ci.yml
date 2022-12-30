@@ -16,8 +16,10 @@ pre-commit:
   stage: test
   needs: []
   script:
-    - pipenv sync --dev
-    - pipenv run pre-commit run --all-files
+    - poetry config virtualenvs.in-project true
+    - poetry env use 3.10
+    - poetry install
+    - poetry run pre-commit run --all-files
 
 build:
   stage: test

@@ -12,16 +12,16 @@ repos:
     hooks:
       - id: check_ten_maru
         name: Check ten and maru.
-        entry: pipenv run python scripts/fix-ten-maru.py
+        entry: poetry run python scripts/fix-ten-maru.py
         language: system
         files: "\\.(tex|md)$"
       - id: check_filenames
         name: Check filenames
-        entry: pipenv run python scripts/check-filename.py
+        entry: poetry run python scripts/check-filename.py
         language: system
       - id: format_tex_files
         name: Format TeX files
-        entry: pipenv run python scripts/run-latexindent.py
+        entry: poetry run python scripts/run-latexindent.py
         language: system
         files: "\\.(tex)$"
       - id: black

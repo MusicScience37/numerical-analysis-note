@@ -1,9 +1,6 @@
 {
   "build": { "dockerfile": "Dockerfile" },
-  "containerEnv": {
-    "PIPENV_VENV_IN_PROJECT": "1",
-    "PIPENV_IGNORE_VIRTUALENVS": "1"
-  },
+  "containerEnv": {},
   "extensions": [
     "james-yu.latex-workshop",
     "streetsidesoftware.code-spell-checker",
@@ -12,7 +9,8 @@
     "ms-python.python",
     "njpwerner.autodocstring",
     "ms-azuretools.vscode-docker",
-    "jebbs.plantuml"
+    "jebbs.plantuml",
+    "tamasfe.even-better-toml"
   ],
   "postCreateCommand": "bash ./.devcontainer/setup.bash",
   "settings": {}
