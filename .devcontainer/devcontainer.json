@@ -1,18 +1,22 @@
 {
   "build": { "dockerfile": "Dockerfile" },
   "containerEnv": {},
-  "extensions": [
-    "james-yu.latex-workshop",
-    "streetsidesoftware.code-spell-checker",
-    "davidanson.vscode-markdownlint",
-    "esbenp.prettier-vscode",
-    "ms-python.python",
-    "njpwerner.autodocstring",
-    "ms-azuretools.vscode-docker",
-    "jebbs.plantuml",
-    "tamasfe.even-better-toml",
-    "redhat.vscode-yaml"
-  ],
-  "postCreateCommand": "bash ./.devcontainer/setup.bash",
-  "settings": {}
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "james-yu.latex-workshop",
+        "streetsidesoftware.code-spell-checker",
+        "davidanson.vscode-markdownlint",
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "njpwerner.autodocstring",
+        "ms-azuretools.vscode-docker",
+        "jebbs.plantuml",
+        "tamasfe.even-better-toml",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {}
+    }
+  },
+  "postCreateCommand": "bash ./.devcontainer/setup.bash"
 }
