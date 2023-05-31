@@ -44,9 +44,9 @@ spell check:
       "**/*.py"
       "**/*.md"
       "**/*.tex"
-      "**/*.sty"
       "**/*.bib"
       "**/*.yaml"
+      "**/*.toml"
       "**/*.json"
       "**/*.sh"
   interruptible: true
