@@ -13,7 +13,8 @@
         "ms-azuretools.vscode-docker",
         "jebbs.plantuml",
         "tamasfe.even-better-toml",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "ms-python.black-formatter"
       ],
       "settings": {}
     }

@@ -1,4 +1,4 @@
-image: registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2022
+image: registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2023
 
 stages:
   - test
@@ -17,7 +17,7 @@ pre-commit:
   needs: []
   script:
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.10
+    - poetry env use 3.11
     - poetry install
     - poetry run pre-commit run --all-files
 
@@ -32,11 +32,29 @@ build:
     paths:
       - main.pdf
     expire_in: 1 week
+  interruptible: true
+
+spell check:
+  stage: test
+  needs: []
+  image: node
+  script:
+    - npm install -g cspell
+    - cspell lint
+      "**/*.py"
+      "**/*.md"
+      "**/*.tex"
+      "**/*.bib"
+      "**/*.yaml"
+      "**/*.toml"
+      "**/*.json"
+      "**/*.sh"
+  interruptible: true
 
 pages:
   stage: deploy
   needs: [build]
-  image: ubuntu
+  image: alpine
   script:
     - mkdir public
     - mv main.pdf public/numerical-analysis-note.pdf
@@ -45,3 +63,4 @@ pages:
       - public
   only:
     - main
+  interruptible: true

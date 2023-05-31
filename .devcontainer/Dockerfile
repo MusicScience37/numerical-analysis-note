@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2022
+FROM registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2023
 
 ENV PATH="${PATH}:/root/.local/bin"
 RUN apt-get update && \
