@@ -32,6 +32,25 @@ build:
     paths:
       - main.pdf
     expire_in: 1 week
+  interruptible: true
+
+spell check:
+  stage: test
+  needs: []
+  image: node
+  script:
+    - npm install -g cspell
+    - cspell lint
+      "**/*.py"
+      "**/*.md"
+      "**/*.tex"
+      "**/*.sty"
+      "**/*.bib"
+      "**/*.yaml"
+      "**/*.json"
+      "**/*.sh"
+  interruptible: true
+  allow_failure: true
 
 pages:
   stage: deploy
@@ -45,3 +64,4 @@ pages:
       - public
   only:
     - main
+  interruptible: true
