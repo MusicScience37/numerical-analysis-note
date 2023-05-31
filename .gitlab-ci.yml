@@ -1,4 +1,4 @@
-image: registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2022
+image: registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2023
 
 stages:
   - test
@@ -54,7 +54,7 @@ spell check:
 pages:
   stage: deploy
   needs: [build]
-  image: ubuntu
+  image: alpine
   script:
     - mkdir public
     - mv main.pdf public/numerical-analysis-note.pdf
