@@ -50,7 +50,6 @@ spell check:
       "**/*.json"
       "**/*.sh"
   interruptible: true
-  allow_failure: true
 
 pages:
   stage: deploy
