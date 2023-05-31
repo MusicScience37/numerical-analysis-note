@@ -11,5 +11,8 @@
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
   "cSpell.enableFiletypes": ["bibtex", "toml"]
 }

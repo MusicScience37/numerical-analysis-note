@@ -10,7 +10,7 @@ TMP_DIR_PATH = os.path.abspath(THIS_DIR + "/../.latexindent")
 
 
 def run_latexindent(filepath: str):
-    """latesindent を適用する。
+    """latexindent を適用する。
 
     Args:
         filepath (str): ファイルパス
