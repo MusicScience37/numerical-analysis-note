@@ -10,5 +10,6 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "cSpell.enableFiletypes": ["bibtex"]
 }
