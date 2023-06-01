@@ -11,7 +11,6 @@
         "ms-python.python",
         "njpwerner.autodocstring",
         "ms-azuretools.vscode-docker",
-        "jebbs.plantuml",
         "tamasfe.even-better-toml",
         "redhat.vscode-yaml",
         "ms-python.black-formatter"
