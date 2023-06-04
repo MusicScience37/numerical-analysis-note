@@ -87,6 +87,37 @@ Algebraic Multigrid (AMG) 法
 最終的には細かいグリッドにおける詳細な解まで求められるようにしていくというのが
 基本的な Multigrid 法の考え方となっている．
 そのような細かさの異なるグリッドを実際のグリッドの形状から作るのではなく，
-細かいグリッドにおける係数行列 $A$ の値をもとに
-荒いグリッドにおける係数行列 $A'$ を求めるようにして実現するのが
-Algebraic Multigrid 法である．
+細かいグリッドにおける係数行列の値をもとに
+荒いグリッドにおける係数行列を求めるようにして実現するのが
+AMG 法である．
+
+\begin{algorithm}[tp]
+    \caption{Algebraic Multigrid (AMG) 法の準備 \cite{Ruge1987,Wolters2002}}
+    \label{alg:matrix-computation_amg_setup}
+    \begin{algorithmic}
+        \Procedure{AMGSetup}{$A \in \setR^{n \times n}$}
+        \State 係数行列 $A$ のグリッドの点のインデックスの集合を $\Omega_1$ とする．
+        \State $A_1 \gets A$
+        \State $m \gets 1$
+        \Loop
+        \State $A_m$ の値をもとに $\Omega_m$ から一段荒いグリッドに使用するインデックスを選択し，
+        その集合を $\Omega_{m+1}$ とする．
+        \State $\Omega_{m+1}$ 上のベクトルを $\Omega_{m}$ 上のベクトルに変換する
+        補間の行列 $P_{m+1}^{m}$ を生成する．
+        \State $\Omega_{m}$ 上のベクトルを $\Omega_{m+1}$ 上のベクトルに変換する
+        行列 $P_{m}^{m+1} = {P_{m+1}^{m}}^\top$ を用意する．
+        \State $\Omega_{m+1}$ 上の係数行列 $A_{m+1} = P_{m}^{m+1} A_{m} P_{m+1}^{m}$ を算出する．
+        \If{係数行列 $A_{m+1}$ が行列分解を適用できる程度に小さくなった}
+        \State \Return
+        \EndIf
+        \State $m \gets m + 1$
+        \EndLoop
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+AMG 法では，
+Algorithm \ref{alg:matrix-computation_amg_setup}
+のようにして係数行列 $A$ から反復的に荒いグリッドを生成していく．
+反復を停止する条件として，
+文献 \cite{Wolters2002} ではグリッドの点数が 1000 を下回ることが用いられている．
