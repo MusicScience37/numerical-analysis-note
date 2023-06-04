@@ -25,6 +25,7 @@ $A \bm{x} = \bm{b}$
 
 行列 $A$ が対称とは限らない正方行列である場合に使用できる反復解法の例として，
 BiCGstab (Algorithm \ref{alg:matrix-computation__bicgstab})
+\index{BiCGstab}
 \footnote{実装を意識して一部記法の変更を加えている．}
 が挙げられる．
 ベクトル $\bm{x}$ について $A \bm{x}$ が計算できれば使用できるアルゴリズムとなっている．
@@ -59,3 +60,33 @@ BiCGstab (Algorithm \ref{alg:matrix-computation__bicgstab})
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
+
+\subsection{Algebraic Multigrid 法}
+
+\index{Algebric Multigrid}
+\index{AMG|see{Algebraic Multigrid}}
+
+ここで，
+大規模で対称な疎行列 $A \in \setR^{n \times n}$ を係数とする
+線形方程式 $A \bm{x} = \bm{b}$ の解法の 1 つである
+Algebraic Multigrid (AMG) 法
+\cite{Ruge1987}
+について説明する．
+
+偏微分方程式の解法においては，
+対称となる領域（1 次元の弦，2 次元の水面や膜，3 次元の室内など）をグリッドに分け，
+各点ごとに近傍の点との位置関係などをもとにして
+係数行列 $A$ が作られる．
+このような場合，方程式 $A \bm{x} = \bm{b}$ は近傍の点との関係のみを示すことになるが，
+細かいグリッドにおける方程式 $A \bm{x} = \bm{b}$ と
+荒いグリッドにおける方程式 $A' \bm{x}' = \bm{b}'$ を用意しておくことで，
+領域全体の大まかな傾向は荒いグリッドで計算し，
+細かい部分は細かいグリッドで計算するといった使い分けができるようになり，
+細かいグリッドにおける詳細な解の計算を高速化することができる．
+そのようにして，複数の細かさの異なるグリッドを使い分けて
+最終的には細かいグリッドにおける詳細な解まで求められるようにしていくというのが
+基本的な Multigrid 法の考え方となっている．
+そのような細かさの異なるグリッドを実際のグリッドの形状から作るのではなく，
+細かいグリッドにおける係数行列 $A$ の値をもとに
+荒いグリッドにおける係数行列 $A'$ を求めるようにして実現するのが
+Algebraic Multigrid 法である．
