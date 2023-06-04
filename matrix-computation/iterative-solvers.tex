@@ -1,0 +1,59 @@
+% !TEX root = ../main.tex
+%
+
+\section{線形方程式の反復解法}
+
+ここでは，変数 $\bm{x} \in \setC^n$ に関する線形方程式
+$A \bm{x} = \bm{b}$
+($A \in \setC^{m \times n}$, $\bm{b} \in \setC^m$)
+を反復的に解くアルゴリズムについて説明する．
+このようなアルゴリズムは以下のような場合に役に立つ．
+\begin{itemize}
+    \item 行列のサイズ $m$, $n$ が大きいが，行列 $A$ が疎行列になっている場合，
+          行列分解では大きな密行列ができてしまってコンピューターのメモリが足りなくなるが，
+          疎行列 $A$ を疎行列のまま扱える反復解法であれば使用できる．
+          このような状況は，例えば偏微分方程式の数値計算において発生する．
+    \item 行列 $A$ 自身を計算するのは困難だが，
+          行列 $A$ を与えられたベクトル $\bm{x}$ にかけた $A \bm{x}$ は比較的容易に計算できる場合，
+          $A \bm{x}$ さえ計算できれば使用できるタイプの反復解法を使用して
+          線形方程式 $A \bm{x} = \bm{b}$ を解くことができる．
+          このような状況は，
+          例えば \ref{sec:ode_runge-kutta_without-jacobian} 節において扱う．
+\end{itemize}
+
+行列 $A$ が対称とは限らない正方行列である場合に使用できる反復解法の例として，
+BiCGstab (Algorithm \ref{alg:matrix-computation__bicgstab})
+\footnote{実装を意識して一部記法の変更を加えている．}
+が挙げられる．
+ベクトル $\bm{x}$ について $A \bm{x}$ が計算できれば使用できるアルゴリズムとなっている．
+
+\begin{algorithm}[tp]
+    \caption{BiCGstab \cite{Golub2013}}
+    \label{alg:matrix-computation__bicgstab}
+    \begin{algorithmic}
+        \Procedure{BiCGstab}{$A \in \setR^{n \times n}, \bm{b} \in \setR^n, \bm{x}_0 \in \setR^n$}
+        \State $\bm{r} \gets \bm{b} - A \bm{x}_0$
+        \State $\tilde{\bm{r}}_0$ を零ベクトルでない値に設定
+        \Comment 残差 $\bm{r}$ にしておけば良い．
+        \State $\bm{x} \gets \bm{x}_0$
+        \State $\bm{p} \gets \bm{r}$
+        \State $\rho \gets \tilde{\bm{r}}_0^\top \bm{r}$
+        \Loop
+        \State $\bm{p}' \gets A \bm{p}$
+        \State $\mu \gets \frac{\tilde{\bm{r}}_0^\top \bm{r}}{\tilde{\bm{r}}_0^\top \bm{p}'}$
+        \State $\bm{s} \gets \bm{r} - \mu \bm{p}'$
+        \State $\bm{s}' \gets A \bm{s}$
+        \State $\omega \gets \frac{\bm{s}^\top \bm{s}'}{\|\bm{s}'\|_2^2}$
+        \State $\bm{x} \gets \bm{x} + \mu \bm{p} + \omega \bm{s}$
+        \State $\bm{r} \gets \bm{s} - \omega \bm{s}'$
+        \If{$\|\bm{r}\|_2 < tolerance$}
+        \State \Return $\bm{x}$
+        \EndIf
+        \State $\rho_{old} \gets \rho$
+        \State $\rho \gets \tilde{\bm{r}}_0^\top \bm{r}$
+        \State $\tau \gets \frac{\rho \mu}{\rho_{old} \omega}$
+        \State $\bm{p} \gets \bm{r} + \tau(\bm{p} - \omega \bm{p}')$
+        \EndLoop
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}

@@ -1,0 +1,58 @@
+% !TEX root = ../main.tex
+%
+
+\section{QR 分解}
+
+\index{QRぶんかい@QR 分解}
+行列 $A \in \setC^{m \times n}$ が
+$m \ge n$ かつランク $n$ の場合に次のような分解を行うことができ，
+QR 分解と呼ばれる．
+
+\begin{equation}
+    A = Q
+    \begin{pmatrix}
+        R \\ O
+    \end{pmatrix}
+\end{equation}
+
+ここで，$Q \in \setC^{m \times m}$ はユニタリ行列であり，
+$R \in \setC^{n \times n}$ は正則な上三角行列である．
+
+行列 $Q$ を $Q = (Q_1, Q_2)$ のように
+行列 $Q_1 \in \setC^{m \times n}$ と
+行列 $Q_2 \in \setC^{m \times (n-m)}$ に分割すると
+$A = Q_1 R$ となり，
+$A^\dagger = R^{-1} Q_1^*$のように
+Moore-Penrose の一般化逆行列を求められる．
+
+\section{特異値分解}
+
+\index{とくいちぶんかい@特異値分解}
+\index{Singular Value Decomposition|see{特異値分解}}
+続いて，特異値分解についても触れておく．
+特異値分解には複数の定義があるが，
+ここでは行列 $A \in \setC^{m \times n}$ の特異値分解は
+\begin{equation}
+    A = U
+    \begin{pmatrix}
+        \Sigma & O \\
+        O      & O
+    \end{pmatrix}
+    V^*
+\end{equation}
+とする．
+ここで，$\Sigma \in \setR^{r \times r}$ は
+正数の対角要素による対角行列で，
+$U \in \setC^{m \times m}$ と
+$V \in \setC^{n \times n}$ はユニタリ行列とする．
+
+QR 分解と同様に
+$U = (U_1, U_2)$,
+$U_1 \in \setC^{m \times r}$,
+$U_2 \in \setC^{m \times (m-r)}$,
+$V = (V_2, V_2)$,
+$V_1 \in \setC^{n \times r}$,
+$V_2 \in \setC^{n \times (n-r)}$ のように
+行列を分割すると，
+$A = U_1 \Sigma V_1^*$となり，
+$A^\dagger = V_1 \Sigma^{-1} U_1^*$ が示せる．
