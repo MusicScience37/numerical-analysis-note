@@ -123,7 +123,7 @@ Algorithm \ref{alg:matrix-computation_amg_setup}
 文献 \cite{Wolters2002} ではグリッドの点数が 1000 を下回ることが用いられている．
 1 段階荒いグリッドを求めるアルゴリズムは，
 Algorithm \ref{alg:matrix-computation_amg_select-coarse-points1},
-Algorithm (TODO)
+Algorithm \ref{alg:matrix-computation_amg_select-coarse-points2}
 からなる．
 
 \begin{algorithm}[tp]
@@ -151,9 +151,9 @@ Algorithm (TODO)
         %
         \While{$U \neq \emptyset$}
         \State $U$ から $\lambda_i$ が最も大きい $i$ を選択する．
-        \State $C \gets C \cup \{i\}$, $U \gets U - \{i\}$
+        \State $C \gets C \cup \{i\}$, $U \gets U \setminus \{i\}$
         \ForAll{$j \in S_i^\top \cap U$}
-        \State $F \gets F \cup \{j\}$, $U \gets U - \{j\}$
+        \State $F \gets F \cup \{j\}$, $U \gets U \setminus \{j\}$
         \ForAll{$k \in S_j \cap U$}
         \State $\lambda_k \gets \lambda_k + 1$
         \EndFor
@@ -184,6 +184,54 @@ $\left| [A_m]_{ij} \right| \ge \theta %
 \cite{Ruge1987}．
 アルゴリズム中に出てくる $S_i^\top$ は $i$ に強く接続している点の集合となっており，
 強く接続している点が多いような点は優先的に荒いグリッドに含むようになっている．
+アルゴリズムの後半で $\lambda_i$ の値が更新されているが，
+更新されたあとの値は
+$\lambda_i = \left|S_i^\top \cap U\right| + 2 \left|S_i^\top \cap F\right|$
+となっており，
+荒いグリッドに選択しないことにした点の集合 $F$ に含まれる点との
+関係が強い点は次の荒いグリッドへ追加する点に選択されやすいようになっている．
+
+\begin{algorithm}[tp]
+    \caption{Algebraic Multigrid (AMG) 法における荒いグリッドの点の選択（ステップ 2）%
+        （\cite{Ruge1987} をもとに一部変更）}
+    \label{alg:matrix-computation_amg_select-coarse-points2}
+    \begin{algorithmic}
+        \Procedure{AMGSelectCoarsePointsStep2}{$A_m$, $C$, $F$}
+        \State $T = \emptyset$
+        \While{$F \setminus T \neq \emptyset$}
+        \State $i \in F \setminus T$ を任意に選択する．
+        \State $T \gets T \cup \{i\}$
+        \State $C_i \gets S_i \cap C$
+        \Comment{$i$ に強く接続している荒いグリッド上の点}
+        \State $D_i^s \gets S_i \setminus C_i$
+        \Comment{$i$ に強く接続している荒いグリッドにない点}
+        \State $\tilde{C}_i \gets \emptyset$
+        \Comment{荒いグリッドへ追加する点の仮の置き場所}
+        \ForAll{$j \in D_i^s$}
+        \If{$S_j \cap C_i = \emptyset$}
+        \If{$\tilde{C}_i = \emptyset$}
+        \State $\tilde{C}_i \gets \{j\}$
+        \State $C_i \gets C_i \cup \{j\}$, $D_i^s \gets D_i^s \setminus \{j\}$
+        \State for 文の処理をやり直す．
+        \Else
+        \State $C \gets C \cup \{i\}$, $F \gets F \setminus \{i\}$
+        \State for 文を抜けて次の $i$ の選択に移る．
+        \EndIf
+        \EndIf
+        \EndFor
+        \State $C \gets C \cup \tilde{C}_i$, $F \gets F \setminus \tilde{C}_i$
+        \EndWhile
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+Algorithm \ref{alg:matrix-computation_amg_select-coarse-points2}
+では，
+各 $i \in F$ について，各 $j \in S_i$ は $C$ にあるか，
+$C_i = C \cap S_i$ の少なくとも 1 点に強く接続しているという条件を満たすように
+荒いグリッドに選択する点を調整している．
+この条件を満たしていると効率よく計算できたという
+\cite{Ruge1987}．
 
 \begin{algorithm}[tp]
     \caption{Algebraic Multigrid (AMG) 法による反復 \cite{Wolters2002}}
