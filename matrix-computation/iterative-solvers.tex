@@ -21,8 +21,56 @@ $A \bm{x} = \bm{b}$
           例えば \ref{sec:ode_runge-kutta_without-jacobian} 節において扱う．
 \end{itemize}
 
+\subsection{単純な反復による解法}
+
+まず，線形方程式について単純な反復による解法の例を示す．
+
+\begin{algorithm}[tp]
+    \caption{Jacobi 法の反復 \cite{Golub2013}}
+    \label{alg:matrix-computation_jacobi-iteration}
+    \begin{algorithmic}
+        \Procedure{JacobiIterate}{$A$, $\bm{b}$, $\bm{x}$}
+        \For{$i = 1, 2, \ldots, n$}
+        \State $x_i' \gets \frac{\displaystyle b_i - \sum_{j = 1}^{i - 1} A_{ij} x_j %
+                - \sum_{j = i + 1}^{n} A_{ij} x_j}{\displaystyle A_{ii}}$
+        \EndFor
+        \State $\bm{x} \gets \bm{x}'$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[tp]
+    \caption{Gauss-Seidel 法の反復 \cite{Golub2013}}
+    \label{alg:matrix-computation_gauss-seidel-iteration}
+    \begin{algorithmic}
+        \Procedure{GaussSeidelIterate}{$A$, $\bm{b}$, $\bm{x}$}
+        \For{$i = 1, 2, \ldots, n$}
+        \State $x_i \gets \frac{\displaystyle b_i - \sum_{j = 1}^{i - 1} A_{ij} x_j %
+                - \sum_{j = i + 1}^{n} A_{ij} x_j}{\displaystyle A_{ii}}$
+        \EndFor
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+Jacobi 法
+\index{Jacobiほう@Jacobi 法}
+では，
+Algorithm \ref{alg:matrix-computation_jacobi-iteration}
+の反復を繰り返すことで解を求める．
+一方，Gauss-Seidel 法
+\index{GaussSeidelほう@Gauss-Seidel 法}
+では，
+Algorithm \ref{alg:matrix-computation_gauss-seidel-iteration}
+の反復を繰り返すことで解を求める．
+Jacobi 法では前の解のみから次の解の各要素を求めるのに対し，
+Gauss-Seidel 法では反復中の最新の解も使用するという違いがある．
+
+\subsection{Krylov 部分空間法}
+\index{Krylovぶぶんくうかんほう@Krylov 部分空間法}
+
+ここでは，Krylov 部分空間法と呼ばれる種類のアルゴリズムの例を示す．
+
 \TODO{対称行列の CG 法と PCG 法に触れておきたい．}
-\TODO{Gauss-Seidel 法に触れておきたい．}
 
 行列 $A$ が対称とは限らない正方行列である場合に使用できる反復解法の例として，
 BiCGstab (Algorithm \ref{alg:matrix-computation__bicgstab})
@@ -278,7 +326,7 @@ $P_{m+1}^m$ の値として，文献 \cite{Wolters2002} では
 Algorithm \ref{alg:matrix-computation_amg_iterate}
 のような処理を反復的に行って解を更新する．
 アルゴリズム中の SMOOTH に使用する反復解法としては
-Gauss-Seidel 法
+Gauss-Seidel 法（Algorithm \ref{alg:matrix-computation_gauss-seidel-iteration}）
 \index{GaussSeidelほう@Gauss-Seidel 法}
 が挙げられる
 \cite{Ruge1987,Wolters2002}．
