@@ -234,6 +234,19 @@ $C_i = C \cap S_i$ の少なくとも 1 点に強く接続しているという�
 この条件を満たしていると効率よく計算できたという
 \cite{Ruge1987}．
 
+荒いグリッドを求めたあとは，
+補間の行列 $P_{m+1}^m$ を求める．
+$P_{m+1}^m$ の値として，文献 \cite{Wolters2002} では
+\begin{equation}
+    [P_{m+1}^m]_{ij} =
+    \begin{cases}
+        1                                      & i = j \in C                    \\
+        \frac{1}{\left|S_i^\top \cap C\right|} & i \in F, j \in S_i^\top \cap C \\
+        0                                      & \mathrm{otherwise}
+    \end{cases}
+\end{equation}
+が挙げられている．
+
 \begin{algorithm}[tp]
     \caption{Algebraic Multigrid (AMG) 法による反復 \cite{Wolters2002}}
     \label{alg:matrix-computation_amg_iterate}
