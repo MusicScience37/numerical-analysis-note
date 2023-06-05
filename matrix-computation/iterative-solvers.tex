@@ -22,6 +22,7 @@ $A \bm{x} = \bm{b}$
 \end{itemize}
 
 \TODO{対称行列の CG 法と PCG 法に触れておきたい．}
+\TODO{Gauss-Seidel 法に触れておきたい．}
 
 行列 $A$ が対称とは限らない正方行列である場合に使用できる反復解法の例として，
 BiCGstab (Algorithm \ref{alg:matrix-computation__bicgstab})
@@ -63,8 +64,8 @@ BiCGstab (Algorithm \ref{alg:matrix-computation__bicgstab})
 
 \subsection{Algebraic Multigrid 法}
 
-\index{Algebric Multigrid}
-\index{AMG|see{Algebraic Multigrid}}
+\index{AlgebricMultigridほう@Algebric Multigrid 法}
+\index{AMGほう@AMG 法|see{Algebraic Multigrid 法}}
 
 ここで，
 大規模で対称な疎行列 $A \in \setR^{n \times n}$ を係数とする
@@ -264,7 +265,16 @@ $C_i = C \cap S_i$ の少なくとも 1 点に強く接続しているという�
 Algorithm \ref{alg:matrix-computation_amg_iterate}
 のような処理を反復的に行って解を更新する．
 アルゴリズム中の SMOOTH に使用する反復解法としては
-Gauss-Seidel 法が挙げられる
+Gauss-Seidel 法
+\index{GaussSeidelほう@Gauss-Seidel 法}
+が挙げられる
 \cite{Ruge1987,Wolters2002}．
 1 回の SMOOTH で行う Gauss-Seidel 法の反復の回数は 1 回で良い
+\cite{Wolters2002}．
+
+AMG 法を既存の CG 法の前処理に使用した AMG-CG 法
+\index{AMGCGほう@AMG-CG 法}
+\index{CGほう@CG 法}
+も考えられており，
+単純な前処理よりも効率よく方程式を解くことができるという
 \cite{Wolters2002}．
