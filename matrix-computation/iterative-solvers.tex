@@ -116,6 +116,75 @@ AMG 法である．
     \end{algorithmic}
 \end{algorithm}
 
+AMG 法では，
+Algorithm \ref{alg:matrix-computation_amg_setup}
+のようにして係数行列 $A$ から反復的に荒いグリッドを生成していく．
+反復を停止する条件として，
+文献 \cite{Wolters2002} ではグリッドの点数が 1000 を下回ることが用いられている．
+1 段階荒いグリッドを求めるアルゴリズムは，
+Algorithm \ref{alg:matrix-computation_amg_select-coarse-points1},
+Algorithm (TODO)
+からなる．
+
+\begin{algorithm}[tp]
+    \caption{Algebraic Multigrid (AMG) 法における荒いグリッドの点の選択（ステップ 1） \cite{Ruge1987}}
+    \label{alg:matrix-computation_amg_select-coarse-points1}
+    \begin{algorithmic}
+        \Procedure{AMGSelectCoarsePointsStep1}{$A_m$, $\Omega_m$}
+        \State $C \gets \emptyset$
+        \Comment{荒いグリッドの点の集合}
+        \State $F \gets \emptyset$
+        \Comment{細かいグリッドのみの点の集合}
+        \State $U \gets \Omega_m$
+        \Comment{未確認の点の集合}
+        %
+        \ForAll{$i \in \Omega_m$}
+        \State $S_i \gets \left\{j \in \Omega_m \relmiddle| %
+            \left| [A_m]_{ij} \right| \ge \theta %
+            \max_{k \in \Omega_m, k \neq i} \left| [A_m]_{ik} \right| \right\}$
+        \Comment{$\theta$ は $\theta \in (0, 1]$ な定数}
+        \EndFor
+        \ForAll{$i \in \Omega_m$}
+        \State $S_i^\top \gets \left\{ j \in \Omega_m \relmiddle| i \in S_j \right\}$
+        \State $\lambda_i \gets \left| S_i^\top \right|$
+        \EndFor
+        %
+        \While{$U \neq \emptyset$}
+        \State $U$ から $\lambda_i$ が最も大きい $i$ を選択する．
+        \State $C \gets C \cup \{i\}$, $U \gets U - \{i\}$
+        \ForAll{$j \in S_i^\top \cap U$}
+        \State $F \gets F \cup \{j\}$, $U \gets U - \{j\}$
+        \ForAll{$k \in S_j \cap U$}
+        \State $\lambda_k \gets \lambda_k + 1$
+        \EndFor
+        \EndFor
+        \ForAll{$j \in S_i \cap U$}
+        \State $\lambda_j \gets \lambda_j - 1$
+        \EndFor
+        \EndWhile
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+Algorithm \ref{alg:matrix-computation_amg_select-coarse-points1}
+では，グリッドの点に対する評価値 $\lambda_i$ が高い点を荒いグリッドの点に選択していく．
+その $\lambda_i$ の基準となっている集合が
+\begin{equation}
+    S_i \gets \left\{j \in \Omega_m \relmiddle| %
+    \left| [A_m]_{ij} \right| \ge \theta %
+    \max_{k \in \Omega_m, k \neq i} \left| [A_m]_{ik} \right| \right\}
+\end{equation}
+だが，$i, j \in \Omega_m$ が
+$\left| [A_m]_{ij} \right| \ge \theta %
+    \max_{k \in \Omega_m, k \neq i} \left| [A_m]_{ik} \right|$
+を満たすとき $i$ は $j$ に強く接続している（strongly connected, strongly depends）という
+\cite{Ruge1987}．
+ここで，$\theta$ は $\theta \in (0, 1]$ を満たす定数で，
+実用的には 0.25 にしておけば良い
+\cite{Ruge1987}．
+アルゴリズム中に出てくる $S_i^\top$ は $i$ に強く接続している点の集合となっており，
+強く接続している点が多いような点は優先的に荒いグリッドに含むようになっている．
+
 \begin{algorithm}[tp]
     \caption{Algebraic Multigrid (AMG) 法による反復 \cite{Wolters2002}}
     \label{alg:matrix-computation_amg_iterate}
@@ -142,13 +211,6 @@ AMG 法である．
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
-
-AMG 法では，
-Algorithm \ref{alg:matrix-computation_amg_setup}
-のようにして係数行列 $A$ から反復的に荒いグリッドを生成していく．
-（$\Omega_m$ から $\Omega_{m+1}$ を生成する方法については後述．）
-反復を停止する条件として，
-文献 \cite{Wolters2002} ではグリッドの点数が 1000 を下回ることが用いられている．
 
 荒いグリッドを求めたあとは
 Algorithm \ref{alg:matrix-computation_amg_iterate}
