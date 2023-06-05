@@ -92,10 +92,10 @@ Algebraic Multigrid (AMG) 法
 AMG 法である．
 
 \begin{algorithm}[tp]
-    \caption{Algebraic Multigrid (AMG) 法の準備 \cite{Ruge1987,Wolters2002}}
+    \caption{Algebraic Multigrid (AMG) 法の準備（概要） \cite{Ruge1987,Wolters2002}}
     \label{alg:matrix-computation_amg_setup}
     \begin{algorithmic}
-        \Procedure{AMGSetup}{$A \in \setR^{n \times n}$}
+        \Procedure{AMGSetup}{$A$}
         \State 係数行列 $A$ のグリッドの点のインデックスの集合を $\Omega_1$ とする．
         \State $A_1 \gets A$
         \State $m \gets 1$
@@ -107,7 +107,7 @@ AMG 法である．
         \State $\Omega_{m}$ 上のベクトルを $\Omega_{m+1}$ 上のベクトルに変換する
         行列 $P_{m}^{m+1} = {P_{m+1}^{m}}^\top$ を用意する．
         \State $\Omega_{m+1}$ 上の係数行列 $A_{m+1} = P_{m}^{m+1} A_{m} P_{m+1}^{m}$ を算出する．
-        \If{係数行列 $A_{m+1}$ が行列分解を適用できる程度に小さくなった}
+        \If{係数行列 $A_{m+1}$ が行列分解を適用できる程度に小さくなった場合}
         \State \Return
         \EndIf
         \State $m \gets m + 1$
@@ -116,8 +116,45 @@ AMG 法である．
     \end{algorithmic}
 \end{algorithm}
 
+\begin{algorithm}[tp]
+    \caption{Algebraic Multigrid (AMG) 法による反復 \cite{Wolters2002}}
+    \label{alg:matrix-computation_amg_iterate}
+    \begin{algorithmic}
+        \Procedure{AMGIterate}{$m$, $\bm{x}_m$, $\bm{b}_m$}
+        \Comment{$m$ 番目に細かいグリッドで $A_m \bm{x}_m = \bm{b}_m$ を解くために反復する．}
+        \If{最も細かいグリッドの場合}
+        \State 行列分解を用いて $\bm{x}_m \gets A_m^{-1} \bm{b}_m$ とする．
+        \State \Return $\bm{x}_m$
+        \EndIf
+        %
+        \State $\bm{x}_m \gets \mathrm{SMOOTH}(A_m, \bm{x}_m, \bm{b}_m)$
+        \Comment{反復解法で $\bm{x}_m$ を更新する．}
+        %
+        \State $\bm{r}_m \gets \bm{b}_m - A_m \bm{x}_m$
+        \State $\bm{r}_{m+1} \gets P_{m}^{m+1} \bm{r}_m$
+        \State $\bm{e}_{m+1} \gets \mathrm{AMGIterate}($m + 1$, \bm{0}, \bm{r}_{m+1})$
+        \State $\bm{e}_m \gets P_{m+1}^{m} \bm{e}_{m+1}$
+        \Comment{$A_m (\bm{x}_m + \bm{e}_m) = \bm{b}_m$ を荒いグリッドで解いたことになる．}
+        \State $\bm{x}_m \gets \bm{x}_m + \bm{e}_m$
+        %
+        \State $\bm{x}_m \gets \mathrm{SMOOTH}(A_m, \bm{x}_m, \bm{b}_m)$
+        \State \Return $\bm{x}_m$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
 AMG 法では，
 Algorithm \ref{alg:matrix-computation_amg_setup}
 のようにして係数行列 $A$ から反復的に荒いグリッドを生成していく．
+（$\Omega_m$ から $\Omega_{m+1}$ を生成する方法については後述．）
 反復を停止する条件として，
 文献 \cite{Wolters2002} ではグリッドの点数が 1000 を下回ることが用いられている．
+
+荒いグリッドを求めたあとは
+Algorithm \ref{alg:matrix-computation_amg_iterate}
+のような処理を反復的に行って解を更新する．
+アルゴリズム中の SMOOTH に使用する反復解法としては
+Gauss-Seidel 法が挙げられる
+\cite{Ruge1987,Wolters2002}．
+1 回の SMOOTH で行う Gauss-Seidel 法の反復の回数は 1 回で良い
+\cite{Wolters2002}．
