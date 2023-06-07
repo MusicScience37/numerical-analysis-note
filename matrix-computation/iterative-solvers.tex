@@ -25,7 +25,7 @@ $A \bm{x} = \bm{b}$
 
 まず，線形方程式について単純な反復による解法の例を示す．
 
-\begin{algorithm}[tp]
+\begin{algorithm}[p]
     \caption{Jacobi 法の反復 \cite{Golub2013}}
     \label{alg:matrix-computation_jacobi-iteration}
     \begin{algorithmic}
@@ -39,7 +39,7 @@ $A \bm{x} = \bm{b}$
     \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[tp]
+\begin{algorithm}[p]
     \caption{Gauss-Seidel 法の反復 \cite{Golub2013}}
     \label{alg:matrix-computation_gauss-seidel-iteration}
     \begin{algorithmic}
@@ -47,6 +47,40 @@ $A \bm{x} = \bm{b}$
         \For{$i = 1, 2, \ldots, n$}
         \State $x_i \gets \frac{\displaystyle b_i - \sum_{j = 1}^{i - 1} A_{ij} x_j %
                 - \sum_{j = i + 1}^{n} A_{ij} x_j}{\displaystyle A_{ii}}$
+        \EndFor
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[p]
+    \caption{Successive over-relaxation (SOR) 法の反復 \cite{Golub2013}}
+    \label{alg:matrix-computation_sor-method}
+    \begin{algorithmic}
+        \Procedure{GaussSeidelIterate}{$A$, $\bm{b}$, $\bm{x}$}
+        \For{$i = 1, 2, \ldots, n$}
+        \State $x_i' \gets \omega \frac{\displaystyle b_i - \sum_{j = 1}^{i - 1} A_{ij} x_j' %
+                - \sum_{j = i + 1}^{n} A_{ij} x_j}{\displaystyle A_{ii}} %
+            + (1 - \omega) x_i$
+        \EndFor
+        \State $\bm{x} \gets \bm{x}'$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[p]
+    \caption{Symmetric successive over-relaxation (SSOR) 法の反復 \cite{Golub2013}}
+    \label{alg:matrix-computation_ssor-method}
+    \begin{algorithmic}
+        \Procedure{GaussSeidelIterate}{$A$, $\bm{b}$, $\bm{x}$}
+        \For{$i = 1, 2, \ldots, n$}
+        \State $x_i' \gets \omega \frac{\displaystyle b_i - \sum_{j = 1}^{i - 1} A_{ij} x_j' %
+                - \sum_{j = i + 1}^{n} A_{ij} x_j}{\displaystyle A_{ii}} %
+            + (1 - \omega) x_i$
+        \EndFor
+        \For{$i = n, n - 1, \ldots, 1$}
+        \State $x_i \gets \omega \frac{\displaystyle b_i - \sum_{j = 1}^{i - 1} A_{ij} x_j' %
+                - \sum_{j = i + 1}^{n} A_{ij} x_j}{\displaystyle A_{ii}} %
+            + (1 - \omega) x_i'$
         \EndFor
         \EndProcedure
     \end{algorithmic}
@@ -62,10 +96,23 @@ Algorithm \ref{alg:matrix-computation_jacobi-iteration}
 では，
 Algorithm \ref{alg:matrix-computation_gauss-seidel-iteration}
 の反復を繰り返すことで解を求める．
-Jacobi 法では前の解のみから次の解の各要素を求めるのに対し，
+これらのアルゴリズムは，$A \bm{x} = \bm{b}$ を
+$x_1$ から順に 1 要素分ずつ解いていく．
+ただし，Jacobi 法では前の解のみから次の解の各要素を求めるのに対し，
 Gauss-Seidel 法では反復中の最新の解も使用するという違いがある．
 
-\TODO{SOR, SSOR 法も書く．}
+さらに，Gauss-Seidel 法から派生したアルゴリズムとして，
+successive over-relaxation (SOR) 法
+（Algorithm \ref{alg:matrix-computation_sor-method}），
+symmetric successive over-relaxation (SSOR) 法
+（Algorithm \ref{alg:matrix-computation_ssor-method}）
+がある．
+これらはパラメータ $\omega \in (0, 2)$ を持ち，
+SOR 法は $\omega = 1$ のとき Gauss-Seidel 法に一致する．
+SSOR 法は SOR 法で一回全ての変数を更新したあと，
+逆順に変数の更新を行う．
+
+\clearpage
 
 \subsection{Krylov 部分空間法}
 \index{Krylovぶぶんくうかんほう@Krylov 部分空間法}
