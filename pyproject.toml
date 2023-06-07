@@ -15,6 +15,7 @@ pre-commit = "^3.3.2"
 plotly = "^5.14.1"
 pandas = "^2.0.2"
 kaleido = "==0.2.1"
+msgpack = "^1.0.5"
 
 [build-system]
 requires = ["poetry-core"]

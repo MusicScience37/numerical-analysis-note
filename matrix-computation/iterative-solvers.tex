@@ -388,3 +388,40 @@ AMG 法を既存の CG 法の前処理に使用した AMG-CG 法
 も考えられており，
 単純な前処理よりも効率よく方程式を解くことができるという
 \cite{Wolters2002}．
+
+\clearpage
+
+\subsection{反復解法の比較}
+
+ここまでに紹介した反復解法の一部についてベンチマークを行った結果を示す．
+
+Poisson 方程式 $-\triangle\phi = f$ を 2 次元の格子上で離散化する．
+格子上の点は均等に間隔 $d$ で並んでいるものとし，
+$i$ 行目 $j$ 列目（$(i, j)$ と記す）の点の $\phi$ の値を $\phi_{i,j}$ のように書くものとする．
+このとき，$(i, j)$ における Laplacian は以下のように近似できる
+\footnote{この近似は，文献 \cite{Knabner2003} を参考に%
+    格子上の各正方形内で双線形なテスト関数を用いた有限要素近似を行った結果である．%
+    \TODO{有限要素法の説明をして，導出過程を書くようにしたい．}}
+．
+\begin{equation}
+    -\triangle \phi_{i,j} \approx
+    \frac{8}{3d^2} \phi_{i,j} - \frac{1}{3d^2} \left(
+    \phi_{i-1,j-1} + \phi_{i-1,j} + \phi_{i-1,j+1}
+    + \phi_{i,j-1} + \phi_{i,j+1}
+    + \phi_{i+1,j-1} + \phi_{i+1,j} + \phi_{i+1,j+1}
+    \right)
+\end{equation}
+
+この近似をもとに領域 $[0, 1]^2$ 上の Poisson 方程式を解くための離散化された
+方程式 $A \bm{\phi} = \bm{b}$ （$\bm{\phi}$ は $\phi_{i,j}$ を並べたベクトル）を立て，
+複数のアルゴリズムで解いた．
+解くのにかかった時間を図 \ref{fig:matrix-computation_bench-laplacian-2d-grid} に示している．
+
+\TODO{他のアルゴリズムも実装して比較する．}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{matrix-computation/experiments/laplacian-2d-grid/bench.pdf}
+    \caption{2 次元格子上の Laplacian を離散化した行列を用いた反復解法のベンチマーク}
+    \label{fig:matrix-computation_bench-laplacian-2d-grid}
+\end{figure}

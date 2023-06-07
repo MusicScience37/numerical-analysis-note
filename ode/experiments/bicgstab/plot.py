@@ -54,8 +54,9 @@ def plot():
         category_orders={"Solver": ["BiCGstab", "Repeated GMRES (m=2)"]},
         color="Solver",
         line_dash="Solver",
+        log_x=True,
         log_y=True,
-        title="Processing Time of BiCGstab compared to GMRES",
+        title="Processing Time of BiCGstab Compared to GMRES",
     )
 
     # PDF を出力させると MathJax の読み込み中の表示が画像内に出力されるため、
