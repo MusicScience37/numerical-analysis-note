@@ -119,7 +119,7 @@ SSOR 法は SOR 法で一回全ての変数を更新したあと，
 
 ここでは，Krylov 部分空間法と呼ばれる種類のアルゴリズムの例を示す．
 
-\TODO{対称行列の CG 法と PCG 法に触れておきたい．}
+\todo{対称行列の CG 法と PCG 法に触れておきたい．}
 
 行列 $A$ が対称とは限らない正方行列である場合に使用できる反復解法の例として，
 BiCGstab (Algorithm \ref{alg:matrix-computation__bicgstab})
@@ -400,9 +400,9 @@ Poisson 方程式 $-\triangle\phi = f$ を 2 次元の格子上で離散化す�
 $i$ 行目 $j$ 列目（$(i, j)$ と記す）の点の $\phi$ の値を $\phi_{i,j}$ のように書くものとする．
 このとき，$(i, j)$ における Laplacian は以下のように近似できる
 \footnote{この近似は，文献 \cite{Knabner2003} を参考に%
-    格子上の各正方形内で双線形なテスト関数を用いた有限要素近似を行った結果である．%
-    \TODO{有限要素法の説明をして，導出過程を書くようにしたい．}}
+    格子上の各正方形内で双線形なテスト関数を用いた有限要素近似を行った結果である．}
 ．
+\todo{有限要素法の説明をして，導出過程を書くようにしたい．}
 \begin{equation}
     -\triangle \phi_{i,j} \approx
     \frac{8}{3d^2} \phi_{i,j} - \frac{1}{3d^2} \left(
@@ -417,7 +417,7 @@ $i$ 行目 $j$ 列目（$(i, j)$ と記す）の点の $\phi$ の値を $\phi_{i
 複数のアルゴリズムで解いた．
 解くのにかかった時間を図 \ref{fig:matrix-computation_bench-laplacian-2d-grid} に示している．
 
-\TODO{他のアルゴリズムも実装して比較する．}
+\todo{他のアルゴリズムも実装して比較する．}
 
 \begin{figure}[tp]
     \centering

@@ -38,3 +38,4 @@ http://creativecommons.org/licenses/by-sa/4.0/.
 | fontenc       | フォントのエンコード           | The Latex Project Public License                                        |
 | textcomp      | 記号のフォント                 | The Latex Project Public License                                        |
 | newtxmath     | 数式のフォント                 | The Latex Project Public License 1.3                                    |
+| todonotes     | TODO                           | The Latex Project Public License 1.3                                    |
