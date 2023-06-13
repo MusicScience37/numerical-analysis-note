@@ -391,6 +391,49 @@ AMG 法を既存の CG 法の前処理に使用した AMG-CG 法
 
 \clearpage
 
+\subsection{Ordering（行または列の順番の入れ替えによる高速化）}
+
+\begin{algorithm}[tp]
+    \caption{Cuthill-McKee Ordering \cite{Golub2013,Knabner2003}}
+    \label{alg:matrix-computation_ordering_cuthill-mckee}
+    \begin{algorithmic}[1]
+        \Procedure{CuthillMcKeeOrdering}{$A$}
+        \Comment{$A \in \setC^{n \times n}$ は疎行列}
+        \State $U \gets \{1, 2, \ldots, n\}$
+        \Comment{未処理の点の集合}
+        \State 点 $1, 2, \ldots, n$ について
+        $A$ の $(i, j)$ 成分（$i \neq j$） $A_{ij}$ が零でないときに
+        点 $i$ と点 $j$ が接続されているようなグラフ $G$ を考える．
+        \State グラフ $G$ における各点の次数
+        $d_i = \left| \left\{ j \relmiddle| A_{ij} \neq 0, i \neq j \right\} \right|$
+        を算出する．
+        \State 次数が最も小さい点 $i$ について
+        $S_0 \gets \{ i \}$,
+        $U \gets U \setminus \{ i \}$
+        とする．
+        \State $k \gets 1$
+        \While{$U \neq \emptyset$}
+        \State $S_{k - 1}$ の点に接続されていて $U$ に残っている点の集合を $S_k$ とする．
+        \State $U \gets U \setminus S_k$
+        \State $k \gets k + 1$
+        \EndWhile
+        \State 点 $1, 2, \ldots, n$ を $S_0, S_1, \ldots$ の順に並び替える．
+        同じ集合 $S_k$ に含まれる点同士は次数の小さい順に並び替える．
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+疎行列の演算を高速化するために行または列の順番を入れ替えるアルゴリズムが考えられている．
+例えば，
+Cuthill-McKee Ordering (Algorithm \ref{alg:matrix-computation_ordering_cuthill-mckee})
+を用いて行と列を並び替えると行列の中央に非零要素が集まり，
+一部の疎行列解法に効果があることが知られている
+\cite{Golub2013,Knabner2003}．
+また，Cuthill-McKee Ordering の結果を逆順に並び替えただけの
+Reverse Cuthill-McKee Ordering も考えられており，
+Cuthill-McKee Ordering より良い効果が得られる場合があるという
+\cite{Golub2013,Knabner2003}．
+
 \subsection{反復解法の比較}
 
 ここまでに紹介した反復解法の一部についてベンチマークを行った結果を示す．
