@@ -122,7 +122,7 @@ SSOR 法は SOR 法で一回全ての変数を更新したあと，
 \todo{対称行列の CG 法と PCG 法に触れておきたい．}
 
 行列 $A$ が対称とは限らない正方行列である場合に使用できる反復解法の例として，
-BiCGstab (Algorithm \ref{alg:matrix-computation__bicgstab})
+BiCGstab (Algorithm \ref{alg:matrix-computation_bicgstab})
 \index{BiCGstab}
 \footnote{実装を意識して一部記法の変更を加えている．}
 が挙げられる．
@@ -130,7 +130,7 @@ BiCGstab (Algorithm \ref{alg:matrix-computation__bicgstab})
 
 \begin{algorithm}[tp]
     \caption{BiCGstab \cite{Golub2013}}
-    \label{alg:matrix-computation__bicgstab}
+    \label{alg:matrix-computation_bicgstab}
     \begin{algorithmic}
         \Procedure{BiCGstab}{$A \in \setR^{n \times n}, \bm{b} \in \setR^n, \bm{x}_0 \in \setR^n$}
         \State $\bm{r} \gets \bm{b} - A \bm{x}_0$

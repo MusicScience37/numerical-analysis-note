@@ -595,7 +595,7 @@ GMRES 法を適用するにあたってはステップサイズが大きくな�
 係数行列を列ベクトルに左から作用させる以外の使い方をしないアルゴリズムであれば
 GMRES の代わりに使用できる．
 例えば，
-BiCGstab (Algorithm \ref{alg:matrix-computation__bicgstab})
+BiCGstab (Algorithm \ref{alg:matrix-computation_bicgstab})
 を使用することができる．
 BiCGstab を使用して同様に
 式 \eqref{eq:ode_runge-kutta_gmres_sample-coeff-matrix} の
@@ -606,7 +606,7 @@ GMRES で最も速かった $m=2$ の場合よりもさらに速くなってい�
 \begin{figure}[tp]
     \centering
     \includegraphics[width=0.99\linewidth]{ode/experiments/bicgstab/dimension-to-time.pdf}
-    \caption{BiCGstab（Algorithm \ref{alg:matrix-computation__bicgstab}）を使用して%
+    \caption{BiCGstab（Algorithm \ref{alg:matrix-computation_bicgstab}）を使用して%
         線形方程式を解くのにかかった時間}
     \label{fig:ode_runge-kutta_bicgstab_subspace-dimension-to-processing-time}
 \end{figure}
