@@ -19,6 +19,3 @@
   - Git LFS を有効にした環境で clone しないと画像が読み込めない．
     そのままビルドを行おうとすると，
     BoundingBox の自動生成に対応した dvipdfmx を使用しているのに「no BoundingBox」のエラーになる．
-
-- TeX の外部パッケージのうちの 1 つは Git submodule で取り込んでいるため，
-  clone 後 `git submodule update --init` をしておくこと．
