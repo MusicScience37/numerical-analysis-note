@@ -46,7 +46,7 @@ Algorithm \ref{alg:more-precision_reducing-truncation-errors_kahan-summation-rev
 \begin{algorithm}[tp]
     \caption{Kahan Summation \cite{Kahan1965}}
     \label{alg:more-precision_reducing-truncation-errors_kahan-summation}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{PerformKahanSummation}{$y_1, y_2, \ldots, y_n$}
         \State $s \gets 0$
         \Comment 総和を保持する変数
@@ -70,7 +70,7 @@ Algorithm \ref{alg:more-precision_reducing-truncation-errors_kahan-summation-rev
     \caption{Algorithm \ref{alg:more-precision_reducing-truncation-errors_kahan-summation}%
         を一時変数が少なくなるよう変更したもの}
     \label{alg:more-precision_reducing-truncation-errors_kahan-summation-revised}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{PerformKahanSummation}{$y_1, y_2, \ldots, y_n$}
         \State $s \gets 0$
         \Comment 総和を保持する変数
@@ -105,7 +105,7 @@ Kahan Summation (Algorithm \ref{alg:more-precision_reducing-truncation-errors_ka
 \begin{algorithm}[tp]
     \caption{敗者復活算法 \cite{Togawa2007}}
     \label{alg:more-precision_reducing-truncation-errors_repechange-arithmetic}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{PerformRepechangeArithmetic}{$y_1, y_2, \ldots, y_n$}
         \State $s \gets 0$
         \Comment 総和を保持する変数

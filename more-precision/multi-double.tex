@@ -33,7 +33,7 @@ Algorithm \ref{more-precision_multi-double_algo_TwoSum} を使用する．
 \begin{algorithm}[tp]
     \caption{大小の明確な倍精度浮動小数点数の加算と誤差計算\cite[Algorithm 3]{Hida2001}}
     \label{more-precision_multi-double_algo_QuickTwoSum}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{QuickTwoSum}{$a, b$}
         \State $s \gets a \oplus b$
         \State $e \gets b \ominus (s \ominus a)$
@@ -45,7 +45,7 @@ Algorithm \ref{more-precision_multi-double_algo_TwoSum} を使用する．
 \begin{algorithm}[tp]
     \caption{大小の不明な倍精度浮動小数点数の加算と誤差計算\cite[Algorithm 4]{Hida2001}}
     \label{more-precision_multi-double_algo_TwoSum}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{TwoSum}{$a, b$}
         \State $s \gets a \oplus b$
         \State $v \gets s \ominus a$
@@ -65,7 +65,7 @@ Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化�
 \begin{algorithm}[tp]
     \caption{倍精度浮動小数点数の乗算と誤差計算\cite[Algorithm 5, 6]{Hida2001}}
     \label{more-precision_multi-double_algo_TwoProd}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{TwoProd}{$a, b$}
         \State $p \gets a \otimes b$
         \State $(a_h, a_l) \gets \text{Split}(a)$
@@ -74,7 +74,7 @@ Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化�
         \State \Return $(p, e)$
         \EndProcedure
     \end{algorithmic}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{Split}{$a$}
         \State $t \gets (2^{27} + 1) \otimes a$
         \State $a_h \gets t \ominus (t \ominus a)$
@@ -87,7 +87,7 @@ Algorithm \ref{more-precision_multi-double_algo_TwoProdFMA} により高速化�
 \begin{algorithm}[tp]
     \caption{倍精度浮動小数点数の乗算と誤差計算（FMA 命令を使用する場合）\cite[Algorithm 7]{Hida2001}}
     \label{more-precision_multi-double_algo_TwoProdFMA}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{TwoProdFMA}{$a, b$}
         \State $s \gets a \otimes b$
         \State $e \gets \text{FMA}(a, b, -p)$
@@ -119,7 +119,7 @@ Algorithm \ref{more-precision_multi-double_algo_QuadAddSimple} の方が
 \begin{algorithm}[tp]
     \caption{四倍精度の加算（正確な演算）\cite{Hisashi2006}}
     \label{more-precision_multi-double_algo_QuadAddPrecisely}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{QuadAddPrecisely}{$(a_h, a_l), (b_h, b_l)$}
         \State $(x_h, x_l) \gets \text{TwoSum}(a_h, b_h)$
         \State $(y_h, y_l) \gets \text{TwoSum}(a_l, b_l)$
@@ -135,7 +135,7 @@ Algorithm \ref{more-precision_multi-double_algo_QuadAddSimple} の方が
 \begin{algorithm}[tp]
     \caption{四倍精度の加算（簡潔な演算）\cite{Naoya2012,Hirayama2014}}
     \label{more-precision_multi-double_algo_QuadAddSimple}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{QuadAddSimple}{$(a_h, a_l), (b_h, b_l)$}
         \State $(x_h, x_l) \gets \text{TwoSum}(a_h, b_h)$
         \State $x_l \gets x_l \oplus a_l \oplus b_l$
@@ -152,7 +152,7 @@ Algorithm \ref{more-precision_multi-double_algo_QuadMultiply} のようにする
 \begin{algorithm}[tp]
     \caption{四倍精度の乗算\cite{Hisashi2006,Naoya2012}}
     \label{more-precision_multi-double_algo_QuadMultiply}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{QuadMultiply}{$(a_h, a_l), (b_h, b_l)$}
         \State $(x_h, x_l) \gets \text{TwoProd}(a_h, b_h)$
         \State $x_l \gets x_l \oplus a_h \otimes b_l \oplus a_l \otimes b_h$
@@ -169,7 +169,7 @@ Algorithm \ref{more-precision_multi-double_algo_QuadDivide} のようにする�
 \begin{algorithm}[tp]
     \caption{四倍精度の除算\cite{Naoya2012s}}
     \label{more-precision_multi-double_algo_QuadDivide}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{QuadDivide}{$(a_h, a_l), (b_h, b_l)$}
         \State $c \gets 1 \oslash b_h$
         \State $d \gets b_l \otimes c$

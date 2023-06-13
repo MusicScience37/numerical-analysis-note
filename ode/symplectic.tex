@@ -85,7 +85,7 @@ $\bm{P}_i$ と $\bm{Q}_i$ は次のようになる．
 \begin{algorithm}[tp]
     \caption{可分ハミルトニアンに対する陽的な分離型 Runge-Kutta 法 \cite[Section II.16.]{Hairer1993}}
     \label{alg:ode_symplectic_explicit-runge-kutta}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{SynplecticExplicitRungeKutta}{$\frac{\partial V}{\partial \bm{q}}, \frac{\partial T}{\partial \bm{p}}, t, \bm{q}(t), \bm{p}(t), h$}
         \State $\bm{Q} \gets \bm{q}(t)$ \Comment{$\bm{Q}_1$}
         \State $\bm{P} \gets \bm{p}(t)$ \Comment{$\bm{P}_0$}

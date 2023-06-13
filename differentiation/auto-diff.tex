@@ -70,7 +70,7 @@ $\bm{f}(\bm{g}(\bm{x}))$ の Jacobian を算出する
 \begin{algorithm}[tp]
     \caption{後退型自動微分における微分係数の計算}
     \label{alg:differentiation_auto-diff_backward-derivative-calculation}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{BackwardModeAutomaticDifferentiation}{グラフ, 微分の対象となるノード}
         \State $V, r = \text{ListRequiredNodes}(\text{グラフ, 微分の対象となるノード})$
         \Comment Algorithm \ref{alg:differentiation_auto-diff_backward-derivative-calculation-2}
@@ -98,7 +98,7 @@ $\bm{f}(\bm{g}(\bm{x}))$ の Jacobian を算出する
 \begin{algorithm}[tp]
     \caption{後退型自動微分における微分係数の計算におけるサブルーチン ListRequiredNodes}
     \label{alg:differentiation_auto-diff_backward-derivative-calculation-2}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{ListRequiredNodes}{グラフ, 微分の対象となるノード}
         \State $V \gets \{\text{微分の対象となるノード}\}$ \Comment 必要なノードの一覧
         \State $r(\text{微分の対象となるノード}) \gets 0$ \Comment ノードが参照されている回数

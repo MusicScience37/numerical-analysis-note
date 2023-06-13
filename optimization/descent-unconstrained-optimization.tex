@@ -9,7 +9,7 @@
 \begin{algorithm}[tp]
     \caption{勾配による最適化}
     \label{alg:optimization_unconstrained_descent-methods_general-descent-method}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{DescentMethod}{$f, \bm{x}_0$}
         \For{$i = 1,2,\ldots$}
         \State 更新方向 $\bm{d}_i \in \setR^n$ を算出する
@@ -60,7 +60,7 @@ $f(\bm{x}_{i-1} + t_i \bm{d}_i)$
 \begin{algorithm}[tp]
     \caption{Backtracking Line Search \cite[Section 9.2]{Boyd2004}}
     \label{alg:optimization_unconstrained_descent-methods_BacktrackingLineSearch}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{BacktrackingLineSearch}{$f, \bm{x}_{i-1}, \bm{d}_i$}
         \State $t_i \gets 1$
         \While{$f(\bm{x}_{i-1} + t_i \bm{d}_i) > f(\bm{x}_{i-1}) + \alpha t_i \nabla f(\bm{x}_{i-1})^\top \bm{d}_i$}

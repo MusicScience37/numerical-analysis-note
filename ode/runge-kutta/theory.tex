@@ -161,7 +161,7 @@ $f_{safe} = 0.8, 0.9, (0.25)^{1/(p+1)}, (0.38)^{1/(p+1)}$
     \caption{式 \eqref{eq:ode_runge-kutta_auto-next-step-size} を利用したステップサイズの自動決定 %
         \cite[4.1 節 (a)]{Mitsui1993}, \cite[Section II.4]{Hairer1993}}
     \label{alg:ode_runge-kutta_auto-step-size-with-embedded-formula}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{StepWithAutoStepSize}{$\bm{f}, t, \bm{y}(t), h$}
         \Loop
         \State 現在のステップ幅 $h$ で 1 ステップ計算し，推定値 $\bm{y}(t + h)$, $\bm{y}^*(t+h)$ を計算する
@@ -238,7 +238,7 @@ Algorithm \ref{alg:ode_runge-kutta_auto-step-size-simple}
 \begin{algorithm}[tp]
     \caption{簡易的なステップサイズの自動決定 \cite[4.1 節 (a)]{Mitsui1993}}
     \label{alg:ode_runge-kutta_auto-step-size-simple}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{StepWithAutoStepSize}{$\bm{f}, t, \bm{y}(t), h$}
         \Loop
         \State 現在のステップ幅 $h$ で 1 ステップ計算し，推定値 $\bm{y}(t + h)$, $\bm{y}^*(t+h)$ を計算する
@@ -269,7 +269,7 @@ Algorithm \ref{alg:ode_runge-kutta_auto-step-size-init}
 \begin{algorithm}[tp]
     \caption{初期ステップサイズの自動決定 \cite[Section II.4]{Hairer1993}}
     \label{alg:ode_runge-kutta_auto-step-size-init}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{DetermineInitialStepSize}{$\bm{f}, \bm{y}(0)$}
         \State $d_0 \gets \|\bm{y}_0\|_{tol}$
         \Comment ノルム $\| \cdot \|_{tol}$ は
@@ -513,7 +513,7 @@ Newton 法においては $A$ が Jacobian になるため，
 \begin{algorithm}[tp]
     \caption{GMRES (Generalized Minimal Residual) \cite{Golub2013,Blom2013}}
     \label{alg:ode_runge-kutta_gmres}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{GMRES}{$A \in \setR^{n \times n}, \bm{b} \in \setR^n, \bm{x}_0 \in \setR^n, m \in \{1, 2, \ldots, n\}$}
         \State $k \gets 0$
         \State $\bm{r}_0 \gets \bm{b} - A \bm{x}_0$

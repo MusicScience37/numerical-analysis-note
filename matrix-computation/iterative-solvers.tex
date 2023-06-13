@@ -28,7 +28,7 @@ $A \bm{x} = \bm{b}$
 \begin{algorithm}[p]
     \caption{Jacobi 法の反復 \cite{Golub2013}}
     \label{alg:matrix-computation_jacobi-iteration}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{JacobiIterate}{$A$, $\bm{b}$, $\bm{x}$}
         \For{$i = 1, 2, \ldots, n$}
         \State $x_i' \gets \frac{\displaystyle b_i - \sum_{j = 1}^{i - 1} A_{ij} x_j %
@@ -42,7 +42,7 @@ $A \bm{x} = \bm{b}$
 \begin{algorithm}[p]
     \caption{Gauss-Seidel 法の反復 \cite{Golub2013}}
     \label{alg:matrix-computation_gauss-seidel-iteration}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{GaussSeidelIterate}{$A$, $\bm{b}$, $\bm{x}$}
         \For{$i = 1, 2, \ldots, n$}
         \State $x_i \gets \frac{\displaystyle b_i - \sum_{j = 1}^{i - 1} A_{ij} x_j %
@@ -55,7 +55,7 @@ $A \bm{x} = \bm{b}$
 \begin{algorithm}[p]
     \caption{Successive over-relaxation (SOR) 法の反復 \cite{Golub2013}}
     \label{alg:matrix-computation_sor-method}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{GaussSeidelIterate}{$A$, $\bm{b}$, $\bm{x}$}
         \For{$i = 1, 2, \ldots, n$}
         \State $x_i' \gets \omega \frac{\displaystyle b_i - \sum_{j = 1}^{i - 1} A_{ij} x_j' %
@@ -70,7 +70,7 @@ $A \bm{x} = \bm{b}$
 \begin{algorithm}[p]
     \caption{Symmetric successive over-relaxation (SSOR) 法の反復 \cite{Golub2013}}
     \label{alg:matrix-computation_ssor-method}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{GaussSeidelIterate}{$A$, $\bm{b}$, $\bm{x}$}
         \For{$i = 1, 2, \ldots, n$}
         \State $x_i' \gets \omega \frac{\displaystyle b_i - \sum_{j = 1}^{i - 1} A_{ij} x_j' %
@@ -131,7 +131,7 @@ BiCGstab (Algorithm \ref{alg:matrix-computation_bicgstab})
 \begin{algorithm}[tp]
     \caption{BiCGstab \cite{Golub2013}}
     \label{alg:matrix-computation_bicgstab}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{BiCGstab}{$A \in \setR^{n \times n}, \bm{b} \in \setR^n, \bm{x}_0 \in \setR^n$}
         \State $\bm{r} \gets \bm{b} - A \bm{x}_0$
         \State $\tilde{\bm{r}}_0$ を零ベクトルでない値に設定
@@ -192,7 +192,7 @@ AMG 法である．
 \begin{algorithm}[tp]
     \caption{Algebraic Multigrid (AMG) 法の準備（概要） \cite{Ruge1987,Wolters2002}}
     \label{alg:matrix-computation_amg_setup}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{AMGSetup}{$A$}
         \State 係数行列 $A$ のグリッドの点のインデックスの集合を $\Omega_1$ とする．
         \State $A_1 \gets A$
@@ -227,7 +227,7 @@ Algorithm \ref{alg:matrix-computation_amg_select-coarse-points2}
 \begin{algorithm}[tp]
     \caption{Algebraic Multigrid (AMG) 法における荒いグリッドの点の選択（ステップ 1） \cite{Ruge1987}}
     \label{alg:matrix-computation_amg_select-coarse-points1}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{AMGSelectCoarsePointsStep1}{$A_m$, $\Omega_m$}
         \State $C \gets \emptyset$
         \Comment{荒いグリッドの点の集合}
@@ -293,7 +293,7 @@ $\lambda_i = \left|S_i^\top \cap U\right| + 2 \left|S_i^\top \cap F\right|$
     \caption{Algebraic Multigrid (AMG) 法における荒いグリッドの点の選択（ステップ 2）%
         （\cite{Ruge1987} をもとに一部変更）}
     \label{alg:matrix-computation_amg_select-coarse-points2}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{AMGSelectCoarsePointsStep2}{$A_m$, $C$, $F$}
         \State $T = \emptyset$
         \While{$F \setminus T \neq \emptyset$}
@@ -347,7 +347,7 @@ $P_{m+1}^m$ の値として，文献 \cite{Wolters2002} では
 \begin{algorithm}[tp]
     \caption{Algebraic Multigrid (AMG) 法による反復 \cite{Wolters2002}}
     \label{alg:matrix-computation_amg_iterate}
-    \begin{algorithmic}
+    \begin{algorithmic}[1]
         \Procedure{AMGIterate}{$m$, $\bm{x}_m$, $\bm{b}_m$}
         \Comment{$m$ 番目に細かいグリッドで $A_m \bm{x}_m = \bm{b}_m$ を解くために反復する．}
         \If{最も細かいグリッドの場合}
