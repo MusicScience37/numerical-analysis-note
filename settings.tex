@@ -4,6 +4,8 @@
 % チェック
 \RequirePackage[l2tabu, orthodox]{nag}
 
+\usepackage{luatexja}
+
 %% パッケージ
 %図
 \usepackage[hiresbb]{graphicx}
@@ -43,11 +45,9 @@
 \makeindex
 %ハイパーリンク
 \usepackage{hyperref}%なるべく後
-\usepackage{pxjahyper}%日本語対応
 \renewcommand\UrlFont{\rmfamily}
 %フォント（※順番を変えない．）
-\usepackage[nomath]{lmodern}
-\usepackage[T1]{fontenc}
+\usepackage[no-math,ipaex-hg]{luatexja-preset}
 \usepackage{textcomp}
 \usepackage{newtxmath}
 %TODO
