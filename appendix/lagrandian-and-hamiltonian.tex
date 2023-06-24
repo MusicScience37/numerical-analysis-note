@@ -1,0 +1,48 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{Lagrangian と Hamiltonian}\label{chap:lagrangian-and-hamiltonian}
+
+本章では
+\index{ラグランジアン}
+\index{Lagrangian|see{ラグランジアン}}
+ラグランジアン（Lagrangian）
+と
+\index{ハミルトニアン}
+\index{Hamiltonian|see{ハミルトニアン}}
+ハミルトニアン（Hamiltonian）
+について，
+\cite[Chapter 3]{Morse1953}
+本書の説明に必要な最低限の理論をまとめておく．
+
+座標 $\bm{q} = (q_1, q_2, \ldots, q_d)^\top \in \setR^d$ と
+その速度 $\dot{\bm{q}}$ を用いて
+位置エネルギーを以下のように表す．
+\begin{equation}
+    T(\bm{q}, \dot{\bm{q}}) = \frac{1}{2} \sum_{i=1}^d \sum_{j=1}^d a_{ij}(\bm{q}) \dot{q}_i \dot{q}_j
+\end{equation}
+これをもとにモーメント \index{モーメント} $\bm{p}$ を以下のように定める．
+\begin{equation}
+    \bm{p} = \frac{\partial T}{\partial \dot{\bm{q}}}
+\end{equation}
+さらに，位置エネルギー $V$ を $\bm{q}$ の式で表しておき，
+その勾配 $\partial V / \partial q_i$ を求める．
+このとき，運動方程式は以下のように書ける．
+（ラグランジュの運動方程式）\index{らぐらんじゅのうんどうほうていしき@ラグランジュの運動方程式}
+\begin{equation}
+    \dot{p}_i = \frac{\partial T}{\partial q_i} - \frac{\partial V}{\partial q_i}
+    \label{eq:lagrangian-and-hamiltonian_lagrange-equation}
+\end{equation}
+ラグランジアン $L(\bm{q}, \dot{\bm{q}}) = T - V$ を定義すると，以下のようにも書ける．
+\begin{equation}
+    \frac{d}{dt} \frac{\partial L}{\partial \dot{q}_i}
+    = \frac{\partial L}{\partial q_i}
+\end{equation}
+また，全エネルギーの和を $\bm{q}$ と $\bm{p}$ で表現した
+関数 $H(\bm{q}, \bm{p}) = T + V$ をハミルトニアンと呼ぶ．
+ハミルトニアンを用いると，運動方程式は次の式で表現される．
+（正準方程式）\index{せいじゅんほうていしき@正準方程式}
+\begin{align}
+    \dot{\bm{q}} & = \frac{\partial H}{\partial \bm{p}}  \\
+    \dot{\bm{p}} & = -\frac{\partial H}{\partial \bm{q}}
+\end{align}

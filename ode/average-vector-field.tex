@@ -8,23 +8,10 @@
 エネルギー保存則を満たす系の運動方程式を解くことを目的とした手法の 1 つとして，
 平均ベクトル場法（Average vector field method, AVF method） \cite{Quispel2008} がある．
 
-座標 $\bm{q} \in \setR^d$ と位置エネルギー
-\begin{equation}
-    T(\bm{q}, \dot{\bm{q}}) = \frac{1}{2} \sum_{i=1}^d \sum_{j=1}^d a_{ij}(\bm{q}) \dot{q}_i \dot{q}_j
-\end{equation}
-に対して，
-モーメント
-\begin{equation}
-    \bm{p} = \frac{\partial T}{\partial \dot{\bm{q}}}
-\end{equation}
-を定める．
-さらに運動エネルギー $T$ と位置エネルギー $V$ を座標 $\bm{q}$, $\bm{p}$ で表現することで，
-全エネルギーの和を表現した関数 $H(\bm{q}, \bm{p}) = T + V$ を
-\index{ハミルトニアン}
-\index{Hamiltonian|see{ハミルトニアン}}
-ハミルトニアン（Hamiltonian）と呼ぶ
-\cite[Section 3.2]{Morse1953}．
-このとき，運動方程式は次の式で表現される．
+\ref{chap:lagrangian-and-hamiltonian} 章で示しているように，
+座標 $\bm{q} \in \setR^d$ とモーメント $\bm{p} \in \setR^d$ による
+ハミルトニアン $H(\bm{q}, \bm{p})$ を用いた次の正準方程式を考える．
+\index{せいじゅんほうていしき@正準方程式}
 \begin{align}
     \dot{\bm{q}} & = \frac{\partial H}{\partial \bm{p}}  \\
     \dot{\bm{p}} & = -\frac{\partial H}{\partial \bm{q}}

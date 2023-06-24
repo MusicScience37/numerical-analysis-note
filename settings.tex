@@ -78,10 +78,4 @@
 \def\bibname{参考文献}
 
 %数式の番号（章番号を使うようにする．）
-\makeatletter
-\renewcommand{\theequation}{%
-    \arabic{chapter}.\arabic{equation}%
-}
-\@removefromreset{equation}{section}
-\@addtoreset{equation}{chapter}
-\makeatother
+\numberwithin{equation}{chapter}

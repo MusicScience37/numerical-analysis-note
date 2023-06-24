@@ -1,0 +1,85 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{二重振り子}\label{chap:double-pendulum}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.5\linewidth]{appendix/double-pendulum-formulation.pdf}
+    \caption{二重振り子}
+    \label{fig:double-pendulum_double-pendulum-formulation}
+\end{figure}
+
+本章では，
+図 \ref{fig:double-pendulum_double-pendulum-formulation} のように
+1 つの振り子の先端に別の振り子を取り付けたような二重振り子について運動方程式を導出する．
+
+xy 平面の原点に固定された回転軸 O に棒 1 の端を取り付け，
+もう一方の端に回転軸 $J_{12}$ を取り付け，
+その回転軸に別の棒 2 の端を取り付けた状態になっているとする．
+各棒は密度と太さが均一で，
+棒 $i$ （$i = 1, 2$）について
+\begin{itemize}
+    \item 質量は $m_i$
+    \item 長さは $L_i$
+    \item 重心位置は $C_i$
+    \item $y$ 軸の負の方向から時計回りの角度は $\theta_i$
+\end{itemize}
+とする．
+この条件で，
+ラグランジュの運動方程式（式 \eqref{eq:lagrangian-and-hamiltonian_lagrange-equation}）を考える．
+
+各棒は剛体とみなすと，棒 $i$ の慣性モーメント $I_i$ は以下のように求められる．
+\begin{equation}
+    I_i
+    = \int_{-\frac{L_i}{2}}^{\frac{L_i}{2}} \frac{m_i}{L_i} s^2 ds
+    = \frac{1}{12} m_i L_i^2
+\end{equation}
+
+また，各棒の重心位置は
+\begin{align}
+    C_1 & = \frac{L_1}{2} \begin{pmatrix}
+                              \sin\theta_1 \\
+                              -\cos\theta_1
+                          \end{pmatrix}
+    \\
+    C_2 & = L_1 \begin{pmatrix}
+                    \sin\theta_1 \\
+                    -\cos\theta_1
+                \end{pmatrix}
+    + \frac{L_2}{2} \begin{pmatrix}
+                        \sin(\theta_2) \\
+                        -\cos(\theta_2)
+                    \end{pmatrix}
+\end{align}
+と書ける．
+それらの速度は
+\begin{align}
+    \dot{C}_1 & = \frac{L_1}{2} \dot{\theta}_1 \begin{pmatrix}
+                                                   \cos\theta_1 \\
+                                                   \sin\theta_1
+                                               \end{pmatrix}
+    \\
+    \dot{C}_2 & = L_1 \dot{\theta}_1 \begin{pmatrix}
+                                         \cos\theta_1 \\
+                                         \sin\theta_1
+                                     \end{pmatrix}
+    + \frac{L_2}{2} \dot{\theta}_2 \begin{pmatrix}
+                                       \cos\theta_2 \\
+                                       \sin\theta_2
+                                   \end{pmatrix}
+\end{align}
+となり，その大きさの 2 乗は
+\begin{align}
+    \|\dot{C}_1\|_2^2
+     & = \frac{1}{4} L_1^2 \dot{\theta}_1^2
+    \\
+    \|\dot{C}_2\|_2^2
+     & = L_1^2 \dot{\theta}_1^2
+    + L_1 L_2 \dot{\theta}_1 \dot{\theta}_2 \cos(\theta_1 - \theta_2)
+    + \frac{1}{4} L_2^2 \dot{\theta}_2^2
+\end{align}
+となる．
+
+これらを用いて，二重振り子の系全体の運動エネルギーは以下のように書ける．
+\todo{続きを書く．}
