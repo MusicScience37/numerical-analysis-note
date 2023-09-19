@@ -7,13 +7,13 @@ readme = "README.md"
 packages = []
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.12"
+python = ">=3.11,<3.12"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.7.0"
-pre-commit = "^3.3.3"
-plotly = "^5.15.0"
-pandas = "^2.0.3"
+black = "^23.9.1"
+pre-commit = "^3.4.0"
+plotly = "^5.17.0"
+pandas = "^2.1.0"
 kaleido = "==0.2.1"
 msgpack = "^1.0.5"
 
