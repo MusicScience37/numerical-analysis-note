@@ -50,28 +50,28 @@ Runge-Kutta 法の公式は次のように分類される \cite{Mitsui1993}．
 
 \begin{description}
     \item[陽的 Runge-Kutta 法 (Explicit Runge-Kutta method, ERK method)]
-        $j \ge i$ について $a_{ij} = 0$ となっている場合，
-        $\bm{k}i$ は $\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s$
-        の順に式 \eqref{eq:ode_runge-kutta_k-law} の右辺を評価することで計算できる．
-        このような場合は
-        \index{ようてきRunge-Kuttaほう@陽的 Runge-Kutta 法}
-        陽的 Runge-Kutta 法と呼ばれる．
+          $j \ge i$ について $a_{ij} = 0$ となっている場合，
+          $\bm{k}i$ は $\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s$
+          の順に式 \eqref{eq:ode_runge-kutta_k-law} の右辺を評価することで計算できる．
+          このような場合は
+          \index{ようてきRunge-Kuttaほう@陽的 Runge-Kutta 法}
+          陽的 Runge-Kutta 法と呼ばれる．
     \item[半陰的 Runge-Kutta 法 (Semi-implicit Runge-Kutta method)]
-        $j > i$ について $a_{ij} = 0$ となっている場合，
-        $\bm{k}i$ は $\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s$
-        の順に式 \eqref{eq:ode_runge-kutta_k-law} を $\bm{k}_i$ について解くことで計算できる．
-        このような場合は
-        \index{はんいんてきRunge-Kuttaほう@半陰的 Runge-Kutta 法}
-        半陰的 Runge-Kutta 法と呼ばれる．
-        \footnote{Diagonally implicit Runge-Kutta (DIRK) とも呼ばれる \cite{Hairer1991}．}
+          $j > i$ について $a_{ij} = 0$ となっている場合，
+          $\bm{k}i$ は $\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s$
+          の順に式 \eqref{eq:ode_runge-kutta_k-law} を $\bm{k}_i$ について解くことで計算できる．
+          このような場合は
+          \index{はんいんてきRunge-Kuttaほう@半陰的 Runge-Kutta 法}
+          半陰的 Runge-Kutta 法と呼ばれる．
+          \footnote{Diagonally implicit Runge-Kutta (DIRK) とも呼ばれる \cite{Hairer1991}．}
     \item[陰的 Runge-Kutta 法 (Implicit Runge-Kutta method, IRK method)]
-        $j > i$ でも $a_{ij} \neq 0$ となる係数が存在する場合，
-        $\bm{k}i$ は $i = 1, 2, \ldots, s$ について連立した
-        式 \eqref{eq:ode_runge-kutta_k-law} を $\bm{k}_i$ について解くことで計算する．
-        このような場合は
-        \index{いんてきRunge-Kuttaほう@陰的 Runge-Kutta 法}
-        陰的 Runge-Kutta 法と呼ばれる．
-        \footnote{半陰的 Runge-Kutta 法まで含めて陰的 Runge-Kutta 法と呼ばれていることもある．}
+          $j > i$ でも $a_{ij} \neq 0$ となる係数が存在する場合，
+          $\bm{k}i$ は $i = 1, 2, \ldots, s$ について連立した
+          式 \eqref{eq:ode_runge-kutta_k-law} を $\bm{k}_i$ について解くことで計算する．
+          このような場合は
+          \index{いんてきRunge-Kuttaほう@陰的 Runge-Kutta 法}
+          陰的 Runge-Kutta 法と呼ばれる．
+          \footnote{半陰的 Runge-Kutta 法まで含めて陰的 Runge-Kutta 法と呼ばれていることもある．}
 \end{description}
 
 陽的 Runge-Kutta 法の方が計算は単純だが，
