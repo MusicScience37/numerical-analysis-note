@@ -26,6 +26,10 @@ build:
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
+    - poetry config virtualenvs.in-project true
+    - poetry env use 3.11
+    - poetry install --sync
+    - poetry run python ./num_anal_plots/make_pdf_plot.py
     - latexmk
   artifacts:
     paths:

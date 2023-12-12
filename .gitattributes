@@ -3,3 +3,5 @@
 *.svg filter=lfs diff=lfs merge=lfs -text
 **/experiments/**/*.json filter=lfs diff=lfs merge=lfs -text
 **/experiments/**/*.data filter=lfs diff=lfs merge=lfs -text
+num_anal_plots/**/*.data filter=lfs diff=lfs merge=lfs -text
+num_anal_plots/**/*.json filter=lfs diff=lfs merge=lfs -text

@@ -5,6 +5,7 @@ import os
 
 import pandas
 import plotly.express as px
+import plotly.graph_objects
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -12,9 +13,12 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 SOLVERS = ["CG", "BiCGstab"]
 
 
-def plot():
-    """ベンチマーク結果をプロットする。"""
+def laplacian_2d_grid() -> plotly.graph_objects.Figure:
+    """ベンチマーク結果をプロットする。
 
+    Returns:
+        plotly.graph_objects.Figure: プロット結果。
+    """
     with open(os.path.join(THIS_DIR, "bench.data"), mode="rb") as file:
         results = msgpack.unpack(file)
 
@@ -36,7 +40,7 @@ def plot():
         )
 
     data_frame = pandas.DataFrame(data_list)
-    fig = px.line(
+    return px.line(
         data_frame,
         x="Size of Coefficient Matrix",
         y="Time [sec]",
@@ -47,11 +51,3 @@ def plot():
         log_y=True,
         title="Time to Solve Linear Equations of Laplacian Matrices",
     )
-
-    # PDF を出力させると MathJax の読み込み中の表示が画像内に出力されるため、
-    # SVG で出力させたものを Inkscape で PDF 化している。
-    fig.write_image(os.path.join(THIS_DIR, "bench.svg"))
-
-
-if __name__ == "__main__":
-    plot()

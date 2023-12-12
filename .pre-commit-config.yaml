@@ -19,6 +19,7 @@ repos:
         name: Check filenames
         entry: poetry run python scripts/check-filename.py
         language: system
+        exclude: "num_anal_plots/"
       - id: format_tex_files
         name: Format TeX files
         entry: poetry run python scripts/run-latexindent.py
