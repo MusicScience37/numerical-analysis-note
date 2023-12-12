@@ -30,10 +30,11 @@ build:
     - poetry env use 3.11
     - poetry install --sync
     - poetry run python ./num_anal_plots/make_pdf_plot.py
+    - cd numerical-analysis-note
     - latexmk
   artifacts:
     paths:
-      - main.pdf
+      - numerical-analysis-note/main.pdf
     expire_in: 1 week
   interruptible: true
 
@@ -60,7 +61,7 @@ pages:
   image: alpine
   script:
     - mkdir public
-    - mv main.pdf public/numerical-analysis-note.pdf
+    - mv numerical-analysis-note/main.pdf public/numerical-analysis-note.pdf
   artifacts:
     paths:
       - public
