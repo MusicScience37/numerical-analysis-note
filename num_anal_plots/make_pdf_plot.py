@@ -9,7 +9,7 @@ from num_anal_plots.plots.plots import PlotInfo, PLOT_INFO_DICT, PLOT_NAMES
 
 THIS_DIR = pathlib.Path(__file__).absolute().parent
 ROOT_DIR = THIS_DIR.parent
-IMAGE_DIR = ROOT_DIR / "plots"
+IMAGE_DIR = ROOT_DIR / "numerical-analysis-note" / "plots"
 
 
 def _make_pdf_plot(info: PlotInfo) -> None:
