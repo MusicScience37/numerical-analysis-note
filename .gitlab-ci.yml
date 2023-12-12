@@ -19,6 +19,13 @@ pre-commit:
     - poetry env use 3.11
     - poetry install
     - poetry run pre-commit run --all-files
+  cache:
+    key:
+      prefix: cache-${CI_JOB_NAME}
+      files:
+        - poetry.lock
+    paths:
+      - .venv
 
 build:
   stage: test
@@ -29,9 +36,16 @@ build:
     - poetry config virtualenvs.in-project true
     - poetry env use 3.11
     - poetry install --sync
-    - poetry run python ./num_anal_plots/make_pdf_plot.py
+    - poetry run python3 ./num_anal_plots/make_pdf_plot.py
     - cd numerical-analysis-note
     - latexmk
+  cache:
+    key:
+      prefix: cache-${CI_JOB_NAME}
+      files:
+        - poetry.lock
+    paths:
+      - .venv
   artifacts:
     paths:
       - numerical-analysis-note/main.pdf
