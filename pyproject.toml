@@ -4,10 +4,11 @@ version = "0.0.0"
 description = ""
 authors = []
 readme = "README.md"
-packages = []
+packages = [{ include = "num_anal_plots" }]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.12"
+svglib = "^1.5.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.12.0"
