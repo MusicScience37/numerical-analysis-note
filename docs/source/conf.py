@@ -4,8 +4,12 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os
+import sys
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(os.path.dirname(THIS_DIR))
+
+sys.path.insert(0, ROOT_DIR)
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -39,7 +43,9 @@ myst_enable_extensions = [
     "dollarmath",
 ]
 nb_execution_mode = "cache"
-nb_execution_cache_path = os.path.join(THIS_DIR, "build", "jupyter_cache")
+nb_execution_cache_path = os.path.join(
+    os.path.dirname(THIS_DIR), "build", "jupyter_cache"
+)
 
 # setting of opengraph
 # https://pypi.org/project/sphinxext-opengraph/
