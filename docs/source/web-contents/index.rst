@@ -5,3 +5,4 @@ Web コンテンツ
     :maxdepth: 2
 
     matrix-computation/index
+    ode/index
