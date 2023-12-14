@@ -19,7 +19,7 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "cSpell.enableFiletypes": ["bibtex", "toml"],
+  "cSpell.enableFiletypes": ["bibtex", "shellscript", "toml"],
   "restructuredtext.linter.disabledLinters": ["rstcheck", "rst-lint"],
   "esbonio.server.enabled": false,
   "files.watcherExclude": {
