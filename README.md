@@ -1,10 +1,27 @@
 # 数値解析ノート
 
-数値解析関係で調査したことをまとめたノート
+[![pipeline status](https://gitlab.com/MusicScience37Projects/numerical-analysis/numerical-analysis-note/badges/main/pipeline.svg)](https://gitlab.com/MusicScience37Projects/numerical-analysis/numerical-analysis-note/-/commits/main)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
-## ビルド済み PDF
+数値解析関係で調査したことをまとめたノートです．
 
-- [main ブランチの最新版の PDF](https://numanalnote.musicscience37.com/numerical-analysis-note.pdf)
+ノートの最新版の PDF は
+[こちら](https://numanalnote.musicscience37.com/numerical-analysis-note.pdf)
+で確認できます．
+
+また，インタラクティブなグラフを含む
+[Web ページ](https://numanalnote.musicscience37.com/)
+も用意しています．
+
+## リポジトリ
+
+- [GitLab（メイン）](https://gitlab.com/MusicScience37Projects/numerical-analysis/numerical-analysis-note)
+- [GitHub（ミラー）](https://github.com/MusicScience37/numerical-analysis-note)
+
+## 成果物
+
+- [ノート (PDF)](https://numanalnote.musicscience37.com/numerical-analysis-note.pdf)
+- [Web ページ](https://numanalnote.musicscience37.com/)
 
 ## 開発者向け
 
