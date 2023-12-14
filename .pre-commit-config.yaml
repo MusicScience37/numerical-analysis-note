@@ -14,12 +14,12 @@ repos:
         name: Check ten and maru.
         entry: poetry run python scripts/fix-ten-maru.py
         language: system
-        files: "\\.(tex|md)$"
+        files: "\\.(tex|md|rst)$"
       - id: check_filenames
         name: Check filenames
         entry: poetry run python scripts/check-filename.py
         language: system
-        exclude: "num_anal_plots/"
+        exclude: "num_anal_plots/|_static|_templates"
       - id: format_tex_files
         name: Format TeX files
         entry: poetry run python scripts/run-latexindent.py

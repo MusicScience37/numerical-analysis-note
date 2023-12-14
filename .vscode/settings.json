@@ -6,9 +6,7 @@
       "args": ["%DOC%"]
     }
   ],
-  "python.formatting.provider": "black",
   "hadolint.cliOptions": ["--ignore", "DL3008", "--no-color"],
-  "plantuml.exportOutDir": ".",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -21,5 +19,10 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "cSpell.enableFiletypes": ["bibtex", "toml"]
+  "cSpell.enableFiletypes": ["bibtex", "shellscript", "toml"],
+  "restructuredtext.linter.disabledLinters": ["rstcheck", "rst-lint"],
+  "esbonio.server.enabled": false,
+  "files.watcherExclude": {
+    "**/.venv/**": true
+  }
 }
