@@ -3,9 +3,37 @@
     {
       "name": "latexmk",
       "command": "latexmk",
-      "args": ["%DOC%"]
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "lualatex",
+      "command": "lualatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "%DOC%"
+      ]
     }
   ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk",
+      "tools": ["latexmk"]
+    },
+    {
+      "name": "lualatex",
+      "tools": ["lualatex"]
+    }
+  ],
+  "latex-workshop.latex.recipe.default": "lualatex",
   "hadolint.cliOptions": ["--ignore", "DL3008", "--no-color"],
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
