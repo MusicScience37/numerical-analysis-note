@@ -6,3 +6,4 @@ Web コンテンツ
 
     matrix-computation/index
     ode/index
+    special-functions/index

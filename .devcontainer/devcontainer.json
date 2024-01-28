@@ -14,6 +14,7 @@
         "tamasfe.even-better-toml",
         "redhat.vscode-yaml",
         "ms-python.black-formatter",
+        "ms-python.isort",
         "lextudio.restructuredtext",
         "trond-snekvik.simple-rst",
         "executablebookproject.myst-highlight",
