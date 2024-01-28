@@ -17,12 +17,18 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
   },
+  "isort.args": ["--profile", "black"],
   "cSpell.enableFiletypes": ["bibtex", "shellscript", "toml"],
   "restructuredtext.linter.disabledLinters": ["rstcheck", "rst-lint"],
   "esbonio.server.enabled": false,
   "files.watcherExclude": {
     "**/.venv/**": true
-  }
+  },
+  "esbonio.sphinx.confDir": ""
 }

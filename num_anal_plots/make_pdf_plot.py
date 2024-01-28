@@ -5,7 +5,7 @@ import subprocess
 
 import click
 
-from num_anal_plots.plots.plots import PlotInfo, PLOT_INFO_DICT, PLOT_NAMES
+from num_anal_plots.plots.plots import PLOT_INFO_DICT, PLOT_NAMES, PlotInfo
 
 THIS_DIR = pathlib.Path(__file__).absolute().parent
 ROOT_DIR = THIS_DIR.parent
@@ -64,7 +64,8 @@ def _make_pdf_plot(info: PlotInfo) -> None:
 @click.argument("names", nargs=-1)
 def make_pdf_plot(names: list[str]) -> None:
     """PDF 形式のプロットを生成する。"""
-    names = PLOT_NAMES
+    if not names:
+        names = PLOT_NAMES
     for name in names:
         _make_pdf_plot(PLOT_INFO_DICT[name])
 
