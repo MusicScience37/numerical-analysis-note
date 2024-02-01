@@ -29,6 +29,9 @@ doc8 = "^1.1.1"
 sphinx-autobuild = "^2021.3.14"
 isort = "^5.13.2"
 
+[tool.isort]
+profile = "black"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-from sys import argv
-import subprocess
 import os
-
+import subprocess
+from sys import argv
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 TMP_DIR_PATH = os.path.abspath(THIS_DIR + "/../.latexindent")
