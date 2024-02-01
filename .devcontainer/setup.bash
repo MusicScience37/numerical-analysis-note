@@ -1,6 +1,7 @@
 #!/bin/bash
 
-git config --global --add safe.directory $(pwd)
+sudo chmod 0777 /cache_volume/
+mkdir -p $POETRY_CACHE_DIR
 
 poetry config virtualenvs.in-project true
 poetry env use 3.11

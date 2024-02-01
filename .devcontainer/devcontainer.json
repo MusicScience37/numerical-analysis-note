@@ -1,6 +1,16 @@
 {
   "build": { "dockerfile": "Dockerfile" },
-  "containerEnv": {},
+  "mounts": [
+    {
+      "type": "volume",
+      "source": "${localWorkspaceFolderBasename}-cache",
+      "target": "/cache_volume/"
+    }
+  ],
+  "containerEnv": {
+    "SHELL": "/bin/bash",
+    "POETRY_CACHE_DIR": "/cache_volume/poetry/"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -23,5 +33,6 @@
       "settings": {}
     }
   },
-  "postCreateCommand": "bash ./.devcontainer/setup.bash"
+  "postCreateCommand": "bash ./.devcontainer/setup.bash",
+  "remoteUser": "vscode"
 }
