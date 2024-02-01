@@ -32,4 +32,10 @@ repos:
         language: python
         require_serial: true
         types_or: [python, pyi]
+      - id: isort
+        name: isort
+        entry: isort
+        language: python
+        require_serial: true
+        types_or: [python, pyi]
 exclude: "extern|\\.svg"

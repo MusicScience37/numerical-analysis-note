@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from sys import argv
 import re
+from sys import argv
 
 FILENAME_REGEX = re.compile(r"^[a-zA-Z0-9./-]*$")
 

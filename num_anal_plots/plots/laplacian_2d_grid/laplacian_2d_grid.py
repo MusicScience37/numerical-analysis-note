@@ -1,8 +1,8 @@
 """ベンチマーク結果をプロットする。"""
 
-import msgpack
 import os
 
+import msgpack
 import pandas
 import plotly.express as px
 import plotly.graph_objects
