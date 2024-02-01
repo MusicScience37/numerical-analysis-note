@@ -15,7 +15,7 @@ sys.path.insert(0, ROOT_DIR)
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "数値解析ノート"
-copyright = "2023, Kenta Kabashima. Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License."
+copyright = "2021, Kenta Kabashima. Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License."
 author = "Kenta Kabashima"
 
 # -- General configuration ---------------------------------------------------
