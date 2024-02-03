@@ -48,6 +48,7 @@ def _make_pdf_plot(info: PlotInfo) -> None:
             "gs",
             "-dNoOutputFonts",
             "-sDEVICE=pdfwrite",
+            "-dCompatibilityLevel=1.5",
             "-o",
             str(pdf_path),
             str(temp_pdf_path),
