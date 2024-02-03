@@ -17,7 +17,7 @@ file_format: mystnb
 
 from num_anal_plots.generate_plot_widget import generate_plot_widget
 
-generate_plot_widget("ode-runge-kutta-gmres")
+generate_plot_widget("ode-runge-kutta-gmres", version=1)
 ```
 
 ```{code-cell}
@@ -25,7 +25,7 @@ generate_plot_widget("ode-runge-kutta-gmres")
 
 from num_anal_plots.generate_plot_widget import generate_plot_widget
 
-generate_plot_widget("ode-runge-kutta-bicgstab")
+generate_plot_widget("ode-runge-kutta-bicgstab", version=1)
 ```
 
 ## 環境

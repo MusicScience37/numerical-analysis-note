@@ -16,7 +16,7 @@ file_format: mystnb
 
 from num_anal_plots.generate_plot_widget import generate_plot_widget
 
-generate_plot_widget("laplacian-2d-grid")
+generate_plot_widget("laplacian-2d-grid", version=1)
 ```
 
 ## 環境

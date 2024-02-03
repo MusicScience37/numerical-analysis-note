@@ -45,6 +45,7 @@ def ode_runge_kutta_gmres() -> plotly.graph_objects.Figure:
         y="Time [sec]",
         color="Subspace Dimension",
         line_dash="Subspace Dimension",
+        markers=True,
         log_x=True,
         log_y=True,
         title="Processing Time of GMRES",

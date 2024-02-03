@@ -58,6 +58,7 @@ def ode_runge_kutta_bicgstab() -> plotly.graph_objects.Figure:
         category_orders={"Solver": ["BiCGstab", "Repeated GMRES (m=2)"]},
         color="Solver",
         line_dash="Solver",
+        markers=True,
         log_x=True,
         log_y=True,
         title="Processing Time of BiCGstab Compared to GMRES",
