@@ -6,7 +6,7 @@
 
 基本的には，実装のためにアルゴリズムやその理論を確認した結果をまとめることを目的としており，
 C++ で実装したものは Git リポジトリ
-`numerical-collection-cpp <https://gitlab.com/MusicScience37Projects/numerical-analysis/numerical-collection-cpp>`_
+numerical-collection-cpp :cite:p:`NumericalCollectionCpp`
 にて公開している．
 
 ライセンス

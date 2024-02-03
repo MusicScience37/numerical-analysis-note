@@ -6,8 +6,8 @@ file_format: mystnb
 
 2 次元格子上で Laplacian を離散化して得られる方程式を以下の手法で解いた際の時間を計測した．
 
-- CG 法（[Eigen ライブラリ](https://eigen.tuxfamily.org/) を使用）
-- BiCGstab 法（[Eigen ライブラリ](https://eigen.tuxfamily.org/) を使用）
+- CG 法（Eigen ライブラリ {cite:p}`EigenLibrary` を使用）
+- BiCGstab 法（Eigen ライブラリ {cite:p}`EigenLibrary` を使用）
 
 ## 結果
 
@@ -26,5 +26,5 @@ generate_plot_widget("laplacian-2d-grid", version=1)
 
 ## ソースコード
 
-[numerical-collection-cpp リポジトリ](https://gitlab.com/MusicScience37Projects/numerical-analysis/numerical-collection-cpp)
-のコミット d0595598d5e28bd6a6a90d3605791d391c1a61ba 時点のものを使用した．
+numerical-collection-cpp リポジトリ {cite:p}`NumericalCollectionCpp`
+のコミット `d0595598d5e28bd6a6a90d3605791d391c1a61ba` 時点のものを使用した．

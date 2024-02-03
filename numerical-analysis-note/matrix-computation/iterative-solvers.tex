@@ -456,11 +456,6 @@ $i$ 行目 $j$ 列目（$(i, j)$ と記す）の点の $\phi$ の値を $\phi_{i
     \right)
 \end{equation}
 
-この近似をもとに領域 $[0, 1]^2$ 上の Poisson 方程式を解くための離散化された
-方程式 $A \bm{\phi} = \bm{b}$ （$\bm{\phi}$ は $\phi_{i,j}$ を並べたベクトル）を立て，
-複数のアルゴリズムで解いた．
-解くのにかかった時間を図 \ref{fig:matrix-computation_bench-laplacian-2d-grid} に示している．
-
 \todo{他のアルゴリズムも実装して比較する．}
 
 \begin{figure}[tp]
@@ -469,3 +464,13 @@ $i$ 行目 $j$ 列目（$(i, j)$ と記す）の点の $\phi$ の値を $\phi_{i
     \caption{2 次元格子上の Laplacian を離散化した行列を用いた反復解法のベンチマーク}
     \label{fig:matrix-computation_bench-laplacian-2d-grid}
 \end{figure}
+
+この近似をもとに領域 $[0, 1]^2$ 上の Poisson 方程式を解くための離散化された
+方程式 $A \bm{\phi} = \bm{b}$ （$\bm{\phi}$ は $\phi_{i,j}$ を並べたベクトル）を立て，
+以下のアルゴリズムで解いた．
+解くのにかかった時間を図 \ref{fig:matrix-computation_bench-laplacian-2d-grid} に示している．
+
+\begin{itemize}
+    \item CG 法（\cite{EigenLibrary} の実装）
+    \item BiCGstab 法（\cite{EigenLibrary} の実装）
+\end{itemize}

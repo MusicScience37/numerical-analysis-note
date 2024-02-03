@@ -27,6 +27,11 @@ def legendre_function() -> plotly.graph_objects.Figure:
         y=y_list,
         color=n_list,
         line_dash=n_list,
-        labels={"x": "x", "y": "Pn(x)", "color": "Degree", "line_dash": "Degree"},
+        labels={
+            "x": "$x$",
+            "y": "$P_n(x)$",
+            "color": "Degree",
+            "line_dash": "Degree",
+        },
         title="Legendre Function",
     )

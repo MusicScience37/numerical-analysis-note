@@ -4,6 +4,13 @@ file_format: mystnb
 
 # Legendre 関数
 
+Legendre 関数は，$n=0,1,\ldots$ について次の式で表される
+{cite:p}`Morse1953`．
+
+$$
+P_n(x) = \frac{1}{2^n n!} \frac{d^n}{dx^n} (x - 1)^n
+$$
+
 0 から 5 次までの Legendre 関数をプロットしたものを以下に示す．
 
 ```{code-cell}
@@ -11,5 +18,5 @@ file_format: mystnb
 
 from num_anal_plots.generate_plot_widget import generate_plot_widget
 
-generate_plot_widget("legendre-function")
+generate_plot_widget("legendre-function", version=1)
 ```
