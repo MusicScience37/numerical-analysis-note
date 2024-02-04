@@ -37,22 +37,16 @@ nb_execution_cache_path = os.path.join(
     os.path.dirname(THIS_DIR), "build", "jupyter_cache"
 )
 
-# setting of mathjax
-# Configuration in https://github.com/executablebooks/jupyter-book/issues/1528
-mathjax_path = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"
-mathjax2_config = {
-    "tex2jax": {
-        "inlineMath": [["$", "$"], ["\\(", "\\)"]],
-        "processEscapes": True,
-        "ignoreClass": "document",
-        "processClass": "math|output_area",
-    },
-    "TeX": {
+# setting of MathJax
+# Extension for MathJax is already enabled by myst_nb.
+# MathJax URL working with Plotly was written in https://www.npmjs.com/package/plotly.js/v/2.16.4#mathjax.
+mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+mathjax3_config = {
+    "tex": {
         "macros": {
             "bm": ["{\\boldsymbol{#1}}", 1],
         },
     },
-    "displayAlign": "center",
 }
 
 # setting of opengraph
