@@ -9,24 +9,29 @@ packages = [{ include = "num_anal_plots" }]
 [tool.poetry.dependencies]
 python = ">=3.11,<3.12"
 click = "^8.1.7"
-plotly = "^5.18.0"
-pandas = "^2.2.0"
+plotly = "^5.19.0"
+pandas = "^2.2.1"
 kaleido = "==0.2.1"
-msgpack = "^1.0.7"
+msgpack = "^1.0.8"
 svglib = "^1.5.1"
+scipy = "^1.12.0"
+
+[tool.poetry.group.web.dependencies]
 sphinx = "^7.2.6"
 sphinxext-opengraph = "^0.9.1"
 sphinxcontrib-bibtex = "^2.6.2"
 sphinx-orange-book-theme = "^0.6.0"
 myst-nb = "^1.0.0"
-jupyter = "^1.0.0"
-scipy = "^1.12.0"
+jupyterlab = "^4.1.4"
+ipywidgets = "^8.1.2"
+ipython = "^8.22.2"
+ipykernel = "^6.29.3"
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.1.1"
-pre-commit = "^3.6.0"
+black = "^24.2.0"
+pre-commit = "^3.6.2"
 doc8 = "^1.1.1"
-sphinx-autobuild = "^2021.3.14"
+sphinx-autobuild = "^2024.2.4"
 isort = "^5.13.2"
 
 [tool.isort]
