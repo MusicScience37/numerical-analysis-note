@@ -16,7 +16,7 @@ $$
 ```{code-cell}
 :tags: ["hide-input"]
 
-from num_anal_plots.generate_plot_widget import generate_plot_widget
+from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-generate_plot_widget("legendre-function", version=1)
+show_plot_in_jupyter("legendre-function", version=1)
 ```

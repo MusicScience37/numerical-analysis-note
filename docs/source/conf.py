@@ -67,6 +67,11 @@ bibtex_default_style = "unsrt"
 html_theme = "sphinx_orange_book_theme"
 html_static_path = ["_static"]
 
+# Required for plotly.
+html_js_files = [
+    "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"
+]
+
 html_title = project
 
 html_theme_options = {
