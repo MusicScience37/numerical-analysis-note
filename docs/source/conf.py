@@ -54,6 +54,7 @@ mathjax3_config = {
 extensions += ["sphinxext.opengraph"]
 ogp_site_url = "https://numanalnote.musicscience37.com/"
 ogp_site_name = project
+ogp_social_cards = {"enable": False}
 
 # setting of bibtex
 # https://sphinxcontrib-bibtex.readthedocs.io/

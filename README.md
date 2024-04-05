@@ -28,6 +28,22 @@
 [dev ディレクトリ](./dev/index.md)
 に本リポジトリの開発者向けのドキュメントを記載していく．
 
+### 環境構築の概要
+
+1. VSCode の DevContainer を起動する．
+2. Python の仮想環境を起動する．
+
+   ```shell
+   poetry install --sync
+   poetry shell
+   ```
+
+3. TeX 文書用の画像を生成する．
+
+   ```shell
+   python ./num_anal_plots/make_pdf_plot.py
+   ```
+
 ### 開発者向け注意点
 
 **知らないと解決に時間のかかる問題もあるため，このリポジトリを clone する前に必ず読むこと．**

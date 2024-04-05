@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2023
+FROM registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2024
 
 ARG USERNAME=vscode
 ARG USER_UID=1000

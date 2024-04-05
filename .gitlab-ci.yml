@@ -1,4 +1,4 @@
-image: registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2023
+image: registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2024
 
 stages:
   - test
@@ -11,6 +11,8 @@ include:
 pre-commit:
   stage: test
   needs: []
+  variables:
+    POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
     - poetry config virtualenvs.in-project true
     - poetry env use 3.11
@@ -22,13 +24,14 @@ pre-commit:
       files:
         - poetry.lock
     paths:
-      - .venv
+      - .poetry-cache
 
 build:
   stage: test
   needs: []
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
+    POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
     - poetry config virtualenvs.in-project true
     - poetry env use 3.11
@@ -37,19 +40,19 @@ build:
     - cd numerical-analysis-note
     - latexmk
     - cd ..
-    - poetry run sphinx-build -b html -W -q docs/source docs/build
+    - poetry run sphinx-build -b html -W docs/source docs/build/html
   cache:
     key:
       prefix: cache-${CI_JOB_NAME}
       files:
         - poetry.lock
     paths:
-      - .venv
+      - .poetry-cache
       - docs/build/jupyter_cache
   artifacts:
     paths:
       - numerical-analysis-note/main.pdf
-      - docs/build
+      - docs/build/html
     expire_in: 1 week
   interruptible: true
 
@@ -75,7 +78,7 @@ pages:
   needs: [build]
   image: alpine
   script:
-    - mv docs/build public
+    - mv docs/build/html public
     - mv numerical-analysis-note/main.pdf public/numerical-analysis-note.pdf
   artifacts:
     paths:
