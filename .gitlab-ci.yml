@@ -1,4 +1,4 @@
-image: registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2023
+image: registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2024
 
 stages:
   - test
