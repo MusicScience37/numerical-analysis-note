@@ -11,6 +11,8 @@ include:
 pre-commit:
   stage: test
   needs: []
+  variables:
+    POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
     - poetry config virtualenvs.in-project true
     - poetry env use 3.11
@@ -22,13 +24,14 @@ pre-commit:
       files:
         - poetry.lock
     paths:
-      - .venv
+      - .poetry-cache
 
 build:
   stage: test
   needs: []
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
+    POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
     - poetry config virtualenvs.in-project true
     - poetry env use 3.11
@@ -44,7 +47,7 @@ build:
       files:
         - poetry.lock
     paths:
-      - .venv
+      - .poetry-cache
       - docs/build/jupyter_cache
   artifacts:
     paths:
