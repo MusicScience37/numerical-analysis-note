@@ -68,14 +68,14 @@ def ode_pendulum_movement_auto_step_all_work_error() -> plotly.graph_objects.Fig
         }
     )
 
-    data_frame["Type"] = data_frame["Solver"].map(SOLVER_TYPE_MAPPING)
+    data_frame["Solver Type"] = data_frame["Solver"].map(SOLVER_TYPE_MAPPING)
 
     figure = px.line(
         data_frame,
         x="Time [sec]",
         y="Error Rate",
         color="Solver",
-        facet_row="Type",
+        facet_row="Solver Type",
         line_dash="Solver",
         hover_data=["Solver", "Err. Tol.", "Error Rate", "Time [sec]"],
         markers=True,

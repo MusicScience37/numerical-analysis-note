@@ -1,0 +1,121 @@
+% !TEX root = ../../main.tex
+%
+
+\chapter{数値実験}
+
+この部において説明してきた常微分方程式の数値解法について，数値実験を行った結果を示す．
+
+\section{対象とした数値解法}
+
+本章で対象とした数値解法について，結果を示す図の中で用いる略称とそれに対応する解法を以下に示す．
+
+\begin{itemize}
+    \item Runge-Kutta 法（\ref{chap:ode_runge-kutta} 章）
+          \begin{itemize}
+              \item 陽的公式
+                    \begin{description}
+                        \item[RK4] 古典的な 4 次の Runge-Kutta 法 \cite{Mitsui1993}
+                              （表 \ref{table:ode_runge-kutta_butcher-array-rk4}）
+                        \item[RKF45] RKF45 公式 \cite{Mitsui1993}
+                              （表 \ref{table:ode_runge-kutta_butcher-array-rkf45}）
+                        \item[DOPRI5] DOPRI5 公式 \cite{Hairer1991}
+                        \item[ARK4(3)-ERK] ARK4(3)6L[2]SA-ERK 公式 \cite{Kennedy2003}
+                    \end{description}
+              \item 半陰的公式
+                    \begin{description}
+                        \item[Tanaka1] 田中 Formula1 公式 \cite{Togawa2007}
+                              （表 \ref{table:ode_runge-kutta_butcher-array-tanaka-formula1}）
+                        \item[Tanaka2] 田中 Formula2 公式 \cite{Togawa2007}
+                              （表 \ref{table:ode_runge-kutta_butcher-array-tanaka-formula2}）
+                        \item[SDIRK4] 4 次の SDIRK \cite[Section IV.6.]{Hairer1991}
+                              （表 \ref{table:ode_runge-kutta_butcher-array-sdirk-4}）
+                        \item[ARK4(3)-ESDIRK] ARK4(3)6L[2]SA-ESDIRK 公式 \cite{Kennedy2003}
+                              （表 \ref{table:ode_runge-kutta_butcher-array-ark436l2sa-esdirk}）
+                        \item[ARK5(4)-ESDIRK] ARK5(4)6L[2]SA-ESDIRK 公式 \cite{Kennedy2003}
+                        \item[ESDIRK45c] ESDIRK45c 公式 \cite{Jorgensen2018}
+                    \end{description}
+          \end{itemize}
+    \item Rosenbrock 法（\ref{sec:ode_rosenbrock} 章）
+          \begin{description}
+              \item[ROS3w] ROS3w 公式 \cite{Rang2005}
+              \item[ROS34PW3] ROS34PW3 公式 \cite{Rang2005}
+              \item[RODASP] RODASP 公式 \cite{Steinebach2022}
+              \item[RODASPR] RODASPR 公式 \cite{Rang2015}
+          \end{description}
+    \item 平均ベクトル場法（\ref{chap:ode_avf} 章）
+          \begin{description}
+              \item[AVF2] 2 次精度の解法
+              \item[AVF3] 3 次精度の解法
+              \item[AVF4] 4 次精度の解法
+          \end{description}
+    \item シンプレクティック積分法（\ref{sec:ode_symplectic} 章）
+          \begin{description}
+              \item[LeapFrog] 2 段 2 次の陽的シンプレクティック積分法（Leap-frog 法） \cite{Forest1990}
+                    （表 \ref{table:ode_symplectic_explicit-runge-kutta-2}）
+              \item[Forest4] 4 段 4 次の陽的シンプレクティック積分法 \cite{Forest1990}
+                    （表 \ref{table:ode_symplectic_explicit-runge-kutta-4b}）
+          \end{description}
+\end{itemize}
+
+\section{振り子の運動}
+
+以下の式で表される簡易化した振り子の運動方程式に対して数値解法を適用した結果を示す
+\footnote{厳密には質量や長さといったパラメータが係数として必要だが，%
+    ここではパラメータ値 1 として省略している．}．
+
+\begin{equation}
+    \ddot{\theta} = -\sin{\theta}
+\end{equation}
+
+振れ角が小さいものとして $\sin{\theta} \approx \theta$ と近似すれば
+解 $\theta(t)$ を三角関数で表せるが，
+ここでは近似しない方程式に対して数値解法を適用した．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/ode-pendulum-movement-auto-step-all-work-error.pdf}
+    \caption{振り子の運動方程式に数値解法を適用したときの計算時間と誤差%
+        （ステップ幅の自動調整機能 \cite{Gustafsson1991} 付きの解法によるもの）}
+    \label{fig:ode_experiments_pendulum-movement_auto-step-all-work-error}
+\end{figure}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/ode-pendulum-movement-auto-step-work-error.pdf}
+    \caption{図 \ref{fig:ode_experiments_pendulum-movement_auto-step-all-work-error} %
+        から種類ごとに比較的速いアルゴリズムだけ抜き出したもの}
+    \label{fig:ode_experiments_pendulum-movement_auto-step-work-error}
+\end{figure}
+
+まず，ステップ幅を自動決定しながら各種数値解法を適用した．
+ここで，ステップ幅は \ref{chap:ode_runge-kutta_auto-next-step-size-pi-controller} 節で示したアルゴリズムにより決定した．
+$t=0$ における初期値 $\theta = 1$ をもとに $t=10$ における $\theta$ の値を求めるという初期値問題で評価を行った
+結果を図
+\ref{fig:ode_experiments_pendulum-movement_auto-step-all-work-error},
+\ref{fig:ode_experiments_pendulum-movement_auto-step-work-error}
+に示す．
+振り子の運動方程式を解くにあたっては，単純な Runge-Kutta 法の陽的公式が最も速かった．
+その Runge-Kutta 法の陽的公式 3 種類ではおおよそ同等の性能となった．
+Runge-Kutta 法の半陰的公式の中では
+性能向上が行われている SDIRK, ESDIRK の公式による解法が比較的速かった．
+SDIRK からアルゴリズム自体も変更して性能向上が行われている Rosenbrock 法は SDIRK よりもさらに速かった．
+平均ベクトル場法は計算が少し複雑になるため，性能は比較的悪くなった．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/ode-pendulum-movement-fixed-step-work-error.pdf}
+    \caption{振り子の運動方程式に数値解法を適用したときの計算時間と誤差%
+        （ステップ幅を固定した解法によるもの）}
+    \label{fig:ode_experiments_pendulum-movement_fixed-step-work-error}
+\end{figure}
+
+続いて，ステップ幅を固定して数値解法を適用した．
+ここでは，主にステップ幅を固定して使用することを前提としているシンプレクティック積分法の評価を目的としている．
+$t=0$ における初期値 $\theta = 1$ をもとに $t=100$ における $\theta$ の値を求めるという初期値問題で評価を行った
+結果を図
+\ref{fig:ode_experiments_pendulum-movement_fixed-step-work-error}
+に示す．
+シンプレクティック積分法 2 種類の中では 4 次の解法（Forest4）の方が速かった．
+
+% 話題を切り替える前に一旦全てを出力しておく．
+\clearpage

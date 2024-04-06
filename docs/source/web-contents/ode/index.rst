@@ -5,3 +5,4 @@
     :maxdepth: 1
 
     runge-kutta-implicit-solvers
+    pendulum-movement-benchmark

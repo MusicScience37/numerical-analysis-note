@@ -12,4 +12,5 @@ numerical-collection-cpp のコミット f4488124c9121787879ed70a0975523e4b54558
 
 ```shell
 ./build/Release/bin/num_collect_bench_ode_pendulum_movement results
+./build/Release/bin/num_collect_bench_ode_pendulum_movement_fixed_step results
 ```
