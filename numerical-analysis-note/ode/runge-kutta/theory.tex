@@ -574,7 +574,7 @@ $\|A\bm{x} - \bm{b}\|_2 / \|\bm{b}\|_2 < 10^{-8}$
     ソースコードは，リポジトリ \cite{NumericalCollectionCpp} の%
     コミット \texttt{e7cddd677dbd031f2b2c2e8e8622a8c318f7b31b} 時点における%
     ファイル \texttt{test/bench/ode/sparse\_linear\_equation\_test.cpp} を使用している．}．
-この例では，部分空間の次元数 $m$ を 2 にした場合に最も良い性能が得られている．
+この例では，部分空間の次元数 $m$ を 2 か 3 にした場合に最も良い性能が得られている．
 なお，最初は $\alpha$ を小さくない 1 にしていたが，
 その場合は解の収束が極めて遅かった
 \footnote{1000 回反復しても残差 $\|A\bm{x} - \bm{b}\|_2 / \|\bm{b}\|_2$ の割合のオーダーが%
@@ -585,7 +585,7 @@ GMRES 法を適用するにあたってはステップサイズが大きくな�
 
 \begin{figure}[tp]
     \centering
-    \includegraphics[width=0.99\linewidth]{plots/ode-runge-kutta-gmres.pdf}
+    \includegraphics[width=0.99\linewidth]{plots/ode-runge-kutta-sparse-solvers-gmres.pdf}
     \caption{繰り返し GMRES（Algorithm \ref{alg:ode_runge-kutta_gmres}）を適用して%
         線形方程式を解くのにかかった時間}
     \label{fig:ode_runge-kutta_gmres_subspace-dimension-to-processing-time}
@@ -601,11 +601,11 @@ BiCGstab を使用して同様に
 式 \eqref{eq:ode_runge-kutta_gmres_sample-coeff-matrix} の
 係数行列を持つ方程式を解く時間を計測した結果が
 図 \ref{fig:ode_runge-kutta_bicgstab_subspace-dimension-to-processing-time} である．
-GMRES で最も速かった $m=2$ の場合よりもさらに速くなっている．
+GMRES で最も速かった $m=2,3$ の場合よりもさらに速くなっている．
 
 \begin{figure}[tp]
     \centering
-    \includegraphics[width=0.99\linewidth]{plots/ode-runge-kutta-bicgstab.pdf}
+    \includegraphics[width=0.99\linewidth]{plots/ode-runge-kutta-sparse-solvers.pdf}
     \caption{BiCGstab（Algorithm \ref{alg:matrix-computation_bicgstab}）を使用して%
         線形方程式を解くのにかかった時間}
     \label{fig:ode_runge-kutta_bicgstab_subspace-dimension-to-processing-time}

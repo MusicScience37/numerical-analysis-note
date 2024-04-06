@@ -7,11 +7,9 @@ import plotly.graph_objects
 
 from num_anal_plots.plots.laplacian_2d_grid.laplacian_2d_grid import laplacian_2d_grid
 from num_anal_plots.plots.legendre_function.legendre_function import legendre_function
-from num_anal_plots.plots.ode_runge_kutta_bicgstab.ode_runge_kutta_bicgstab import (
-    ode_runge_kutta_bicgstab,
-)
-from num_anal_plots.plots.ode_runge_kutta_gmres.ode_runge_kutta_gmres import (
-    ode_runge_kutta_gmres,
+from num_anal_plots.plots.ode_runge_kutta_sparse_solvers.ode_runge_kutta_sparse_solvers import (
+    ode_runge_kutta_sparse_solvers,
+    ode_runge_kutta_sparse_solvers_gmres,
 )
 
 
@@ -25,8 +23,14 @@ class PlotInfo:
 
 PLOT_INFO_LIST = [
     PlotInfo(name="laplacian-2d-grid", figure_factory=laplacian_2d_grid),
-    PlotInfo(name="ode-runge-kutta-gmres", figure_factory=ode_runge_kutta_gmres),
-    PlotInfo(name="ode-runge-kutta-bicgstab", figure_factory=ode_runge_kutta_bicgstab),
+    PlotInfo(
+        name="ode-runge-kutta-sparse-solvers",
+        figure_factory=ode_runge_kutta_sparse_solvers,
+    ),
+    PlotInfo(
+        name="ode-runge-kutta-sparse-solvers-gmres",
+        figure_factory=ode_runge_kutta_sparse_solvers_gmres,
+    ),
     PlotInfo(name="legendre-function", figure_factory=legendre_function),
 ]
 
