@@ -43,6 +43,9 @@ def ode_runge_kutta_sparse_solvers() -> plotly.graph_objects.Figure:
                 "Problem Dimension": int(measurement["params"]["dim"]),
                 "Iterations": iterations,
                 "Time [sec]": float(measurement["durations"]["stat"]["mean"]),
+                "Std. Err. of Time [sec]": float(
+                    measurement["durations"]["stat"]["standard_error"]
+                ),
             }
         )
 
@@ -52,6 +55,7 @@ def ode_runge_kutta_sparse_solvers() -> plotly.graph_objects.Figure:
         data_frame,
         x="Problem Dimension",
         y="Time [sec]",
+        error_y="Std. Err. of Time [sec]",
         color="Solver",
         line_dash="Solver",
         markers=True,
@@ -92,6 +96,9 @@ def ode_runge_kutta_sparse_solvers_gmres() -> plotly.graph_objects.Figure:
                 "Problem Dimension": int(measurement["params"]["dim"]),
                 "Iterations": iterations,
                 "Time [sec]": float(measurement["durations"]["stat"]["mean"]),
+                "Std. Err. of Time [sec]": float(
+                    measurement["durations"]["stat"]["standard_error"]
+                ),
             }
         )
 
@@ -101,6 +108,7 @@ def ode_runge_kutta_sparse_solvers_gmres() -> plotly.graph_objects.Figure:
         data_frame,
         x="Problem Dimension",
         y="Time [sec]",
+        error_y="Std. Err. of Time [sec]",
         color="Solver",
         line_dash="Solver",
         markers=True,
