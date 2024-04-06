@@ -119,3 +119,40 @@ $t=0$ における初期値 $\theta = 1$ をもとに $t=100$ における $\the
 
 % 話題を切り替える前に一旦全てを出力しておく．
 \clearpage
+
+\section{Kaps の問題（硬い系の例）}
+
+Kaps の問題 (Kaps' problem) は
+文献 \cite{Kennedy2003} において常微分方程式の解法の比較に用いられており，
+以下の式で表される．
+\begin{align}
+    \dot{y_1} & = -(\epsilon^{-1} + 2) y_1 + \epsilon^{-1} y_2^2 \\
+    \dot{y_2} & = y_1 - y_2 - y_2^2
+\end{align}
+
+この常微分方程式はパラメータ $\epsilon$ が小さいほど硬い系になるが，
+$\epsilon$ の値に関係なく以下の解をもつ．
+\begin{align}
+    y_1 & = \exp(-2t) \\
+    y_2 & = \exp(-t)
+\end{align}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/ode-kaps-problem-work-error.pdf}
+    \caption{Kaps の問題にに数値解法を適用したときの計算時間と誤差%
+        （ステップ幅の自動調整機能 \cite{Gustafsson1991} 付きの解法によるもの）}
+    \label{fig:ode_experiments_kaps-problem_work-error}
+\end{figure}
+
+この常微分方程式に対して各種数値解法を適用した．
+ここで，ステップ幅は \ref{chap:ode_runge-kutta_auto-next-step-size-pi-controller} 節で示したアルゴリズムにより決定した．
+$t=0$ における初期値をもとに $t=1$ における数値解を求めるという初期値問題で評価を行った結果を図
+\ref{fig:ode_experiments_kaps-problem_work-error}
+に示す．
+$\epsilon = 1$ の場合は陽的解法が最も速いが，
+$\epsilon$ が小さくなると陽的解法は計算に時間がかかるようになった．
+一方，陰的解法では特に計算時間の増加が見られなかった．
+この結果により，硬い系では陽的解法で安定した解を求めるために必要となるステップ幅が小さくなり，
+同じ時刻の数値解を求めるために必要な計算時間が長くなってしまうという事実を確認することができた．
+なお，$\epsilon$ の値と関係なく陰的解法の中では Rosenbrock 法の RODASP, RODASPR 公式が速かった．

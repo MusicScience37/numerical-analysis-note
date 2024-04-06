@@ -6,3 +6,4 @@
 
     runge-kutta-implicit-solvers
     pendulum-movement-benchmark
+    kaps-problem-benchmark
