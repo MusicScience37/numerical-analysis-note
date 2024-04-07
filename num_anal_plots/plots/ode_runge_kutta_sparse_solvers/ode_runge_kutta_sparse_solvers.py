@@ -61,7 +61,7 @@ def ode_runge_kutta_sparse_solvers() -> plotly.graph_objects.Figure:
         markers=True,
         log_x=True,
         log_y=True,
-        title="Processing Time of Solvers of Sparse Linear Equations in Implicit Runge-Kutta Method",
+        title="Processing Time of Solvers of Sparse Linear Equations",
         template="plotly_white",
     )
 
@@ -114,6 +114,6 @@ def ode_runge_kutta_sparse_solvers_gmres() -> plotly.graph_objects.Figure:
         markers=True,
         log_x=True,
         log_y=True,
-        title="Processing Time of Solvers of Sparse Linear Equations in Implicit Runge-Kutta Method",
+        title="Processing Time of Solvers of Sparse Linear Equations",
         template="plotly_white",
     )
