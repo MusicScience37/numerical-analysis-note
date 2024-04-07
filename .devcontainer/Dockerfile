@@ -11,6 +11,7 @@ RUN apt-get update && \
     vim nano \
     graphviz \
     sudo \
+    librsvg2-bin \
     && \
     apt-get autoremove -y && \
     apt-get autoclean && \
