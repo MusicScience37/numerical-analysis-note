@@ -19,7 +19,7 @@ file_format: mystnb
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-runge-kutta-sparse-solvers", version=3)
+show_plot_in_jupyter("ode-runge-kutta-sparse-solvers", version=4)
 ```
 
 ## 環境

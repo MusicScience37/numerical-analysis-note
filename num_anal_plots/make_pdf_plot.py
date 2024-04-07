@@ -19,46 +19,37 @@ def _make_pdf_plot(info: PlotInfo) -> None:
         info (PlotInfo): プロットの情報。
     """
     svg_path = IMAGE_DIR / f"{info.name}.svg"
-    temp_pdf_path = IMAGE_DIR / f"{info.name}-temp.pdf"
     pdf_path = IMAGE_DIR / f"{info.name}.pdf"
 
     click.echo(f"> Creating {pdf_path}")
 
     figure = info.figure_factory()
 
+    figure.update_layout(
+        font_family=r'"Latin Modern Roman","Latin Modern Math"',
+        font_color="#000",
+    )
+
     # PDF を出力させると MathJax の読み込み中の表示が画像内に出力されるため、
     # 一旦 SVG で出力させる。
     figure.write_image(str(svg_path))
 
     # SVG から PDF へ変換。
-    # まだ埋め込まれていないフォントが使われている状態。
+    # デフォルトでフォントが埋め込まれる。
     subprocess.run(
         [
-            "svg2pdf",
-            str(svg_path),
-            "-o",
-            str(temp_pdf_path),
-        ],
-        check=True,
-    )
-
-    # テキストをパスに変換。
-    subprocess.run(
-        [
-            "gs",
-            "-dNoOutputFonts",
-            "-sDEVICE=pdfwrite",
-            "-dCompatibilityLevel=1.5",
+            "rsvg-convert",
+            "-f",
+            "pdf",
             "-o",
             str(pdf_path),
-            str(temp_pdf_path),
+            str(svg_path),
         ],
         check=True,
     )
 
     # 要らなくなった中間ファイルを削除。
     svg_path.unlink()
-    temp_pdf_path.unlink()
 
 
 @click.command
