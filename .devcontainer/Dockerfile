@@ -11,6 +11,7 @@ RUN apt-get update && \
     vim nano \
     graphviz \
     sudo \
+    # For rsvg-converter
     librsvg2-bin \
     && \
     apt-get autoremove -y && \
