@@ -134,7 +134,6 @@ Gauss-Legendre 積分公式よりも安定して数値積分を行うことが�
     T_h = h \sum_{k = -N}^{N} f(\phi(kh)) \phi'(kh)
 \end{equation}
 で近似できる．
-ここで，パラメータ $c$ は $1$ か $\pi/2$ とする場合が多い\cite[Section 4.5]{Press2007}．
 また，パラメータ $h$ の最適値は
 \begin{equation}
     h \approx \frac{\log(2 \pi N)}{N}
@@ -146,11 +145,27 @@ Gauss-Legendre 積分公式よりも安定して数値積分を行うことが�
 となる\cite[Section 4.5]{Press2007}．
 点数 $N$ を 2 倍にすると有効桁数が約 2 倍になる．
 
-なお，実装時はオーバーフローしないように
+なお，実装時はオーバーフローや桁落ちを防ぐため
+\begin{align}
+    b - x
+     & = \frac{1}{2}(b - a) \left(1 - \tanh \left(\frac{\pi}{2} \sinh{t}\right) \right)
+    \notag                                                                                 \\
+     & = \frac{1}{2}(b - a) \left(1 -
+    \frac{\exp\left(\frac{\pi}{2} \sinh{t}\right) - \exp\left(-\frac{\pi}{2} \sinh{t}\right)}%
+    {\exp\left(\frac{\pi}{2} \sinh{t}\right) + \exp\left(-\frac{\pi}{2} \sinh{t}\right)}\right)
+    \notag                                                                                 \\
+     & = \frac{1}{2}(b - a) \left(1 -
+    \frac{1 - \exp\left(-\pi \sinh{t}\right)}{1 + \exp\left(-\pi \sinh{t}\right)}\right)
+    \notag                                                                                 \\
+     & = (b - a) \frac{\exp\left(-\pi \sinh{t}\right)}{1 + \exp\left(-\pi \sinh{t}\right)}
+\end{align}
 \begin{align}
     \phi'(t)
-     & = \frac{\pi}{4} (b - a) \frac{\cosh{t}}{\cosh^2 \left(\frac{\pi}{2} \sinh{t}\right)}                                              \\
-     & = \frac{\pi}{4} (b - a) \frac{4 \cosh{t}}{(\exp\left(\frac{\pi}{2} \sinh{t}\right) + \exp\left(-\frac{\pi}{2} \sinh{t}\right))^2} \\
+     & = \frac{\pi}{4} (b - a) \frac{\cosh{t}}{\cosh^2 \left(\frac{\pi}{2} \sinh{t}\right)}
+    \notag                                                                                  \\
+     & = \frac{\pi}{4} (b - a) \frac{4 \cosh{t}}                                            %
+    {(\exp\left(\frac{\pi}{2} \sinh{t}\right) + \exp\left(-\frac{\pi}{2} \sinh{t}\right))^2}
+    \notag                                                                                  \\
      & = \pi (b - a) \frac{\cosh{t} \exp(-\pi \sinh{t})}{(1 + \exp(-\pi \sinh{t}))^2}
 \end{align}
 とすると良い\cite[Section 4.5.2]{Press2007}．
