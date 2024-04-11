@@ -211,3 +211,73 @@ Gauss-Legendre 積分公式よりも安定して数値積分を行うことが�
     = \frac{\pi}{2} \cosh \left(\frac{\pi}{2} \sinh{t}\right) \cosh{t}
 \end{equation}
 となる．
+
+\section{適用例}
+
+\subsection{有限区間上の積分}
+
+以下の積分を数値積分で計算した．
+\begin{gather}
+    \int_{0}^{1} e^x dx = e - 1
+    \label{eq:integration_one-dim_finite-exp-integration}
+    \\
+    \int_{-1}^{1} \sqrt{1-x^2} dx = \frac{\pi}{2}
+    \label{eq:integration_one-dim_finite-sqrt-1mx2-integration}
+    \\
+    \int_{-1}^{1} \frac{1}{\sqrt{1-x^2}} dx = \pi
+    \label{eq:integration_one-dim_finite-inv-sqrt-1mx2-integration}
+\end{gather}
+上から順に，
+\begin{itemize}
+    \item 滑らかな関数の積分（最も簡単な例）
+    \item 積分区間の端で急変する関数（滑らかな関数よりも難易度が高い）
+    \item 積分区間の端で発散する関数（特異積分）
+\end{itemize}
+となっている．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/integ-gauss-legendre-errors.pdf}
+    \caption{Legendre 関数の次数の異なる Gauss-Legendre 公式による数値積分の誤差}
+    \label{fig:integration_one-dim_finite_gauss-legendre-errors}
+\end{figure}
+
+まず，Gauss-Legendre 公式で積分したときの誤差を
+図 \ref{fig:integration_one-dim_finite_gauss-legendre-errors} に示す．
+次数を増やすと精度が良くなる様子を確認できる．
+また，簡単な式 \eqref{eq:integration_one-dim_finite-exp-integration} の積分では誤差が小さいのに対し，
+積分区間の端で急変する式 \eqref{eq:integration_one-dim_finite-sqrt-1mx2-integration} の積分では誤差が大きくなり，
+積分区間の端で発散する式 \eqref{eq:integration_one-dim_finite-inv-sqrt-1mx2-integration} の積分ではさらに誤差が大きくなっている．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/integ-gauss-legendre-kronrod-time.pdf}
+    \caption{Legendre 関数の次数の異なる Gauss-Legendre-Kronrod 公式による数値積分の計算時間}
+    \label{fig:integration_one-dim_finite_gauss-legendre-kronrod-time}
+\end{figure}
+
+Gauss-Legendre-Kronrod 公式で適応積分したときの計算時間を
+図 \ref{fig:integration_one-dim_finite_gauss-legendre-kronrod-time} に示す．
+計算結果の誤差はどれも $10^{-7}$ 程度となっており，
+その精度の値を計算するのにかかった時間が対象の積分や Legendre 関数の次数に応じて変化している．
+まず，対象の積分の難易度が高くなると計算時間が長くなった．
+積分区間を細かく分割して積分しないと十分な精度が出せないため，計算時間が長くなっていくものと考えられる．
+また，Legendre 関数の次数が小さい場合も計算時間が長くなっている．
+一回の積分公式の適用で得られる積分値の精度が低いため，
+積分区間を細かく分割して積分することになり，計算時間が長くなっていくものと考えられる．
+一方，次数を大きくしすぎた場合も計算時間が少し長くなっている．
+分割した個々の区間に対する積分の計算に時間がかかるためと考えられる．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/integ-de-finite-time.pdf}
+    \caption{点数の異なる二重指数関数型公式による数値積分の計算時間}
+    \label{fig:integration_one-dim_finite_de-errors}
+\end{figure}
+
+二重指数関数型公式で積分したときの誤差を
+図 \ref{fig:integration_one-dim_finite_de-errors} に示す．
+点数の多いときの結果がないのは，精度が倍精度浮動小数点数の桁数を超えてしまって
+誤差の値が 0 となってしまったためである．
+二重指数関数型公式は積分区間の端で被積分関数が急変したり発散したりするような難しい積分に強く，
+どの積分でも計算に用いる点数を増やした場合は誤差が同程度に小さくなる．
