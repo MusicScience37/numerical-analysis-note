@@ -1,0 +1,35 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{数値実験}
+
+\section{制約のない凸関数の最適化}
+
+本節では，大域最適解以外に局所最適解をもたない凸関数を制約条件なしで最適化する基本的な問題について
+数値実験を行った結果を示す．
+
+\begin{figure}[tp]
+    \centering
+    \begin{subfigure}{0.85\linewidth}
+        \centering
+        \includegraphics[width=0.99\linewidth]{plots/opt-random-multi-quadratic-function-time.pdf}
+        \subcaption{計算時間}
+    \end{subfigure}
+    \begin{subfigure}{0.85\linewidth}
+        \centering
+        \includegraphics[width=0.99\linewidth]{plots/opt-random-multi-quadratic-function-evaluations.pdf}
+        \subcaption{関数の値を評価した回数}
+    \end{subfigure}
+    \caption{ランダムな二次関数を最適化した場合の計算時間と関数の値を評価した回数}
+    \label{fig:optimization_unconstrained-convex-optimization_random-multi-quadratic-function}
+\end{figure}
+
+\paragraph{ランダムな二次関数の最適化}
+ランダムな二次関数に最適化アルゴリズムを適用した結果を
+図 \ref{fig:optimization_unconstrained-convex-optimization_random-multi-quadratic-function} に示す．
+Downhill Simplex 法と Dividing Rectangle 法は
+変数の次元が増加すると急激に計算時間が増加した．
+そのため 5 次元までしか計測を行っていない．
+二次関数のような単純な関数では単純な最急降下法で十分速く計算ができたようだ．
+
+\clearpage

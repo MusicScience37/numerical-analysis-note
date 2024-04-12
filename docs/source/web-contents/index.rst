@@ -7,4 +7,5 @@ Web コンテンツ
     matrix-computation/index
     ode/index
     integration/index
+    opt/index
     special-functions/index

@@ -28,6 +28,10 @@ from num_anal_plots.plots.ode_runge_kutta_sparse_solvers.ode_runge_kutta_sparse_
     ode_runge_kutta_sparse_solvers,
     ode_runge_kutta_sparse_solvers_gmres,
 )
+from num_anal_plots.plots.opt_random_multi_quadratic_function.opt_random_multi_quadratic_function import (
+    opt_random_multi_quadratic_function_evaluations,
+    opt_random_multi_quadratic_function_time,
+)
 
 
 @dataclasses.dataclass
@@ -39,7 +43,9 @@ class PlotInfo:
 
 
 PLOT_INFO_LIST = [
+    # Linear Solvers.
     PlotInfo(name="laplacian-2d-grid", figure_factory=laplacian_2d_grid),
+    # ODE Solvers.
     PlotInfo(
         name="ode-runge-kutta-sparse-solvers",
         figure_factory=ode_runge_kutta_sparse_solvers,
@@ -64,7 +70,9 @@ PLOT_INFO_LIST = [
         name="ode-kaps-problem-work-error",
         figure_factory=ode_kaps_problem_work_error,
     ),
+    # Special Functions.
     PlotInfo(name="legendre-function", figure_factory=legendre_function),
+    # Numerical integration.
     PlotInfo(
         name="integ-gauss-legendre-errors",
         figure_factory=integ_gauss_legendre_errors,
@@ -76,6 +84,15 @@ PLOT_INFO_LIST = [
     PlotInfo(
         name="integ-de-finite-time",
         figure_factory=integ_de_errors,
+    ),
+    # Optimization.
+    PlotInfo(
+        name="opt-random-multi-quadratic-function-time",
+        figure_factory=opt_random_multi_quadratic_function_time,
+    ),
+    PlotInfo(
+        name="opt-random-multi-quadratic-function-evaluations",
+        figure_factory=opt_random_multi_quadratic_function_evaluations,
     ),
 ]
 
