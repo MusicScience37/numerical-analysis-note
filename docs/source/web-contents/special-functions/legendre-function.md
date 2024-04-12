@@ -2,6 +2,8 @@
 file_format: mystnb
 ---
 
+(legendre-function)=
+
 # Legendre 関数
 
 Legendre 関数は，$n=0,1,\ldots$ について次の式で表される
