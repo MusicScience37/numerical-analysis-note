@@ -33,4 +33,29 @@ Downhill Simplex 法と Dividing Rectangle 法は
 二次関数のような単純な関数では単純な最急降下法で十分速く計算ができたようだ．
 また，共役勾配法では次元が増加しても計算時間が大きく増加していない．
 
+\begin{figure}[tp]
+    \centering
+    \begin{subfigure}{0.85\linewidth}
+        \centering
+        \includegraphics[width=0.99\linewidth]{plots/opt-convex-difficult-functions-time.pdf}
+        \subcaption{計算時間}
+    \end{subfigure}
+    \begin{subfigure}{0.85\linewidth}
+        \centering
+        \includegraphics[width=0.99\linewidth]{plots/opt-convex-difficult-functions-evaluations.pdf}
+        \subcaption{関数の値を評価した回数}
+    \end{subfigure}
+    \caption{テスト用の凸関数を最適化した場合の計算時間と関数の値を評価した回数}
+    \label{fig:optimization_unconstrained-convex-optimization_convex-difficult-function}
+\end{figure}
+
+\paragraph{テスト用の凸関数の最適化}
+Web ページ \cite{GOTestProblems} で紹介されていたテスト用の凸関数
+Rosenbrock Function, Powell Function（4次元） について最適化アルゴリズムを適用した結果を
+図 \ref{fig:optimization_unconstrained-convex-optimization_convex-difficult-function} に示す．
+これらの関数においては単純な最急降下法の収束が遅くなり，
+準 Newton 法の方が 2 桁速くなっている．
+Downhill Simplex 法は中間的な性能となっている．
+勾配の計算すら必要のないアルゴリズムだが，変数の次元が少ない問題であれば最適解を求めることができている．
+
 \clearpage

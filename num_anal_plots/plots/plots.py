@@ -28,6 +28,10 @@ from num_anal_plots.plots.ode_runge_kutta_sparse_solvers.ode_runge_kutta_sparse_
     ode_runge_kutta_sparse_solvers,
     ode_runge_kutta_sparse_solvers_gmres,
 )
+from num_anal_plots.plots.opt_convex_difficult_functions.opt_convex_difficult_functions import (
+    opt_convex_difficult_functions_evaluations,
+    opt_convex_difficult_functions_time,
+)
 from num_anal_plots.plots.opt_random_multi_quadratic_function.opt_random_multi_quadratic_function import (
     opt_random_multi_quadratic_function_evaluations,
     opt_random_multi_quadratic_function_time,
@@ -93,6 +97,14 @@ PLOT_INFO_LIST = [
     PlotInfo(
         name="opt-random-multi-quadratic-function-evaluations",
         figure_factory=opt_random_multi_quadratic_function_evaluations,
+    ),
+    PlotInfo(
+        name="opt-convex-difficult-functions-time",
+        figure_factory=opt_convex_difficult_functions_time,
+    ),
+    PlotInfo(
+        name="opt-convex-difficult-functions-evaluations",
+        figure_factory=opt_convex_difficult_functions_evaluations,
     ),
 ]
 
