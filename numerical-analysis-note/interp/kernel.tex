@@ -420,17 +420,20 @@ Gaussian Process 最適化
 $(\bm{x}_i, f(\bm{x}_i))$ ($i = 1,2,\ldots,T$)
 に対して Gaussian Process による補間を行い，
 Gaussian Process の平均 $\mu_T(\bm{x})$ と標準偏差 $\sigma_T(\bm{x})$ を算出できるようにする．
-そして，反復ごとに変化する係数 $\beta_t$ を用いて定義される目的関数
+そして，反復ごとに変化する係数 $\beta_t$ とパラメータ $\nu$ を用いて定義される目的関数
 \begin{equation}
-    F_T(\bm{x}) = \mu_T(\bm{x}) - \sqrt{\beta_{T+1}} \sigma_T(\bm{x})
+    F_T(\bm{x}) = \mu_T(\bm{x}) - \sqrt{\nu \beta_{T+1}} \sigma_T(\bm{x})
 \end{equation}
 を最小化するような $\bm{x}$ を次のサンプル点として選択する．
-係数 $\beta_t$ は
+係数 $\nu$, $\beta_t$ は
 \begin{itemize}
-    \item $\beta_t = 2 \log(|D| t^2 \pi^2 / 6 \delta)$,
+    \item $\nu = 1/5$, $\beta_t = 2 \log(|D| t^2 \pi^2 / 6 \delta)$,
           $\delta \in (0, 1)$
           \cite{Srinivas2010}
-    \item $\beta_t = 2 \log(t^{d/2+2} \pi^2 /3 \delta)$,
+          \footnote{文献 \cite{Srinivas2010} 内の定理では $\nu = 1$ の場合を扱っていたが，%
+              数値実験において $\nu = 1/5$ とすると結果が良くなったという記述がある．%
+              また，文献 \cite{Srinivas2010} の数値実験では $\delta = 0.1$ が選択されている．}
+    \item $\nu=1$, $\beta_t = 2 \log(t^{d/2+2} \pi^2 /3 \delta)$,
           $\delta \in (0, 1)$
           \cite{Brochu2010}
 \end{itemize}
