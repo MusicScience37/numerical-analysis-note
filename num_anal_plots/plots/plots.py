@@ -32,6 +32,10 @@ from num_anal_plots.plots.opt_convex_difficult_functions.opt_convex_difficult_fu
     opt_convex_difficult_functions_evaluations,
     opt_convex_difficult_functions_time,
 )
+from num_anal_plots.plots.opt_multi_variate_difficult_multi_optima_function.opt_multi_variate_difficult_multi_optima_function import (
+    opt_multi_variate_difficult_multi_optima_function_evaluations,
+    opt_multi_variate_difficult_multi_optima_function_time,
+)
 from num_anal_plots.plots.opt_random_multi_quadratic_function.opt_random_multi_quadratic_function import (
     opt_random_multi_quadratic_function_evaluations,
     opt_random_multi_quadratic_function_time,
@@ -117,6 +121,14 @@ PLOT_INFO_LIST = [
     PlotInfo(
         name="opt-single-variate-multi-optima-function-evaluations",
         figure_factory=opt_single_variate_multi_optima_function_evaluations,
+    ),
+    PlotInfo(
+        name="opt-multi-variate-difficult-multi-optima-function-time",
+        figure_factory=opt_multi_variate_difficult_multi_optima_function_time,
+    ),
+    PlotInfo(
+        name="opt-multi-variate-difficult-multi-optima-function-evaluations",
+        figure_factory=opt_multi_variate_difficult_multi_optima_function_evaluations,
     ),
 ]
 

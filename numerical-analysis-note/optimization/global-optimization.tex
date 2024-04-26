@@ -122,9 +122,10 @@ DIRECT 法の派生としては以下のようなものが挙げられる．
 
 \begin{itemize}
     \item 各局所最適解への収束に重点をおいた DIRECT-l \cite{Gablonsky2001}
+    \item 対称な関数に最適化された SymDIRECT \cite{Grbic2013}
 \end{itemize}
 
-\section{Adaptive Diagonal Curves 法}
+\section{Adaptive Diagonal Curves 法}\label{sec:optimization_adaptive-diagonal-curves}
 
 \index{Adaptive Diagonal Curves}
 Adaptive Diagonal Curves 法 \cite{Sergeyev2006} は
@@ -135,6 +136,8 @@ DIRECT 法（第 \ref{sec:optimization_direct} 節）と同様に
 目的関数の値をとる頂点が隣り合う超短形の間で共有できるように
 分割を行っていく手法 \cite{Sergeyev2000} を用いており，
 DIRECT 法よりも目的関数の値をとる点の数を減らすことができる．
+特に，困難な大域的最適化の問題において特に良い性能が出せるという
+\cite{Sergeyev2006,Kvasov2015}．
 
 \begin{figure}[tp]
     \centering

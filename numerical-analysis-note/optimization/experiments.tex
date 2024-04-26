@@ -16,6 +16,7 @@
     \item[Quasi-Newton (BFGS Formula)] BFGS 公式による準 Newton 法（\ref{sec:optimization_quasi-newton} 節）
     \item[Conjugate Gradient] 共役勾配法（\ref{sec:optimization_conjugate-gradient} 節）
     \item[Dividing Rectangle] Dividing Rectangles (DIRECT) 法（\ref{sec:optimization_direct} 節）
+    \item[Adaptive Diagonal Curves] Adaptive Diagonal Curves 法（\ref{sec:optimization_adaptive-diagonal-curves} 節）
     \item[Gaussian Process Optimization] Gaussian Process 最適化（\ref{sec:interp_kernel_global-optimization} 節）
 \end{description}
 
@@ -103,5 +104,31 @@ Gaussian Process 最適化を用いた方が良いと思われる．
     \caption{1 次元における局所最適解を持つランダムな関数を最適化した場合の計算時間と関数の値を評価した回数}
     \label{fig:optimization_unconstrained-convex-optimization_single-variate-multi-optima-function}
 \end{figure}
+
+\begin{figure}[tp]
+    \centering
+    \begin{subfigure}{0.85\linewidth}
+        \centering
+        \includegraphics[width=0.99\linewidth]{plots/opt-multi-variate-difficult-multi-optima-function-time.pdf}
+        \subcaption{計算時間}
+    \end{subfigure}
+    \begin{subfigure}{0.85\linewidth}
+        \centering
+        \includegraphics[width=0.99\linewidth]{plots/opt-multi-variate-difficult-multi-optima-function-evaluations.pdf}
+        \subcaption{関数の値を評価した回数}
+    \end{subfigure}
+    \caption{2, 3 次元における局所最適解を持つランダムな関数を最適化した場合の計算時間と関数の値を評価した回数}
+    \label{fig:optimization_unconstrained-convex-optimization_multi-variate-difficult-multi-optima-function}
+\end{figure}
+
+\paragraph{複数次元における局所最適解を持つランダムな関数の最適化}
+複数次元において局所最適解を持つ関数をランダムに生成し，
+最適化アルゴリズムを適用した結果を
+図 \ref{fig:optimization_unconstrained-convex-optimization_multi-variate-difficult-multi-optima-function} に示す．
+1 次元の場合と同様に
+計算時間の短いアルゴリズムと関数の評価を行う回数が少ないアルゴリズムが異なっているため，
+対象とする目的関数の計算時間や難易度に応じてアルゴリズムを切り替えることでより速く解を得られる可能性がある．
+特に，Adaptive Diagonal Curves は困難な大域的最適化の問題において特に良い性能が出せるという
+\cite{Sergeyev2006,Kvasov2015}．
 
 \clearpage
