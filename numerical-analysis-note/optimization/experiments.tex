@@ -3,6 +3,22 @@
 
 \chapter{数値実験}
 
+本章では，本書で示した最適化アルゴリズムについて数値実験を行った結果を示す．
+
+\section{対象としたアルゴリズム}
+
+本章において結果を示す図の中で用いる略称とそれに対応する解法を以下に示す．
+
+\begin{description}
+    \item[Steepest Descent] 最急降下法（\ref{sec:optimization_steepest-descent} 節）
+    \item[Downhill Simplex] Downhill Simplex 法（\ref{chap:optimization_downhill-simplex} 章）
+    \item[Quasi-Newton (DFP Formula)] DFP 公式による準 Newton 法（\ref{sec:optimization_quasi-newton} 節）
+    \item[Quasi-Newton (BFGS Formula)] BFGS 公式による準 Newton 法（\ref{sec:optimization_quasi-newton} 節）
+    \item[Conjugate Gradient] 共役勾配法（\ref{sec:optimization_conjugate-gradient} 節）
+    \item[Dividing Rectangle] Dividing Rectangles (DIRECT) 法（\ref{sec:optimization_direct} 節）
+    \item[Gaussian Process Optimization] Gaussian Process 最適化（\ref{sec:interp_kernel_global-optimization} 節）
+\end{description}
+
 \section{制約のない凸関数の最適化}
 
 本節では，大域最適解以外に局所最適解をもたない凸関数を制約条件なしで最適化する基本的な問題について
@@ -57,5 +73,35 @@ Rosenbrock Function, Powell Function（4次元） について最適化アルゴ
 準 Newton 法の方が 2 桁速くなっている．
 Downhill Simplex 法は中間的な性能となっている．
 勾配の計算すら必要のないアルゴリズムだが，変数の次元が少ない問題であれば最適解を求めることができている．
+
+\clearpage
+
+\section{制約のない大域的最適化}
+
+\paragraph{1 次元における局所最適解を持つランダムな関数の最適化}
+1 次元において局所最適解を持つ関数をランダムに生成し，
+最適化アルゴリズムを適用した結果を
+図 \ref{fig:optimization_unconstrained-convex-optimization_single-variate-multi-optima-function} に示す．
+計算時間の短い関数は関数の値を評価した回数が多くなっている．
+目的関数の計算時間が短い場合はアルゴリズム自体の計算時間が短い
+Dividing Rectangle 法を用いた方が良い一方，
+目的関数の計算時間が長い場合は関数の値を評価する回数が少なく済む
+Gaussian Process 最適化を用いた方が良いと思われる．
+
+\begin{figure}[tp]
+    \centering
+    \begin{subfigure}{0.85\linewidth}
+        \centering
+        \includegraphics[width=0.99\linewidth]{plots/opt-single-variate-multi-optima-function-time.pdf}
+        \subcaption{計算時間}
+    \end{subfigure}
+    \begin{subfigure}{0.85\linewidth}
+        \centering
+        \includegraphics[width=0.99\linewidth]{plots/opt-single-variate-multi-optima-function-evaluations.pdf}
+        \subcaption{関数の値を評価した回数}
+    \end{subfigure}
+    \caption{1 次元における局所最適解を持つランダムな関数を最適化した場合の計算時間と関数の値を評価した回数}
+    \label{fig:optimization_unconstrained-convex-optimization_single-variate-multi-optima-function}
+\end{figure}
 
 \clearpage

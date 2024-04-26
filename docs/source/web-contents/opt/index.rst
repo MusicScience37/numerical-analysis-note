@@ -6,3 +6,4 @@
 
     opt-random-quadratic-functions
     opt-convex-difficult-functions
+    opt-single-variate-multi-optima-functions

@@ -156,7 +156,7 @@ $g_i(\lambda_{j-1})$ の情報もも加えて 3 次関数による補間を行�
 \footnote{$2 \times 2$ 行列の逆行列や 3 次関数の最小値の計算が必要になるため，容易ではない．}
 ．
 
-\section{最急降下法}
+\section{最急降下法}\label{sec:optimization_steepest-descent}
 
 \index{さいきゅうこうかほう@最急降下法}
 最急降下法では，更新方向を $\bm{d}_i = -\nabla f(\bm{x}_{i-1})$ とする．
@@ -189,7 +189,7 @@ $\nabla f(\bm{x}_{i-1})^\top \bm{d}_i = -\nabla f(\bm{x}_{i-1})^\top \nabla^2 f(
 となり，目的関数が減少する方向になっていることを確認できる．
 Newton 法の収束性については \cite[Section 9.5.3, 9.6.4]{Boyd2004} にて議論されている．
 
-\section{準 Newton 法}
+\section{準 Newton 法}\label{sec:optimization_quasi-newton}
 
 \index{じゅんNewtonほう@準 Newton 法}
 Newton 法では，
@@ -238,7 +238,7 @@ Broyden-Fletcher-Goldfarb-Shanno (BFGS) 公式が存在する
     - \frac{H_i \bm{q}_i}{\bm{q}_i^\top H_i \bm{q}_i}
 \end{align}
 
-\section{共役勾配法}
+\section{共役勾配法}\label{sec:optimization_conjugate-gradient}
 
 \index{きょうやくこうばいほう@共役勾配法}
 共役勾配法では，

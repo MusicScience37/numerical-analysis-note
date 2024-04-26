@@ -36,6 +36,10 @@ from num_anal_plots.plots.opt_random_multi_quadratic_function.opt_random_multi_q
     opt_random_multi_quadratic_function_evaluations,
     opt_random_multi_quadratic_function_time,
 )
+from num_anal_plots.plots.opt_single_variate_multi_optima_function.opt_single_variate_multi_optima_function import (
+    opt_single_variate_multi_optima_function_evaluations,
+    opt_single_variate_multi_optima_function_time,
+)
 
 
 @dataclasses.dataclass
@@ -105,6 +109,14 @@ PLOT_INFO_LIST = [
     PlotInfo(
         name="opt-convex-difficult-functions-evaluations",
         figure_factory=opt_convex_difficult_functions_evaluations,
+    ),
+    PlotInfo(
+        name="opt-single-variate-multi-optima-function-time",
+        figure_factory=opt_single_variate_multi_optima_function_time,
+    ),
+    PlotInfo(
+        name="opt-single-variate-multi-optima-function-evaluations",
+        figure_factory=opt_single_variate_multi_optima_function_evaluations,
     ),
 ]
 
