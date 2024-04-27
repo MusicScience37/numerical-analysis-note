@@ -40,7 +40,7 @@ def _make_pdf_plot(info: PlotInfo) -> None:
         [
             "rsvg-convert",
             "-f",
-            "pdf",
+            "pdf1.5",
             "-o",
             str(pdf_path),
             str(svg_path),
