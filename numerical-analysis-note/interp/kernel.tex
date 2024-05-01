@@ -253,11 +253,11 @@ Gaussian Process を用いた表現では分散 $\sigma_K^2(\bm{r})$ も得ら�
 
 \index{RBFほかん@RBF 補間}
 \index{Radial Basis Function}
-カーネル $K(\bm{r}, \bm{r}')$ の値が距離 $\|\bm{r} - \bm{r}'\|_2$ に依存する場合，
+カーネル $K(\bm{r}, \bm{r}')$ の値が距離 $\|\bm{r} - \bm{r}'\|$ に依存する場合，
 そのもとになる関数は Radial Basis Function (RBF) と呼ばれる．
 RBF $\phi : [0, \infty) \to \setR$ によるカーネルは
 \begin{equation}
-    K(\bm{r}, \bm{r}') = \phi\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)
+    K(\bm{r}, \bm{r}') = \phi\left(\frac{\|\bm{r} - \bm{r}'\|}{c}\right)
     \label{eq:regularization_kernel_kernel-of-rbf}
 \end{equation}
 のように書ける．
@@ -281,6 +281,65 @@ RBF としては表
         Bessel ($d=1,2,\ldots$) & $J_{d/2-1}(r) / r^{d/2-1}$
     \end{tabular}
 \end{table}
+
+\subsection{Wendland の Compactly Supported RBF}
+
+\index{Compactly Supported Radial Basis Function}
+\index{CSRBF}
+RBF 補間を行うにあたって
+式 \eqref{eq:interp_kernel_tikhonov_coeff_c} にあるような係数の計算が必要となるが，
+表 \ref{table:interp_kernel_example-rbfs}
+で挙げたような RBF を使用した場合，
+係数行列 $K_m$ は $m \times m$ の密行列となるため，
+補間に用いるサンプル点の数 $m$ の数が増加すると
+計算に必要な時間が $m^3$ オーダーで増加し，
+メモリは $m^2$ オーダーで増加する．
+そこで，係数行列 $K_m$ が疎行列となるような RBF が考案された．
+そのような RBF のうち，
+ここでは Wendland の compactly supported RBF \cite{Wendland1995} について説明する．
+
+Wendland の compactly supported RBF においては，
+\begin{equation}
+    x_+^l = \begin{cases}
+        x^l & \text{for $|x| < 1$} \\
+        0   & \text{otherwise}
+    \end{cases}
+\end{equation}
+のような truncated power function を用いる．
+また，サンプル点の座標は $d$ 次元の Euclid 空間にあるものとする．
+
+まず，truncated power function を用いて定義される連続な RBF
+\begin{equation}
+    \phi_l(r) \equiv (1 - r)_+^l
+\end{equation}
+のパラメータ $l$ を $l \le \lfloor d/2 \rfloor + 1$ となるように設定すると，
+カーネルの行列 $K_m$ が正定値になる．
+さらに，微分も可能な RBF を作るため，積分の作用素
+\begin{equation}
+    I(f)(r) \equiv \int_r^\infty sf(s) ds
+\end{equation}
+を定義し，その作用素を $\phi_l$ に適用した RBF
+\begin{equation}
+    \phi_{l,k} \equiv I^k \phi_l
+\end{equation}
+を考える．
+このとき，$l = \lfloor d/2 \rfloor + k + 1$ とすると，
+カーネルの行列 $K_m$ が正定値になる特性を持ったまま
+$C^{2k}$ 級の関数になる \cite[Theorem 3.5]{Wendland1995}．
+積分の作用素を適用した結果は部分積分を用いて計算でき，
+$k = 0, 1, 2$ における RBF は以下のような式で書ける．
+\begin{align}
+    \phi_{l,0} & = (1 - r)_+^l                                                    \\
+    \phi_{l,1} & = \frac{1}{(l+1)(l+2)} (1 - r)_+^{l+1} \left( (l+1)r + 1 \right) \\
+    \phi_{l,2} & = \frac{1}{(l+1)(l+2)(l+3)(l+4)} (1 - r)_+^{l+2}
+    \left( (l+1)(l+3)r^2 + 3(l+2)r + 3 \right)
+\end{align}
+
+なお，微分の計算をするにあたっては，積分の作用素 $I$ の逆となる微分の作用素が
+\begin{equation}
+    D(f)(r) \equiv -\frac{1}{r} \frac{d}{dr} f(r)
+\end{equation}
+で定義されるということを利用すればよい．
 
 \section{パラメータ推定}\label{sec:regularization_kernel_param-est}
 
