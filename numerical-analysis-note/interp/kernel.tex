@@ -334,6 +334,17 @@ $k = 0, 1, 2$ における RBF は以下のような式で書ける．
     \phi_{l,2} & = \frac{1}{(l+1)(l+2)(l+3)(l+4)} (1 - r)_+^{l+2}
     \left( (l+1)(l+3)r^2 + 3(l+2)r + 3 \right)
 \end{align}
+これらをプロットすると
+図 \ref{fig:rbf_wendland-csrbf}
+のようになる．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/rbf-wendland-csrbf.pdf}
+    \caption{Wendland の Compactly Supported RBF $\phi_{l,k}(r)$ \cite{Wendland1995} の例%
+        （見やすいように $r = 0$ のときの値に対する比をプロットしている．）}
+    \label{fig:rbf_wendland-csrbf}
+\end{figure}
 
 なお，微分の計算をするにあたっては，積分の作用素 $I$ の逆となる微分の作用素が
 \begin{equation}

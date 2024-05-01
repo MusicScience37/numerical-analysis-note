@@ -44,6 +44,9 @@ from num_anal_plots.plots.opt_single_variate_multi_optima_function.opt_single_va
     opt_single_variate_multi_optima_function_evaluations,
     opt_single_variate_multi_optima_function_time,
 )
+from num_anal_plots.plots.rbf_wendland_csrbf.rbf_wendland_csrbf import (
+    rbf_wendland_csrbf,
+)
 
 
 @dataclasses.dataclass
@@ -84,6 +87,8 @@ PLOT_INFO_LIST = [
     ),
     # Special Functions.
     PlotInfo(name="legendre-function", figure_factory=legendre_function),
+    # RBF interpolation
+    PlotInfo(name="rbf-wendland-csrbf", figure_factory=rbf_wendland_csrbf),
     # Numerical integration.
     PlotInfo(
         name="integ-gauss-legendre-errors",
