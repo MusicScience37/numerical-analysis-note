@@ -320,19 +320,23 @@ Wendland の compactly supported RBF においては，
 \end{equation}
 を定義し，その作用素を $\phi_l$ に適用した RBF
 \begin{equation}
-    \phi_{l,k} \equiv I^k \phi_l
+    \phi_{l,k} \equiv I^k \phi_l \label{eq:rbf_wendland-csrbf_definition}
 \end{equation}
 を考える．
 このとき，$l = \lfloor d/2 \rfloor + k + 1$ とすると，
 カーネルの行列 $K_m$ が正定値になる特性を持ったまま
 $C^{2k}$ 級の関数になる \cite[Theorem 3.5]{Wendland1995}．
 積分の作用素を適用した結果は部分積分を用いて計算でき，
-$k = 0, 1, 2$ における RBF は以下のような式で書ける．
+$k = 0, 1, 2$ における RBF は以下のような式で書ける
+（導出過程は後述する）．
 \begin{align}
-    \phi_{l,0} & = (1 - r)_+^l                                                    \\
-    \phi_{l,1} & = \frac{1}{(l+1)(l+2)} (1 - r)_+^{l+1} \left( (l+1)r + 1 \right) \\
+    \phi_{l,0} & = (1 - r)_+^l
+    \label{eq:rbf_wendland-csrbf_formula0}                                        \\
+    \phi_{l,1} & = \frac{1}{(l+1)(l+2)} (1 - r)_+^{l+1} \left( (l+1)r + 1 \right)
+    \label{eq:rbf_wendland-csrbf_formula1}                                        \\
     \phi_{l,2} & = \frac{1}{(l+1)(l+2)(l+3)(l+4)} (1 - r)_+^{l+2}
     \left( (l+1)(l+3)r^2 + 3(l+2)r + 3 \right)
+    \label{eq:rbf_wendland-csrbf_formula2}
 \end{align}
 これらをプロットすると
 図 \ref{fig:rbf_wendland-csrbf}
@@ -351,6 +355,141 @@ $k = 0, 1, 2$ における RBF は以下のような式で書ける．
     D(f)(r) \equiv -\frac{1}{r} \frac{d}{dr} f(r)
 \end{equation}
 で定義されるということを利用すればよい．
+
+\subsubsection{Wendland の CSRBF の計算式の導出}
+
+ここで，
+式 \eqref{eq:rbf_wendland-csrbf_formula1}, \eqref{eq:rbf_wendland-csrbf_formula2}
+の導出過程について説明しておく．
+
+まず，式 \eqref{eq:rbf_wendland-csrbf_formula1} を導出する．
+式 \eqref{eq:rbf_wendland-csrbf_definition} の定義より，
+\begin{align}
+    \phi_{l,1} (r)
+     & = I (\phi_l) (r)
+    \notag                              \\
+     & = \int_r^\infty s \phi_l(s) ds
+    \notag                              \\
+     & = \int_r^\infty s (1 - s)_+^l ds
+\end{align}
+と書ける．
+ここで，truncated power function の定義より，
+被積分関数は $s \ge 1$ において 0 となるため，
+$r \ge 1$ において $\phi_{l,1} = 0$ となる．
+そこで，$0 \le r < 1$ の場合について計算を続行する．
+部分積分を用いることで，
+\begin{align}
+    \phi_{l,1} (r)
+     & = \int_r^1 s (1 - s)^l ds
+    \notag                                                              \\
+     & = \left[ s \left( -\frac{1}{l+1} \right) (1-s)^{l+1} \right]_r^1
+    - \int_r^1 \left( -\frac{1}{l+1} \right) (1-s)^{l+1} ds
+    \notag                                                              \\
+     & = \frac{1}{l+1} r (1-r)^{l+1}
+    - \left[ \frac{1}{(l+1)(l+2)} (1-s)^{l+2} \right]_r^1
+    \notag                                                              \\
+     & = \frac{1}{l+1} r (1-r)^{l+1}
+    + \frac{1}{(l+1)(l+2)} (1-r)^{l+2}
+\end{align}
+となる．式を整理すると，
+\begin{align}
+    \phi_{l,1} (r)
+     & = \frac{1}{(l+1)(l+2)} (1-r)^{l+1}
+    \left( (l+2)r + (1-r) \right)
+    \notag                                                            \\
+     & = \frac{1}{(l+1)(l+2)} (1 - r)^{l+1} \left( (l+1)r + 1 \right)
+\end{align}
+となる．
+最後に $r \ge 1$ で $\phi_{l,1} = 0$ となるように truncated power function を用いて書き直すことで，
+\begin{align}
+    \phi_{l,1} (r)
+     & = \frac{1}{(l+1)(l+2)} (1 - r)_+^{l+1} \left( (l+1)r + 1 \right)
+\end{align}
+が得られる．
+
+続いて，式 \eqref{eq:rbf_wendland-csrbf_formula2} を導出する．
+$\phi_{l,1}$ と同様に定義より
+\begin{align}
+    \phi_{l,2}
+     & = I (\phi_{l,1}) (r)
+    \notag                                                                                 \\
+     & = \int_r^\infty s \phi_{l,1}(s) ds
+    \notag                                                                                 \\
+     & = \int_r^\infty s \frac{1}{(l+1)(l+2)} (1 - s)_+^{l+1} \left( (l+1)s + 1 \right) ds
+    \notag                                                                                 \\
+     & = \frac{1}{(l+1)(l+2)} \int_r^\infty s (1 - s)_+^{l+1} \left( (l+1)s + 1 \right) ds
+\end{align}
+となる．
+$r \ge 1$ においては $\phi_{l,2} = 0$ となるため，
+$0 \le r < 1$ とすると，
+\begin{align}
+    \phi_{l,2}
+     & = \frac{1}{(l+1)(l+2)} \int_r^1 s (1 - s)^{l+1} \left( (l+1)s + 1 \right) ds
+\end{align}
+となる．部分積分を 2 回適用し，式を整理すると，
+\begin{align}
+    \phi_{l,2}
+     & = \frac{1}{(l+1)(l+2)} \int_r^1 \left( (l+1)s^2 + s \right) (1 - s)^{l+1} ds
+    \notag                                                                                                             \\
+     & = \frac{1}{(l+1)(l+2)} \left[ \left( (l+1)s^2 + s \right) \left( -\frac{1}{l+2} \right) (1-s)^{l+2} \right]_r^1
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    - \frac{1}{(l+1)(l+2)} \int_r^1 \left( 2(l+1)s + 1 \right) \left( -\frac{1}{l+2} \right) (1-s)^{l+2} ds
+    \notag                                                                                                             \\
+     & = \frac{1}{(l+1)(l+2)^2} \left( (l+1)r^2 + r \right) (1-r)^{l+2}
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    - \frac{1}{(l+1)(l+2)} \left[ \left( 2(l+1)s + 1 \right) \frac{1}{(l+2)(l+3)} (1-s)^{l+3} \right]_r^1
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    + \frac{1}{(l+1)(l+2)} \int_r^1 2(l+1) \frac{1}{(l+2)(l+3)} (1-s)^{l+3} ds
+    \notag                                                                                                             \\
+     & = \frac{1}{(l+1)(l+2)^2} \left( (l+1)r^2 + r \right) (1-r)^{l+2}
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    + \frac{1}{(l+1)(l+2)^2(l+3)} \left( 2(l+1)r + 1 \right) (1-r)^{l+3}
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    + \frac{1}{(l+1)(l+2)} \left[ -\frac{2(l+1)}{(l+2)(l+3)(l+4)} (1-s)^{l+4} \right]_r^1
+    \notag                                                                                                             \\
+     & = \frac{1}{(l+1)(l+2)^2} \left( (l+1)r^2 + r \right) (1-r)^{l+2}
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    + \frac{1}{(l+1)(l+2)^2(l+3)} \left( 2(l+1)r + 1 \right) (1-r)^{l+3}
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    + \frac{2}{(l+2)^2(l+3)(l+4)} (1-r)^{l+4}
+    \notag                                                                                                             \\
+     & = \frac{1}{(l+1)(l+2)^2(l+3)(l+4)} (1-r)^{l+2}
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    \left( (l+3)(l+4) \left( (l+1)r^2 + r \right) + (l+4) \left( 2(l+1)r + 1 \right) (1-r)
+    + 2(l+1) (1-r)^2 \right)
+    \notag                                                                                                             \\
+     & = \frac{1}{(l+1)(l+2)^2(l+3)(l+4)} (1-r)^{l+2}
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    \big( (l+1)(l+3)(l+4) r^2 + (l+3)(l+4)r
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    - 2(l+1)(l+4)r^2 + (2l+1)(l+4)r + (l+4)
+    \notag                                                                                                             \\
+     & \hspace{5em}
+    + 2(l+1)r^2 - 4(l+1)r +2(l+1) \big)
+    \notag                                                                                                             \\
+     & = \frac{1}{(l+1)(l+2)^2(l+3)(l+4)} (1-r)^{l+2}
+    \left( (l+1)(l+2)(l+3)r^2 + 3(l+2)^2r + 3(l+2) \right)
+    \notag                                                                                                             \\
+     & = \frac{1}{(l+1)(l+2)(l+3)(l+4)} (1-r)^{l+2}
+    \left( (l+1)(l+3)r^2 + 3(l+2)r + 3 \right)
+\end{align}
+となる．
+最後に $r \ge 1$ で $\phi_{l,2} = 0$ となるように truncated power function を用いて書き直すことで，
+\begin{align}
+    \phi_{l,2} & = \frac{1}{(l+1)(l+2)(l+3)(l+4)} (1 - r)_+^{l+2}
+    \left( (l+1)(l+3)r^2 + 3(l+2)r + 3 \right)
+\end{align}
+が得られる．
 
 \section{パラメータ推定}\label{sec:regularization_kernel_param-est}
 
