@@ -1,0 +1,29 @@
+% !TEX root = ../../main.tex
+%
+
+\chapter{カーネル法}
+
+\index{かーねるほう@カーネル法}
+本章では，カーネルを用いて補間を行うカーネル法についてまとめる．
+
+関数 $f : X \to \setC$ を
+サンプル点 $(\bm{r}_i, y_i) \in X \times \setC$ ($i = 1, 2, \ldots, m$) から補間することを考える．
+カーネルを用いた補間では，カーネル $K : X \times X \to \setC$ を用いて
+\begin{equation}
+    f(\bm{r}) = \sum_{i=1}^m c_i K(\bm{r}, \bm{r}_i)
+\end{equation}
+のようにおき，$y_i = f(\bm{r}_i)$ となるように係数 $c_i$ を決める
+\cite{Fukumizu2010}．
+
+また，関数 $p_i : X \to \setC$ による項を追加した
+\begin{equation}
+    f(\bm{r}) = \sum_{i=1}^m c_i K(\bm{r}, \bm{r}_i) + \sum_{i=1}^Q d_i p_i(\bm{r})
+\end{equation}
+を考えて係数 $c_i$, $d_i$ を求める方法も存在する
+（\ref{sec:interp_kernel_additional-terms} 節にて説明する）．
+
+\input{interp/kernel/derivation.tex}
+\input{interp/kernel/rbf.tex}
+\input{interp/kernel/additional-terms.tex}
+\input{interp/kernel/computation.tex}
+\input{interp/kernel/optimization.tex}

@@ -1,0 +1,236 @@
+% !TEX root = ../../main.tex
+%
+
+\section{Tikhonov 正則化による導出}\label{sec:interp_kernel_tikhonov}
+
+まず，カーネルによる補間の導出を行う．
+
+関数 $f$ はある正規直交基底の存在する関数空間 $\mathcal{H}$
+\footnote{正確には，関数空間 $\mathcal{H}$ には%
+    再生核ヒルベルト空間 (reproducing kernel Hilbert space, RKHS)%
+    と呼ばれるものを用いる．}
+に属するものとし，
+その関数空間 $\mathcal{H}$ には正規直交基底となる
+関数 $\alpha_1(\bm{r}), \alpha_2(\bm{r}), \ldots, \alpha_N(\bm{r})$ が存在するものとする
+\footnote{この導出では $N$ が有限であるとする．}．
+それらの基底を用いて関数 $f$ を次のようにおく．
+\begin{equation}
+    f(\bm{r}) = \sum_{i = 1}^{N} x_i \alpha_i(\bm{r})
+\end{equation}
+ここで，
+$A_{ij} = \alpha_j(\bm{r}_i)$ となる行列 $A \in \setC^{m \times N}$ を考えると，
+最小二乗法の評価関数は
+\begin{equation}
+    \|A \bm{x} - \bm{y}\|_2
+\end{equation}
+となる．
+
+これに Tikhonov 正則化（\ref{chap:regularization_tikhonov} 章）を適用する．
+関数空間 $\mathcal{H}$ のノルムを $\|\cdot\|_{\mathcal{H}}$ とすると，
+$\alpha_i$ が $\mathcal{H}$ の正規直交基底であることから，
+\begin{align}
+    \|f\|_{\mathcal{H}}^2
+     & = \sum_{i = 1}^{N} |x_i|^2 \notag \\
+     & = \|\bm{x}\|_2^2
+\end{align}
+となる．
+よって，Tikhonov 正則化の評価関数は
+式 \eqref{eq:regularization_tikhonov_objective} のように書ける．
+
+式 \eqref{eq:regularization_tikhonov_exchange-mat} より最適解は
+\begin{align}
+    \bm{x} & = A^* (AA^* + \lambda I)^{-1} \bm{y}
+\end{align}
+となる．
+ここで，行列 $AA^*$ の $(i, j)$ 要素は
+\begin{equation}
+    [AA^*]_{ij} = \sum_{k = 1}^{N} \alpha_k(\bm{r}_i) \overline{\alpha_k(\bm{r}_j)}
+\end{equation}
+となる．それをもとに次のように関数 $K : X \times X \to \setC$ を定義する．
+\begin{equation}
+    K(\bm{r}, \bm{r}') = \sum_{k = 1}^{N} \alpha_k(\bm{r}) \overline{\alpha_k(\bm{r}')}
+\end{equation}
+この関数がカーネルである．
+また，行列 $K_m \in \setC^{m \times m}$ を
+$K_m = AA^*$ のようにおく．
+なお，この行列は半正定値エルミート行列である．
+
+ここで，変数 $\bm{c} \in \setC^m$ を
+\begin{equation}
+    \bm{c} = (K_m + \lambda I)^{-1} \bm{y}
+    \label{eq:interp_kernel_tikhonov_coeff_c}
+\end{equation}
+のようにおく．
+このとき，$\bm{x} = A^* \bm{c}$ だから，
+\begin{align}
+    f(\bm{r})
+     & = \sum_{i = 1}^{N} x_i \alpha_i(\bm{r}) \notag                                                \\
+     & = \sum_{i = 1}^{N} \sum_{j = 1}^{m} \overline{A_{ji}} c_j \alpha_i(\bm{r}) \notag             \\
+     & = \sum_{i = 1}^{N} \sum_{j = 1}^{m} \overline{\alpha_i(\bm{r}_j)} c_j \alpha_i(\bm{r}) \notag \\
+     & = \sum_{j = 1}^{m} c_j K(\bm{r}, \bm{r}_j)
+\end{align}
+となる．
+
+関数 $f$ を正規直交基底で表していたことから，
+カーネル法は関数空間 $\mathcal{H}$ 全体の中で Tikhonov 正則化の評価関数
+\begin{equation}
+    \sum_{i=1}^m \left|y_i - f(\bm{r}_i)\right|^2
+    + \|f\|_{\mathcal{H}}^2
+\end{equation}
+を最小化したものを求められるということが分かる．
+また，ここでは導出において関数空間 $\mathcal{H}$ の次元を表す $N$ が有限であることを前提としていたが，
+導出されたカーネル法で用いる行列は $m \times m$ の正方行列であるため，
+$N \to \infty$ の場合にも適用できる．
+
+\section{Gaussian Process}\label{sec:regularization_kernel_gaussian-process}
+
+カーネルによる補間は，
+\index{Gaussian Process}
+Gaussian Process と呼ばれる確率分布から導くこともできる
+\cite{Brochu2010}．
+ただし，データとカーネル関数の値は実数とする．
+
+平均 $\mu(\bm{r})$，分散 $K(\bm{r}, \bm{r}')$ の Gaussian Process に従う関数 $f$ は，
+関数値のベクトル $(f(\bm{r}_1), f(\bm{r}_2), \ldots, f(\bm{r}_m))$ が
+正規分布 $\mathcal{N}(\bm{\mu}_m, K_m)$ に従う．
+ここで，
+$\bm{\mu}_m$ は $[\bm{\mu}_m]_i = \mu(\bm{r}_i)$ なるベクトルであり，
+$K_m$ は $[K_m]_{ij} = K(\bm{r}_i, \bm{r}_j)$ なる行列である．
+Gaussian Process は関数における正規分布のようなものである．
+
+関数 $f$ が平均 $0$，分散 $\tau K(\bm{r}, \bm{r}')$ の Gaussian Process に従っており，
+関数 $f$ に対するノイズ入りのサンプルが $y_i = f(\bm{r}_i) + \epsilon_i$ のように得られているとする．
+ただし，$\epsilon_i$ は独立に正規分布 $\mathcal{N}(0, \sigma^2)$ に従うものとする．
+また，$\tau > 0$ は分散の大きさを示すパラメータである．
+このとき，ベクトル $(y_1, y_2, \ldots, y_m, f(\bm{r}))$ は
+次のような正規分布に従う．
+\begin{equation}
+    \mathcal{N}\left(\bm{0},
+    \begin{pmatrix}
+        \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
+        \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
+    \end{pmatrix}
+    \right)
+\end{equation}
+このとき，確率密度関数 $p(y_1, y_2, \ldots, y_m, f(\bm{r}))$ は次のように書ける．
+\begin{equation}
+    p(y_1, y_2, \ldots, y_m, f(\bm{r}))
+    = \frac{1}{\sqrt{(2\pi)^{m+1} \det{
+                \begin{pmatrix}
+                    \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
+                    \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
+                \end{pmatrix}
+            }}}
+    \exp\left(-\frac{1}{2}
+    \begin{pmatrix}
+        \bm{y} \\ f(\bm{r})
+    \end{pmatrix}^T
+    \begin{pmatrix}
+        \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
+        \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        \bm{y} \\ f(\bm{r})
+    \end{pmatrix}
+    \right)
+\end{equation}
+
+ここで，
+\begin{align}
+    \sigma_K^2(\bm{r})
+     & \equiv \tau K(\bm{r}, \bm{r})
+    - \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \\
+     & = \tau K(\bm{r}, \bm{r})
+    - \tau \bm{k}(\bm{r})^T (K_m + \sigma^2 I)^{-1} \bm{k}(\bm{r})
+\end{align}
+とおくと，
+\begin{align}
+    \det{
+        \begin{pmatrix}
+            \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
+            \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
+        \end{pmatrix}
+    }
+     & = \sigma_K^2(\bm{r}) \det(\tau K_m + \sigma^2 I)
+\end{align}
+となる．
+また，
+\begin{align}
+     & \hphantom{=}
+    \begin{pmatrix}
+        \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
+        \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
+    \end{pmatrix}^{-1}
+    \notag          \\
+     & =
+    \begin{pmatrix}
+        (\tau K_m + \sigma^2 I)^{-1}
+        + (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K^2(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1}
+         &
+        - (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K^2(\bm{r})^{-1}
+        \\
+        - \sigma_K^2(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1}
+         &
+        \sigma_K^2(\bm{r})^{-1}
+    \end{pmatrix}
+\end{align}
+であり，
+\begin{align}
+     & \hphantom{=}
+    \begin{pmatrix}
+        \bm{y} \\ f(\bm{r})
+    \end{pmatrix}^T
+    \begin{pmatrix}
+        \tau K_m + \sigma^2 I & \tau \bm{k}(\bm{r})    \\
+        \tau \bm{k}(\bm{r})^T & \tau K(\bm{r}, \bm{r})
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        \bm{y} \\ f(\bm{r})
+    \end{pmatrix}
+    \notag                                            \\
+     & = \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    + \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K^2(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    \notag                                            \\ & \hspace{2em}
+    - f(\bm{r}) \sigma_K^2(\bm{r})^{-1} \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    - \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \tau \bm{k}(\bm{r}) \sigma_K^2(\bm{r})^{-1} f(\bm{r})
+    \notag                                            \\ & \hspace{2em}
+    + f(\bm{r}) \sigma_K^2(\bm{r})^{-1} f(\bm{r})
+    \notag                                            \\
+     & = \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    + \sigma_K^2(\bm{r})^{-1} \left(f(\bm{r}) - \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}\right)^2
+\end{align}
+となる．
+よって，確率密度関数は次のように分割できる．
+\begin{align}
+    p(y_1, y_2, \ldots, y_m, f(\bm{r}))
+     & = p_{\bm{y}}(\bm{y}) p_f(f(\bm{r}))
+    \\
+    p_{\bm{y}}(\bm{y})
+     & = \frac{1}{\sqrt{(2\pi)^{m} \det(\tau K_m + \sigma^2 I)}}
+    \exp\left(-\frac{1}{2} \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y} \right)
+    \\
+    p_f(f(\bm{r}))
+     & = \frac{1}{\sqrt{(2\pi)^{m} \sigma_K^2(\bm{r})}}
+    \exp\left(-\frac{1}{2} \sigma_K^2(\bm{r})^{-1} \left(f(\bm{r}) - \mu_K(\bm{r})\right)^2\right)
+    \\
+    \mu_K(\bm{r})
+     & = \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+\end{align}
+分割したあとの
+$p_{\bm{y}}$ は $\bm{y}$ に関する正規分布 $\mathcal{N}(\bm{0}, \tau K_m + \sigma^2 I)$ であり，
+$p_f$ は $f(\bm{r})$ に関する正規分布 $\mathcal{N}(\mu_K(\bm{r}), \sigma_K^2(\bm{r}))$ である．
+$\lambda = \sigma^2 / \tau$ とおくと，
+\begin{align}
+    \mu_K(\bm{r})
+     & = \tau \bm{k}(\bm{r})^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+    \notag                                                                               \\
+     & = \bm{k}(\bm{r})^T (K_m + \lambda I)^{-1} \bm{y}
+    \notag                                                                               \\
+     & = \sum_{i = 1}^m K(\bm{r}, \bm{r}_i) \left[(K_m + \lambda I)^{-1} \bm{y}\right]_i
+\end{align}
+のように前節と同様の公式が得られる．
+
+Gaussian Process を用いた表現では分散 $\sigma_K^2(\bm{r})$ も得られるため，
+補間された関数のどの部分に誤差が多い可能性が高いか評価するのにも役立つ．
+また，パラメータ推定において確率の最大化を行うといった応用もある
+（\ref{sec:regularization_kernel_param-est} 節）．

@@ -1,0 +1,41 @@
+% !TEX root = ../../main.tex
+%
+
+\section{大域最適解への応用}\label{sec:interp_kernel_global-optimization}
+
+Gaussian Process （\ref{sec:regularization_kernel_gaussian-process} 節）
+を利用して大域最適解を行う
+Gaussian Process 最適化
+\index{Gaussian Process さいてきか@Gaussian Process 最適化}
+が考案されている
+\cite{Srinivas2010}．
+
+領域 $D \in \setR^d$ 上で関数 $f : D \to \setR$ を最小化する
+制約なし最適化の問題を考える
+\footnote{文献 \cite{Srinivas2010} では最大化を前提としているが，%
+    ここでは \ref{part:optimization} 部に合わせて最小化を考える．}．
+文献 \cite{Srinivas2010} のアルゴリズムにおいては，
+各反復ごとにこれまでに算出したサンプル点
+$(\bm{x}_i, f(\bm{x}_i))$ ($i = 1,2,\ldots,T$)
+に対して Gaussian Process による補間を行い，
+Gaussian Process の平均 $\mu_T(\bm{x})$ と標準偏差 $\sigma_T(\bm{x})$ を算出できるようにする．
+そして，反復ごとに変化する係数 $\beta_t$ とパラメータ $\nu$ を用いて定義される目的関数
+\begin{equation}
+    F_T(\bm{x}) = \mu_T(\bm{x}) - \sqrt{\nu \beta_{T+1}} \sigma_T(\bm{x})
+\end{equation}
+を最小化するような $\bm{x}$ を次のサンプル点として選択する．
+係数 $\nu$, $\beta_t$ は
+\begin{itemize}
+    \item $\nu = 1/5$, $\beta_t = 2 \log(|D| t^2 \pi^2 / 6 \delta)$,
+          $\delta \in (0, 1)$
+          \cite{Srinivas2010}
+          \footnote{文献 \cite{Srinivas2010} 内の定理では $\nu = 1$ の場合を扱っていたが，%
+              数値実験において $\nu = 1/5$ とすると結果が良くなったという記述がある．%
+              また，文献 \cite{Srinivas2010} の数値実験では $\delta = 0.1$ が選択されている．}
+    \item $\nu=1$, $\beta_t = 2 \log(t^{d/2+2} \pi^2 /3 \delta)$,
+          $\delta \in (0, 1)$
+          \cite{Brochu2010}
+\end{itemize}
+のように与えられる．
+関数 $F_T$ を最小化するために別の大域最適解のアルゴリズムが必要となるが，
+元の目的関数 $f$ の値を得るのに時間がかかる場合には有効なアルゴリズムである．

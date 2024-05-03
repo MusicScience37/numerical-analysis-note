@@ -1,0 +1,123 @@
+% !TEX root = ../../main.tex
+%
+
+\section{パラメータ推定}\label{sec:regularization_kernel_param-est}
+
+式 \eqref{eq:regularization_kernel_kernel-of-rbf} の定数 $c$ のように
+カーネルがパラメータを持っている場合がある．
+そのようなパラメータの推定を
+\cite[Remark 3 (Connection to spatial statistics)]{Scheuerer2011}
+に沿った
+\index{maximum likelihood estimation}
+maximum likelihood estimation (MLE)
+により考える．
+
+Gaussian Process （\ref{sec:regularization_kernel_gaussian-process} 節）より，
+データ $\bm{y}$ の確率密度関数は
+\begin{equation}
+    p(\bm{y}) = \frac{1}{\sqrt{(2\pi)^{m} \det(\tau K_m + \sigma^2 I)}}
+    \exp\left(-\frac{1}{2} \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y} \right)
+\end{equation}
+であり，その対数を取ると
+\begin{equation}
+    \log{p(\bm{y})}
+    = -\frac{m}{2}\log(2\pi)
+    - \frac{1}{2} \log{\det(\tau K_m + \sigma^2 I)}
+    - \frac{1}{2} \bm{y}^T (\tau K_m + \sigma^2 I)^{-1} \bm{y}
+\end{equation}
+となる．
+これを最大化するようにパラメータを決定する．
+
+$\lambda = \sigma^2 / \tau$ を固定すると，
+\begin{equation}
+    \log{p(\bm{y})}
+    = -\frac{m}{2}\log(2\pi)
+    - \frac{m}{2} \log{\tau}
+    - \frac{1}{2} \log{\det(K_m + \lambda I)}
+    - \frac{1}{2\tau} \bm{y}^T (K_m + \lambda I)^{-1} \bm{y}
+\end{equation}
+となる．
+これを最大化するように $\tau$ を決定すると，
+\begin{equation}
+    \tau = \frac{1}{m} \bm{y}^T (K_m + \lambda I)^{-1} \bm{y}
+    \label{eq:interp_kernel_param_coeff_tau}
+\end{equation}
+となり，そのときの $\log{p(\bm{y})}$ は
+\begin{equation}
+    \log{p(\bm{y})}
+    = -\frac{m}{2}\log(2\pi)
+    + \frac{m}{2} \log{m}
+    - \frac{m}{2} \log(\bm{y}^T (K_m + \lambda I)^{-1} \bm{y})
+    - \frac{1}{2} \log{\det(K_m + \lambda I)}
+    - \frac{m}{2}
+\end{equation}
+となる．
+$m$ はサンプルの数であり，定数だから，
+パラメータ推定では
+\begin{equation}
+    m \log(\bm{y}^T (K_m + \lambda I)^{-1} \bm{y})
+    + \log{\det(K_m + \lambda I)}
+\end{equation}
+を最小化すれば良い．
+
+\section{固有値分解による数値解法}
+
+密行列の固有値分解を用いてカーネル法の計算を行うことを考える．
+
+カーネルの値を並べた行列 $K_m \in \setC^{m \times m}$ を次のように固有値分解する．
+\begin{equation}
+    K_m = V D V^*
+\end{equation}
+ここで，$V \in \setC^{m \times m}$ はエルミート行列であり，
+$D \in \setR^{m \times m}$ は実数による対角行列である．
+ここで，$K_m$ は半正定値とする
+（このような性質を持つカーネルは正定値カーネルと呼ばれる \cite{Fukumizu2010}）．
+\ref{sec:interp_kernel_tikhonov} 節で導出したカーネルや
+\ref{sec:interp_kernel_rbf} 節で示した Gaussian の RBF によるカーネルは
+正定値カーネルである．
+このとき，
+\begin{equation}
+    K_m + \lambda I = V (D + \lambda I) V^*
+\end{equation}
+が成り立つ．
+$\lambda > 0$ であれば確実に $K_m + \lambda I$ が正定値となり，逆行列を持つ．
+よって，
+式 \eqref{eq:interp_kernel_tikhonov_coeff_c} で定めた係数 $\bm{c}$ は
+\begin{align}
+    \bm{c}
+     & = (K_m + \lambda I)^{-1} \bm{y} \notag \\
+     & = V (D + \lambda I)^{-1} V^* \bm{y}
+\end{align}
+と書ける．
+さらに，
+$V = (\bm{v}_1, \bm{v}_2, \ldots, \bm{v}_m)$,
+$D = \diag(\lambda_1, \lambda_2, \ldots, \lambda_m)$
+とおくと，
+\begin{align}
+    \bm{c}
+     & = \sum_{i=1}^m \frac{1}{\lambda_i + \lambda} (\bm{v}_i^* \bm{y}) \bm{v}_i
+\end{align}
+のように表すこともできる．
+
+なお，$K_m$, $\bm{y}$ が実数の行列とベクトルである場合，
+パラメータ推定における
+式 \eqref{eq:interp_kernel_param_coeff_tau} の $\tau$ は
+\begin{align}
+    \tau
+     & = \frac{1}{m} \bm{y}^T (K_m + \lambda I)^{-1} \bm{y} \notag                    \\
+     & = \frac{1}{m} \sum_{i=1}^m \frac{1}{\lambda_i + \lambda} (\bm{v}_i^T \bm{y})^2
+\end{align}
+のように書ける．
+さらに，評価関数は
+\begin{align}
+     & \hphantom{=}
+    m \log(\bm{y}^T (K_m + \lambda I)^{-1} \bm{y})
+    + \log{\det(K_m + \lambda I)}
+    \notag                                                                                   \\
+     & = m \log\left(\sum_{i=1}^m \frac{1}{\lambda_i + \lambda} (\bm{v}_i^T \bm{y})^2\right)
+    + \log\left(\prod_{i=1}^m (\lambda_i + \lambda)\right)
+    \notag                                                                                   \\
+     & = m \log\left(\sum_{i=1}^m \frac{1}{\lambda_i + \lambda} (\bm{v}_i^T \bm{y})^2\right)
+    + \sum_{i=1}^m \log(\lambda_i + \lambda)
+\end{align}
+のように書ける．
