@@ -3,4 +3,33 @@
 
 \section{多項式などによる項の追加}\label{sec:interp_kernel_additional-terms}
 
-\todo{記載する．}
+本章の冒頭で概説したように，カーネル法で
+\begin{equation}
+    f(\bm{r}) = \sum_{i=1}^m c_i K(\bm{r}, \bm{r}_i) + \sum_{i=1}^M d_i p_i(\bm{r})
+\end{equation}
+のように追加の関数 $p_i : X \to \setR$ による項を追加することが考えられる．
+
+例えば，RBF 補間においては追加の項が定数や多項式となるように，
+$M = 1$ で $p_1(\bm{r}) = 1$ としたり，
+$\bm{r} = (x, y)^\top$ のときに $M = 3$ で
+$p_1(\bm{r}) = 1$, $p_2(\bm{r}) = x$, $p_3(\bm{r}) = y$ としたりする．
+これにより，補間の精度が高くなるという
+\cite[Section 3.1.3.5]{Fornberg2015}．
+また，thin plate spline \cite{Ghosh2010}, spherical spline \cite{Wahba1981} のように，
+追加の項が指定されているカーネルも存在する．
+
+このような補間においては，係数 $c_i$, $d_i$ を以下の方程式により決定する．
+\begin{equation}
+    \begin{pmatrix}
+        K_m + \lambda I & P \\
+        P^\top          & O
+    \end{pmatrix}
+    \begin{pmatrix}
+        \bm{c} \\ \bm{d}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \bm{y} \\ \bm{0}
+    \end{pmatrix}
+\end{equation}
+ここで，行列 $P \in \setR^{m \times M}$ の成分は $P_{ij} = p_j(\bm{r}_i)$ とする．

@@ -5,6 +5,10 @@
 
 密行列の固有値分解を用いてカーネル法の計算を行うことを考える．
 
+\subsection{追加の項がない場合}
+
+まず，本節では \ref{sec:interp_kernel_additional-terms} 節のような追加の項がない場合の
+方程式 $K_m \bm{c} = \bm{y}$ を考える．
 カーネルの値を並べた行列 $K_m \in \setC^{m \times m}$ を次のように固有値分解する．
 \begin{equation}
     K_m = V D V^*
@@ -39,6 +43,103 @@ $D = \diag(\lambda_1, \lambda_2, \ldots, \lambda_m)$
      & = \sum_{i=1}^m \frac{1}{\lambda_i + \lambda} (\bm{v}_i^* \bm{y}) \bm{v}_i
 \end{align}
 のように表すこともできる．
+
+\subsection{追加の項がある場合}
+
+続いて，本節では \ref{sec:interp_kernel_additional-terms} 節のような追加の項がある場合の
+方程式
+\begin{equation}
+    \begin{pmatrix}
+        K_m + \lambda I & P \\
+        P^\top          & O
+    \end{pmatrix}
+    \begin{pmatrix}
+        \bm{c} \\ \bm{d}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \bm{y} \\ \bm{0}
+    \end{pmatrix}
+\end{equation}
+を考える．
+ただし，サンプル点と追加の項の関数 $p_i$ を適切に選択することにより
+行列 $P$ のランクが $M$ となるようにしておく．
+また，行列 $K_m$ は実数による行列で正定値とする．
+
+追加で出てきた行列 $P$ について以下のように QR 分解を行う．
+\begin{equation}
+    P =
+    \begin{pmatrix}
+        Q_1 & Q_2
+    \end{pmatrix}
+    \begin{pmatrix}
+        R \\ O
+    \end{pmatrix}
+\end{equation}
+ここで，
+$Q_1 \in \setR^{m \times M}$,
+$Q_2 \in \setR^{m \times (m-M)}$
+$R \in \setR^{M \times M}$
+とする．
+また，行列 $P$ のランクが $M$ としているため，行列 $R$ は正則行列となる．
+
+方程式のうち $P^\top \bm{c} = \bm{0}$ より，
+\begin{align}
+    \bm{c}^\top P     & = \bm{0} \notag \\
+    \bm{c}^\top Q_1 R & = \bm{0} \notag \\
+    \bm{c}^\top Q_1   & = \bm{0}
+\end{align}
+となるため，$\bm{c}$ は $Q_1$ のすべての列に対して直行するように選択する必要がある．
+QR 分解において $(Q_1, Q_2)$ は直行行列になることから，
+$\bm{c}$ は $Q_2$ の列ベクトルにより作られる部分空間に属している必要があるため，
+$\bm{c} = Q_2 \bm{\gamma}$ のようにベクトル $\bm{\gamma}$ を用いて書ける．
+
+方程式の残りの $(K_m + \lambda I) \bm{c} + P \bm{d} = \bm{y}$ について，
+変数を置き換えると
+\begin{align}
+    (K_m + \lambda I) Q_2 \bm{\gamma} + Q_1 R \bm{d} = \bm{y}
+\end{align}
+となる．
+左から $Q_2^\top$ をかけると，$Q_2^\top Q_1 = O$ より
+\begin{align}
+    Q_2^\top (K_m + \lambda I) Q_2 \bm{\gamma} & = Q_2^\top \bm{y}
+\end{align}
+となる．$(K_m + \lambda I)$ が正定値となることから，
+フルランクの行列 $Q_2$ をかけた $Q_2^\top (K_m + \lambda I) Q_2$ も正定値（つまり正則でもある）となり，
+\begin{equation}
+    \bm{\gamma} = \left( Q_2^\top (K_m + \lambda I) Q_2 \right)^{-1} Q_2^\top \bm{y}
+\end{equation}
+となる．
+よって，$\bm{c} = Q_2 \bm{\gamma}$ より
+\begin{equation}
+    \bm{c} = Q_2 \left( Q_2^\top (K_m + \lambda I) Q_2 \right)^{-1} Q_2^\top \bm{y}
+\end{equation}
+となる．
+
+また，$(K_m + \lambda I) \bm{c} + P \bm{d} = \bm{y}$ より
+\begin{align}
+    P \bm{d}     & = \bm{y} - (K_m + \lambda I) \bm{c} \notag                         \\
+    Q_1 R \bm{d} & = \bm{y} - (K_m + \lambda I) \bm{c} \notag                         \\
+    R \bm{d}     & = Q_1^\top \left( \bm{y} - (K_m + \lambda I) \bm{c} \right) \notag \\
+    \bm{d}       & = R^{-1} Q_1^\top \left( \bm{y} - (K_m + \lambda I) \bm{c} \right)
+\end{align}
+となる．
+
+さらに，$Q_2^\top K_m Q_2$ の固有値分解
+$Q_2^\top K_m Q_2 = U D U^\top$ （$D$ は対角行列で $U$ は直行行列）が得られている場合，
+\begin{align}
+    \bm{c}
+     & = Q_2 \left( Q_2^\top (K_m + \lambda I) Q_2 \right)^{-1} Q_2^\top \bm{y}
+    \notag                                                                      \\
+     & = Q_2 \left( Q_2^\top K_m Q_2 + \lambda I \right)^{-1} Q_2^\top \bm{y}
+    \notag                                                                      \\
+     & = Q_2 \left( U D U^\top + \lambda I \right)^{-1} Q_2^\top \bm{y}
+    \notag                                                                      \\
+     & = Q_2 U \left( D + \lambda I \right)^{-1} U^\top Q_2^\top \bm{y}
+    \notag                                                                      \\
+     & = Q_2 U \left( D + \lambda I \right)^{-1} (Q_2 U)^\top \bm{y}
+\end{align}
+のように計算できる．
 
 \section{パラメータ推定}\label{sec:regularization_kernel_param-est}
 
