@@ -118,12 +118,17 @@ $\bm{c} = Q_2 \bm{\gamma}$ のようにベクトル $\bm{\gamma}$ を用いて�
 
 また，$(K_m + \lambda I) \bm{c} + P \bm{d} = \bm{y}$ より
 \begin{align}
-    P \bm{d}     & = \bm{y} - (K_m + \lambda I) \bm{c} \notag                         \\
-    Q_1 R \bm{d} & = \bm{y} - (K_m + \lambda I) \bm{c} \notag                         \\
-    R \bm{d}     & = Q_1^\top \left( \bm{y} - (K_m + \lambda I) \bm{c} \right) \notag \\
-    \bm{d}       & = R^{-1} Q_1^\top \left( \bm{y} - (K_m + \lambda I) \bm{c} \right)
+    P \bm{d}     & = \bm{y} - (K_m + \lambda I) \bm{c} \notag                                \\
+    Q_1 R \bm{d} & = \bm{y} - (K_m + \lambda I) \bm{c} \notag                                \\
+    R \bm{d}     & = Q_1^\top \left( \bm{y} - (K_m + \lambda I) \bm{c} \right) \notag        \\
+    \bm{d}       & = R^{-1} Q_1^\top \left( \bm{y} - (K_m + \lambda I) \bm{c} \right) \notag \\
+    \bm{d}       & = R^{-1} Q_1^\top \left( \bm{y} - K_m \bm{c} \right)
 \end{align}
 となる．
+Moore-Penrose の一般化逆行列を用いて
+$\bm{d} = R^\dagger \left( \bm{y} - K_m \bm{c} \right)$
+としても良い
+\footnote{処理系が QR 分解の結果を用いて方程式を解くようなプログラムを用意している場合がある．}．
 
 さらに，$Q_2^\top K_m Q_2$ の固有値分解
 $Q_2^\top K_m Q_2 = U D U^\top$ （$D$ は対角行列で $U$ は直行行列）が得られている場合，
