@@ -5,11 +5,7 @@
 
 まず，カーネルによる補間の導出を行う．
 
-関数 $f$ はある正規直交基底の存在する関数空間 $\mathcal{H}$
-\footnote{正確には，関数空間 $\mathcal{H}$ には%
-    再生核ヒルベルト空間 (reproducing kernel Hilbert space, RKHS) \cite{Aronszajn1950}%
-    と呼ばれるものを用いる．}
-に属するものとし，
+関数 $f$ はある正規直交基底の存在する関数空間 $\mathcal{H}$ に属するものとし，
 その関数空間 $\mathcal{H}$ には正規直交基底となる
 関数 $\alpha_1(\bm{r}), \alpha_2(\bm{r}), \ldots, \alpha_N(\bm{r})$ が存在するものとする
 \footnote{この導出では $N$ が有限であるとする．}．
@@ -81,6 +77,128 @@ $K_m = AA^*$ のようにおく．
 また，ここでは導出において関数空間 $\mathcal{H}$ の次元を表す $N$ が有限であることを前提としていたが，
 導出されたカーネル法で用いる行列は $m \times m$ の正方行列であるため，
 $N \to \infty$ の場合にも適用できる．
+
+\section{再生核ヒルベルト空間}\label{sec:interp_kernel_rkhs}
+
+\index{さいせいかくひるべるとくうかん@再生核ヒルベルト空間}
+\index{Reproducing Kernel Hilbert Space}
+\index{RKHS|see(Reproducing Kernel Hilbert Space)}
+本節では，
+再生核ヒルベルト空間 (Reproducing Kernel Hilbert Space, RKHS)
+について説明するとともに，
+再生核ヒルベルト空間とカーネル法との関連について説明する．
+
+再生核ヒルベルト空間は次のように定義される．
+
+\begin{definition}[{\cite{Aronszajn1950}}]
+    空間 $X$ 上で定義される関数のヒルベルト空間 $\mathcal{H}$ があり，
+    関数 $f, g \in \mathcal{H}$ の内積は $(f, g)$ で表されるものとする．
+    このとき，関数 $K : X \times X \to \setC$ が以下を満たすのであれば，
+    関数 $K$ を再生核と呼び，$\mathcal{H}$ は再生核ヒルベルト空間と呼ぶ．
+    \begin{itemize}
+        \item 任意の $y \in X$ について $y$ を固定した $x$ についての関数 $K(x,y)$ は
+              $\mathcal{H}$ に属する．
+        \item 任意の $y \in X$ と $f \in \mathcal{X}$ について，
+              \begin{equation}
+                  f(y) = (f(x), K(x, y))_x
+              \end{equation}
+              が成り立つ．（添え字 $x$ は $x$ の関数として内積をとることを示す．）
+    \end{itemize}
+\end{definition}
+
+上記の定義を満たすような再生核 $K$ をカーネル法におけるカーネルとして使用する場合，
+点群 $\bm{r}_1, \bm{r}_2, \ldots, \bm{r}_m$ とカーネルによる行列
+\begin{equation}
+    K_m =
+    \begin{pmatrix}
+        K(\bm{r}_1, \bm{r}_1) & K(\bm{r}_1, \bm{r}_2) & \cdots & K(\bm{r}_1, \bm{r}_m) \\
+        K(\bm{r}_2, \bm{r}_1) & K(\bm{r}_2, \bm{r}_2) & \cdots & K(\bm{r}_2, \bm{r}_m) \\
+        \vdots                & \vdots                & \ddots & \vdots                \\
+        K(\bm{r}_m, \bm{r}_1) & K(\bm{r}_m, \bm{r}_2) & \cdots & K(\bm{r}_m, \bm{r}_m)
+    \end{pmatrix}
+\end{equation}
+は少なくとも半正定値になる
+\cite{Aronszajn1950}．
+点群を適切に選ぶことで行列 $K_m$ が正則になるようにした場合，
+カーネル法による補間は以下の性質を満たすことが示せる
+\footnote{文献 \cite{Kimeldorf1971,Wahba1981} の理論を利用している．}．
+
+\begin{theorem}
+    空間 $X$ 上で定義される関数の再生核ヒルベルト空間 $\mathcal{H}$ があり，
+    関数 $f, g \in \mathcal{H}$ の内積は $(f, g)$ で表されるものとし，
+    ノルムを $\|f\|$ とし，
+    再生核は $K : X \times X \to \setC$ とする．
+    また，$i = 1, 2, \ldots, m$ について
+    点 $\bm{r}_i \in X$ と値 $f_i \in C$ を定義する．
+    このとき，$f(\bm{r}_i) = f_i$ を満たす $f \in \mathcal{H}$ で
+    ノルム $\|f\|$ が最小となるものは以下で与えられる．
+    \begin{equation}
+        f(\bm{r}) = \sum_{j = 1}^{m} c_j K(\bm{r}, \bm{r}_j)
+    \end{equation}
+    ここで，$c_j$ は以下を満たす係数である．
+    \begin{equation}
+        \begin{pmatrix}
+            K(\bm{r}_1, \bm{r}_1) & K(\bm{r}_1, \bm{r}_2) & \cdots & K(\bm{r}_1, \bm{r}_m) \\
+            K(\bm{r}_2, \bm{r}_1) & K(\bm{r}_2, \bm{r}_2) & \cdots & K(\bm{r}_2, \bm{r}_m) \\
+            \vdots                & \vdots                & \ddots & \vdots                \\
+            K(\bm{r}_m, \bm{r}_1) & K(\bm{r}_m, \bm{r}_2) & \cdots & K(\bm{r}_m, \bm{r}_m)
+        \end{pmatrix}
+        \begin{pmatrix}
+            c_1 \\ c_2 \\ \vdots \\ c_m
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            f_1 \\ f_2 \\ \vdots \\ f_m
+        \end{pmatrix}
+        \label{eq:interp_kernel_rkhs_exact-interp-coeff-equation}
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    式 \eqref{eq:interp_kernel_rkhs_exact-interp-coeff-equation} を満たす係数 $c_i$ について，
+    \begin{equation}
+        f(\bm{r}) = \sum_{j = 1}^{m} c_j K(\bm{r}, \bm{r}_j) + g(\bm{r})
+    \end{equation}
+    となる関数 $g \in \mathcal{H}$ を考える．
+    両辺について右から $K(\bm{r}, \bm{r}_i)$ との内積をとると，
+    \begin{align}
+        (f(\bm{r}), K(\bm{r}, \bm{r}_i))_{\bm{r}} & =
+        \sum_{j = 1}^{m} c_j (K(\bm{r}, \bm{r}_j), K(\bm{r}, \bm{r}_i))_{\bm{r}}
+        + (g(\bm{r}), K(\bm{r}, \bm{r}_i))_{\bm{r}}
+    \end{align}
+    となる．
+    再生核の定義を用いると以下のように変形できる．
+    \begin{align}
+        f(\bm{r}_i)                               & =
+        \sum_{j = 1}^{m} c_j K(\bm{r}_i, \bm{r}_j) + (g(\bm{r}), K(\bm{r}, \bm{r}_i)) \notag          \\
+        f_i                                       & = f_i + (g(\bm{r}), K(\bm{r}, \bm{r}_i))   \notag \\
+        (g(\bm{r}), K(\bm{r}, \bm{r}_i))_{\bm{r}} & = 0
+    \end{align}
+    この結果を利用すると，関数 $f$ のノルムは
+    \begin{align}
+        \|f\|^2
+         & = (f, f)
+        \notag                                                                                          \\
+         & = \sum_{i = 1}^{m} \sum_{j = 1}^{m} c_i \bar{c_j} (K(\bm{r}, \bm{r}_i), K(\bm{r}, \bm{r}_j))
+        + \sum_{j = 1}^{m} \bar{c_j} (g(\bm{r}), K(\bm{r}, \bm{r}_j))
+        + \sum_{j = 1}^{m} c_j (K(\bm{r}, \bm{r}_j), g(\bm{r}))
+        + \|g\|^2
+        \notag                                                                                          \\
+         & = \sum_{i = 1}^{m} \sum_{j = 1}^{m} c_i \bar{c_j} (K(\bm{r}, \bm{r}_i), K(\bm{r}, \bm{r}_j))
+        + \|g\|^2
+    \end{align}
+    となる．
+    これが最小となる $g \in \mathcal{H}$ は $\|g\| = 0$ となる $g(\bm{r}) = 0$ である．
+    よって，$g(\bm{r}) = 0$ とした
+    \begin{equation}
+        f(\bm{r}) = \sum_{j = 1}^{m} c_j K(\bm{r}, \bm{r}_j)
+    \end{equation}
+    は $f(\bm{r}_i) = f_i$ となる $f \in \mathcal{H}$ の中で $\|f\|$ が最も小さいものとなっている．
+\end{proof}
+
+この定理の結果を利用し，例えば
+ノルムの最小化が関数を滑らかにするように
+再生核ヒルベルト空間 $\mathcal{H}$ を定義すると，
+与えられた点を通る最も滑らかな関数を得ることができる．
 
 \section{Gaussian Process}\label{sec:regularization_kernel_gaussian-process}
 
