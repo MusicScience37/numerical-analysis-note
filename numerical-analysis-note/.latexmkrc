@@ -8,6 +8,6 @@ $lualatex = 'lualatex -synctex=1 -interaction=nonstopmode -halt-on-error -file-l
 $pdflualatex = $lualatex;
 $max_repeat = 10;
 
-$bibtex = 'bibtex %O %B';
+$bibtex = 'upbibtex %O %B';
 
-$makeindex = 'mendex %O -s jpbase -o %D %S';
+$makeindex = 'upmendex %O -s jpbase -o %D %S';
