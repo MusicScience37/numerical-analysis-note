@@ -1,0 +1,266 @@
+% !TEX root = ../../main.tex
+%
+
+\section{再生核ヒルベルト空間}\label{sec:interp_kernel_rkhs}
+
+\index{さいせいかくひるべるとくうかん@再生核ヒルベルト空間}
+\index{Reproducing Kernel Hilbert Space}
+\index{RKHS|see(Reproducing Kernel Hilbert Space)}
+本節では，
+再生核ヒルベルト空間 (Reproducing Kernel Hilbert Space, RKHS)
+について説明するとともに，
+再生核ヒルベルト空間とカーネル法との関連について説明する．
+
+再生核ヒルベルト空間は次のように定義される．
+
+\begin{definition}[{\cite{Aronszajn1950}}]
+    空間 $X$ 上で定義される関数のヒルベルト空間 $\mathcal{H}$ があり，
+    関数 $f, g \in \mathcal{H}$ の内積は $(f, g)$ で表されるものとする．
+    このとき，関数 $K : X \times X \to \setC$ が以下を満たすのであれば，
+    関数 $K$ を再生核と呼び，$\mathcal{H}$ は再生核ヒルベルト空間と呼ぶ．
+    \begin{itemize}
+        \item 任意の $y \in X$ について $y$ を固定した $x$ についての関数 $K(x,y)$ は
+              $\mathcal{H}$ に属する．
+        \item 任意の $y \in X$ と $f \in \mathcal{X}$ について，
+              \begin{equation}
+                  f(y) = (f(x), K(x, y))_x
+              \end{equation}
+              が成り立つ．（添え字 $x$ は $x$ の関数として内積をとることを示す．）
+    \end{itemize}
+\end{definition}
+
+上記の定義を満たすような再生核 $K$ をカーネル法におけるカーネルとして使用する場合，
+点群 $\bm{r}_1, \bm{r}_2, \ldots, \bm{r}_m$ とカーネルによる行列
+\begin{equation}
+    K_m =
+    \begin{pmatrix}
+        K(\bm{r}_1, \bm{r}_1) & K(\bm{r}_1, \bm{r}_2) & \cdots & K(\bm{r}_1, \bm{r}_m) \\
+        K(\bm{r}_2, \bm{r}_1) & K(\bm{r}_2, \bm{r}_2) & \cdots & K(\bm{r}_2, \bm{r}_m) \\
+        \vdots                & \vdots                & \ddots & \vdots                \\
+        K(\bm{r}_m, \bm{r}_1) & K(\bm{r}_m, \bm{r}_2) & \cdots & K(\bm{r}_m, \bm{r}_m)
+    \end{pmatrix}
+\end{equation}
+は少なくとも半正定値になる
+\cite{Aronszajn1950}．
+点群を適切に選ぶことで行列 $K_m$ が正則になるようにした場合，
+カーネル法による補間は以下の性質を満たすことが示せる
+\footnote{文献 \cite{Kimeldorf1971,Wahba1981} の理論を利用している．}．
+
+\begin{theorem}\label{theorem:interp_kernel_rkhs_exact-interp}
+    空間 $X$ 上で定義される関数の再生核ヒルベルト空間 $\mathcal{H}$ があり，
+    関数 $f, g \in \mathcal{H}$ の内積は $(f, g)$ で表されるものとし，
+    ノルムを $\|f\|$ とし，
+    再生核は $K : X \times X \to \setC$ とする．
+    また，$i = 1, 2, \ldots, m$ について
+    点 $\bm{r}_i \in X$ と値 $f_i \in C$ を定義する．
+    このとき，$f(\bm{r}_i) = f_i$ を満たす $f \in \mathcal{H}$ で
+    ノルム $\|f\|$ が最小となるものは以下で与えられる．
+    \begin{equation}
+        f(\bm{r}) = \sum_{j = 1}^{m} c_j K(\bm{r}, \bm{r}_j)
+    \end{equation}
+    ここで，$c_j$ は以下を満たす係数である．
+    \begin{equation}
+        \begin{pmatrix}
+            K(\bm{r}_1, \bm{r}_1) & K(\bm{r}_1, \bm{r}_2) & \cdots & K(\bm{r}_1, \bm{r}_m) \\
+            K(\bm{r}_2, \bm{r}_1) & K(\bm{r}_2, \bm{r}_2) & \cdots & K(\bm{r}_2, \bm{r}_m) \\
+            \vdots                & \vdots                & \ddots & \vdots                \\
+            K(\bm{r}_m, \bm{r}_1) & K(\bm{r}_m, \bm{r}_2) & \cdots & K(\bm{r}_m, \bm{r}_m)
+        \end{pmatrix}
+        \begin{pmatrix}
+            c_1 \\ c_2 \\ \vdots \\ c_m
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            f_1 \\ f_2 \\ \vdots \\ f_m
+        \end{pmatrix}
+        \label{eq:interp_kernel_rkhs_exact-interp-coeff-equation}
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    式 \eqref{eq:interp_kernel_rkhs_exact-interp-coeff-equation} を満たす係数 $c_i$ について，
+    \begin{equation}
+        f(\bm{r}) = \sum_{j = 1}^{m} c_j K(\bm{r}, \bm{r}_j) + g(\bm{r})
+    \end{equation}
+    となる関数 $g \in \mathcal{H}$ を考える．
+    両辺について右から $K(\bm{r}, \bm{r}_i)$ との内積をとると，
+    \begin{align}
+        (f(\bm{r}), K(\bm{r}, \bm{r}_i))_{\bm{r}} & =
+        \sum_{j = 1}^{m} c_j (K(\bm{r}, \bm{r}_j), K(\bm{r}, \bm{r}_i))_{\bm{r}}
+        + (g(\bm{r}), K(\bm{r}, \bm{r}_i))_{\bm{r}}
+    \end{align}
+    となる．
+    再生核の定義を用いると以下のように変形できる．
+    \begin{align}
+        f(\bm{r}_i)                               & =
+        \sum_{j = 1}^{m} c_j K(\bm{r}_i, \bm{r}_j) + (g(\bm{r}), K(\bm{r}, \bm{r}_i)) \notag          \\
+        f_i                                       & = f_i + (g(\bm{r}), K(\bm{r}, \bm{r}_i))   \notag \\
+        (g(\bm{r}), K(\bm{r}, \bm{r}_i))_{\bm{r}} & = 0
+    \end{align}
+    この結果を利用すると，関数 $f$ のノルムは
+    \begin{align}
+        \|f\|^2
+         & = (f, f)
+        \notag                                                                                          \\
+         & = \sum_{i = 1}^{m} \sum_{j = 1}^{m} c_i \bar{c_j} (K(\bm{r}, \bm{r}_i), K(\bm{r}, \bm{r}_j))
+        + \sum_{j = 1}^{m} \bar{c_j} (g(\bm{r}), K(\bm{r}, \bm{r}_j))
+        + \sum_{j = 1}^{m} c_j (K(\bm{r}, \bm{r}_j), g(\bm{r}))
+        + \|g\|^2
+        \notag                                                                                          \\
+         & = \sum_{i = 1}^{m} \sum_{j = 1}^{m} c_i \bar{c_j} (K(\bm{r}, \bm{r}_i), K(\bm{r}, \bm{r}_j))
+        + \|g\|^2
+    \end{align}
+    となる．
+    これが最小となる $g \in \mathcal{H}$ は $\|g\| = 0$ となる $g(\bm{r}) = 0$ である．
+    よって，$g(\bm{r}) = 0$ とした
+    \begin{equation}
+        f(\bm{r}) = \sum_{j = 1}^{m} c_j K(\bm{r}, \bm{r}_j)
+    \end{equation}
+    は $f(\bm{r}_i) = f_i$ となる $f \in \mathcal{H}$ の中で $\|f\|$ が最も小さいものとなっている．
+\end{proof}
+
+\begin{theorem}
+    空間 $X$ 上で定義される関数のヒルベルト空間 $\mathcal{H}$ があり，
+    関数 $f, g \in \mathcal{H}$ の内積は $(f, g)$ で表されるものとし，
+    ノルムを $\|f\|$ とする．
+    空間 $\mathcal{H}$ は部分空間 $\mathcal{H}_0$ と $\mathcal{H}_1$ の直積で表されるものとし，
+    空間 $\mathcal{H}$ に属する関数を部分空間 $\mathcal{H}_0$, $\mathcal{H}_1$ へ射影する
+    演算子 $P_0$, $P_1$ を定義する．
+    部分空間 $\mathcal{H}_0$ は再生核 $K : X \times X \to \setC$ による再生核ヒルベルト空間とし，
+    部分空間 $\mathcal{H}_1$ に属する関数は基底 $p_i in \mathcal{H}_1$ ($i = 1, 2, \ldots, M$)
+    により表現できるものとする．
+    また，$i = 1, 2, \ldots, m$ について
+    点 $\bm{r}_i \in X$ と値 $f_i \in C$ を定義する．
+    ただし，行列
+    \begin{equation}
+        K_m =
+        \begin{pmatrix}
+            K(\bm{r}_1, \bm{r}_1) & K(\bm{r}_1, \bm{r}_2) & \cdots & K(\bm{r}_1, \bm{r}_m) \\
+            K(\bm{r}_2, \bm{r}_1) & K(\bm{r}_2, \bm{r}_2) & \cdots & K(\bm{r}_2, \bm{r}_m) \\
+            \vdots                & \vdots                & \ddots & \vdots                \\
+            K(\bm{r}_m, \bm{r}_1) & K(\bm{r}_m, \bm{r}_2) & \cdots & K(\bm{r}_m, \bm{r}_m)
+        \end{pmatrix}
+    \end{equation}
+    は正則であるものとし，行列
+    \begin{equation}
+        P =
+        \begin{pmatrix}
+            p_1(\bm{r}_1) & p_2(\bm{r}_1) & \cdots & p_M(\bm{r}_1) \\
+            p_1(\bm{r}_2) & p_2(\bm{r}_2) & \cdots & p_M(\bm{r}_2) \\
+            \vdots        & \vdots        & \ddots & \vdots        \\
+            p_1(\bm{r}_m) & p_2(\bm{r}_m) & \cdots & p_M(\bm{r}_m)
+        \end{pmatrix}
+    \end{equation}
+    は列フルランクとする．
+    このとき，$f(\bm{r}_i) = f_i$ を満たす $f \in \mathcal{H}$ で
+    ノルム $\|P_0 f\|$ が最小となるものは以下で与えられる．
+    \begin{equation}
+        f(\bm{r}) = \sum_{i = 1}^{m} c_i K(\bm{r}, \bm{r}_i) + \sum_{i=1}^M d_i p_i(\bm{r})
+    \end{equation}
+    ここで，$c_i$, $d_i$ は以下を満たす係数である．
+    \begin{equation}
+        \begin{pmatrix}
+            K_m & P \\
+            P^* & O
+        \end{pmatrix}
+        \begin{pmatrix}
+            \bm{c} \\ \bm{d}
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            \bm{f} \\ \bm{0}
+        \end{pmatrix}
+        \label{eq:interp_kernel_rkhs_exact-interp-with-additional-terms-coeff-equation}
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    まず，
+    \begin{equation}
+        f(\bm{r}) = \sum_{i = 1}^{m} c_i K(\bm{r}, \bm{r}_i) + \sum_{i=1}^M d_i p_i(\bm{r})
+    \end{equation}
+    とおいた場合を考える．
+    $f(\bm{r}_i) = f_i$ より，
+    \begin{equation}
+        \sum_{j = 1}^{m} c_j K(\bm{r}_i, \bm{r}_j) + \sum_{j=1}^M d_j p_j(\bm{r}_i) = f_i
+    \end{equation}
+    となる．これを行列で表すと
+    \begin{equation}
+        K_m \bm{c} + P \bm{d} = \bm{f}
+    \end{equation}
+    となる．
+    また，関数 $f$ の空間 $\mathcal{H}_0$ におけるノルムは
+    \begin{align}
+        \|P_0 f\|^2 & =
+        \sum_{i = 1}^{m} \sum_{j = 1}^{m} c_i \bar{c_j} (K(\bm{r}, \bm{r}_i), K(\bm{r}, \bm{r}_j))_{\bm{r}}
+        \notag          \\ & =
+        \sum_{i = 1}^{m} \sum_{j = 1}^{m} c_i \bar{c_j} K(\bm{r}_j, \bm{r}_i)
+        \notag          \\ & =
+        \bm{c}^* K \bm{c}
+    \end{align}
+    と書ける．ここで，$K_m$ は正則であることから，
+    \begin{equation}
+        \bm{c} = K_m^{-1} (\bm{f} - P \bm{d})
+    \end{equation}
+    となる．
+    また，再生核の性質 $K(\bm{x}, \bm{y}) = \overline{K(\bm{y}, \bm{x})}$ より
+    $K_m$ はエルミート行列になるため，
+    \begin{equation}
+        \bm{c}^* = (\bm{f} - P \bm{d})^* K_m^{-1}
+    \end{equation}
+    が成り立つ．
+    よって，
+    \begin{align}
+        \|P_0 f\|^2 & =
+        \bm{c}^* K \bm{c}
+        \notag          \\ & =
+        (\bm{f} - P \bm{d})^* K_m^{-1} K K_m^{-1} (\bm{f} - P \bm{d})
+        \notag          \\ & =
+        (\bm{f} - P \bm{d})^* K_m^{-1} (\bm{f} - P \bm{d})
+        \notag          \\ & =
+        \bm{f}^* K_m^{-1} \bm{f}- \bm{f}^* K_m^{-1} P \bm{d}
+        - \bm{d}^* P^* K_m^{-1} \bm{f} + \bm{d}^* P^* K_m^{-1} P \bm{d}
+    \end{align}
+    となる．
+    ここで，再生核の性質と $K_m$ が正則であることから，$K_m$ は正定値の行列となる．
+    さらに，$P$ が列フルランクであることから，$P^* K_m^{-1} P$ も正定値の行列となる．
+    このことを利用すると，
+    \begin{align}
+        \|P_0 f\|^2 & =
+        \left( \bm{d} - \left( P^* K_m^{-1} P \right)^{-1} P^* K_m^{-1} \bm{f} \right)^* P^* K_m^{-1} P
+        \left( \bm{d} - \left( P^* K_m^{-1} P \right)^{-1} P^* K_m^{-1} \bm{f} \right)
+        \notag          \\ & \hspace{4em}
+        - \bm{f}^* K_m^{-1} P^* \left( P^* K_m^{-1} P \right)^{-1} P^* K_m^{-1} \bm{f}
+        + \bm{f}^* K_m^{-1} \bm{f}
+    \end{align}
+    と変形できる．
+    $P^* K_m^{-1} P$ が正定値であることから，
+    $\|P_0 f\|^2$ を最小化する $\bm{d}$ は第一項を 0 にする
+    \begin{equation}
+        \bm{d} = \left( P^* K_m^{-1} P \right)^{-1} P^* K_m^{-1} \bm{f}
+    \end{equation}
+    である．このとき，
+    \begin{align}
+        \bm{c}
+         & = K_m^{-1} (\bm{f} - P \bm{d})
+        \notag                                                                                    \\
+         & = K_m^{-1} \left( I - P \left( P^* K_m^{-1} P \right)^{-1} P^* K_m^{-1} \right) \bm{f}
+    \end{align}
+    となる．
+    これらの $\bm{c}$ と $\bm{d}$ は
+    方程式 \eqref{eq:interp_kernel_rkhs_exact-interp-with-additional-terms-coeff-equation}
+    の解になっている．
+
+    定理 \ref{theorem:interp_kernel_rkhs_exact-interp} と同様にすると，
+    \begin{equation}
+        f(\bm{r}) = \sum_{i = 1}^{m} c_i K(\bm{r}, \bm{r}_i) + \sum_{i=1}^M d_i p_i(\bm{r})
+    \end{equation}
+    が $f(\bm{r}_i) = f_i$ となる $f \in \mathcal{H}$ の中で $\|P_0 f\|$ を最小化することも示せる．
+\end{proof}
+
+これらの定理の結果を利用し，例えば
+ノルムを小さくすることで関数が滑らかになるように
+再生核ヒルベルト空間 $\mathcal{H}$ を定義すると，
+カーネル法により与えられた点を通る最も滑らかな関数を得ることができる．
+実際に，そのような理論で作られたカーネルとして
+thin plate spline \cite{Ghosh2010},
+spherical spline \cite{Wahba1981}
+が挙げられる．
