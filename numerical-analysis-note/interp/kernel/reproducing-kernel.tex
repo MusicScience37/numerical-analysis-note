@@ -118,7 +118,7 @@
     は $f(\bm{r}_i) = f_i$ となる $f \in \mathcal{H}$ の中で $\|f\|$ が最も小さいものとなっている．
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{theorem:interp_kernel_rkhs_exact-interp-with-additional-terms}
     空間 $X$ 上で定義される関数のヒルベルト空間 $\mathcal{H}$ があり，
     関数 $f, g \in \mathcal{H}$ の内積は $(f, g)$ で表されるものとし，
     ノルムを $\|f\|$ とする．
@@ -264,3 +264,105 @@
 thin plate spline \cite{Ghosh2010},
 spherical spline \cite{Wahba1981}
 が挙げられる．
+
+\subsection{Thin plate spline}
+
+Thin plate spline \cite{Ghosh2010} は，
+$\setR^d$ ($d = 1, 2, \ldots$) から $\setR$ への関数を
+$n$ 回偏微分したものの積を積分するようなノルム
+\begin{equation}
+    (f, g) =
+    \sum_{\alpha_1 + \cdots + \alpha_d = n} \frac{n!}{\alpha_1! \cdots \alpha_d!}
+    \int_{-\infty}^{\infty} \cdots \int_{-\infty}^{\infty}
+    \frac{\partial^n f}{\partial x_1^{\alpha_1} \cdots \partial x_d^{\alpha_d}}
+    \frac{\partial^n g}{\partial x_1^{\alpha_1} \cdots \partial x_d^{\alpha_d}}
+    dx_1 \cdots dx_d
+    \label{eq:interp_kernel_thin-plate-spline_inner-product}
+\end{equation}
+により定義される関数空間を考える．
+この内積で定義される関数空間は
+$2n -d > 0$ の場合に再生核
+\begin{equation}
+    K(\bm{r}, \bm{s}) =
+    \begin{cases}
+        \displaystyle
+        \frac{(-1)^{d/2 + 1 + n}}{2^{2n} \pi^{d/2} (n-1)! (n-d/2)!}
+        \|\bm{r} - \bm{s}\|_2^{2n-d} \log{\|\bm{r} - \bm{s}\|_2^2}
+         &
+        \text{$2n-d$ が偶数の場合}
+        \\[1.5em]
+        \displaystyle
+        \frac{\Gamma(d/2 - n)}{2^{2n} \pi^{d/2} (n-1)!}
+        \|\bm{r} - \bm{s}\|_2^{2n-d}
+         &
+        \text{$2n-d$ が奇数の場合}
+    \end{cases}
+\end{equation}
+を持つ再生核ヒルベルト空間となる
+\cite{Ghosh2010}．
+ただし，内積の中の微分に $n - 1$ 次までの多項式が含まれないため，
+$d$ 個の変数の $n - 1$ 次までの組み合わせを関数 $p_1, p_2, \ldots, p_M$ とし，
+定理 \ref{theorem:interp_kernel_rkhs_exact-interp-with-additional-terms} を
+適用して補間を行う．
+
+\subsection{Spherical spline}
+
+Spherical spline \cite{Wahba1981} は，
+単位球面 $S$ から実数への関数について
+$n$ 回微分して積分するノルム
+\begin{equation}
+    \|f\|^2 =
+    \begin{cases}
+        \displaystyle
+        \int_{0}^{2\pi} \int_{0}^{\pi} \left( \triangle^{n/2} f \right)^2 \sin{\theta} d\theta d\phi
+         &
+        \text{$n$ が偶数の場合}
+        \\
+        \displaystyle
+        \int_{0}^{2\pi} \int_{0}^{\pi}
+        \left(
+        \frac{1}{\sin^2\theta} \left( \frac{\partial \triangle^{(n-1)/2} f}{\partial \phi} \right)^2
+        + \left( \frac{\partial \triangle^{(n-1)/2} f}{\partial \theta} \right)^2
+        \right)
+        \sin{\theta} d\theta d\phi
+         &
+        \text{$n$ が奇数の場合}
+    \end{cases}
+\end{equation}
+により定義される関数空間を考える
+（$\theta$ と $\phi$ は極座標における緯度と経度を示す）．
+$n > 1$ の場合，この関数空間は再生核
+\begin{equation}
+    K(\bm{r}, \bm{s}) \equiv
+    \frac{1}{4\pi}
+    \sum_{v=1}^{\infty} \frac{2 v + 1}{v^n (v + 1)^n} P_v (\cos{\gamma(\bm{r}, \bm{s})})
+\end{equation}
+を持つ．
+ここで，$P_v(x)$ は $v$ 次の Legendre 関数（\ref{sec:special-function_legendre-function} 節）で，
+$\gamma(\bm{r}, \bm{s})$ は $\bm{r}$ と $\bm{s}$ をベクトルとしたときに 2 つのベクトルがなす角を示す．
+この再生核に加えて，関数 $p_1(\bm{r}) = 1$ を用いて
+定理 \ref{theorem:interp_kernel_rkhs_exact-interp-with-additional-terms} のように補間を行う．
+
+ここで，再生核の値の計算に無限級数の評価が必要となるが，
+$n = 2$ の場合は
+\begin{equation}
+    K(\bm{r}, \bm{s}) =
+    \frac{1}{4\pi} \int_{0}^{1} \log{h} \left( 1 - \frac{1}{h} \right)
+    \left( \frac{1}{\sqrt{1 - 2 h \cos{\gamma(\bm{r}, \bm{s})} + h^2}} - 1 \right) dh
+\end{equation}
+と書くことができ \cite{Wahba1981}，
+比較的容易な数値積分により再生核の値を計算できる．
+
+また，文献 \cite{Wahba1981} 内では比較的計算が容易なカーネル
+\begin{align}
+    K'(\bm{r}, \bm{s})
+     & \equiv
+    \frac{1}{2\pi} \sum_{v=1}^{\infty}
+    \frac{1}{(v+1) (v+2) \cdots (v + 2n - 1)} P_v (\cos{\gamma(\bm{r}, \bm{s})})
+    \\
+     & =
+    \frac{1}{2\pi} \left( \frac{1}{(2n-2)!}
+    \int_{0}^{1} \frac{(1-h)^{2n-2}}{\sqrt{1 - 2 h \cos{\gamma(\bm{r}, \bm{s})} + h^2}} dh
+    - \frac{1}{(2n-1)!} \right)
+\end{align}
+も提案されている．
