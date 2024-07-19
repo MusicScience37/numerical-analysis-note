@@ -1,0 +1,19 @@
+% !TEX root = ../../main.tex
+%
+
+\section[L1 正則化]{$L_1$ 正則化}
+\index{L1せいそくか@$L_1$ 正則化}
+
+まず，最も単純な 1-ノルムによる正則化（$L_1$ 正則化）による評価関数
+\begin{equation}
+    E_{\lambda}(\bm{x}) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{x}\|_1
+    \label{eq:regularization_sparse_l1_objective}
+\end{equation}
+を考える．
+この評価関数の最小化のために考えられたアルゴリズムとして，
+FISTA (Fast Iterative Shrinkage-Thresholding Algorithm) \cite{Beck2009}
+\index{Fast Iterative Shrinkage-Thresholding Algorithm}
+\index{FISTA|see{Fast Iterative Shrinkage-Thresholding Algorithm}}
+が考案されている．
+
+\todo{FISTA の詳細について記載する．}
