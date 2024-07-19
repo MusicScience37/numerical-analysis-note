@@ -1,0 +1,48 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{スパース正則化}\label{chap:regularization_sparse}
+\index{すぱーすせいそくか@スパース正則化}
+
+本章では，解またはその微分のスパース性を要求する正則化手法についてまとめる．
+
+Tikhonov 正則化では，未知パラメータ $\bm{x}$ に関する
+線型方程式 $A \bm{x} = \bm{y}$ の係数行列 $A$ の特異値の分布が悪く
+単純な最小二乗解 $\bm{x} = A^\dagger \bm{y}$ が安定して計算できない場合に，
+解の 2-ノルム $\|\bm{x}\|_2$ が大きくなりすぎないようにするため，
+ただの最小二乗法の代わりに評価関数
+\begin{equation}
+    E_{\lambda}(\bm{x}) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{x}\|_2^2
+\end{equation}
+を最小化していた．
+一方，スパース正則化では 2-ノルムの代わりに 1-ノルムを用い，例えば評価関数
+\begin{equation}
+    E_{\lambda}(\bm{x}) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{x}\|_1^2
+    \label{eq:regularization_sparse_l1_objective}
+\end{equation}
+を最小化する．
+1-ノルム $\|\bm{x}\|_1$ で正則化を行うと，
+$\bm{x}$ の要素のうち多くの要素は 0 になるように，
+つまりスパースになるように $\bm{x}$ を求めることができる．
+また，$\bm{x}$ が空間上のパラメータの分布を示す場合，
+その微分を計算するような行列 $D$ を用いたノルム $\|D \bm{x}\|_1$ を用いて正則化することにより，
+空間上でパラメータが変化する箇所を少なくするという正則化
+（Total variation 正則化
+\index{Total variation せいそくか@Total variation 正則化}
+\index{TVせいそくか@TV 正則化|see{Total variation 正則化}}）
+を行うこともできる．
+これらのようなスパース正則化には，
+\begin{itemize}
+    \item 未知パラメータ $\bm{x}$ の要素数よりもデータ $\bm{y}$ の要素数の方が少ないという
+          情報が少ない状況（「劣決定」\index{れつけってい@劣決定}と呼ばれる）でも
+          比較的安定して $\bm{x}$ を求めることができる．
+\end{itemize}
+という利点がある．
+しかし一方で，
+\begin{itemize}
+    \item Tikhonov 正則化と違って解を陽的に求めることができない．
+    \item 評価関数は微分できない点を持つ．
+\end{itemize}
+といった欠点を持つ．
+そこで，スパース正則化に特化した反復法が考えられている．
+そのようなスパース正則化のアルゴリズムの例について以下に示す．
