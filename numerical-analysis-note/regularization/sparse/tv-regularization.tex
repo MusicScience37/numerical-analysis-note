@@ -1,0 +1,145 @@
+% !TEX root = ../../main.tex
+%
+
+\section{Total variation 正則化}
+\index{Total variation せいそくか@Total variation 正則化}
+\index{TVせいそくか@TV 正則化|see{Total variation 正則化}}
+
+何らかの領域における分布
+\footnote{2 次元や 3 次元の領域上の分布だけでなく，%
+    1 次元の線分上の分布や，3 次元空間上に存在する曲面上の分布でも良い．}
+を示すベクトル $\bm{x}$ について，
+微分値を算出する行列 $D$ を用いた正則化項 $\|D \bm{x}\|_1$ による正則化は
+total variation 正則化と呼ばれる．
+このとき，評価関数は
+\begin{equation}
+    E_{\lambda}(\bm{x}) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|D \bm{x}\|_1
+\end{equation}
+のようになる．
+この評価関数を最小化する手法の 1 つに
+Split Bregman 法 \cite{Goldstein2009}
+\index{Split Bregman ほう@Split Bregman 法}
+がある．
+
+Split Bregman 法について説明するにあたって，
+まず次のような等号制約条件付きの最適化問題を考える
+\cite{Goldstein2009}
+\footnote{文字の重複を防ぐため，文献 \cite{Goldstein2009} における文字とは変えている．}．
+\begin{align}
+    \text{minimize} \hspace{1em} & E(\bm{u})         \\
+    \text{s.t.} \hspace{1em}     & G \bm{u} = \bm{b}
+\end{align}
+ここで，$\bm{u}$ は最適化の変数で，$G$ は線型作用素，$\bm{b}$ は定数のベクトルであり，
+関数 $E(\bm{u})$ は凸関数とする．
+関数 $E(\bm{u})$ は微分できなくても良い．
+文献 \cite{Bregman1967} で提案された Bregman 反復を利用することで，
+この最適化問題が以下の反復により解けることが示されている
+\cite{Goldstein2009}．
+\begin{align}
+    \bm{u}_{k+1} & = \argmin_{\bm{u}} \left( E(\bm{u}) - \bm{p}_k^\top (\bm{u} - \bm{u}_k)
+    + \frac{\mu}{2} \|G \bm{u} - \bm{b}\|_2^2 \right)
+    \\
+    \bm{p}_{k+1} & = \bm{p}_k - \mu G^\top (G \bm{u}_{k+1} - \bm{b})
+\end{align}
+ここで，$\mu$ は正の定数である．
+この反復は，以下のように行うこともできる
+\cite{Goldstein2009}．
+\begin{align}
+    \bm{u}_{k+1} & = \argmin_{\bm{u}} \left( E(\bm{u}) + \frac{\mu}{2} \|G \bm{u} - \bm{b}_k\|_2^2 \right)
+    \\
+    \bm{b}_{k+1} & = \bm{b}_k + \bm{b} - G \bm{u}_k
+\end{align}
+
+Split Bregman 法では，TV 正則化における評価関数の最小化を以下のような最適化問題に置き換えることで，
+上述の反復法を適用する．
+\begin{align}
+    \text{minimize} \hspace{1em} & \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{d}\|_1 \\
+    \text{s.t.} \hspace{1em}     & \bm{d} = D \bm{x}
+\end{align}
+このとき，
+\begin{align}
+    \bm{u} & = \begin{pmatrix}
+                   \bm{x} \\ \bm{d}
+               \end{pmatrix}
+    ,      &
+    G      & = \begin{pmatrix}
+                   D & -I
+               \end{pmatrix}
+    ,      &
+    \bm{b} & = \bm{0}
+\end{align}
+とすることで，以下の反復法が得られる．
+\begin{align}
+    (\bm{x}_{k+1}, \bm{d}_{k+1}) & =
+    \argmin_{\bm{x}, \bm{d}} \left( \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{d}\|_1
+    + \frac{\mu}{2} \|D \bm{x} - \bm{d} - \bm{b}_k\|_2^2
+    \right)
+    \\
+    \bm{b}_{k+1}                 & = \bm{b}_k - D \bm{x}_k + \bm{d}
+\end{align}
+さらに，$\bm{x}$, $\bm{d}$ に関する反復を以下の 2 つに分割する．
+\begin{align}
+    \bm{x}_{k+1} & =
+    \argmin_{\bm{x}} \left( \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{d}_k\|_1
+    + \frac{\mu}{2} \|D \bm{x} - \bm{d}_k - \bm{b}_k\|_2^2
+    \right)
+    \\
+    \bm{d}_{k+1} & =
+    \argmin_{\bm{d}} \left( \|A \bm{x}_{k+1} - \bm{y}\|_2^2 + \lambda \|\bm{d}\|_1
+    + \frac{\mu}{2} \|D \bm{x}_{k+1} - \bm{d} - \bm{b}_k\|_2^2
+    \right)
+\end{align}
+
+ここで，$\bm{x}$ に関する反復で最小化する関数を
+\begin{equation}
+    f(\bm{x}) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{d}_k\|_1
+    + \frac{\mu}{2} \|D \bm{x} - \bm{d}_k - \bm{b}_k\|_2^2
+\end{equation}
+とおくと，その勾配は
+\begin{align}
+    \nabla f(\bm{x})
+     & =
+    2 A^\top (A \bm{x} - \bm{y}) + \mu D^\top (D \bm{x} - \bm{d}_k - \bm{b}_k)
+    \notag \\
+     & =
+    (2 A^\top A + \mu D^\top D) \bm{x}
+    - (2 A^\top \bm{y} + \mu D^\top \bm{d}_k + \mu D^\top \bm{b}_k)
+\end{align}
+となり，Hessian は
+\begin{align}
+    \nabla^2 f(\bm{x})
+     & =
+    2 A^\top A + \mu D^\top D
+\end{align}
+となる．
+$D$ が列フルランクであれば
+\footnote{ここでは $A$ を列フルランクにしても良いが，%
+    スパース最適化を適用する場合 $A$ が横長の行列になっていて列フルランクを満たしようがない場合もあるため，%
+    $D$ を列フルランクにする想定で説明している．}，
+Hessian は正定値行列になり，
+関数 $f$ は強凸関数となる．
+よって，関数 $f$ が最小となる $\bm{x}$ は $\nabla f(\bm{x}) = \bm{0}$ となるような $\bm{x}$ であり，
+$\bm{x}$ の更新式は以下のようになる．
+\begin{equation}
+    \bm{x}_{k+1} =
+    (2 A^\top A + \mu D^\top D)^{-1}
+    (2 A^\top \bm{y} + \mu D^\top \bm{d}_k + \mu D^\top \bm{b}_k)
+\end{equation}
+
+また，$\bm{d}$ の更新は，
+要素ごとに絶対値を小さくする収縮演算子
+\begin{equation}
+    [\mathcal{T}_a(\bm{x})]_i =
+    \begin{cases}
+        x_i - a & \text{for $x_i > a$}  \\
+        x_i + a & \text{for $x_i < -a$} \\
+        0       & \text{otherwise}
+    \end{cases}
+\end{equation}
+を用いることで
+\begin{equation}
+    \bm{d}_{k+1} = \mathcal{T}_{\lambda / \mu} (D\bm{x}_{k+1} - \bm{b}_k)
+\end{equation}
+と書ける．
+
+\todo{収縮演算子で書ける部分の理論の説明をする．}

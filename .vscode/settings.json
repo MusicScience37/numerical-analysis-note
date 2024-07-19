@@ -59,5 +59,6 @@
     "**/.venv/**": true
   },
   "esbonio.sphinx.confDir": "",
-  "restructuredtext.pythonRecommendation.disabled": true
+  "restructuredtext.pythonRecommendation.disabled": true,
+  "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false
 }
