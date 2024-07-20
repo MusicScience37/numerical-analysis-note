@@ -1,0 +1,110 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{等号制約付き最適化における拡張ラグランジュ関数法}\label{chap:opt_augmented-lagrange-function-for-equality-constraints}
+\index{かくちょうらぐらんじゅかんすうほう@拡張ラグランジュ関数法}
+\index{かくちょうらぐらんじゅかんすう@拡張ラグランジュ関数}
+\index{Augmented Lagrange function@拡張ラグランジュ関数}
+
+本章では，等号制約のある最適化問題における
+拡張ラグランジュ関数法 (augmented Lagrange function method)
+とそれをもとにした
+交互方向乗数法 (ADMM, alternating direction method of multipliers)
+\index{こうごほうこうじょうすうほう@交互方向乗数法}
+\index{ADMM|see{交互方向乗数法}}
+\index{alternating direction method of multipliers|see{交互方向乗数法}}
+について，
+文献 \cite{Ito2008, Boyd2010, Hisano2012} をもとにまとめる．
+
+\section{拡張ラグランジュ関数法}
+\index{かくちょうらぐらんじゅかんすうほう@拡張ラグランジュ関数法}
+\index{かくちょうらぐらんじゅかんすう@拡張ラグランジュ関数}
+\index{Augmented Lagrange function@拡張ラグランジュ関数}
+
+ここでは，式 \eqref{eq:optimization_general_problem} から
+不等式制約をなくした以下の最適化問題を考える．
+\begin{equation}
+    \begin{aligned}
+        \text{minimize} \hspace{1em} & f(\bm{x})               \\
+        \text{s.t.} \hspace{1em}     & \bm{h}(\bm{x}) = \bm{0}
+    \end{aligned}
+    \label{eq:optimization_equality-constraind-problem}
+\end{equation}
+
+この最適化問題において，通常の
+ラグランジュ関数
+\index{らぐらんじゅかんすう@ラグランジュ関数}
+\index{Lagrange function|see{ラグランジュ関数}}
+は
+\begin{equation}
+    L(\bm{x}, \bm{\lambda}) \equiv f(\bm{x}) + \bm{\lambda}^\top \bm{h}(\bm{x})
+\end{equation}
+である \cite{Boyd2010, Hisano2012}．
+一方，拡張ラグランジュ関数は最後に罰則項を追加した
+\begin{equation}
+    L_{\rho}(\bm{x}, \bm{\lambda}) \equiv f(\bm{x}) + \bm{\lambda}^\top \bm{h}(\bm{x})
+    + \frac{\rho}{2}\|\bm{h}(\bm{x})\|_2^2
+\end{equation}
+で定義される \cite{Boyd2010, Hisano2012}．
+ここで，$\rho$ は正の定数である．
+この拡張ラグランジュ関数は，最適化問題を
+\begin{equation}
+    \begin{aligned}
+        \text{minimize} \hspace{1em} & f(\bm{x})  + \frac{\rho}{2}\|\bm{h}(\bm{x})\|_2^2 \\
+        \text{s.t.} \hspace{1em}     & \bm{h}(\bm{x}) = \bm{0}
+    \end{aligned}
+\end{equation}
+とした場合のラグランジュ関数であり，
+等号制約が満たされると罰則項が消えることから，元の最適化問題
+（式 \eqref{eq:optimization_equality-constraind-problem}）
+と同じ解になる．
+
+この拡張ラグランジュ関数を用いた最適化では，
+以下の更新式で解 $\bm{x}$ の候補を更新していく \cite{Boyd2010, Hisano2012}．
+\begin{align}
+    \bm{x}_{k+1}       & = \argmin_{\bm{x}} L_{\rho}(\bm{x}, \bm{\lambda}_{k}) \\
+    \bm{\lambda}_{k+1} & = \bm{\lambda}_k + \rho \bm{h}(\bm{x}_{k+1})
+\end{align}
+この更新式により解が得られることは文献 \cite{Ito2008} で示されている．
+
+\section{交互方向乗数法 (ADMM)}
+
+前節の拡張ラグランジュ関数法を利用して以下の形式の最適化問題を解く手法として
+交互方向乗数法 (ADMM, alternating direction method of multipliers)
+\index{こうごほうこうじょうすうほう@交互方向乗数法}
+\index{ADMM|see{交互方向乗数法}}
+\index{alternating direction method of multipliers|see{交互方向乗数法}}
+が考えられている \cite{Boyd2010, Hisano2012}．
+\begin{equation}
+    \begin{aligned}
+        \text{minimize} \hspace{1em} & f(\bm{x}) + g(\bm{y})        \\
+        \text{s.t.} \hspace{1em}     & A \bm{x} + B \bm{y} = \bm{c}
+    \end{aligned}
+\end{equation}
+ここで，ベクトル $\bm{x}$ と $\bm{y}$ が最適化変数で，
+関数 $f$ と $g$ は凸関数，
+行列 $A$ と $B$ およびベクトル $\bm{c}$ は定数である．
+
+この最適化問題における拡張ラグランジュ関数は
+\begin{equation}
+    L_{\rho}(\bm{x}, \bm{y}, \bm{\lambda}) \equiv
+    f(\bm{x}) + g(\bm{y}) + \bm{\lambda}^\top (A \bm{x} + B \bm{y} - \bm{c})
+    + \frac{\rho}{2} \|A \bm{x} + B \bm{y} - \bm{c}\|_2^2
+\end{equation}
+であり，拡張ラグランジュ関数法による更新式は
+\begin{align}
+    (\bm{x}_{k+1}, \bm{y}_{k+1}) & = \argmin_{\bm{x}, \bm{y}} L_{\rho}(\bm{x}, \bm{y}, \bm{\lambda}_{k}) \\
+    \bm{\lambda}_{k+1}           & = \bm{\lambda}_k + \rho (A \bm{x}_{k+1} + B \bm{y}_{k+1}- \bm{c})
+\end{align}
+となる．
+交互方向乗数法では，1 つ目の更新式を $\bm{x}$ と $\bm{y}$ で分割して
+\begin{align}
+    \bm{x}_{k+1}       & = \argmin_{\bm{x}} L_{\rho}(\bm{x}, \bm{y}_{k}, \bm{\lambda}_{k})   \\
+    \bm{y}_{k+1}       & = \argmin_{\bm{y}} L_{\rho}(\bm{x}_{k+1}, \bm{y}, \bm{\lambda}_{k}) \\
+    \bm{\lambda}_{k+1} & = \bm{\lambda}_k + \rho (A \bm{x}_{k+1} + B \bm{y}_{k+1}- \bm{c})
+\end{align}
+とする \cite{Boyd2010, Hisano2012}．
+
+上記のように更新式を分割することで，関数 $f$ と $g$ の最適化を別々に扱えるようになる．
+この性質を活用した応用例としては，
+スパース正則化（\ref{chap:regularization_sparse} 章）が挙げられる．
