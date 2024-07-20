@@ -11,15 +11,11 @@
 とそれをもとにした
 交互方向乗数法 (ADMM, alternating direction method of multipliers)
 \index{こうごほうこうじょうすうほう@交互方向乗数法}
-\index{ADMM|see{交互方向乗数法}}
-\index{alternating direction method of multipliers|see{交互方向乗数法}}
 について，
 文献 \cite{Ito2008, Boyd2010, Hisano2012} をもとにまとめる．
 
 \section{拡張ラグランジュ関数法}
 \index{かくちょうらぐらんじゅかんすうほう@拡張ラグランジュ関数法}
-\index{かくちょうらぐらんじゅかんすう@拡張ラグランジュ関数}
-\index{Augmented Lagrange function@拡張ラグランジュ関数}
 
 ここでは，式 \eqref{eq:optimization_general_problem} から
 不等式制約をなくした以下の最適化問題を考える．
@@ -40,6 +36,9 @@
     L(\bm{x}, \bm{\lambda}) \equiv f(\bm{x}) + \bm{\lambda}^\top \bm{h}(\bm{x})
 \end{equation}
 である \cite{Boyd2010, Hisano2012}．
+ここで，$\bm{\lambda}$ がラグランジュ乗数である．
+\index{らぐらんじゅじょうすう@ラグランジュ乗数}
+\index{Lagrange multiplier|see{ラグランジュ乗数}}
 一方，拡張ラグランジュ関数は最後に罰則項を追加した
 \begin{equation}
     L_{\rho}(\bm{x}, \bm{\lambda}) \equiv f(\bm{x}) + \bm{\lambda}^\top \bm{h}(\bm{x})

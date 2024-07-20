@@ -18,6 +18,85 @@ total variation 正則化と呼ばれる．
 のようになる．
 本節ではこのような評価関数の最小化について説明する．
 
+\subsection{交互方向乗数法}
+\index{こうごほうこうじょうすうほう@交互方向乗数法}
+
+評価関数の最小化を
+\begin{align}
+    \text{minimize} \hspace{1em} & \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{d}\|_1 \\
+    \text{s.t.} \hspace{1em}     & D \bm{x} - \bm{d} = \bm{0}
+\end{align}
+と書き換えることで，
+交互方向乗数法（\ref{sec:optimization_admm} 節）により
+評価関数を最小化するような解 $\bm{x}$ を求めることができる \cite{Boyd2010}
+\footnote{文献 \cite{Boyd2010} においては「Generalized Lasso」というタイトルで記載され，%
+    行列 $D$ は微分に関係ない行列も含めている．}．
+
+このとき，拡張ラグランジュ関数は
+\begin{equation}
+    L_{\rho}(\bm{x}, \bm{d}, \bm{p}) \equiv
+    \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{d}\|_1
+    + \bm{p}^\top (D \bm{x} - \bm{d})
+    + \frac{\rho}{2} \|D \bm{x} - \bm{d}\|_2^2
+\end{equation}
+となる．
+
+$\bm{x}$ の更新式は
+\begin{align}
+    \bm{x}_{k+1}
+     & = \argmin_{\bm{x}} L_{\rho}(\bm{x}, \bm{d}_k, \bm{p}_k)
+    \notag                                                                          \\
+     & = \argmin_{\bm{x}} \left( \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{d}_k\|_1
+    + \bm{p}_k^\top (D \bm{x} - \bm{d}_k)
+    + \frac{\rho}{2} \|D \bm{x} - \bm{d}_k\|_2^2 \right)
+    \notag                                                                          \\
+     & = \argmin_{\bm{x}} \left( \|A \bm{x} - \bm{y}\|_2^2
+    + \bm{p}_k^\top (D \bm{x} - \bm{d}_k)
+    + \frac{\rho}{2} \|D \bm{x} - \bm{d}_k\|_2^2 \right)
+\end{align}
+となる．
+行列 $D$ が列フルランクであればこの最小化を
+\begin{align}
+    \bm{x}_{k+1}
+     & = (2 A^\top A + \rho D^\top D)^{-1} (2 A^\top \bm{y} - D^\top \bm{p}_k + \rho D^\top \bm{d}_k)
+\end{align}
+で実行できる．
+
+$\bm{d}$ の更新式は
+\begin{align}
+    \bm{d}_{k+1}
+     & = \argmin_{\bm{d}} L_{\rho}(\bm{x}_{k+1}, \bm{d}, \bm{p}_k)
+    \notag                                                                                \\
+     & = \argmin_{\bm{d}} \left( \|A \bm{x}_{k+1} - \bm{y}\|_2^2 + \lambda \|\bm{d}\|_1
+    + \bm{p}_k^\top (D \bm{x}_{k+1} - \bm{d})
+    + \frac{\rho}{2} \|D \bm{x}_{k+1} - \bm{d}\|_2^2 \right)
+    \notag                                                                                \\
+     & = \argmin_{\bm{d}} \left( \lambda \|\bm{d}\|_1
+    + \bm{p}_k^\top (D \bm{x}_{k+1} - \bm{d})
+    + \frac{\rho}{2} \|D \bm{x}_{k+1} - \bm{d}\|_2^2 \right)
+    \notag                                                                                \\
+     & = \argmin_{\bm{d}} \left( \lambda \|\bm{d}\|_1
+    + \frac{\rho}{2} \left\| D \bm{x}_{k+1} - \bm{d} + \frac{\bm{p}_k}{\rho} \right\|_2^2 \right)
+    \notag                                                                                \\
+     & = \mathcal{T}_{\lambda/\rho} \left( D \bm{x}_{k+1} + \frac{\bm{p}_k}{\rho} \right)
+\end{align}
+となる．
+（最後の変形は \ref{sec:regularization_shrinkage-operator} 節を参照．）
+
+$\bm{p}$ の更新式まで含めると以下のようになる
+\footnote{文献 \cite{Boyd2010} と定式化のときの係数が異なるため，%
+    最終的な更新式の係数が異なっている．}．
+\begin{align}
+    \bm{x}_{k+1}
+     & = (2 A^\top A + \rho D^\top D)^{-1} (2 A^\top \bm{y} - D^\top \bm{p}_k + \rho D^\top \bm{d}_k)
+    \\
+    \bm{d}_{k+1}
+     & = \mathcal{T}_{\lambda/\rho} \left( D \bm{x}_{k+1} + \frac{\bm{p}_k}{\rho} \right)
+    \\
+    \bm{p}_{k+1}
+     & = \bm{p}_k + \rho (D \bm{x}_{k+1} -\bm{d}_{k+1})
+\end{align}
+
 \subsection{Split Bregman 法}
 
 TV 正則化の評価関数を最小化する手法の 1 つに
@@ -135,3 +214,17 @@ $\bm{x}$ の更新式は以下のようになる．
     \bm{d}_{k+1} = \mathcal{T}_{\lambda / \mu} (D\bm{x}_{k+1} - \bm{b}_k)
 \end{equation}
 と書ける．
+
+以上をまとめると，以下の更新式が得られる
+\footnote{実は，交互方向乗数法と変数が定数倍異なっているだけで，同じ更新式になっている．}．
+\begin{align}
+    \bm{x}_{k+1}
+     & = (2 A^\top A + \mu D^\top D)^{-1}
+    (2 A^\top \bm{y} + \mu D^\top \bm{d}_k + \mu D^\top \bm{b}_k)
+    \\
+    \bm{d}_{k+1}
+     & = \mathcal{T}_{\lambda / \mu} (D\bm{x}_{k+1} - \bm{b}_k)
+    \\
+    \bm{b}_{k+1}
+     & = \bm{b}_k - D \bm{x}_k + \bm{d}
+\end{align}
