@@ -1,0 +1,50 @@
+% !TEX root = ../../main.tex
+%
+
+\section{基本的な理論}
+
+本節では，スパース正則化においてよく使用される収縮演算子や変数の分離の仕方などについて説明する．
+
+\subsection{収縮演算子}
+\index{しゅしゅくえんざんし@収縮演算子}
+\index{shrinkage operator|see{収縮演算子}}
+
+収縮演算子 (shrinkage operator)
+は，次のように変数の絶対値を小さくする演算子である．
+\begin{equation}
+    \mathcal{T}_a(x) \equiv
+    \begin{cases}
+        x - a & \text{for $x > a$}  \\
+        x + a & \text{for $x < -a$} \\
+        0     & \text{otherwise}
+    \end{cases}
+\end{equation}
+また，ベクトル $\bm{x}$ について各要素に上記の操作を行った結果は
+$\mathcal{T}_a(\bm{x})$ のように示す．
+
+この演算子は，
+\begin{equation}
+    \mathcal{T}_a(x) =
+    \argmin_{\bm{y}} \left(
+    \|\bm{y}\|_1 + \frac{1}{2a} \|\bm{y} - \bm{x}\|_2^2
+    \right)
+\end{equation}
+のように 1-ノルムを含む最小化と関係している．
+微分ができない点を持つ 1-ノルムが含まれるような評価関数を最小化にあたってこの性質が便利なため，
+本章で紹介するアルゴリズムは，
+この等式の右辺のような最小化で 1-ノルムの項を扱えるように作られている．
+
+\subsection{変数の分離}
+
+本章で扱う評価関数は，
+$\|A \bm{x} - \bm{b}\|_2^2 + \|D \bm{x}\|_1$ のように
+微分できる最小二乗の項と微分できない正則化項の組み合わせからできている．
+そのような評価関数の最小化を
+\begin{align}
+    \text{minimize} \hspace{1em} & \|A \bm{x} - \bm{b}\|_2^2 + \|\bm{d}\|_1 \\
+    \text{s.t.} \hspace{1em}     & D \bm{x} = \bm{d}
+\end{align}
+のように最小二乗の項と正則化項で別の変数により扱う．
+このように変数を分けて別々に最小化を考えるようにすることで
+計算を楽にするというアイデアが，
+本章で扱うアルゴリズムの多くで使用されている．

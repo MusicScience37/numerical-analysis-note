@@ -16,6 +16,7 @@ total variation 正則化と呼ばれる．
     E_{\lambda}(\bm{x}) \equiv \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|D \bm{x}\|_1
 \end{equation}
 のようになる．
+本節ではこのような評価関数の最小化について説明する．
 
 \subsection{Split Bregman 法}
 
@@ -129,20 +130,8 @@ $\bm{x}$ の更新式は以下のようになる．
     (2 A^\top \bm{y} + \mu D^\top \bm{d}_k + \mu D^\top \bm{b}_k)
 \end{equation}
 
-また，$\bm{d}$ の更新は，
-要素ごとに絶対値を小さくする収縮演算子
-\begin{equation}
-    [\mathcal{T}_a(\bm{x})]_i =
-    \begin{cases}
-        x_i - a & \text{for $x_i > a$}  \\
-        x_i + a & \text{for $x_i < -a$} \\
-        0       & \text{otherwise}
-    \end{cases}
-\end{equation}
-を用いることで
+また，$\bm{d}$ の更新は収縮演算子を用いることで
 \begin{equation}
     \bm{d}_{k+1} = \mathcal{T}_{\lambda / \mu} (D\bm{x}_{k+1} - \bm{b}_k)
 \end{equation}
 と書ける．
-
-\todo{収縮演算子で書ける部分の理論の説明をする．}
