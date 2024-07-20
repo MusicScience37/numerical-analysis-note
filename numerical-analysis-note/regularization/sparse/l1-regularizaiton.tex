@@ -10,10 +10,93 @@
     \label{eq:regularization_sparse_l1_objective}
 \end{equation}
 を考える．
-この評価関数の最小化のために考えられたアルゴリズムとして，
+このような正則化は lasso とも呼ばれる \cite{Boyd2010}．
+この評価関数の最小化を行うアルゴリズムについて以下にまとめる．
+
+\subsection{交互方向乗数法}
+
+式 \eqref{eq:regularization_sparse_l1_objective} の評価関数の最小化を
+\begin{equation}
+    \begin{aligned}
+        \text{minimize} \hspace{1em} & \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{z}\|_1 \\
+        \text{s.t.} \hspace{1em}     & \bm{x} - \bm{z} = \bm{0}
+    \end{aligned}
+\end{equation}
+と書き換えることで，
+交互方向乗数法（\ref{sec:optimization_admm} 節）により
+評価関数を最小化するような解 $\bm{x}$ を求めることができる \cite{Boyd2010}．
+
+このとき，拡張ラグランジュ関数は
+\begin{equation}
+    L_{\rho}(\bm{x}, \bm{z}, \bm{p}) \equiv
+    \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{z}\|_1
+    + \bm{p}^\top (\bm{x} - \bm{z})
+    + \frac{\rho}{2} \|\bm{x} - \bm{z}\|_2^2
+\end{equation}
+となる．
+ここで，ベクトル $\bm{p}$ はラグランジュ乗数，
+$\rho$ は正の定数である．
+
+交互方向乗数法における $\bm{x}$ の更新式は，
+\begin{align}
+    \bm{x}_{k+1}
+     & = \argmin_{\bm{x}} L_{\rho}(\bm{x}, \bm{z}_k, \bm{p}_k)
+    \notag                                                                          \\
+     & = \argmin_{\bm{x}} \left( \|A \bm{x} - \bm{y}\|_2^2 + \lambda \|\bm{z}_k\|_1
+    + \bm{p}_k^\top (\bm{x} - \bm{z}_k)
+    + \frac{\rho}{2} \|\bm{x} - \bm{z}_k\|_2^2 \right)
+    \notag                                                                          \\
+     & = \argmin_{\bm{x}} \left( \|A \bm{x} - \bm{y}\|_2^2
+    + \bm{p}_k^\top (\bm{x} - \bm{z}_k)
+    + \frac{\rho}{2} \|\bm{x} - \bm{z}_k\|_2^2 \right)
+\end{align}
+となる．
+$\bm{x}$ については 2 次関数になっているため，
+この最小化は陽的に解を求めることができ，以下のようになる．
+\begin{align}
+    \bm{x}_{k+1}
+     & = (2 A^\top A + \rho I)^{-1} (2 A^\top \bm{y} - \bm{p}_k + \rho \bm{z}_k)
+\end{align}
+
+$\bm{z}$ の更新式は，
+\begin{align}
+    \bm{z}_{k+1}
+     & = \argmin_{\bm{z}} L_{\rho}(\bm{x}_{k+1}, \bm{z}, \bm{p}_k)
+    \notag                                                                              \\
+     & = \argmin_{\bm{z}} \left( \|A \bm{x}_{k+1} - \bm{y}\|_2^2 + \lambda \|\bm{z}\|_1
+    + \bm{p}_k^\top (\bm{x}_{k+1} - \bm{z})
+    + \frac{\rho}{2} \|\bm{x}_{k+1} - \bm{z}\|_2^2 \right)
+    \notag                                                                              \\
+     & = \argmin_{\bm{z}} \left( \lambda \|\bm{z}\|_1
+    + \bm{p}_k^\top (\bm{x}_{k+1} - \bm{z})
+    + \frac{\rho}{2} \|\bm{x}_{k+1} - \bm{z}\|_2^2 \right)
+    \notag                                                                              \\
+     & = \argmin_{\bm{z}} \left( \lambda \|\bm{z}\|_1
+    + \frac{\rho}{2} \left\|\bm{x}_{k+1} - \bm{z} + \frac{\bm{p}_k}{\rho} \right\|_2^2 \right)
+    \notag                                                                              \\
+     & = \mathcal{T}_{\lambda/\rho} \left( \bm{x}_{k+1} + \frac{\bm{p}_k}{\rho} \right)
+\end{align}
+となる．
+（最後の変形は \ref{sec:regularization_shrinkage-operator} 節を参照．）
+
+$\bm{p}$ の更新式まで含めると以下のようになる
+\footnote{文献 \cite{Boyd2010} と定式化のときの係数が異なるため，%
+    最終的な更新式の係数が異なっている．}．
+\begin{align}
+    \bm{x}_{k+1} & = (2 A^\top A + \rho I)^{-1} (2 A^\top \bm{y} - \bm{p}_k + \rho \bm{z}_k)
+    \\
+    \bm{z}_{k+1} & = \mathcal{T}_{\lambda/\rho} \left( \bm{x}_{k+1} + \frac{\bm{p}_k}{\rho} \right)
+    \\
+    \bm{p}_{k+1} & = \bm{p}_k + \rho (\bm{x}_{k+1} - \bm{z}_{k+1})
+\end{align}
+
+\subsection{FISTA}
+
+式 \eqref{eq:regularization_sparse_l1_objective} の
+評価関数の最小化のために考えられたアルゴリズムの 1 つに
 FISTA (Fast Iterative Shrinkage-Thresholding Algorithm) \cite{Beck2009}
 \index{Fast Iterative Shrinkage-Thresholding Algorithm}
 \index{FISTA|see{Fast Iterative Shrinkage-Thresholding Algorithm}}
-が考案されている．
+がある．
 
-\todo{FISTA の詳細について記載する．}
+\todo{FISTA の詳細について記載する．元になった最適化アルゴリズムの説明から必要になる．}
