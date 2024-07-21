@@ -1,0 +1,100 @@
+% !TEX root = ../../main.tex
+%
+
+\section{Total generalized variation 正則化}
+\index{Total generalized variation せいそくか@Total generalized variation 正則化}
+\index{TGVせいそくか@TGV 正則化|see{Total generalized variation 正則化}}
+
+TV 正則化は領域内の 1 階微分をスパースにする正則化だが，
+それを拡張して 2 階以上の微分までスパースにする
+TGV (total generalized variation) 正則化が考えられている
+\cite{Bredies2010}．
+
+ここでは，2 階微分までスパースにする
+2 階の TGV（「$\mathrm{TGV}_{\alpha}^2$」と書かれる）について説明する．
+$\bm{x}$ から各点の 1 階微分を算出する行列を $D$，
+1 階微分から 2 階微分を算出する行列を $E$ とすると，
+$\mathrm{TGV}_{\alpha}^2$ の正則化項は
+\begin{equation}
+    \mathrm{TGV}_{\alpha}^2(\bm{x}) \equiv
+    \min_{\bm{x}_1 + \bm{x}_2 = \bm{x}} \left(
+    \|D \bm{x}_1\|_1 + \alpha \|E D \bm{x}_2\|_1
+    \right)
+\end{equation}
+のように書ける
+（文献 \cite{Bredies2010} の積分による表現を離散化したもの）．
+ここで，$\alpha$ は正の定数である．
+この正則化項では，1 階微分と 2 階微分をスパースにしている．
+
+$\mathrm{TGV}_{\alpha}^2$ の正則化項は，
+$\bm{z} = D \bm{x}_2$
+とすると
+\begin{equation}
+    \mathrm{TGV}_{\alpha}^2(\bm{x}) =
+    \min_{\bm{z}} \left(
+    \|D \bm{x} - \bm{z}\|_1 + \alpha \|E \bm{z}\|_1
+    \right)
+\end{equation}
+のようにも書ける
+（文献 \cite{Li2016} における表現）．
+
+$\mathrm{TGV}_{\alpha}^2$ により正則化する評価関数は例えば
+\begin{equation}
+    E_{\lambda}(\bm{x}, \bm{z}) \equiv \|A \bm{x} - \bm{y}\|_2^2
+    + \lambda \left( \|D \bm{x} - \bm{z}\|_1 + \alpha \|E \bm{z}\|_1 \right)
+\end{equation}
+のように書ける．
+$\bm{x}$ と $\bm{z}$ の両方を変化させて最小値を探索する必要がある．
+そのアルゴリズムについて以下にまとめる．
+
+\subsection{交互方向乗数法}
+\index{こうごほうこうじょうすうほう@交互方向乗数法}
+
+文献 \cite{Li2016} では，
+$\mathrm{TGV}_{\alpha}^2$ を含む評価関数の最適化について
+交互方向乗数法（\ref{sec:optimization_admm} 節）を用いている．
+その解法をもとに，評価関数の最適化問題を以下のように書き換える．
+\begin{equation}
+    \begin{aligned}
+        \text{minimize} \hspace{1em} & \|A \bm{x} - \bm{y}\|_2^2
+        + \lambda \left( \|\bm{s}\|_1 + \alpha \|\bm{t}\|_1 \right)
+        \\
+        \text{s.t.} \hspace{1em}     & D \bm{x} - \bm{z} = \bm{s} \\
+                                     & E \bm{z} = \bm{t}
+    \end{aligned}
+\end{equation}
+ここで，最適化変数は $\bm{x}$, $\bm{z}$, $\bm{s}$, $\bm{t}$ である．
+
+ラグランジュ乗数 $\bm{p}$, $\bm{u}$ を用いて
+拡張ラグランジュ関数は以下のように書ける．
+\begin{equation}
+    L_{\rho}(\bm{x}, \bm{z}, \bm{s}, \bm{t}, \bm{p}, \bm{u})
+    \equiv
+    \|A \bm{x} - \bm{y}\|_2^2
+    + \lambda \left( \|\bm{s}\|_1 + \alpha \|\bm{t}\|_1 \right)
+    + \bm{p}^\top (D \bm{x} - \bm{z} - \bm{s})
+    + \bm{u}^\top (E \bm{z} - \bm{t})
+    + \frac{\rho}{2} \|D \bm{x} - \bm{z} - \bm{s}\|_2^2
+    + \frac{\rho}{2} \|E \bm{z} - \bm{t}\|_2^2
+\end{equation}
+
+交互方向乗数法の更新式は以下のようになる．
+\begin{align}
+    \bm{x}_{k+1} & = \argmin_{\bm{x}}
+    L_{\rho}(\bm{x}, \bm{z}_k, \bm{s}_k, \bm{t}_k, \bm{p}_k, \bm{u}_k)
+    \\
+    \bm{z}_{k+1} & = \argmin_{\bm{z}}
+    L_{\rho}(\bm{x}_{k+1}, \bm{z}, \bm{s}_k, \bm{t}_k, \bm{p}_k, \bm{u}_k)
+    \\
+    \bm{s}_{k+1} & = \argmin_{\bm{s}}
+    L_{\rho}(\bm{x}_{k+1}, \bm{z}_{k+1}, \bm{s}, \bm{t}_k, \bm{p}_k, \bm{u}_k)
+    \\
+    \bm{t}_{k+1} & = \argmin_{\bm{t}}
+    L_{\rho}(\bm{x}_{k+1}, \bm{z}_{k+1}, \bm{s}_{k+1}, \bm{t}, \bm{p}_k, \bm{u}_k)
+    \\
+    \bm{p}_{k+1} & = \bm{p}_k + \rho (D \bm{x}_{k+1} - \bm{z}_{k+1} - \bm{s}_{k+1})
+    \\
+    \bm{u}_{k+1} & = \bm{u}_k + \rho (E \bm{z}_{k+1} - \bm{t}_{k+1})
+\end{align}
+
+\todo{更新式を単純化する．}
