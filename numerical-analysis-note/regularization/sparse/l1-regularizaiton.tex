@@ -100,4 +100,58 @@ FISTA (Fast Iterative Shrinkage-Thresholding Algorithm) \cite{Beck2009}
 \index{FISTA|see{Fast Iterative Shrinkage-Thresholding Algorithm}}
 がある．
 
-\todo{FISTA の詳細について記載する．元になった最適化アルゴリズムの説明から必要になる．}
+FISTA においては，以下のような一般化した評価関数を考える \cite{Beck2009}．
+\begin{equation}
+    F(\bm{x}) \equiv f(\bm{x}) + g(\bm{x})
+\end{equation}
+ここで，
+関数 $f : \setR^n \to \setR$ は凸関数であり，
+連続微分可能で，
+勾配が
+\begin{equation}
+    \|\nabla f(\bm{x}) - \nabla f(\bm{y})\|_2 \le L \|\bm{x} - \bm{y}\|_2
+\end{equation}
+のように定数 $L > 0$ で Lipschitz 連続になっているものとする．
+また，関数 $g : \setR^n \to \setR$ は凸関数であり，
+微分可能とは限らない連続関数である．
+そして，関数 $F$ は $\setR^n$ 上に最小値を持つものとする．
+
+\begin{algorithm}[t]
+    \caption{FISTA \cite{Beck2009}}
+    \label{alg:regularization_fista-with-constant-stepsize}
+    \begin{algorithmic}[1]
+        \Procedure{FISTA}{$\bm{x}_0$, $L$}
+        \State $\bm{y}_1 \gets \bm{x}_0$
+        \State $t_1 \gets 1$
+        \State $k \gets 1$
+        \Loop
+        \State $\bm{x}_k \gets \bm{p}_L(\bm{y}_k)$
+        \State $t_{k+1} \gets \frac{\displaystyle 1 + \sqrt{1 + 4 t_k^2}}{\displaystyle 2}$
+        \State $\bm{y}_{k+1} \gets \bm{x}_k + \frac{\displaystyle t_k - 1}{\displaystyle t_{k+1}} (\bm{x}_k - \bm{x}_{k-1})$
+        \EndLoop
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+この評価関数について，点 $\bm{y} \in \setR^n$ 周りで近似する関数
+\begin{equation}
+    Q_L(\bm{x}, \bm{y}) \equiv f(\bm{y})
+    + \nabla f(\bm{y})^\top (\bm{x} - \bm{y})
+    + \frac{L}{2} \|\bm{x} - \bm{y}\|_2^2 + g(\bm{x})
+\end{equation}
+を考え，それが最小になる点を求める関数
+\begin{equation}
+    \bm{p}_L(\bm{y}) \equiv \argmin_{\bm{x}} Q_L(\bm{x}, \bm{y})
+\end{equation}
+を定義する \cite{Beck2009}．
+この関数は
+\begin{equation}
+    \bm{p}_L(\bm{y}) = \argmin_{\bm{x}} \left(
+    g(\bm{x}) + \frac{L}{2} \left\|\bm{x}
+    - \left( \bm{y} - \frac{1}{L} \nabla f(\bm{y}) \right) \right\|_2^2
+    \right)
+\end{equation}
+とも書ける \cite{Beck2009}．
+この関数を用いて
+Algorithm \ref{alg:regularization_fista-with-constant-stepsize}
+のように解 $\bm{x}_k$ を更新していく．
