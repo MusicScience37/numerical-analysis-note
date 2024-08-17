@@ -33,7 +33,7 @@ def integ_gauss_legendre_kronrod_time() -> plotly.graph_objects.Figure:
         data_list.append(
             {
                 "Degree": degree,
-                "Target": "$\int_{0}^{1}\exp(x)dx$",
+                "Target": r"$\int_{0}^{1}\exp(x)dx$",
                 "Time [sec]": float(measurement["durations"]["stat"]["mean"]),
                 "Std. Err. of Time [sec]": float(
                     measurement["durations"]["stat"]["standard_error"]
@@ -56,7 +56,7 @@ def integ_gauss_legendre_kronrod_time() -> plotly.graph_objects.Figure:
         data_list.append(
             {
                 "Degree": degree,
-                "Target": "$\int_{-1}^{1}\sqrt{1-x^2}dx$",
+                "Target": r"$\int_{-1}^{1}\sqrt{1-x^2}dx$",
                 "Time [sec]": float(measurement["durations"]["stat"]["mean"]),
                 "Std. Err. of Time [sec]": float(
                     measurement["durations"]["stat"]["standard_error"]
@@ -79,7 +79,7 @@ def integ_gauss_legendre_kronrod_time() -> plotly.graph_objects.Figure:
         data_list.append(
             {
                 "Degree": degree,
-                "Target": "$\int_{-1}^{1}1/\sqrt{1-x^2}dx$",
+                "Target": r"$\int_{-1}^{1}1/\sqrt{1-x^2}dx$",
                 "Time [sec]": float(measurement["durations"]["stat"]["mean"]),
                 "Std. Err. of Time [sec]": float(
                     measurement["durations"]["stat"]["standard_error"]
