@@ -41,7 +41,7 @@ def integ_de_errors() -> plotly.graph_objects.Figure:
         data_list.append(
             {
                 "Points": points,
-                "Target": "$\int_{0}^{1}\exp(x)dx$",
+                "Target": r"$\int_{0}^{1}\exp(x)dx$",
                 "Error": error,
             }
         )
@@ -69,7 +69,7 @@ def integ_de_errors() -> plotly.graph_objects.Figure:
         data_list.append(
             {
                 "Points": points,
-                "Target": "$\int_{-1}^{1}\sqrt{1-x^2}dx$",
+                "Target": r"$\int_{-1}^{1}\sqrt{1-x^2}dx$",
                 "Error": error,
             }
         )
@@ -97,7 +97,7 @@ def integ_de_errors() -> plotly.graph_objects.Figure:
         data_list.append(
             {
                 "Points": points,
-                "Target": "$\int_{-1}^{1}1/\sqrt{1-x^2}dx$",
+                "Target": r"$\int_{-1}^{1}1/\sqrt{1-x^2}dx$",
                 "Error": error,
             }
         )

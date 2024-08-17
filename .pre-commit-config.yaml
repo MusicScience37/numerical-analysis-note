@@ -29,13 +29,13 @@ repos:
         name: black
         description: "Black: The uncompromising Python code formatter"
         entry: black
-        language: python
+        language: system
         require_serial: true
         types_or: [python, pyi]
       - id: isort
         name: isort
         entry: isort
-        language: python
+        language: system
         require_serial: true
         types_or: [python, pyi]
 exclude: "extern|\\.svg"

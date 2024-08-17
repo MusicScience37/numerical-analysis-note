@@ -14,6 +14,11 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def load_data() -> pandas.DataFrame:
+    """データを読み込む。
+
+    Returns:
+        pandas.DataFrame: データ。
+    """
     with gzip.open(os.path.join(THIS_DIR, "kaps_problem0.data"), mode="rb") as file:
         results = msgpack.unpack(file)
     data_frame = pandas.DataFrame(
@@ -81,7 +86,7 @@ def ode_kaps_problem_work_error() -> plotly.graph_objects.Figure:
         markers=True,
         log_x=True,
         log_y=True,
-        title=f"Work-Error Diagram of ODE solvers for Kaps' Problem",
+        title="Work-Error Diagram of ODE solvers for Kaps' Problem",
         template="plotly_white",
     )
     figure.update_layout(height=900)
