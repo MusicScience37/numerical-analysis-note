@@ -4,6 +4,7 @@ import pathlib
 import subprocess
 
 import click
+import plotly.io
 
 from num_anal_plots.plots.plots import PLOT_INFO_DICT, PLOT_NAMES, PlotInfo
 
@@ -25,6 +26,12 @@ def _make_pdf_plot(info: PlotInfo) -> None:
 
     figure = info.figure_factory()
 
+    # この設定をしておくと、PDF 内の数式が太字にならない。理由は不明。
+    # https://github.com/plotly/Kaleido/issues/196 が修正されれば不要になる予定。
+    plotly.io.kaleido.scope.mathjax = (
+        "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+    )
+
     figure.update_layout(
         font_family=r'"Latin Modern Roman","Latin Modern Math"',
         font_color="#000",
@@ -32,6 +39,7 @@ def _make_pdf_plot(info: PlotInfo) -> None:
 
     # PDF を出力させると MathJax の読み込み中の表示が画像内に出力されるため、
     # 一旦 SVG で出力させる。
+    # Issue: https://github.com/plotly/plotly.py/issues/3469
     figure.write_image(str(svg_path))
 
     # SVG から PDF へ変換。
