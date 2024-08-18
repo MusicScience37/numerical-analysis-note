@@ -4,9 +4,15 @@
 % チェック
 \RequirePackage[l2tabu, orthodox]{nag}
 
-\usepackage{luatexja}
 
 %% パッケージ
+%日本語の基本的な設定
+\usepackage{luatexja}
+%フォント
+\usepackage{luatexja-otf}
+\usepackage[no-math,jis2004,deluxe,haranoaji]{luatexja-preset}
+\usepackage[nomath]{lmodern}
+\usepackage{newtxmath}
 %図
 \usepackage[hiresbb]{graphicx}
 \usepackage{caption}
@@ -17,7 +23,7 @@
 \allowdisplaybreaks
 \def\equation{\gather}%%hyperref対応
 \def\endequation{\endgather}%%hyperref対応
-\usepackage{amssymb}
+\let\openbox\undefined %newtxmathとamsthmの競合を解消
 \usepackage{amsthm}
 \newcommand{\hmmax}{0}
 \newcommand{\bmmax}{0}
@@ -46,12 +52,6 @@
 %ハイパーリンク
 \usepackage{hyperref}%なるべく後
 \renewcommand\UrlFont{\rmfamily}
-%フォント（※順番を変えない．）
-\usepackage{luatexja-otf}
-\usepackage[no-math,jis2004,deluxe,haranoaji]{luatexja-preset}
-\usepackage[nomath]{lmodern}
-\usepackage{textcomp}
-\usepackage{newtxmath}
 %TODO
 \usepackage{todonotes}
 \setuptodonotes{inline}
