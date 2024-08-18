@@ -33,9 +33,9 @@ build:
     GIT_SUBMODULE_STRATEGY: recursive
     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
-    # Install rsvg-converter
+    # Install rsvg-converter, qpdf
     - apt-get update
-    - apt-get install -y --no-install-recommends librsvg2-bin
+    - apt-get install -y --no-install-recommends librsvg2-bin qpdf
     # Install Python packages
     - poetry config virtualenvs.in-project true
     - poetry env use 3.12
@@ -45,6 +45,9 @@ build:
     # Build LaTeX document
     - cd numerical-analysis-note
     - latexmk
+    # Optimize PDF file
+    - mv main.pdf main-origin.pdf
+    - qpdf --linearize --object-streams=generate ./main-origin.pdf ./main.pdf
     - cd ..
     # Build Sphinx document
     - poetry run sphinx-build -b html -W docs/source docs/build/html

@@ -13,6 +13,8 @@ RUN apt-get update && \
     sudo \
     # For rsvg-converter
     librsvg2-bin \
+    # For qpdf
+    qpdf \
     # For configuration of locale
     locales \
     && \
