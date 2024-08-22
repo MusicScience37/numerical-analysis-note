@@ -114,22 +114,51 @@ SSOR 法は SOR 法で一回全ての変数を更新したあと，
 
 \clearpage
 
-\subsection{Krylov 部分空間法}
+\subsection{Krylov 部分空間法}\label{sec:linear_krylov-subspace-method}
 \index{Krylovぶぶんくうかんほう@Krylov 部分空間法}
 
 ここでは，Krylov 部分空間法と呼ばれる種類のアルゴリズムの例を示す．
 
-\todo{対称行列の CG 法と PCG 法に触れておきたい．}
+対象行列 $A$ について方程式 $A \bm{x} = \bm{b}$ を解く場合，
+Conjugate Gradient (CG) 法 (Algorithm \ref{alg:matrix-computation_cg})
+\index{ConjugateGradientほう@Conjugate Gradient 法}
+\index{CGほう@CG 法|see{Conjugate Gradient 法}}
+が使用できる．
+
+\begin{algorithm}[tp]
+    \caption{Conjugate Gradient (CG) 法 （文献 \cite{Golub2013} における Hestenes-Stiefel Version のものを実装向けに調整したもの）}
+    \label{alg:matrix-computation_cg}
+    \begin{algorithmic}[1]
+        \Procedure{CG}{$A \in \setR^{n \times n}, \bm{b} \in \setR^n, \bm{x}_0 \in \setR^n$}
+        \State $\bm{x} \gets \bm{x}_0$
+        \State $\bm{r} \gets \bm{b} - A \bm{x}$
+        \State $\bm{p} \gets \bm{r}$
+        \Loop
+        \State $\bm{\omega} \gets A \bm{p}$
+        \State $\alpha \gets \frac{\displaystyle \bm{r}^\top \bm{r}}{\displaystyle \bm{p}^\top \bm{\omega}}$
+        \State $\bm{x} \gets \bm{x} + \mu \bm{p}$
+        \State $\bm{r}_{\text{prev}} \gets \bm{r}$
+        \State $\bm{r} \gets \bm{r} - \mu \bm{\omega}$
+        \If{$\|\bm{r}\|_2 < tolerance$}
+        \State \Return $\bm{x}$
+        \EndIf
+        \State $\beta \gets \frac{\displaystyle \bm{r}^\top \bm{r}}{\displaystyle \bm{r}_{\text{prev}}^\top \bm{r}_{\text{prev}}}$
+        \State $\bm{p} \gets \bm{r} + \beta \bm{p}$
+        \EndLoop
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
 
 行列 $A$ が対称とは限らない正方行列である場合に使用できる反復解法の例として，
 BiCGstab (Algorithm \ref{alg:matrix-computation_bicgstab})
 \index{BiCGstab}
-\footnote{実装を意識して一部記法の変更を加えている．}
 が挙げられる．
+非対称な行列向けのアルゴリズムは文献 \cite{Golub2013} にいくつか挙げられているが，
+その中でも BiCGstab は
 ベクトル $\bm{x}$ について $A \bm{x}$ が計算できれば使用できるアルゴリズムとなっている．
 
 \begin{algorithm}[tp]
-    \caption{BiCGstab \cite{Golub2013}}
+    \caption{BiCGstab （文献 \cite{Golub2013} のものを実装向けに調整したもの）}
     \label{alg:matrix-computation_bicgstab}
     \begin{algorithmic}[1]
         \Procedure{BiCGstab}{$A \in \setR^{n \times n}, \bm{b} \in \setR^n, \bm{x}_0 \in \setR^n$}
@@ -158,6 +187,8 @@ BiCGstab (Algorithm \ref{alg:matrix-computation_bicgstab})
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
+
+\todo{preconditioning についても記述しておく}
 
 \subsection{Algebraic Multigrid 法}
 

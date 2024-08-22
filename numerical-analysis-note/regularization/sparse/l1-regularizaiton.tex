@@ -53,7 +53,10 @@ $\rho$ は正の定数である．
 \end{align}
 となる．
 $\bm{x}$ については 2 次関数になっているため，
-この最小化は陽的に解を求めることができ，以下のようになる．
+この最小化は陽的に解を求めることができ，以下のようになる
+\footnote{行列 $A$ の列の数が多い場合は%
+    \ref{sec:linear_krylov-subspace-method} 節の%
+    CG 法などで $\bm{x}_{k+1}$ を求める．}．
 \begin{align}
     \bm{x}_{k+1}
      & = (2 A^\top A + \rho I)^{-1} (2 A^\top \bm{y} - \bm{p}_k + \rho \bm{z}_k)
