@@ -31,18 +31,33 @@
 ### 環境構築の概要
 
 1. VSCode の DevContainer を起動する．
-2. Python の仮想環境を起動する．
+2. Python の仮想環境を準備し，起動する．
 
    ```shell
    poetry install --sync
    poetry shell
    ```
 
-3. TeX 文書用の画像を生成する．
+### その他のコマンド
 
-   ```shell
-   python ./num_anal_plots/make_pdf_plot.py
-   ```
+- TeX 文書用の画像を生成する．
+
+  ```shell
+  python ./num_anal_plots/make_pdf_plot.py
+  ```
+
+- TeX の文書をビルドする．
+
+  ```shell
+  cd numerical-analysis-note
+  latexmk
+  ```
+
+- Web ページをビルドしてプレビューする．
+
+  ```shell
+  ./docs/start-auto-build.sh
+  ```
 
 ### 開発者向け注意点
 
@@ -50,5 +65,3 @@
 
 - 必ず **Git LFS がインストールされていることを確認してから** clone すること．
   - Git LFS を有効にした環境で clone しないと画像が読み込めない．
-    そのままビルドを行おうとすると，
-    BoundingBox の自動生成に対応した dvipdfmx を使用しているのに「no BoundingBox」のエラーになる．
