@@ -77,8 +77,8 @@ html_title = project
 
 html_theme_options = {
     "show_prev_next": False,
-    "pygment_light_style": "gruvbox-light",
-    "pygment_dark_style": "native",
+    "pygments_light_style": "gruvbox-light",
+    "pygments_dark_style": "native",
     "repository_url": "https://gitlab.com/MusicScience37Projects/numerical-analysis/numerical-analysis-note",
     "use_repository_button": True,
 }
