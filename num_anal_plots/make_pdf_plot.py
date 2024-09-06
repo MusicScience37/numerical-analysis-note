@@ -6,6 +6,7 @@ import subprocess
 import click
 import plotly.io
 
+from num_anal_plots.configure_plot_defaults import configure_plot_defaults
 from num_anal_plots.plots.plots import PLOT_INFO_DICT, PLOT_NAMES, PlotInfo
 
 THIS_DIR = pathlib.Path(__file__).absolute().parent
@@ -23,6 +24,8 @@ def _make_pdf_plot(info: PlotInfo) -> None:
     pdf_path = IMAGE_DIR / f"{info.name}.pdf"
 
     click.echo(f"> Creating {pdf_path}")
+
+    configure_plot_defaults()
 
     figure = info.figure_factory()
 

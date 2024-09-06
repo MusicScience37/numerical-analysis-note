@@ -87,7 +87,6 @@ def ode_kaps_problem_work_error() -> plotly.graph_objects.Figure:
         log_x=True,
         log_y=True,
         title="Work-Error Diagram of ODE solvers for Kaps' Problem",
-        template="plotly_white",
     )
     figure.update_layout(height=900)
     return figure

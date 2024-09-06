@@ -92,7 +92,6 @@ def opt_random_multi_quadratic_function_time() -> plotly.graph_objects.Figure:
         log_x=True,
         log_y=True,
         title="Processing Time of Optimization of Random Quadratic Functions",
-        template="plotly_white",
     )
 
 
@@ -122,5 +121,4 @@ def opt_random_multi_quadratic_function_evaluations() -> plotly.graph_objects.Fi
         log_x=True,
         log_y=True,
         title="Function Evaluations in Optimization of Random Quadratic Functions",
-        template="plotly_white",
     )

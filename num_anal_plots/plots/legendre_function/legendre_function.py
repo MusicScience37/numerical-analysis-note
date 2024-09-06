@@ -34,5 +34,4 @@ def legendre_function() -> plotly.graph_objects.Figure:
             "line_dash": "Degree",
         },
         title="Legendre Function",
-        template="plotly_white",
     )

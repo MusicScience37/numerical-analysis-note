@@ -117,7 +117,6 @@ def opt_convex_difficult_functions_time() -> plotly.graph_objects.Figure:
         ],
         log_y=True,
         title="Processing Time of Optimization of Sample Convex Functions",
-        template="plotly_white",
     )
 
 
@@ -143,5 +142,4 @@ def opt_convex_difficult_functions_evaluations() -> plotly.graph_objects.Figure:
         ],
         log_y=True,
         title="Function Evaluations in Optimization of Sample Convex Functions",
-        template="plotly_white",
     )

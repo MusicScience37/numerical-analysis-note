@@ -82,7 +82,6 @@ def opt_single_variate_multi_optima_function_time() -> plotly.graph_objects.Figu
         ],
         log_y=True,
         title="Processing Time of Optimization of Random Functions with Multiple Optima (1D)",
-        template="plotly_white",
     )
 
 
@@ -108,5 +107,4 @@ def opt_single_variate_multi_optima_function_evaluations() -> (
             "Time [sec]",
         ],
         title="Function Evaluations in Optimization of Random Functions with Multiple Optima (1D)",
-        template="plotly_white",
     )

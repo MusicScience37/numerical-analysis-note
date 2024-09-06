@@ -67,7 +67,6 @@ def rbf_wendland_csrbf() -> plotly.graph_objects.Figure:
             "facet_row": "l",
         },
         title="Wendland's Compactly Supported RBF",
-        template="plotly_white",
     )
     figure.update_layout(height=900)
     return figure

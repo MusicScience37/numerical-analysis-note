@@ -113,7 +113,6 @@ def integ_de_errors() -> plotly.graph_objects.Figure:
         markers=True,
         log_y=True,
         title="Error of Numerical Integration Using Double Exponential Formula",
-        template="plotly_white",
     )
     figure.update_layout(
         # cspell: disable
