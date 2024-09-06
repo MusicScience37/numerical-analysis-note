@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3 # pylint: disable=invalid-name
+"""latexindent を実行するスクリプト。"""
 
 import os
 import subprocess
@@ -8,7 +9,7 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 TMP_DIR_PATH = os.path.abspath(THIS_DIR + "/../.latexindent")
 
 
-def run_latexindent(filepath: str):
+def run_latexindent(filepath: str):  # pylint: disable=redefined-outer-name
     """latexindent を適用する。
 
     Args:
