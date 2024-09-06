@@ -90,7 +90,6 @@ def opt_multi_variate_difficult_multi_optima_function_time() -> (
         log_x=True,
         log_y=True,
         title="Processing Time of Optimization of Random Functions with Multiple Optima",
-        template="plotly_white",
     )
 
 
@@ -122,5 +121,4 @@ def opt_multi_variate_difficult_multi_optima_function_evaluations() -> (
         log_x=True,
         log_y=True,
         title="Function Evaluations in Optimization of Random Functions with Multiple Optima",
-        template="plotly_white",
     )

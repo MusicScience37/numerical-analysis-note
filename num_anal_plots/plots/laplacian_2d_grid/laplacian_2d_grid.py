@@ -51,5 +51,4 @@ def laplacian_2d_grid() -> plotly.graph_objects.Figure:
         log_x=True,
         log_y=True,
         title="Time to Solve Linear Equations of Laplacian Matrices",
-        template="plotly_white",
     )

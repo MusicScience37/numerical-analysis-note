@@ -41,5 +41,4 @@ def ode_pendulum_movement_fixed_step_work_error() -> plotly.graph_objects.Figure
         log_x=True,
         log_y=True,
         title="Work-Error Diagram of ODE solvers for Pendulum Movement",
-        template="plotly_white",
     )

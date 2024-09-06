@@ -113,7 +113,6 @@ def integ_gauss_legendre_errors() -> plotly.graph_objects.Figure:
         markers=True,
         log_y=True,
         title="Error of Numerical Integration Using Gauss-Legendre Formula",
-        template="plotly_white",
     )
     figure.update_layout(
         # cspell: disable

@@ -99,5 +99,4 @@ def integ_gauss_legendre_kronrod_time() -> plotly.graph_objects.Figure:
         markers=True,
         log_y=True,
         title="Processing Time of Numerical Integration Using Gauss-Legendre-Kronrod Formula",
-        template="plotly_white",
     )
