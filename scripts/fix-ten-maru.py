@@ -1,15 +1,16 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3 # pylint: disable=invalid-name
+"""句読点を修正するスクリプト。"""
 
 from sys import argv
 
 ENCODING = "utf8"
 
 
-def fix_ten_maru(filepath: str):
-    """句読点を修正する
+def fix_ten_maru(filepath: str):  # pylint: disable=redefined-outer-name
+    """句読点を修正する。
 
     Args:
-        filepath (str): ファイルパス
+        filepath (str): ファイルパス。
     """
 
     with open(filepath, mode="r", encoding=ENCODING) as file:

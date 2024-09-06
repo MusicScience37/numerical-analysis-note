@@ -12,9 +12,9 @@ def legendre_function() -> plotly.graph_objects.Figure:
     Returns:
         plotly.graph_objects.Figure: プロット結果。
     """
-    x_list = []
-    y_list = []
-    n_list = []
+    x_list: list[float] = []
+    y_list: list[float] = []
+    n_list: list[int] = []
     n_max = 5
     for x in numpy.linspace(-1.0, 1.0, num=101):
         y, _ = scipy.special.lpn(n_max, x)

@@ -38,4 +38,22 @@ repos:
         language: system
         require_serial: true
         types_or: [python, pyi]
+      - id: pylint
+        name: pylint
+        entry: poetry run pylint
+        language: system
+        require_serial: true
+        types_or: [python]
+      - id: flake8
+        name: flake8
+        entry: poetry run flake8
+        language: system
+        require_serial: true
+        types_or: [python]
+      - id: mypy
+        name: mypy
+        entry: poetry run mypy
+        language: system
+        require_serial: true
+        types_or: [python]
 exclude: "extern|\\.svg"

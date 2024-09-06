@@ -1,7 +1,6 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
+"""Configuration file for Sphinx."""
+
+# pylint: disable=invalid-name
 
 import os
 import sys
@@ -15,7 +14,10 @@ sys.path.insert(0, ROOT_DIR)
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "数値解析ノート"
-copyright = "2021–2024, Kenta Kabashima. Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License"
+copyright = (  # pylint: disable=redefined-builtin
+    "2021–2024, Kenta Kabashima. "
+    "Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License"
+)
 author = "Kenta Kabashima"
 
 # -- General configuration ---------------------------------------------------
@@ -24,7 +26,7 @@ author = "Kenta Kabashima"
 extensions = []
 
 templates_path = ["_templates"]
-exclude_patterns = []
+exclude_patterns: list[str] = []
 
 # settings of myst-nb
 extensions += ["myst_nb"]  # This will automatically include myst_parser
@@ -39,7 +41,8 @@ nb_execution_cache_path = os.path.join(
 
 # setting of MathJax
 # Extension for MathJax is already enabled by myst_nb.
-# MathJax URL working with Plotly was written in https://www.npmjs.com/package/plotly.js/v/2.16.4#mathjax.
+# MathJax URL working with Plotly was written in
+# https://www.npmjs.com/package/plotly.js/v/2.16.4#mathjax.
 mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
 mathjax3_config = {
     "tex": {

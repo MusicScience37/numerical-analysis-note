@@ -18,7 +18,7 @@ def rbf_wendland_csrbf() -> plotly.graph_objects.Figure:
     l_list = []
     k_list = []
     for x in numpy.linspace(0.0, 1.2, num=121):
-        for l in [1, 2, 3]:
+        for l in [1, 2, 3]:  # noqa: E741
             k = 0
             if x < 1:
                 y = math.pow(1.0 - x, l)

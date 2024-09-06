@@ -32,10 +32,10 @@ def _load_data() -> pandas.DataFrame:
         if algorithm_name is None:
             continue
 
-        iterations = 0
-        iterations_stderr = 0
-        evaluations = 0
-        evaluations_stderr = 0
+        iterations = 0.0
+        iterations_stderr = 0.0
+        evaluations = 0.0
+        evaluations_stderr = 0.0
         for output in measurement["custom_stat_outputs"]:
             if output["name"] == "iterations":
                 iterations = float(output["stat"]["mean"])
