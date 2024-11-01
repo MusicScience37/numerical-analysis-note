@@ -60,5 +60,6 @@
   },
   "esbonio.sphinx.confDir": "",
   "restructuredtext.pythonRecommendation.disabled": true,
-  "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false
+  "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
+  "latex-workshop.formatting.latex": "latexindent"
 }
