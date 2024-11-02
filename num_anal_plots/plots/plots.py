@@ -5,6 +5,7 @@ import dataclasses
 
 import plotly.graph_objects
 
+from num_anal_plots.plots.gamma_function.gamma_function import gamma_function
 from num_anal_plots.plots.integ_finite.integ_finite_de import integ_de_errors
 from num_anal_plots.plots.integ_finite.integ_finite_gauss_legendre import (
     integ_gauss_legendre_errors,
@@ -87,6 +88,7 @@ PLOT_INFO_LIST = [
     ),
     # Special Functions.
     PlotInfo(name="legendre-function", figure_factory=legendre_function),
+    PlotInfo(name="gamma-function", figure_factory=gamma_function),
     # RBF interpolation
     PlotInfo(name="rbf-wendland-csrbf", figure_factory=rbf_wendland_csrbf),
     # Numerical integration.

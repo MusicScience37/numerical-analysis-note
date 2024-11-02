@@ -1,0 +1,36 @@
+% !TEX root = ../main.tex
+%
+
+\section{Gamma 関数}\label{sec:special-function_gamma-function}
+
+Gamma 関数は一部の特殊関数の定義で用いられる \cite{Kaneko1984} ほか，
+統計学における確率密度関数の表現にも用いられる \cite{Berendsen2011}．
+
+Gamma 関数は $x>0$ について次の式で表される
+\cite[Section 4.5]{Morse1953}．
+\begin{equation}
+    \Gamma(x) = \int_0^\infty e^{-t} t^{x-1} dt
+\end{equation}
+これを複素平面全体に拡張して定義される．
+
+Gamma 関数をプロットしたものを
+図 \ref{fig:special-function_gamma-function} に示す．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/gamma-function.pdf}
+    \caption{Gamma 関数}
+    \label{fig:special-function_gamma-function}
+\end{figure}
+
+Gamma 関数は
+\begin{equation}
+    \Gamma(x+1) = x \Gamma(x)
+\end{equation}
+のような漸化式を満たし，
+特に $n = 1, 2, \ldots$ については以下が成り立つ
+\cite[3 章]{Kaneko1984}．
+\begin{align}
+    \Gamma(n + 1)                      & = n!                                \\
+    \Gamma\left(n + \frac{1}{2}\right) & = \frac{(2n - 1)!! \sqrt{\pi}}{2^n}
+\end{align}
