@@ -37,5 +37,10 @@
     }
   },
   "postCreateCommand": "bash ./.devcontainer/setup.bash",
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "portsAttributes": {
+    "3821": {
+      "label": "sphinx-autobuild"
+    }
+  }
 }
