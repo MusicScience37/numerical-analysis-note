@@ -18,7 +18,7 @@ scipy = "^1.15.2"
 setuptools = "^75.8.2"
 
 [tool.poetry.group.web.dependencies]
-# Sphinx 8.2 causes errors in shpinxcontrib-bibtex.
+# Sphinx 8.2 causes errors in sphinxcontrib-bibtex.
 sphinx = "^8.1.3,<8.2"
 sphinxext-opengraph = "^0.9.1"
 sphinxcontrib-bibtex = "^2.6.3"
