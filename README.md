@@ -34,7 +34,7 @@
 2. Python の仮想環境を準備し，起動する．
 
    ```shell
-   poetry install --sync
+   poetry sync
    poetry shell
    ```
 

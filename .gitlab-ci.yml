@@ -15,8 +15,8 @@ pre-commit:
     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.12
-    - poetry install
+    - poetry env use 3.13
+    - poetry sync
     - poetry run pre-commit run --all-files
   cache:
     key:
@@ -38,8 +38,8 @@ build:
     - apt-get install -y --no-install-recommends librsvg2-bin qpdf
     # Install Python packages
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.12
-    - poetry install --sync
+    - poetry env use 3.13
+    - poetry sync
     # Create PDF files of plots for LaTeX document
     - poetry run python3 ./num_anal_plots/make_pdf_plot.py
     # Build LaTeX document
