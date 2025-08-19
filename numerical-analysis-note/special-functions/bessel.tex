@@ -1,0 +1,103 @@
+% !TEX root = ../main.tex
+%
+
+\section{Bessel 関数とそれに関連する関数}\label{sec:special-function_bessel-function}
+
+\index{Bessel かんすう@Bessel 関数}
+Bessel 関数と，それに関係する関数について
+\cite{Kaneko1984, Hockstadt1974, Morse1953, Press2007}
+の内容をまとめる．
+
+Bessel 関数は以下のように表される．
+\begin{equation}
+    J_{\nu}(z) = \left(\frac{z}{2}\right)^{\nu}
+    \sum_{m = 0}^{\infty} \frac{(-1)^m}{m! \Gamma(m + \nu + 1)}
+    \left(\frac{z}{2}\right)^{2m}
+    \label{eq:special-functions_bessel-function}
+\end{equation}
+ここで，$z \in \setC$ は引数で，$\nu \in \setR$ は次数と呼ばれる．
+次数を用いて $J_{\nu}(z)$ は $\nu$ 次の Bessel 関数と呼ばれる．
+
+Bessel 関数は実数 $x$, $y$ について
+以下のような微分方程式（Bessel の微分方程式）の解である．
+\begin{equation}
+    \frac{d^2 y}{dx^2} + \frac{1}{x} \frac{dy}{dx} + \left(1 - \frac{\nu^2}{x^2}\right) y = 0
+\end{equation}
+$\nu$ が整数でない場合，$J_{\nu}$ と $J_{-\nu}$ が独立した 2 つの解となる．
+一方，$\nu$ が非負整数 $n$ の場合，
+\begin{equation}
+    J_{-n}(x) = (-1)^{n} J_{n}(x)
+\end{equation}
+となり独立した解にはならない．
+この場合，$J_{n}$ と独立した解は $n$ 次の Neumann 関数
+\begin{equation}
+    N_n(x) = \lim_{\nu \to n} \frac{J_{\nu}(x) \cos{\nu \pi} - J_{-\nu}(x)}{\sin{\nu \pi}}
+\end{equation}
+となる
+\footnote{$J_{\nu}$ と $N_{\nu}$ をまとめて Bessel 関数と呼ぶ場合もあり，%
+    その場合はそれぞれ第一種 Bessel 関数，第二種 Bessel 関数と呼ぶ．}
+．
+Neumann 関数は非整数の次数 $\nu$ と複素数 $z$ についても以下のように定義される．
+\begin{equation}
+    N_{\nu}(z) = \frac{J_{\nu}(z) \cos{\nu \pi} - J_{-\nu}(z)}{\sin{\nu \pi}}
+\end{equation}
+
+
+Bessel 関数と Neumann 関数を組み合わせた
+\begin{align}
+    H_{\nu}^{(1)}(z) & = J_{\nu}(z) + i N_{\nu}(z) \\
+    H_{\nu}^{(2)}(z) & = J_{\nu}(z) - i N_{\nu}(z)
+\end{align}
+のような関数を Hankel 関数と呼ぶ．
+これらの Bessel 関数，Neumann 関数，Hankel 関数は円柱関数とも呼ばれる．
+
+Bessel 関数，Neumann 関数，Hankel 関数は，いずれも以下のような漸化式を満たす．
+\begin{gather}
+    Z_{\nu - 1}(z) + Z_{\nu + 1}(z) = \frac{2\nu}{z} Z_{\nu}(z) \\
+    Z_{\nu - 1}(z) - Z_{\nu + 1}(z) = 2 \frac{d}{dz} Z_{\nu}(z)
+\end{gather}
+
+整数の次数 $n$，実数の引数 $x$ の場合，Bessel の積分表示
+\begin{equation}
+    J_n(x) = \frac{1}{\pi} \int_0^\pi \cos(n \theta - x \sin\theta) d\theta
+\end{equation}
+が成り立つ．
+非整数の次数 $\nu$ の場合，$\Re(z) > 0$ においては以下の積分表示が成り立つ．
+\begin{equation}
+    J_{\nu}(z) = \frac{1}{\pi} \int_0^\pi \cos(\nu \theta - z \sin \theta) d\theta
+    - \frac{\sin(\nu \pi)}{\pi} \int_0^\infty e^{-\nu t -z \sinh{t}} dt
+\end{equation}
+この積分を Neumann 関数の定義式に代入すると
+\begin{align}
+    N_{\nu}(z)
+     & =
+    \frac{\cos(\nu \pi)}{\pi \sin(\nu \pi)} \int_0^\pi \cos(\nu \theta - z \sin \theta) d\theta
+    - \frac{1}{\pi \sin(\nu \pi)} \int_0^\pi \cos(-\nu \theta - z \sin \theta) d\theta
+    \notag \\ &\hspace{2em}
+    - \frac{\cos(\nu \pi)}{\pi} \int_0^\infty e^{-\nu t -z \sinh{t}} dt
+    - \frac{1}{\pi} \int_0^\infty e^{\nu t -z \sinh{t}} dt
+\end{align}
+となり，2 項目について $\theta$ を $\pi - \theta$ と置換すると
+\begin{align}
+    N_{\nu}(z)
+     & =
+    \frac{\cos(\nu \pi)}{\pi \sin(\nu \pi)} \int_0^\pi \cos(\nu \theta - z \sin \theta) d\theta
+    - \frac{1}{\pi \sin(\nu \pi)} \int_0^\pi \cos(-\nu \pi + \nu \theta - z \sin \theta) d\theta
+    \notag \\ &\hspace{2em}
+    - \frac{\cos(\nu \pi)}{\pi} \int_0^\infty e^{-\nu t -z \sinh{t}} dt
+    - \frac{1}{\pi} \int_0^\infty e^{\nu t -z \sinh{t}} dt
+    \\
+     & =
+    \frac{\cos(\nu \pi)}{\pi \sin(\nu \pi)} \int_0^\pi \cos(\nu \theta - z \sin \theta) d\theta
+    - \frac{\cos(\nu \pi)}{\pi \sin(\nu \pi)} \int_0^\pi \cos(\nu \theta - z \sin \theta) d\theta
+    - \frac{1}{\pi} \int_0^\pi \sin(\nu \theta - z \sin \theta) d\theta
+    \notag \\ &\hspace{2em}
+    - \frac{\cos(\nu \pi)}{\pi} \int_0^\infty e^{-\nu t -z \sinh{t}} dt
+    - \frac{1}{\pi} \int_0^\infty e^{\nu t -z \sinh{t}} dt
+    \\
+     & =
+    \frac{1}{\pi} \int_0^\pi \sin(z \sin \theta - \nu \theta) d\theta
+    - \frac{1}{\pi} \int_0^\infty \left(e^{\nu t} + e^{-\nu t} \cos(\nu \pi)\right) e^{-z \sinh{t}} dt
+\end{align}
+となる．
+この積分表示は分母に $\sin(\nu \pi)$ がないため，整数の $\nu$ についてもそのまま使用できる．
