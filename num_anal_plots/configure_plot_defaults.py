@@ -25,6 +25,17 @@ def configure_plot_defaults():
                 "zerolinecolor": "rgb(200,200,200)",  # cspell: disable-line
                 "ticks": "outside",
             },
+            layout_colorway=[
+                "#DA6212",
+                "#3AB111",
+                "#5B19D9",
+                "#F61EAF",
+                "#2EC1F3",
+                "#E0B70C",
+                "#80807F",
+                "#825308",
+                "#8F0C6F",
+            ],
         )
     )
     plotly.io.templates.default = "plotly_white+num_anal_plot_overrides"
