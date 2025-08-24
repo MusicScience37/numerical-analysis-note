@@ -23,17 +23,24 @@ RBF としては表
     \label{table:interp_kernel_example-rbfs}
     \centering
     \begin{tabular}{ll}
-        名称                      & 関数                                  \\
+        名称                        & 関数                                           \\
         \hline
-        Gaussian                & $e^{-r^2}$                          \\
-        Multi-quadric           & $\sqrt{1 + r^2}$                    \\
-        Inverse Multi-quadric   & $1/\sqrt{1 + r^2}$                  \\
-        Inverse Quadric         & $1 / (1 + r^2)$                     \\
-        Sech                    & $1 / \cosh{r}$                      \\
-        Bessel ($d=1,2,\ldots$) & $J_{d/2-1}(r) / r^{d/2-1}$          \\
-        Compactly Supported RBF & （\ref{sec:interp_kernel_csrbf} 節参照）
+        Gaussian                  & $e^{-r^2}$                                   \\
+        Multi-quadric             & $\sqrt{1 + r^2}$                             \\
+        Inverse Multi-quadric     & $1/\sqrt{1 + r^2}$                           \\
+        Inverse Quadric           & $1 / (1 + r^2)$                              \\
+        Sech                      & $1 / \cosh{r}$                               \\
+        Bessel ($d=1,2,\ldots$)   & $J_{d/2-1}(r) / r^{d/2-1}$                   \\
+        Polyharmonic spline (PHS) & $r^{2k-1}$, $r^{2k}\log{r}$ ($k=1,2,\ldots$) \\
+        Compactly Supported RBF   & （\ref{sec:interp_kernel_csrbf} 節参照）
     \end{tabular}
 \end{table}
+
+Polyharmonic spline は
+\ref{sec:interp_kernel_thin-plate-spline} 節で後述する
+thin plate spline におけるカーネルの係数を省略したような形になっている．
+補間の計算をする上では係数に意味がないが，
+thin plate spline では理論上 $r$ の何乗を選択するべきかが決定されているなどの違いがある．
 
 \subsection{Wendland の Compactly Supported RBF}\label{sec:interp_kernel_csrbf}
 
