@@ -45,6 +45,24 @@ $\bm{r}$ に対する Hessian は以下のように書ける．
     -(D \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right) \frac{I}{c^2}
 \end{equation}
 
+更に，$\bm{r}$ に対する 3 階，4 階の微分も以下のように書ける．
+\begin{align}
+    \nabla \triangle K(\bm{r}, \bm{r}') & =
+    -(D^3 \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)
+    \frac{\|\bm{r} - \bm{r}'\|_2^2 (\bm{r} - \bm{r}')}{c^6}
+    +(D^2 \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)
+    \frac{(d+2)(\bm{r} - \bm{r}')}{c^4}
+    \\
+    \triangle^2 K(\bm{r}, \bm{r}')      & =
+    (D^4 \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)
+    \frac{\|\bm{r} - \bm{r}'\|_2^4}{c^8}
+    -(D^3 \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)
+    \frac{2(d+2)\|\bm{r} - \bm{r}'\|_2^2}{c^6}
+    \notag                                  \\ &\hspace{4em}
+    +(D^2 \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)
+    \frac{d(d+2)}{c^4}
+\end{align}
+
 表 \ref{table:interp_kernel_example-rbfs} で示していた RBF の一部に対して作用素 $D$ を適用した例を
 表 \ref{table:interp_kernel_rbf-derivatives} に示す．
 
