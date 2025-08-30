@@ -1,0 +1,63 @@
+% !TEX root = ../../main.tex
+%
+
+\section{微分などの線型作用素の適用}\label{sec:interp_kernel_operators}
+
+カーネル法による補間
+\begin{equation}
+    f(\bm{r}) = \sum_{i=1}^m c_i K(\bm{r}, \bm{r}_i)
+\end{equation}
+を利用して線型作用素 $L$ を適用した結果を
+\begin{equation}
+    L f(\bm{r}) = \sum_{i=1}^m c_i L K(\bm{r}, \bm{r}_i)
+\end{equation}
+のように推定できる．
+
+\subsection{RBF 補間の微分}\label{sec:interp_kernel_operators_rbf-differentiation}
+
+RBF 補間に Laplacian などの微分の作用素を適用することで部分を表現したものは
+偏微分方程式の解法 \cite{Fornberg2015,Chu2023} などに応用されている．
+
+RBF の微分を行う作用素を Wendland の Compactly Supported RBF のように
+式 \eqref{eq:rbf_wendland-csrbf_differentiation-operator} で定義すると，
+2-ノルムを用いた RBF 補間におけるカーネル
+\begin{equation}
+    K(\bm{r}, \bm{r}') = \phi\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)
+\end{equation}
+の $\bm{r}$ に対する勾配は以下のように書ける
+\footnote{$\nabla$ を適用して式を整理することで導出できるため，導出の過程は省略している．}．
+\begin{equation}
+    \nabla K(\bm{r}, \bm{r}') =
+    - (D \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right) \frac{\bm{r} - \bm{r}'}{c^2}
+\end{equation}
+
+同様に $\bm{r}$ に対する Laplacian は $\bm{r}$ の次元 $d$ を用いて以下のように書ける．
+\begin{equation}
+    \triangle K(\bm{r}, \bm{r}') =
+    (D^2 \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right) \frac{\|\bm{r} - \bm{r}'\|_2^2}{c^4}
+    -(D \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right) \frac{d}{c^2}
+\end{equation}
+
+$\bm{r}$ に対する Hessian は以下のように書ける．
+\begin{equation}
+    \nabla^2 K(\bm{r}, \bm{r}') =
+    (D^2 \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right) \frac{(\bm{r} - \bm{r}')(\bm{r} - \bm{r}')^\top}{c^4}
+    -(D \phi)\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right) \frac{I}{c^2}
+\end{equation}
+
+表 \ref{table:interp_kernel_example-rbfs} で示していた RBF の一部に対して作用素 $D$ を適用した例を
+表 \ref{table:interp_kernel_rbf-derivatives} に示す．
+
+\begin{table}[bp]
+    \caption{RBF の微分の例}
+    \label{table:interp_kernel_rbf-derivatives}
+    \centering
+    \begin{tabular}{lll}
+        名称                    & 元の関数               & 微分                                             \\
+        \hline
+        Gaussian              & $e^{-r^2}$         & $D^n e^{-r^2} = 2^n e^{-r^2}$                  \\
+        Inverse Multi-quadric & $1/\sqrt{1 + r^2}$ & $D (1/\sqrt{1 + r^2}) = 1/(1 + r^2)^{3/2}$     \\
+        Inverse Quadric       & $1 / (1 + r^2)$    & $D (1 / (1 + r^2)) = 2/(1 + r^2)^2$            \\
+        Sech                  & $1 / \cosh{r}$     & $D (1 / \cosh{r}) = \sinh{r} / (r \cosh^2{r})$
+    \end{tabular}
+\end{table}
