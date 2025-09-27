@@ -141,6 +141,31 @@ $\mathrm{TGV}_{\alpha}^2$ を含む評価関数の最適化について
     \end{pmatrix}
 \end{equation}
 
+ここで，係数行列の特性を確認する．
+係数行列の左右から $(\bm{x}^\top, \bm{z}^\top)^\top$ を掛けると，以下のようになる．
+\begin{align}
+      &
+    \begin{pmatrix}
+        \bm{x}^\top & \bm{z}^\top
+    \end{pmatrix}
+    \begin{pmatrix}
+        2 A^\top A + \rho D^\top D & -\rho D^\top           \\
+        -\rho D                    & \rho I + \rho E^\top E
+    \end{pmatrix}
+    \begin{pmatrix}
+        \bm{x} \\ \bm{z}
+    \end{pmatrix}
+    \notag \\
+    = &
+    \bm{x}^\top (2 A^\top A + \rho D^\top D) \bm{x}
+    - 2 \rho \bm{x}^\top D^\top \bm{z}
+    + \rho \bm{z}^\top (I + E^\top E) \bm{z}
+    \notag \\
+    = &
+    2 \|A \bm{x}\|_2^2 + \rho \|D \bm{x} - \bm{z}\|_2^2 + \rho \|E \bm{z}\|_2^2
+\end{align}
+少なくともこの式は 0 以上となるため，係数行列は少なくとも半正定値である．
+
 \subsubsection{$\bm{s}$, $\bm{t}$ の更新式}
 
 次に，$\bm{s}, \bm{t}$ の具体的な更新式を求める．
