@@ -107,3 +107,36 @@
 上記のように更新式を分割することで，関数 $f$ と $g$ の最適化を別々に扱えるようになる．
 この性質を活用した応用例としては，
 スパース正則化（\ref{chap:regularization_sparse} 章）が挙げられる．
+
+交互方向乗数法においては，停止条件の判定に以下の量が使用される．
+\begin{align}
+    \bm{r}_{k+1} & = A \bm{x}_{k+1} + B \bm{y}_{k+1} - \bm{c} \\
+    \bm{s}_{k+1} & = \rho A^\top B (\bm{y}_{k+1} - \bm{y}_k)
+\end{align}
+ここで，$\bm{r}_{k+1}$ は primal residual と呼ばれ，制約条件の残差を示す．
+一方，$\bm{s}_{k+1}$ は dual residual と呼ばれ，KKT 条件に関連する残差を示す \cite{Boyd2010}．
+これらを用いて，以下の停止条件が規定される \cite{Boyd2010}．
+\begin{align}
+    \|\bm{r}_{k+1}\|_2 \leq \epsilon_{\text{pri}}  & =
+    \sqrt{m} \epsilon_{\text{abs}} + \epsilon_{\text{rel}}
+    \max\left\{\|A \bm{x}_{k}\|_2, \|B \bm{y}_{k}\|_2, \|\bm{c}\|_2 \right\}
+    \\
+    \|\bm{s}_{k+1}\|_2 \leq \epsilon_{\text{dual}} & =
+    \sqrt{n} \epsilon_{\text{abs}} + \epsilon_{\text{rel}} \|A^\top \bm{\lambda}_{k}\|_2
+\end{align}
+ここで，$m$ は $\bm{c}$ の次元，$n$ は $\bm{x}$ の次元，
+$\epsilon_{\text{abs}} > 0$ は絶対許容誤差，$\epsilon_{\text{rel}} > 0$ は相対許容誤差である \cite{Boyd2010}．
+
+制約条件に対する係数 $\rho$ は収束の速度に影響を与えるため，
+反復ごとに値を更新していく手法が知られている \cite{Boyd2010}．
+例えば，以下のように $\rho$ を更新する．
+\begin{equation}
+    \rho_{k+1} =
+    \begin{cases}
+        \tau \rho_k                       & \text{if $\|\bm{r}_k\|_2 > \mu \|\bm{s}_k\|_2$} \\
+        \displaystyle \frac{\rho_k}{\tau} & \text{if $\|\bm{s}_k\|_2 > \mu \|\bm{r}_k\|_2$} \\
+        \rho_k                            & \text{otherwise}
+    \end{cases}
+\end{equation}
+ここで，$\tau > 1$ および $\mu > 1$ は定数であり，
+典型的な値としては $\tau = 2$，$\mu = 10$ が挙げられる \cite{Boyd2010}．
