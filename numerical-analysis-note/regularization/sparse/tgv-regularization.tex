@@ -131,6 +131,10 @@ $\bm{z}$ の更新式は，
      & = (\rho I + \rho E^\top E)^{-1} \left(
     \bm{p}_k - E^\top \bm{u}_k + \rho D \bm{x}_{k+1} - \rho \bm{s}_k + \rho E^\top \bm{t}_k
     \right)
+    \notag                                    \\
+     & = (I + E^\top E)^{-1} \left(
+    \frac{\bm{p}_k}{\rho} - \frac{E^\top \bm{u}_k}{\rho} + D \bm{x}_{k+1} - \bm{s}_k + E^\top \bm{t}_k
+    \right)
 \end{align}
 となる．
 $\bm{s}$ の更新式は，
@@ -181,8 +185,8 @@ $\bm{t}$ の更新式は，
     \right)
     \\
     \bm{z}_{k+1}
-     & = (\rho I + \rho E^\top E)^{-1} \left(
-    \bm{p}_k - E^\top \bm{u}_k + \rho D \bm{x}_{k+1} - \rho \bm{s}_k + \rho E^\top \bm{t}_k
+     & = (I + E^\top E)^{-1} \left(
+    \frac{\bm{p}_k}{\rho} - \frac{E^\top \bm{u}_k}{\rho} + D \bm{x}_{k+1} - \bm{s}_k + E^\top \bm{t}_k
     \right)
     \\
     \bm{s}_{k+1}
