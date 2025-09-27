@@ -80,6 +80,120 @@ $\mathrm{TGV}_{\alpha}^2$ を含む評価関数の最適化について
 
 交互方向乗数法の更新式は以下のようになる．
 \begin{align}
+    (\bm{x}_{k+1}, \bm{z}_{k+1}) & = \argmin_{\bm{x}, \bm{z}}
+    L_{\rho}(\bm{x}, \bm{z}, \bm{s}_k, \bm{t}_k, \bm{p}_k, \bm{u}_k)
+    \\
+    (\bm{s}_{k+1}, \bm{t}_{k+1}) & = \argmin_{\bm{s}, \bm{t}}
+    L_{\rho}(\bm{x}_{k+1}, \bm{z}_{k+1}, \bm{s}, \bm{t}, \bm{p}_k, \bm{u}_k)
+    \\
+    \bm{p}_{k+1}                 & = \bm{p}_k + \rho (D \bm{x}_{k+1} - \bm{z}_{k+1} - \bm{s}_{k+1})
+    \\
+    \bm{u}_{k+1}                 & = \bm{u}_k + \rho (E \bm{z}_{k+1} - \bm{t}_{k+1})
+\end{align}
+
+\subsubsection{$\bm{x}$, $\bm{z}$ の更新式}
+
+まず，$\bm{x}, \bm{z}$ の具体的な更新式を求める．
+そのため，拡張ラグランジュ関数について $\bm{x}$, $\bm{z}$ による勾配を計算する．
+\begin{align}
+    \nabla_{\bm{x}} L_{\rho}(\bm{x}, \bm{z}, \bm{s}, \bm{t}, \bm{p}, \bm{u}) & =
+    2 A^\top (A \bm{x} - \bm{y}) + D^\top \bm{p} + \rho D^\top (D \bm{x} - \bm{z} - \bm{s})
+    \\
+    \nabla_{\bm{z}} L_{\rho}(\bm{x}, \bm{z}, \bm{s}, \bm{t}, \bm{p}, \bm{u}) & =
+    -\bm{p} + E^\top \bm{u} - \rho (D \bm{x} - \bm{z} - \bm{s}) + \rho E^\top (E \bm{z} - \bm{t})
+\end{align}
+これらを 0 にするには，以下の方程式を解く必要がある．
+\begin{align}
+    (2 A^\top A + \rho D^\top D) \bm{x} - \rho D^\top \bm{z} & =
+    2 A^\top \bm{y} - D^\top \bm{p} + \rho D^\top \bm{s}
+    \\
+    -\rho D \bm{x} + (\rho I + \rho E^\top E) \bm{z}         & =
+    \bm{p} - E^\top \bm{u} - \rho \bm{s} + \rho E^\top \bm{t}
+\end{align}
+行列で表すと以下になる．
+\begin{equation}
+    \begin{pmatrix}
+        2 A^\top A + \rho D^\top D & -\rho D^\top           \\
+        -\rho D                    & \rho I + \rho E^\top E
+    \end{pmatrix}
+    \begin{pmatrix}
+        \bm{x} \\ \bm{z}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        2 A^\top \bm{y} - D^\top \bm{p} + \rho D^\top \bm{s} \\
+        \bm{p} - E^\top \bm{u} - \rho \bm{s} + \rho E^\top \bm{t}
+    \end{pmatrix}
+\end{equation}
+よって，更新式は以下となる．
+\begin{equation}
+    \begin{pmatrix}
+        2 A^\top A + \rho D^\top D & -\rho D^\top           \\
+        -\rho D                    & \rho I + \rho E^\top E
+    \end{pmatrix}
+    \begin{pmatrix}
+        \bm{x}_{k+1} \\ \bm{z}_{k+1}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        2 A^\top \bm{y}_k - D^\top \bm{p}_k + \rho D^\top \bm{s}_k \\
+        \bm{p}_k - E^\top \bm{u}_k - \rho \bm{s}_k + \rho E^\top \bm{t}_k
+    \end{pmatrix}
+\end{equation}
+
+\subsubsection{$\bm{s}$, $\bm{t}$ の更新式}
+
+次に，$\bm{s}, \bm{t}$ の具体的な更新式を求める．
+拡張ラグランジュ関数において，$\bm{s}$ に関する項と $\bm{t}$ に関する項は分かれているため，
+$\bm{s}$ と $\bm{t}$ は独立に更新できる．
+
+$\bm{s}$ の更新式は，
+\begin{align}
+    \bm{s}_{k+1}
+     & = \argmin_{\bm{s}}
+    L_{\rho}(\bm{x}_{k+1}, \bm{z}_{k+1}, \bm{s}, \bm{t}_k, \bm{p}_k, \bm{u}_k)
+    \notag                                                                                               \\
+     & = \argmin_{\bm{s}} \left(
+    \lambda \|\bm{s}\|_1
+    + \bm{p}_k^\top (D \bm{x}_{k+1} - \bm{z}_{k+1} - \bm{s})
+    + \frac{\rho}{2} \|D \bm{x}_{k+1} - \bm{z}_{k+1} - \bm{s}\|_2^2
+    \right)
+    \notag                                                                                               \\
+     & = \argmin_{\bm{s}} \left(
+    \lambda \|\bm{s}\|_1
+    + \frac{\rho}{2} \left\|D \bm{x}_{k+1} - \bm{z}_{k+1} - \bm{s} + \frac{\bm{p}_k}{\rho} \right\|_2^2
+    \right)
+    \notag                                                                                               \\
+     & = \mathcal{T}_{\lambda/\rho} \left( D \bm{x}_{k+1} - \bm{z}_{k+1} + \frac{\bm{p}_k}{\rho} \right)
+\end{align}
+となる．
+$\bm{t}$ の更新式は，
+\begin{align}
+    \bm{t}_{k+1}
+     & = \argmin_{\bm{t}}
+    L_{\rho}(\bm{x}_{k+1}, \bm{z}_{k+1}, \bm{s}_{k}, \bm{t}, \bm{p}_k, \bm{u}_k)
+    \notag                                                                                       \\
+     & = \argmin_{\bm{t}} \left(
+    \lambda \alpha \|\bm{t}\|_1
+    + \bm{u}_k^\top (E \bm{z}_{k+1} - \bm{t})
+    + \frac{\rho}{2} \|E \bm{z}_{k+1} - \bm{t}\|_2^2
+    \right)
+    \notag                                                                                       \\
+     & = \argmin_{\bm{t}} \left(
+    \lambda \alpha \|\bm{t}\|_1
+    + \frac{\rho}{2} \left\|E \bm{z}_{k+1} - \bm{t} + \frac{\bm{u}_k}{\rho} \right\|_2^2
+    \right)
+    \notag                                                                                       \\
+     & = \mathcal{T}_{\lambda/\rho \alpha} \left( E \bm{z}_{k+1} + \frac{\bm{u}_k}{\rho} \right)
+\end{align}
+となる．
+
+\subsection{交互方向乗数法（各変数を別々に更新した場合）}
+
+文献 \cite{Li2016} では，
+交互方向乗数法において各変数を別々に更新している．
+その解法を用いる場合，交互方向乗数法の更新式は以下のようになる．
+\begin{align}
     \bm{x}_{k+1} & = \argmin_{\bm{x}}
     L_{\rho}(\bm{x}, \bm{z}_k, \bm{s}_k, \bm{t}_k, \bm{p}_k, \bm{u}_k)
     \\
