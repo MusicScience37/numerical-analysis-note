@@ -83,8 +83,14 @@ html_js_files = [
 
 html_title = project
 
+html_favicon = "../../icon/icon.svg"
+html_logo = "../../icon/icon.svg"
+
 html_theme_options = {
     "show_prev_next": False,
+    "logo": {
+        "text": html_title,
+    },
     "pygments_light_style": "gruvbox-light",
     "pygments_dark_style": "native",
     "repository_url": "https://gitlab.com/MusicScience37Projects/numerical-analysis/numerical-analysis-note",

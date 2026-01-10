@@ -11,6 +11,8 @@ RUN apt-get update && \
     vim nano \
     graphviz \
     sudo \
+    # For icon conversion
+    imagemagick \
     # For rsvg-converter
     librsvg2-bin \
     # For qpdf
