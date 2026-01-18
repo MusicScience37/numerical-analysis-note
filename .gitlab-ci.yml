@@ -90,7 +90,7 @@ pages:
   image: alpine
   script:
     - mv docs/build/html public
-    - cp icon/icon.ico public/favicon.ico
+    - cp icon-logo/icon.ico public/favicon.ico
     - mv numerical-analysis-note/main.pdf public/numerical-analysis-note.pdf
   artifacts:
     paths:

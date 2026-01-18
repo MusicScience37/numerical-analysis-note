@@ -83,8 +83,8 @@ html_js_files = [
 
 html_title = project
 
-html_favicon = "../../icon/icon.svg"
-html_logo = "../../icon/icon.svg"
+html_favicon = "../../icon-logo/icon.svg"
+html_logo = "../../icon-logo/icon.svg"
 
 html_theme_options = {
     "show_prev_next": False,
