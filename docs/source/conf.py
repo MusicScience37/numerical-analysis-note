@@ -84,9 +84,12 @@ html_js_files = [
 html_title = project
 
 html_favicon = "../../icon-logo/icon.svg"
-html_logo = "../../icon-logo/logo.svg"
 
 html_theme_options = {
+    "logo": {
+        "image_light": "../../icon-logo/logo.svg",
+        "image_dark": "../../icon-logo/logo-dark.svg",
+    },
     "show_prev_next": False,
     "pygments_light_style": "gruvbox-light",
     "pygments_dark_style": "native",
