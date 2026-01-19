@@ -3,7 +3,7 @@
 ## 著作権表示
 
 ```text
-(c) 2021–2025, Kenta Kabashima.
+(c) 2021–2026, Kenta Kabashima.
 This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. To view a copy of this license, visit
 http://creativecommons.org/licenses/by-sa/4.0/.
 ```
