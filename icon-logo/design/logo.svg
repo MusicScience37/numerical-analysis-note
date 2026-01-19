@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="360"
-   height="88"
-   viewBox="0 0 360 88.000004"
+   width="340"
+   height="70"
+   viewBox="0 0 340 70.000003"
    version="1.1"
    id="svg1"
    inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
@@ -24,7 +24,7 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      inkscape:zoom="1.4378367"
-     inkscape:cx="83.458712"
+     inkscape:cx="83.458713"
      inkscape:cy="-1.7387232"
      inkscape:window-width="2560"
      inkscape:window-height="1369"
@@ -85,8 +85,8 @@
        id="rect3"
        width="66.510834"
        height="66.510841"
-       x="9.2445803"
-       y="8.7445803"
+       x="-1.75542"
+       y="-0.25542003"
        ry="11.854233"
        inkscape:label="book-back-rect" />
   </g>
@@ -97,7 +97,7 @@
      transform="translate(4,2)">
     <path
        style="fill:none;stroke:#1d130e;stroke-width:4.6;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#CapTriangle);marker-end:url(#marker2)"
-       d="m 58.2,61 v 1 h -31 L 42.200002,42.000002 27.2,22 h 31 v 1"
+       d="m 47.2,52 v 1 h -31 L 31.200002,33.000002 16.2,13 h 31 v 1"
        id="path1"
        sodipodi:nodetypes="ccccccc"
        inkscape:label="sigma" />
@@ -109,14 +109,14 @@
     <text
        xml:space="preserve"
        style="font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP';letter-spacing:1.8px;writing-mode:lr-tb;direction:ltr;fill:#1d130e;fill-opacity:1;stroke:none;stroke-width:2;stroke-dasharray:none;stroke-opacity:1"
-       x="92.274002"
-       y="59.507454"
+       x="81.274002"
+       y="50.507454"
        id="text1"
        inkscape:label="title-text"><tspan
          sodipodi:role="line"
          id="tspan1"
-         x="92.274002"
-         y="59.507454"
+         x="81.274002"
+         y="50.507454"
          style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';stroke-width:2">数<tspan
    id="tspan18"
    style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';letter-spacing:2.2px;stroke-width:2">値</tspan><tspan
