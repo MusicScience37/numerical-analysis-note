@@ -23,15 +23,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="0.71891836"
-     inkscape:cx="-166.91742"
-     inkscape:cy="-43.815823"
+     inkscape:zoom="1.4378367"
+     inkscape:cx="83.458712"
+     inkscape:cy="-1.7387232"
      inkscape:window-width="2560"
      inkscape:window-height="1369"
      inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer4" />
+     inkscape:current-layer="layer1" />
   <defs
      id="defs1">
     <marker
@@ -76,33 +76,18 @@
     </marker>
   </defs>
   <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="back"
-     transform="translate(4,2)">
-    <rect
-       style="fill:#fbebe3;fill-opacity:1;stroke:none;stroke-width:13.9466;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-       id="rect3-5"
-       width="360"
-       height="88"
-       x="-4"
-       y="-2"
-       ry="0"
-       inkscape:label="back-rect" />
-  </g>
-  <g
      inkscape:label="book-back"
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(4,2)">
     <rect
-       style="fill:#f6e1bf;fill-opacity:1;stroke:#cfba99;stroke-width:1.4;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#fbebe3;fill-opacity:1;stroke:#b99584;stroke-width:1.48916;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect3"
-       width="61.045998"
-       height="64.045998"
-       x="11.977"
-       y="9.9770002"
-       ry="14.093781"
+       width="66.510834"
+       height="66.510841"
+       x="9.2445803"
+       y="8.7445803"
+       ry="11.854233"
        inkscape:label="book-back-rect" />
   </g>
   <g
@@ -124,13 +109,13 @@
     <text
        xml:space="preserve"
        style="font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP';letter-spacing:1.8px;writing-mode:lr-tb;direction:ltr;fill:#1d130e;fill-opacity:1;stroke:none;stroke-width:2;stroke-dasharray:none;stroke-opacity:1"
-       x="89.096519"
+       x="92.274002"
        y="59.507454"
        id="text1"
        inkscape:label="title-text"><tspan
          sodipodi:role="line"
          id="tspan1"
-         x="89.096519"
+         x="92.274002"
          y="59.507454"
          style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';stroke-width:2">数<tspan
    id="tspan18"
