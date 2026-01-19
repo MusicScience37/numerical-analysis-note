@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="340"
+   height="70"
+   viewBox="0 0 340 70.000003"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="1.4378367"
+     inkscape:cx="83.458713"
+     inkscape:cy="-1.7387232"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <marker
+       markerWidth="1.5"
+       markerHeight="1"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       id="CapTriangle"
+       viewBox="0 0 0.525 1"
+       inkscape:stockid="Triangle cap"
+       style="overflow:visible"
+       preserveAspectRatio="none"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         style="fill:context-stroke;stroke-linecap:butt"
+         d="M 0,-1 1,0 0,1 -0.05,0 Z"
+         sodipodi:nodetypes="sssssscsss"
+         transform="scale(0.5)"
+         id="path61" />
+    </marker>
+    <marker
+       markerWidth="1.5"
+       markerHeight="0.99999994"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       id="marker2"
+       viewBox="0 0 0.525 1"
+       inkscape:stockid="Triangle cap"
+       style="overflow:visible"
+       preserveAspectRatio="none"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         style="fill:context-stroke;stroke-linecap:butt"
+         d="M 0,-1 1,0 0,1 -0.05,0 Z"
+         sodipodi:nodetypes="sssssscsss"
+         transform="scale(0.5)"
+         id="path2" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="book-back"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(4,2)">
+    <rect
+       style="fill:#fbebe3;fill-opacity:1;stroke:#b99584;stroke-width:1.48916;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3"
+       width="66.510834"
+       height="66.510841"
+       x="-1.75542"
+       y="-0.25542003"
+       ry="11.854233"
+       inkscape:label="book-back-rect" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="book-front"
+     transform="translate(4,2)">
+    <path
+       style="fill:none;stroke:#1d130e;stroke-width:4.6;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#CapTriangle);marker-end:url(#marker2)"
+       d="m 47.2,52 v 1 h -31 L 31.200002,33.000002 16.2,13 h 31 v 1"
+       id="path1"
+       sodipodi:nodetypes="ccccccc"
+       inkscape:label="sigma" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="title">
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP';letter-spacing:1.8px;writing-mode:lr-tb;direction:ltr;fill:#1d130e;fill-opacity:1;stroke:none;stroke-width:2;stroke-dasharray:none;stroke-opacity:1"
+       x="81.274002"
+       y="50.507454"
+       id="text1"
+       inkscape:label="title-text"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         x="81.274002"
+         y="50.507454"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';stroke-width:2">数<tspan
+   id="tspan18"
+   style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';letter-spacing:2.2px;stroke-width:2">値</tspan><tspan
+   style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';letter-spacing:2px;stroke-width:2"
+   id="tspan9">解</tspan><tspan
+   style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';letter-spacing:-3.4px;stroke-width:2"
+   id="tspan10">析</tspan><tspan
+   id="tspan19"
+   style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';letter-spacing:-7px;stroke-width:2">ノ</tspan><tspan
+   style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';letter-spacing:-12px;stroke-width:2"
+   id="tspan11">ー</tspan>ト</tspan></text>
+  </g>
+</svg>

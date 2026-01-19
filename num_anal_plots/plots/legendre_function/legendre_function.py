@@ -17,7 +17,9 @@ def legendre_function() -> plotly.graph_objects.Figure:
     n_list: list[int] = []
     n_max = 5
     for x in numpy.linspace(-1.0, 1.0, num=101):
-        y, _ = scipy.special.lpn(n_max, x)
+        # Pylint cannot find eval_legendre in scipy.special.
+        # pylint: disable=E1101
+        y = [scipy.special.eval_legendre(n, x) for n in range(n_max + 1)]
         x_list = x_list + [x] * (n_max + 1)
         y_list = y_list + list(y)
         n_list = n_list + list(range(n_max + 1))
