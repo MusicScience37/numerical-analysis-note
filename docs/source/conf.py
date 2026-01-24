@@ -15,10 +15,10 @@ sys.path.insert(0, ROOT_DIR)
 
 project = "数値解析ノート"
 copyright = (  # pylint: disable=redefined-builtin
-    "2021–2026, Kenta Kabashima. "
+    "2021–2026, MusicScience37 (Kenta Kabashima). "
     "Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License"
 )
-author = "Kenta Kabashima"
+author = "MusicScience37 (Kenta Kabashima)"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
