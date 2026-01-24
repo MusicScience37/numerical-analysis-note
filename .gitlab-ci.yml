@@ -42,7 +42,7 @@ build:
     - poetry sync
     # Create PDF files of plots for LaTeX document
     - poetry run plotly_get_chrome -y
-    - poetry run python3 ./num_anal_plots/make_pdf_plot.py
+    - bash ./scripts/generate-images.sh
     # Build LaTeX document
     - cd numerical-analysis-note
     - latexmk
