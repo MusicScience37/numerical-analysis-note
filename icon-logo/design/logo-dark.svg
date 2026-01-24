@@ -9,13 +9,14 @@
    id="svg1"
    inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
    sodipodi:docname="logo-dark.svg"
+   xml:space="preserve"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
      id="namedview1"
-     pagecolor="#260d02"
+     pagecolor="#303030"
      bordercolor="#000000"
      borderopacity="0.25"
      inkscape:showpageshadow="2"
@@ -23,64 +24,24 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="1.4378367"
-     inkscape:cx="84.154202"
-     inkscape:cy="-1.7387232"
+     inkscape:zoom="2.0334082"
+     inkscape:cx="17.704266"
+     inkscape:cy="-1.2294629"
      inkscape:window-width="2560"
      inkscape:window-height="1369"
      inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs1">
-    <marker
-       markerWidth="1.5"
-       markerHeight="1"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       id="CapTriangle"
-       viewBox="0 0 0.525 1"
-       inkscape:stockid="Triangle cap"
-       style="overflow:visible"
-       preserveAspectRatio="none"
-       inkscape:isstock="true"
-       inkscape:collect="always">
-      <path
-         style="fill:context-stroke;stroke-linecap:butt"
-         d="M 0,-1 1,0 0,1 -0.05,0 Z"
-         sodipodi:nodetypes="sssssscsss"
-         transform="scale(0.5)"
-         id="path61" />
-    </marker>
-    <marker
-       markerWidth="1.5"
-       markerHeight="0.99999994"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       id="marker2"
-       viewBox="0 0 0.525 1"
-       inkscape:stockid="Triangle cap"
-       style="overflow:visible"
-       preserveAspectRatio="none"
-       inkscape:isstock="true"
-       inkscape:collect="always">
-      <path
-         style="fill:context-stroke;stroke-linecap:butt"
-         d="M 0,-1 1,0 0,1 -0.05,0 Z"
-         sodipodi:nodetypes="sssssscsss"
-         transform="scale(0.5)"
-         id="path2" />
-    </marker>
-  </defs>
-  <g
+     inkscape:current-layer="layer2" /><defs
+     id="defs1"><g
+       id="g1"><g
+         id="glyph-0-0"><path
+           d="M 12.375 10.984375 L 12.125 10.984375 C 11.765625 13.171875 10.953125 14.328125 9.734375 14.328125 L 2.109375 14.328125 L 7.5625 7.359375 L 2.90625 0.515625 L 9.1875 0.515625 C 10.46875 0.515625 11.15625 1.25 11.53125 3.453125 L 11.75 3.453125 L 11.640625 0 L 1.171875 0 L 6.5 7.65625 L 0.421875 15.359375 L 12.171875 15.359375 Z M 12.375 10.984375 "
+           id="path1-9" /></g></g></defs><g
      inkscape:label="book-back"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(4,2)">
-    <rect
+     transform="translate(4,2)"><rect
        style="fill:#452311;fill-opacity:1;stroke:#9e7561;stroke-width:1.48916;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect3"
        width="66.510834"
@@ -88,25 +49,21 @@
        x="-1.75542"
        y="-0.25542003"
        ry="11.854233"
-       inkscape:label="book-back-rect" />
-  </g>
-  <g
+       inkscape:label="book-back-rect" /></g><g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="book-front"
-     transform="translate(4,2)">
-    <path
-       style="fill:none;stroke:#fbf7f5;stroke-width:4.6;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#CapTriangle);marker-end:url(#marker2)"
-       d="m 47.2,52 v 1 h -31 L 31.200002,33.000002 16.2,13 h 31 v 1"
-       id="path1"
-       sodipodi:nodetypes="ccccccc"
-       inkscape:label="sigma" />
-  </g>
-  <g
+     transform="translate(4,2)"><use
+       xlink:href="#glyph-0-0"
+       x="0.034000002"
+       y="0.63599998"
+       id="use1"
+       style="fill:#fbf7f5;fill-opacity:1"
+       transform="matrix(3.4162635,0,0,3.279613,8.468292,5.7277636)"
+       inkscape:label="sum" /></g><g
      inkscape:groupmode="layer"
      id="layer4"
-     inkscape:label="title">
-    <text
+     inkscape:label="title"><text
        xml:space="preserve"
        style="font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP';letter-spacing:1.8px;writing-mode:lr-tb;direction:ltr;fill:#fbf7f5;fill-opacity:1;stroke:none;stroke-width:2;stroke-dasharray:none;stroke-opacity:1"
        x="81.274002"
@@ -127,6 +84,4 @@
    id="tspan19"
    style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';letter-spacing:-7px;stroke-width:2;fill:#fbf7f5;fill-opacity:1">ノ</tspan><tspan
    style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:40px;font-family:'Noto Serif JP';-inkscape-font-specification:'Noto Serif JP Semi-Bold';letter-spacing:-12px;stroke-width:2;fill:#fbf7f5;fill-opacity:1"
-   id="tspan11">ー</tspan>ト</tspan></text>
-  </g>
-</svg>
+   id="tspan11">ー</tspan>ト</tspan></text></g></svg>
