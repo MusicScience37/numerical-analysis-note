@@ -1,12 +1,1 @@
-<svg width="32" height="32" version="1.1" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
- <defs>
-  <marker id="marker2" overflow="visible" markerHeight="0.99999994" markerWidth="1.5" orient="auto-start-reverse" preserveAspectRatio="none" viewBox="0 0 0.525 1">
-   <path transform="scale(.5)" d="m0-1 1 1-1 1-0.05-1z" fill="context-stroke"/>
-  </marker>
-  <marker id="CapTriangle" overflow="visible" markerHeight="1" markerWidth="1.5" orient="auto-start-reverse" preserveAspectRatio="none" viewBox="0 0 0.525 1">
-   <path transform="scale(.5)" d="m0-1 1 1-1 1-0.05-1z" fill="context-stroke"/>
-  </marker>
- </defs>
- <rect width="32" height="32" fill="#fbebe3"/>
- <path d="m24 25.5v0.5h-15.5l7.500001-9.999999-7.500001-10h15.5v0.5" fill="none" marker-end="url(#marker2)" marker-start="url(#CapTriangle)" stroke="#1d130e" stroke-width="2.3"/>
-</svg>
+<svg width="32" height="32" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><g id="glyph-0-0"><path d="m5.984375-2.03125h-0.234375c-0.140625 0.75-0.53125 1.21875-1.296875 1.21875h-3.09375l2.484375-2.84375-2.15625-2.609375h2.078125c0.875 0 1.375 0.25 1.53125 1.265625h0.25v-1.59375h-5.25v0.140625l2.65625 3.21875-2.65625 3.078125v0.15625h5.40625z"/></g></defs><rect width="32" height="32" fill="#fbebe3"/><use transform="matrix(3.516643 0 0 3.516643 3.857326 3.57526)" x="0.44100001" y="6.8299999" fill="#1d130e" xlink:href="#glyph-0-0"/></svg>

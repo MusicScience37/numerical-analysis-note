@@ -12,11 +12,12 @@
    inkscape:export-filename="..\icon512.png"
    inkscape:export-xdpi="1536"
    inkscape:export-ydpi="1536"
+   xml:space="preserve"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
      id="namedview1"
      pagecolor="#ffffff"
      bordercolor="#000000"
@@ -26,90 +27,45 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="8.1336326"
-     inkscape:cx="-9.7127574"
-     inkscape:cy="8.5447676"
+     inkscape:zoom="11.502694"
+     inkscape:cx="-9.5629773"
+     inkscape:cy="20.560401"
      inkscape:window-width="2560"
      inkscape:window-height="1369"
      inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs1">
-    <marker
-       markerWidth="1.5"
-       markerHeight="0.99999994"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       id="marker2"
-       viewBox="0 0 0.525 1"
-       inkscape:stockid="Triangle cap"
-       style="overflow:visible"
-       preserveAspectRatio="none"
-       inkscape:isstock="true"
-       inkscape:collect="always">
-      <path
-         style="fill:context-stroke;stroke-linecap:butt"
-         d="M 0,-1 1,0 0,1 -0.05,0 Z"
-         sodipodi:nodetypes="sssssscsss"
-         transform="scale(0.5)"
-         id="path2" />
-    </marker>
-    <marker
-       markerWidth="1.5"
-       markerHeight="1"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       id="CapTriangle"
-       viewBox="0 0 0.525 1"
-       inkscape:stockid="Triangle cap"
-       style="overflow:visible"
-       preserveAspectRatio="none"
-       inkscape:isstock="true"
-       inkscape:collect="always">
-      <path
-         style="fill:context-stroke;stroke-linecap:butt"
-         d="M 0,-1 1,0 0,1 -0.05,0 Z"
-         sodipodi:nodetypes="sssssscsss"
-         transform="scale(0.5)"
-         id="path61" />
-    </marker>
-  </defs>
-  <g
+     inkscape:current-layer="layer1" /><defs
+     id="defs1"><g
+       id="g1"><g
+         id="glyph-0-0"><path
+           d="M 5.984375 -2.03125 L 5.75 -2.03125 C 5.609375 -1.28125 5.21875 -0.8125 4.453125 -0.8125 L 1.359375 -0.8125 L 3.84375 -3.65625 L 1.6875 -6.265625 L 3.765625 -6.265625 C 4.640625 -6.265625 5.140625 -6.015625 5.296875 -5 L 5.546875 -5 L 5.546875 -6.59375 L 0.296875 -6.59375 L 0.296875 -6.453125 L 2.953125 -3.234375 L 0.296875 -0.15625 L 0.296875 0 L 5.703125 0 Z M 5.984375 -2.03125 "
+           id="path1-9" /></g></g></defs><g
      inkscape:groupmode="layer"
      id="layer3"
-     inkscape:label="Back">
-    <rect
+     inkscape:label="Back"><rect
        style="fill:#fbebe3;fill-opacity:1;stroke:none;stroke-width:2.5074;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect3"
        width="32"
        height="32"
        x="0"
-       y="0" />
-  </g>
-  <g
+       y="0" /></g><g
      inkscape:label="Front"
      inkscape:groupmode="layer"
-     id="layer1">
-    <path
-       style="fill:none;stroke:#1d130e;stroke-width:2.3;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#CapTriangle);marker-end:url(#marker2)"
-       d="M 24,25.5 V 26 H 8.5 L 16.000001,16.000001 8.5,6 H 24 v 0.5"
-       id="path1"
-       sodipodi:nodetypes="ccccccc" />
-  </g>
-  <g
+     id="layer1"><use
+       xlink:href="#glyph-0-0"
+       x="0.44100001"
+       y="6.8299999"
+       id="use1"
+       style="fill:#1d130e;fill-opacity:1"
+       transform="matrix(3.5166433,0,0,3.5166433,3.8573265,3.5752599)"
+       inkscape:label="Sigma" /></g><g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Marker"
-     style="display:none">
-    <circle
+     style="display:none"><circle
        style="fill:none;stroke:#000000;stroke-width:0.0133644;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="path3"
        cx="16"
        cy="16"
-       r="16" />
-  </g>
-</svg>
+       r="16" /></g></svg>

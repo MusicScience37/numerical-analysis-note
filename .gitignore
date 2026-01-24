@@ -331,7 +331,7 @@ eggs/
 .eggs/
 lib/
 lib64/
-parts/
+# parts/ # Directory with this name exists in this repository.
 sdist/
 var/
 wheels/
