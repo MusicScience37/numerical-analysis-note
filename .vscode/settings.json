@@ -61,5 +61,7 @@
   "esbonio.sphinx.confDir": "",
   "restructuredtext.pythonRecommendation.disabled": true,
   "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
-  "latex-workshop.formatting.latex": "latexindent"
+  "latex-workshop.formatting.latex": "latexindent",
+  "python-envs.defaultEnvManager": "ms-python.python:poetry",
+  "python-envs.defaultPackageManager": "ms-python.python:poetry"
 }
