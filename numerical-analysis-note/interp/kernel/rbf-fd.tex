@@ -1,0 +1,49 @@
+% !TEX root = ../../main.tex
+%
+
+\section{RBF-FD 法}
+\index{RBF-FD ほう@RBF-FD 法}
+
+偏微分方程式を解くため，
+$m$ 個の点 $\bm{r}_1, \bm{r}_2, \ldots, \bm{r}_m$ と点 $\bm{r}_c$ について，
+点における線型作用素 $L$ （主に 1 階以上の微分を含むもの）を
+\begin{equation}
+    L f(\bm{r}) |_{\bm{r} = \bm{r}_c} \approx \sum_{i=1}^m w_i f(\bm{r}_i)
+\end{equation}
+となるように近似する係数 $w_i$ を求める方法の 1 つに
+RBF-FD (Radial Basis Function Finite Difference) 法がある
+\cite{Fornberg2015}．
+
+多項式項を含む RBF 補間
+\begin{equation}
+    f(\bm{r}) = \sum_{i=1}^m c_i \phi\left(\frac{\|\bm{r} - \bm{r}_i\|_2}{c}\right) + \sum_{i=1}^M d_i p_i(\bm{r})
+\end{equation}
+を用いる場合，RBF-FD 法の係数 $w_i$ は以下の方程式を解くことで得られる．
+\begin{equation}
+    \begin{pmatrix}
+        \phi\left(\frac{\|\bm{r}_1 - \bm{r}_1\|_2}{c}\right) & \cdots & \phi\left(\frac{\|\bm{r}_1 - \bm{r}_m\|_2}{c}\right) &
+        p_1(\bm{r}_1)                                        & \cdots & p_M(\bm{r}_1)                                          \\
+        \vdots                                               & \ddots & \vdots                                               &
+        \vdots                                               & \ddots & \vdots                                                 \\
+        \phi\left(\frac{\|\bm{r}_m - \bm{r}_1\|_2}{c}\right) & \cdots & \phi\left(\frac{\|\bm{r}_m - \bm{r}_m\|_2}{c}\right) &
+        p_1(\bm{r}_m)                                        & \cdots & p_M(\bm{r}_m)                                          \\
+        p_1(\bm{r}_1)                                        & \cdots & p_1(\bm{r}_m)                                        &
+        0                                                    & \cdots & 0                                                      \\
+        \vdots                                               & \ddots & \vdots                                               &
+        \vdots                                               & \ddots & \vdots                                                 \\
+        p_M(\bm{r}_1)                                        & \cdots & p_M(\bm{r}_m)                                        &
+        0                                                    & \cdots & 0
+    \end{pmatrix}
+    \begin{pmatrix}
+        w_1 \\ \vdots \\ w_m \\ w_{m+1} \\ \vdots \\ w_{m+M}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        L \phi\left(\frac{\|\bm{r} - \bm{r}_1\|_2}{c}\right) |_{\bm{r} = \bm{r}_c} \\
+        \vdots                                                                     \\
+        L \phi\left(\frac{\|\bm{r} - \bm{r}_m\|_2}{c}\right) |_{\bm{r} = \bm{r}_c} \\
+        L p_1(\bm{r}) |_{\bm{r} = \bm{r}_c}                                        \\
+        \vdots                                                                     \\
+        L p_M(\bm{r}) |_{\bm{r} = \bm{r}_c}
+    \end{pmatrix}
+\end{equation}
