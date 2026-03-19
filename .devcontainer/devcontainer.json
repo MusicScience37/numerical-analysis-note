@@ -37,7 +37,7 @@
     }
   },
   "postCreateCommand": "bash ./.devcontainer/setup.bash",
-  "remoteUser": "texlive",
+  "remoteUser": "ubuntu",
   "portsAttributes": {
     "3821": {
       "label": "sphinx-autobuild"
