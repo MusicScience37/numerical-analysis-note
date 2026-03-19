@@ -24,7 +24,7 @@ RUN apt-get update && \
     texlive-base \
     texlive-extra-utils \
     lmodern \
-    fonts-ipaexfont \
+    fonts-noto-cjk \
     # Packages needed for tectonic
     libssl-dev \
     libgraphite2-dev \
