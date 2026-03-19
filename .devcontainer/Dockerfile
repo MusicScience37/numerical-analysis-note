@@ -25,6 +25,7 @@ RUN apt-get update && \
     texlive-extra-utils \
     lmodern \
     fonts-noto-cjk \
+    texlive-lang-japanese \
     # Packages needed for tectonic
     libssl-dev \
     libgraphite2-dev \

@@ -1,39 +1,39 @@
 {
   "latex-workshop.latex.tools": [
     {
-      "name": "latexmk",
-      "command": "latexmk",
+      "name": "tectonic",
+      "command": "tectonic",
+      "args": ["--keep-intermediates", "--keep-logs", "--synctex", "%DOC%.tex"]
+    },
+    {
+      "name": "tectonic-once",
+      "command": "tectonic",
       "args": [
-        "-synctex=1",
-        "-interaction=nonstopmode",
-        "-halt-on-error",
-        "-file-line-error",
-        "%DOC%"
+        "--keep-intermediates",
+        "--keep-logs",
+        "--synctex",
+        "--reruns",
+        "0",
+        "%DOC%.tex"
       ]
     },
     {
-      "name": "lualatex",
-      "command": "lualatex",
-      "args": [
-        "-synctex=1",
-        "-interaction=nonstopmode",
-        "-halt-on-error",
-        "-file-line-error",
-        "%DOC%"
-      ]
+      "name": "upmendex",
+      "command": "upmendex",
+      "args": ["-s", "jpbase", "-o", "%DOC%.ind", "%DOC%.idx"]
     }
   ],
   "latex-workshop.latex.recipes": [
     {
-      "name": "latexmk",
-      "tools": ["latexmk"]
+      "name": "tectonic-full",
+      "tools": ["tectonic", "upmendex", "tectonic"]
     },
     {
-      "name": "lualatex",
-      "tools": ["lualatex"]
+      "name": "tectonic-quick",
+      "tools": ["tectonic-once"]
     }
   ],
-  "latex-workshop.latex.recipe.default": "lualatex",
+  "latex-workshop.latex.recipe.default": "tectonic-quick",
   "hadolint.cliOptions": ["--ignore", "DL3008", "--no-color"],
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -56,13 +56,14 @@
   "restructuredtext.linter.disabledLinters": ["rstcheck", "rst-lint"],
   "esbonio.server.enabled": false,
   "files.watcherExclude": {
-    "**/.venv/**": true
+    "**/.venv/**": true,
+    "**/__pycache__/**": true,
+    "**/.mypy_cache/**": true
   },
   "esbonio.sphinx.confDir": "",
   "restructuredtext.pythonRecommendation.disabled": true,
   "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
   "latex-workshop.formatting.latex": "latexindent",
   "python-envs.defaultEnvManager": "ms-python.python:poetry",
-  "python-envs.defaultPackageManager": "ms-python.python:poetry",
-  "latex-workshop.latex.autoBuild.run": "never"
+  "python-envs.defaultPackageManager": "ms-python.python:poetry"
 }
