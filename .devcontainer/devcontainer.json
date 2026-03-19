@@ -9,7 +9,8 @@
   ],
   "containerEnv": {
     "SHELL": "/bin/bash",
-    "POETRY_CACHE_DIR": "/cache_volume/poetry/"
+    "POETRY_CACHE_DIR": "/cache_volume/poetry/",
+    "TECTONIC_CACHE_DIR": "/cache_volume/tectonic/"
   },
   "customizations": {
     "vscode": {
