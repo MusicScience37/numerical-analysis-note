@@ -9,7 +9,6 @@
 %日本語の基本的な設定
 \usepackage{luatexja}
 %フォント
-\usepackage{luatexja-otf}
 \usepackage[no-math,deluxe,haranoaji]{luatexja-preset}
 \usepackage[nomath]{lmodern}
 \usepackage{newtxmath}
@@ -19,7 +18,6 @@
 \usepackage[subrefformat=parens]{subcaption}
 %数式
 \usepackage{amsmath}
-\usepackage[all, warning]{onlyamsmath}
 \allowdisplaybreaks
 \def\equation{\gather}%%hyperref対応
 \def\endequation{\endgather}%%hyperref対応
@@ -28,10 +26,6 @@
 \newcommand{\hmmax}{0}
 \newcommand{\bmmax}{0}
 \usepackage{bm}
-%SI単位系
-\usepackage{siunitx}
-%表
-\usepackage{longtable}
 %アルゴリズム
 \usepackage[chapter]{algorithm}
 \usepackage{algorithmicx}
@@ -39,8 +33,6 @@
 %URL
 \usepackage{url}
 \urlstyle{rm}
-%しおり
-\usepackage{bookmark}
 %引用
 \usepackage{cite}%下の3行がない限りhyperrefとは同時に使わない．
 \makeatletter
@@ -58,7 +50,6 @@
 %自分のパッケージ（他のパッケージに依存するから最後にする）
 \usepackage[book,amsthm,many]{kmath}
 \usepackage{kmacro}
-\usepackage{kdesign}
 
 %タイトル
 \title{\ktitle}
