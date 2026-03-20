@@ -3,7 +3,12 @@
     {
       "name": "tectonic",
       "command": "tectonic",
-      "args": ["--keep-intermediates", "--keep-logs", "--synctex", "%DOC%.tex"]
+      "args": [
+        "--keep-intermediates",
+        "--keep-logs",
+        "--synctex",
+        "%DOCFILE%.tex"
+      ]
     },
     {
       "name": "tectonic-once",
@@ -14,23 +19,43 @@
         "--synctex",
         "--reruns",
         "0",
-        "%DOC%.tex"
+        "%DOCFILE%.tex"
+      ]
+    },
+    {
+      "name": "tectonic-short",
+      "command": "tectonic",
+      "args": [
+        "--keep-intermediates",
+        "--keep-logs",
+        "--synctex",
+        "--reruns",
+        "1",
+        "%DOCFILE%.tex"
       ]
     },
     {
       "name": "upmendex",
       "command": "upmendex",
-      "args": ["-s", "jpbase", "-o", "%DOC%.ind", "%DOC%.idx"]
+      "args": ["-s", "jpbase", "-o", "%DOCFILE%.ind", "%DOCFILE%.idx"]
     }
   ],
   "latex-workshop.latex.recipes": [
     {
       "name": "tectonic-full",
-      "tools": ["tectonic", "upmendex", "tectonic"]
+      "tools": ["tectonic", "upmendex", "tectonic-short"]
+    },
+    {
+      "name": "tectonic-short",
+      "tools": ["tectonic-short", "upmendex", "tectonic-once"]
     },
     {
       "name": "tectonic-quick",
       "tools": ["tectonic-once"]
+    },
+    {
+      "name": "upmendex-only",
+      "tools": ["upmendex"]
     }
   ],
   "latex-workshop.latex.recipe.default": "tectonic-quick",
