@@ -1,4 +1,4 @@
-image: registry.gitlab.com/[MASKED]projects/docker/tectonic-python-docker:latest
+image: registry.gitlab.com/musicscience37projects/docker/tectonic-python-docker:noble
 
 stages:
   - test
