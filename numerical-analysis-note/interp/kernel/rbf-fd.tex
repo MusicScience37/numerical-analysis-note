@@ -9,6 +9,7 @@ $m$ 個の点 $\bm{r}_1, \bm{r}_2, \ldots, \bm{r}_m$ と点 $\bm{r}_c$ につい
 点における線型作用素 $L$ （主に 1 階以上の微分を含むもの）を
 \begin{equation}
     L f(\bm{r}) |_{\bm{r} = \bm{r}_c} \approx \sum_{i=1}^m w_i f(\bm{r}_i)
+    \label{eq:rbf_rbf-fd_approximation-formula}
 \end{equation}
 となるように近似する係数 $w_i$ を求める方法の 1 つに
 RBF-FD (Radial Basis Function Finite Difference) 法がある
@@ -47,3 +48,7 @@ RBF-FD (Radial Basis Function Finite Difference) 法がある
         L p_M(\bm{r}) |_{\bm{r} = \bm{r}_c}
     \end{pmatrix}
 \end{equation}
+
+方程式には追加の係数 $w_{m+1}, \ldots, w_{m+M}$ が含まれているが，
+これらは方程式を立てるために使用しているだけで，
+RBF-FD 法による近似の計算（式 \eqref{eq:rbf_rbf-fd_approximation-formula}）では不要である．
