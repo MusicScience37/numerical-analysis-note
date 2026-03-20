@@ -1,11 +1,12 @@
-FROM registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2025
+FROM registry.gitlab.com/musicscience37projects/docker/tectonic-python-docker:noble
 
-ARG USERNAME=texlive
+ARG USERNAME=ubuntu
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ENV PATH="${PATH}:/root/.local/bin"
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+    git \
     openssh-client \
     gnupg2 \
     vim nano \
@@ -23,9 +24,6 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     apt-get autoclean && \
     rm -r /var/lib/apt/lists/* && \
-    # Create $USERNAME user.
-    # groupadd --gid $USER_GID $USERNAME && \
-    # useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
     # Make $USERNAME user able to use sudo command.
     echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
     chmod 0440 /etc/sudoers.d/$USERNAME && \

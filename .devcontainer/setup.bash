@@ -2,6 +2,7 @@
 
 sudo chmod 0777 /cache_volume/
 mkdir -p $POETRY_CACHE_DIR
+mkdir -p $TECTONIC_CACHE_DIR
 
 poetry config virtualenvs.in-project true
 poetry env use 3.13
@@ -9,12 +10,11 @@ poetry install
 
 poetry run pre-commit install
 
+poetry run playwright install --only-shell --with-deps chromium
 poetry run plotly_get_chrome -y
 
 git config gpg.program gpg2
 git config commit.gpgsign true
 git config tag.gpgsign true
-
-git lfs install
 
 echo "source /usr/share/bash-completion/completions/git" >>~/.bashrc

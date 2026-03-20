@@ -31,11 +31,11 @@
 ### 環境構築の概要
 
 1. VSCode の DevContainer を起動する．
-2. Python の仮想環境を準備し，起動する．
+2. Python の仮想環境を準備する．
 
    ```shell
+   cd <repository-root>
    poetry sync
-   poetry shell
    ```
 
 ### その他のコマンド
@@ -43,18 +43,20 @@
 - TeX 文書用の画像を生成する．
 
   ```shell
-  python ./num_anal_plots/make_pdf_plot.py
+  cd <repository-root>
+  ./scripts/generate-images.sh
   ```
 
-- TeX の文書をビルドする．
+- 上記の画像生成が済んだ状態で TeX の文書をビルドする．
 
   ```shell
   cd numerical-analysis-note
-  latexmk
+  ./build.sh
   ```
 
 - Web ページをビルドしてプレビューする．
 
   ```shell
+  cd <repository-root>
   ./docs/start-auto-build.sh
   ```

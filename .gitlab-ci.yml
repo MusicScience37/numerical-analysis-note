@@ -1,4 +1,4 @@
-image: registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2025
+image: registry.gitlab.com/musicscience37projects/docker/tectonic-python-docker:noble
 
 stages:
   - test
@@ -20,7 +20,7 @@ pre-commit:
     - poetry run pre-commit run --all-files
   cache:
     key:
-      prefix: cache-${CI_JOB_NAME}
+      prefix: poetry-cache
       files:
         - poetry.lock
     paths:
@@ -32,6 +32,7 @@ build:
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
+    TECTONIC_CACHE_DIR: ${CI_PROJECT_DIR}/.tectonic-cache
   script:
     # Install rsvg-converter, qpdf
     - apt-get update
@@ -41,11 +42,12 @@ build:
     - poetry env use 3.13
     - poetry sync
     # Create PDF files of plots for LaTeX document
+    - poetry run playwright install --only-shell --with-deps chromium
     - poetry run plotly_get_chrome -y
     - bash ./scripts/generate-images.sh
     # Build LaTeX document
     - cd numerical-analysis-note
-    - latexmk
+    - bash build.sh
     # Optimize PDF file
     - mv main.pdf main-origin.pdf
     - qpdf --linearize --object-streams=generate ./main-origin.pdf ./main.pdf
@@ -53,13 +55,16 @@ build:
     # Build Sphinx document
     - poetry run sphinx-build -b html -W docs/source docs/build/html
   cache:
-    key:
-      prefix: cache-${CI_JOB_NAME}
-      files:
-        - poetry.lock
-    paths:
-      - .poetry-cache
-      - docs/build/jupyter_cache
+    - key:
+        prefix: poetry-cache
+        files:
+          - poetry.lock
+      paths:
+        - .poetry-cache
+        - docs/build/jupyter_cache
+    - key: tectonic-cache
+      paths:
+        - .tectonic-cache
   artifacts:
     paths:
       - numerical-analysis-note/main.pdf

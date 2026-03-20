@@ -1,9 +1,10 @@
-\DocumentMetadata{pdfversion=1.7}
-\PassOptionsToPackage{unicode}{hyperref}
-\RequirePackage{plautopatch}
-\documentclass[a4j,
-%,draft%
-]{ltjsbook}
+\PassOptionsToPackage{unicode,pdfversion=1.7}{hyperref}
+\documentclass[%
+    xelatex,%
+    ja=standard,%
+    a4paper,%
+    jafont=haranoaji,%
+]{bxjsbook}
 \setlength{\textwidth}{\fullwidth}
 \setlength{\evensidemargin}{\oddsidemargin}
 
@@ -61,7 +62,7 @@ This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 Inte
 \todototoc
 \listoftodos
 
-\bibliographystyle{junsrt}
+\bibliographystyle{unsrt}
 \bibliography{articles.bib}
 
 \printindex
