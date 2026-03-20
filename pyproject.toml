@@ -1,13 +1,17 @@
-[tool.poetry]
+[project]
 name = "numerical-analysis-note"
 version = "0.0.0"
 description = ""
 authors = []
 readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dynamic = ["dependencies"]
+
+[tool.poetry]
 packages = [{ include = "num_anal_plots" }]
 
 [tool.poetry.dependencies]
-python = ">=3.12,<3.14"
+python = ">=3.13,<3.14"
 click = "^8.3.1"
 plotly = "^6.6.0"
 pandas = "^3.0.1"
@@ -40,7 +44,7 @@ mypy = "^1.19.1"
 pandas-stubs = "^3.0.0.260204"
 playwright = "^1.58.0"
 
-[tool.poetry.scripts]
+[project.scripts]
 make_pdf_plot = "num_anal_plots.make_pdf_plot:make_pdf_plot"
 
 [tool.isort]
