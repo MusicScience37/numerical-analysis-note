@@ -1,4 +1,4 @@
-image: registry.gitlab.com/musicscience37projects/docker/texlive-pipenv-docker:tl2025
+image: registry.gitlab.com/[MASKED]projects/docker/tectonic-python-docker:latest
 
 stages:
   - test
@@ -20,53 +20,57 @@ pre-commit:
     - poetry run pre-commit run --all-files
   cache:
     key:
-      prefix: cache-${CI_JOB_NAME}
+      prefix: poetry-cache
       files:
         - poetry.lock
     paths:
       - .poetry-cache
 
-# TODO Fix later.
-# build:
-#   stage: test
-#   needs: []
-#   variables:
-#     GIT_SUBMODULE_STRATEGY: recursive
-#     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
-#   script:
-#     # Install rsvg-converter, qpdf
-#     - apt-get update
-#     - apt-get install -y --no-install-recommends librsvg2-bin qpdf
-#     # Install Python packages
-#     - poetry config virtualenvs.in-project true
-#     - poetry env use 3.13
-#     - poetry sync
-#     # Create PDF files of plots for LaTeX document
-#     - poetry run plotly_get_chrome -y
-#     - bash ./scripts/generate-images.sh
-#     # Build LaTeX document
-#     - cd numerical-analysis-note
-#     - latexmk
-#     # Optimize PDF file
-#     - mv main.pdf main-origin.pdf
-#     - qpdf --linearize --object-streams=generate ./main-origin.pdf ./main.pdf
-#     - cd ..
-#     # Build Sphinx document
-#     - poetry run sphinx-build -b html -W docs/source docs/build/html
-#   cache:
-#     key:
-#       prefix: cache-${CI_JOB_NAME}
-#       files:
-#         - poetry.lock
-#     paths:
-#       - .poetry-cache
-#       - docs/build/jupyter_cache
-#   artifacts:
-#     paths:
-#       - numerical-analysis-note/main.pdf
-#       - docs/build/html
-#     expire_in: 1 week
-#   interruptible: true
+build:
+  stage: test
+  needs: []
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+    POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
+    TECTONIC_CACHE_DIR: ${CI_PROJECT_DIR}/.tectonic-cache
+  script:
+    # Install rsvg-converter, qpdf
+    - apt-get update
+    - apt-get install -y --no-install-recommends librsvg2-bin qpdf
+    # Install Python packages
+    - poetry config virtualenvs.in-project true
+    - poetry env use 3.13
+    - poetry sync
+    # Create PDF files of plots for LaTeX document
+    - poetry run playwright install --only-shell --with-deps chromium
+    - poetry run plotly_get_chrome -y
+    - bash ./scripts/generate-images.sh
+    # Build LaTeX document
+    - cd numerical-analysis-note
+    - bash build.sh
+    # Optimize PDF file
+    - mv main.pdf main-origin.pdf
+    - qpdf --linearize --object-streams=generate ./main-origin.pdf ./main.pdf
+    - cd ..
+    # Build Sphinx document
+    - poetry run sphinx-build -b html -W docs/source docs/build/html
+  cache:
+    - key:
+        prefix: poetry-cache
+        files:
+          - poetry.lock
+      paths:
+        - .poetry-cache
+        - docs/build/jupyter_cache
+    - key: tectonic-cache
+      paths:
+        - .tectonic-cache
+  artifacts:
+    paths:
+      - numerical-analysis-note/main.pdf
+      - docs/build/html
+    expire_in: 1 week
+  interruptible: true
 
 spell check:
   stage: test
@@ -85,18 +89,17 @@ spell check:
       "**/*.sh"
   interruptible: true
 
-# TODO Fix later.
-# pages:
-#   stage: deploy
-#   needs: [build]
-#   image: alpine
-#   script:
-#     - mv docs/build/html public
-#     - cp icon-logo/icon.ico public/favicon.ico
-#     - mv numerical-analysis-note/main.pdf public/numerical-analysis-note.pdf
-#   artifacts:
-#     paths:
-#       - public
-#   only:
-#     - main
-#   interruptible: true
+pages:
+  stage: deploy
+  needs: [build]
+  image: alpine
+  script:
+    - mv docs/build/html public
+    - cp icon-logo/icon.ico public/favicon.ico
+    - mv numerical-analysis-note/main.pdf public/numerical-analysis-note.pdf
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+  interruptible: true
