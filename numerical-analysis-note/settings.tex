@@ -2,6 +2,13 @@
 %
 
 %% パッケージ
+%ページの余白
+\usepackage[a4paper, hmargin=20mm, vmargin=20mm]{geometry}
+%XeLaTeXにおける日本語の設定
+\usepackage{zxjatype}
+\setjamainfont{Noto Serif CJK JP}
+\setjasansfont{Noto Sans CJK JP}
+\setjamonofont{Noto Sans Mono CJK JP}
 %フォント
 \usepackage[nomath]{lmodern}
 \usepackage{newtxmath}
@@ -65,3 +72,6 @@
 
 %数式の番号（章番号を使うようにする．）
 \numberwithin{equation}{chapter}
+
+%行間を日本語向けに変更
+\renewcommand{\baselinestretch}{1.3}
