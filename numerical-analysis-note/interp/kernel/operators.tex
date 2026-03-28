@@ -18,8 +18,12 @@
 RBF 補間に Laplacian などの微分の作用素を適用することで部分を表現したものは
 偏微分方程式の解法 \cite{Fornberg2015,Chu2023} などに応用されている．
 
-RBF の微分を行う作用素を Wendland の Compactly Supported RBF のように
-式 \eqref{eq:rbf_wendland-csrbf_differentiation-operator} で定義すると，
+RBF の微分を行う作用素を Wendland の Compactly Supported RBF における
+式 \eqref{eq:rbf_wendland-csrbf_differentiation-operator} の
+\begin{equation}
+    D(f)(r) \equiv -\frac{1}{r} \frac{d}{dr} f(r)
+\end{equation}
+で定義すると，
 2-ノルムを用いた RBF 補間におけるカーネル
 \begin{equation}
     K(\bm{r}, \bm{r}') = \phi\left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)
@@ -63,19 +67,71 @@ $\bm{r}$ に対する Hessian は以下のように書ける．
     \frac{d(d+2)}{c^4}
 \end{align}
 
-表 \ref{table:interp_kernel_example-rbfs} で示していた RBF の一部に対して作用素 $D$ を適用した例を
-表 \ref{table:interp_kernel_rbf-derivatives} に示す．
+\subsection{RBF の微分の例}
 
-\begin{table}[bp]
-    \caption{RBF の微分の例}
-    \label{table:interp_kernel_rbf-derivatives}
-    \centering
-    \begin{tabular}{lll}
-        名称                    & 元の関数               & 微分                                             \\
-        \hline
-        Gaussian              & $e^{-r^2}$         & $D^n e^{-r^2} = 2^n e^{-r^2}$                  \\
-        Inverse Multi-quadric & $1/\sqrt{1 + r^2}$ & $D (1/\sqrt{1 + r^2}) = 1/(1 + r^2)^{3/2}$     \\
-        Inverse Quadric       & $1 / (1 + r^2)$    & $D (1 / (1 + r^2)) = 2/(1 + r^2)^2$            \\
-        Sech                  & $1 / \cosh{r}$     & $D (1 / \cosh{r}) = \sinh{r} / (r \cosh^2{r})$
-    \end{tabular}
-\end{table}
+本書で示した RBF の微分の例を以下に示す．
+演算子 $D$ は前節と同様に
+\begin{equation}
+    D(f)(r) \equiv -\frac{1}{r} \frac{d}{dr} f(r)
+\end{equation}
+である．
+
+\paragraph{Gaussian RBF}
+\index{Gaussian RBF}
+\begin{align}
+    D^n e^{-r^2} & = 2^n e^{-r^2}
+\end{align}
+
+\paragraph{Inverse Multi-quadric RBF}
+\index{Inverse Multi-quadric RBF}
+\begin{align}
+    D \frac{1}{\sqrt{1 + r^2}} & = \frac{1}{(1 + r^2)^{3/2}}
+\end{align}
+
+\paragraph{Inverse Quadric RBF}
+\index{Inverse Quadric RBF}
+\begin{align}
+    D \frac{1}{1 + r^2} & = \frac{2}{(1 + r^2)^2}
+\end{align}
+
+\paragraph{Sech RBF}
+\index{Sech RBF}
+\begin{align}
+    D \frac{1}{\cosh{r}} & = \frac{\sinh{r}}{r \cosh^2{r}}
+\end{align}
+
+\paragraph{Polyharmonic spline RBF}
+\index{Polyharmonic spline RBF}
+
+奇数次の polyharmonic spline RBF の場合は以下の通り．（$m = 1, 3, \ldots$）
+\begin{align}
+    D r^m   & = -m r^{m-2}                                    \\
+    D^2 r^m & = m(m-2) r^{m-4}                                \\
+    D^3 r^m & = -m(m-2)(m-4) r^{m-6}                          \\
+    D^4 r^m & = m(m-2)(m-4)(m-6) r^{m-8}                      \\
+            & \vdots \notag                                   \\
+    D^n r^m & = (-1)^n m(m-2)(m-4) \cdots (m-2(n-1)) r^{m-2n}
+\end{align}
+
+偶数次の polyharmonic spline RBF の場合は以下の通り．（$m = 2, 4, \ldots$）
+\begin{align}
+    D r^m \log{r}   & =
+    \begin{cases}
+        -\left(2 \log{r} + 1\right)         & (m = 2)            \\
+        -r^{m-2} \left(m \log{r} + 1\right) & (m = 4, 6, \ldots)
+    \end{cases}
+    \\
+    D^2 r^m \log{r} & =
+    \begin{cases}
+        r^{m-4} \left(m(m-2) \log{r} + 2m-2\right) & (m = 6, 8, \ldots) \\
+        8 \log{r} + 6                              & (m = 4)
+    \end{cases}
+\end{align}
+
+偶数次のより高階の微分係数は以下の関係を用いて計算できる．
+\begin{align}
+    D r^m (a \log{r} + b) & = r^{m-2} \left(-m a \log{r} -a -m b\right)
+\end{align}
+
+\paragraph{Compactly Supported RBF}
+Compactly Supported RBF については \ref{sec:interp_kernel_csrbf} 節を参照．
