@@ -67,7 +67,29 @@ $\bm{r}$ に対する Hessian は以下のように書ける．
     \frac{d(d+2)}{c^4}
 \end{align}
 
-\subsection{RBF の微分の例}
+2 回以上 Laplacian を適用する演算子 $\triangle^n$ は
+多重調和演算子 (polyharmonic operator)
+\index{たじゅうちょうわ演算子@多重調和演算子}
+\index{polyharmonic operator|see{多重調和演算子}}
+と呼ばれる．
+物理における偏微分方程式の文脈ではこれに係数を掛けたものを hyperviscosity
+\index{hyperviscosity}
+と呼び，移流方程式や Navier-Stokes 方程式など移流項と呼ばれる項を持つ偏微分方程式の数値解法において
+解を安定化させるために用いられることがある
+\footnote{移流項への対策としては風上差分がよく用いられるが，%
+    RBF-FD 法（\ref{sec:interp_kernel_rbf-fd} 節）など%
+    風上差分を用いることが難しい離散化の手法を用いる場合に hyperviscosity で安定化させることがある．}
+\cite{Fornberg2015,Vaupotic2024,Rot2026}．
+特に 2 回 Laplacian を適用する $\triangle^2$ は重調和演算子 (biharmonic operator)
+\index{じゅうちょうわ演算子@重調和演算子}
+\index{biharmonic operator|see{重調和演算子}}
+と呼ばれる．
+
+RBF 補間に対する多重調和演算子の適用は一般には Laplacian 適用の度に数式が複雑になるが，
+奇数次の polyharmonic spline RBF の場合は簡単な漸化式が得られる
+（\ref{sec:interp_kernel_operators_rbf-differentiation-examples} 節を参照）．
+
+\subsection{RBF の微分の例}\label{sec:interp_kernel_operators_rbf-differentiation-examples}
 
 本書で示した RBF の微分の例を以下に示す．
 演算子 $D$ は前節と同様に
@@ -131,6 +153,15 @@ $\bm{r}$ に対する Hessian は以下のように書ける．
 偶数次のより高階の微分係数は以下の関係を用いて計算できる．
 \begin{align}
     D r^m (a \log{r} + b) & = r^{m-2} \left(-m a \log{r} -a -m b\right)
+\end{align}
+
+奇数次の polyharmonic spline RBF において，
+多重調和演算子
+\index{たじゅうちょうわ演算子@多重調和演算子}
+$\triangle^n$ を適用した結果は，以下の関係を用いて計算できる．
+\begin{align}
+    \triangle \left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)^m & =
+    m (m + d - 2) \frac{1}{c^2} \left(\frac{\|\bm{r} - \bm{r}'\|_2}{c}\right)^{m-2}
 \end{align}
 
 \paragraph{Compactly Supported RBF}
