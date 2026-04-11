@@ -412,7 +412,7 @@ Jacobian は次のようになる．
 \begin{align}
     \left. \frac{\partial \bm{F}_i}{\partial (\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s)}
     \right|_{\bm{k}_i = \bm{k}_i}
-    = I -
+           & = I -
     \begin{pmatrix}
         J_{11} & J_{12} & \cdots & J_{1s} \\
         J_{21} & J_{22} & \cdots & J_{2s} \\
@@ -420,17 +420,33 @@ Jacobian は次のようになる．
         J_{s1} & J_{s2} & \cdots & J_{ss}
     \end{pmatrix}
     \\
-    J_{ij} = h a_{ij} \left. \frac{\partial \bm{f}}{\partial \bm{y}}
+    J_{ij} & = h a_{ij} \left. \frac{\partial \bm{f}}{\partial \bm{y}}
     \right|_{t = t + c_i h, \bm{y} = \bm{y}(t) + h \sum_{l = 1}^i a_{il} \bm{k}_l}
 \end{align}
 
 半陰的公式と同様に，
-上記の Jacobian を $\bm{k}_i = \bm{0}$ のときのものに固定することで
+上記に含まれる $\bm{f}$ の Jacobian を $(t, \bm{y}(t))$ のときのものに固定することで
 計算時間を減らすことが考えられる．
 陰的公式では Jacobian のサイズが大きくなるため，
 Jacobian を固定することの効果はより大きくなる
 \footnote{$d$ 次元の常微分方程式に対して $s$ 段公式を使用すると，%
     Jacobian は $ds$ 次元の正方行列となる．}．
+
+\begin{align}
+    \left. \frac{\partial \bm{F}_i}{\partial (\bm{k}_1, \bm{k}_2, \ldots, \bm{k}_s)}
+    \right|_{\bm{k}_i = \bm{k}_i}
+      & = I -
+    \begin{pmatrix}
+        h a_{11} J & h a_{12} J & \cdots & h a_{1s} J \\
+        h a_{21} J & h a_{22} J & \cdots & h a_{2s} J \\
+        \vdots     & \vdots     & \ddots & \vdots     \\
+        h a_{s1} J & h a_{s2} J & \cdots & h a_{ss} J
+    \end{pmatrix}
+    \label{eq:ode_runge-kutta_implicit-jacobian-fixed}
+    \\
+    J & = \left. \frac{\partial \bm{f}}{\partial \bm{y}}
+    \right|_{t = t, \bm{y} = \bm{y}(t)}
+\end{align}
 
 \subsection{陰的公式の別の定式化}\label{sec:ode_runge-kutta_another-implicit-stage-solving}
 
@@ -448,6 +464,7 @@ Jacobian を固定することの効果はより大きくなる
     \label{eq:ode_runge-kutta_implicit-equation-for-differences}
 \end{equation}
 を解くこともできる \cite[Section IV.8.]{Hairer1991}．
+この場合 Newton 法を適用するときの Jacobian は式 \eqref{eq:ode_runge-kutta_implicit-jacobian-fixed} と一致する．
 
 この形式の方程式は，$a_{sj} = c_j$ ($j = 1, \ldots, s$) が成り立つ場合に
 次のステップの解の計算を
@@ -460,8 +477,110 @@ Jacobian を固定することの効果はより大きくなる
 stiffly accurate \index{stiffly accurate} であると言われる
 \cite[Section IV.6.]{Hairer1991}
 \footnote{stiffly accurate な公式は，ただ計算が楽になるというだけでなく，%
-    追加の条件を満たしていれば L 安定と呼ばれる安定性を満たす\cite[Section IV.3.]{Hairer1991}．}
+    追加の条件を満たしていれば L 安定と呼ばれる安定性を満たし，%
+    硬い方程式においても安定することが知られている\cite[Section IV.3.]{Hairer1991}．}
 ．
+
+\subsection{質量行列がある場合}
+
+質量行列 $M$ を用いて微分方程式が
+\begin{equation}
+    M \dot{\bm{y}} = \bm{f}(t, \bm{y})
+\end{equation}
+のように表される場合，方程式を以下のように書ける．
+\begin{itemize}
+    \item 勾配 $\bm{k}_i$ について解く方程式
+          \begin{equation}
+              M \bm{k}_i = \bm{f}\left(t + b_i h, \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j \right)
+          \end{equation}
+    \item 移動量 $\bm{z}_i$ について解く方程式
+          \begin{equation}
+              M \bm{z}_i = h \sum_{j = 1}^s a_{ij} \bm{f}\left(t + b_j h, \bm{y}(t) + \bm{z}_j \right)
+          \end{equation}
+\end{itemize}
+
+ここで，前者の方程式は質量行列 $M$ が時間 $t$ や変数 $\bm{y}$ に依存していても使用できるが，
+後者の方程式の場合は質量行列 $M$ が定数である必要がある．
+
+\subsection{陰的公式における Newton 法の高速化}
+
+質量行列がある場合の陰的公式における方程式
+\begin{equation}
+    M \bm{z}_i = h \sum_{j = 1}^s a_{ij} \bm{f}\left(t + b_j h, \bm{y}(t) + \bm{z}_j \right)
+\end{equation}
+について，文献 \cite{Hairer1991} における高速化の手法を適用する．
+
+まず，Kronecker 積を用いて方程式を以下のように書き換える．
+\begin{equation}
+    (I \otimes M) \bm{z} = h (A \otimes I) \bm{f}(\bm{z})
+\end{equation}
+
+これを Newton 法で解くにあたって，更新量 $\Delta \bm{z}$ を求める方程式は以下になる．
+\begin{equation}
+    (I \otimes M - h A \otimes J) \Delta \bm{z} = -(I \otimes M) \bm{z} + h (A \otimes I) \bm{f}(\bm{z})
+\end{equation}
+
+ここで，行列 $A$ を固有値分解して
+$A = T \Lambda T^{-1}$
+とする．
+ただし，$\Lambda$ は実数の範囲で分解できるように複素数の固有値を
+\begin{equation}
+    \begin{pmatrix}
+        \alpha & \beta  \\
+        -\beta & \alpha
+    \end{pmatrix}
+\end{equation}
+のような形式で表したものとする．
+これを用いて，以下のように方程式を書き換える．
+\begin{equation}
+    (I \otimes M - h T \Lambda T^{-1} \otimes J) \Delta \bm{z}
+    = -(I \otimes M) \bm{z} + h (T \Lambda T^{-1} \otimes I) \bm{f}(\bm{z})
+\end{equation}
+
+変数 $\bm{w} = (T^{-1} \otimes I) \bm{z}$ を導入し，
+さらに左から $(h^{-1} \Lambda^{-1} T^{-1} \otimes I)$ を掛けると，以下のようになる．
+\begin{equation}
+    (h^{-1} \Lambda^{-1} \otimes M - I \otimes J) \Delta \bm{w}
+    = -h^{-1} (\Lambda^{-1} \otimes M) \bm{w} + (T^{-1} \otimes I) \bm{f}((T \otimes I) \bm{w})
+\end{equation}
+
+左辺の係数行列は以下のような 2 種類のブロックによるブロック対角行列となる．
+（$\gamma$ は実数の固有値で，$\hat{\alpha}$ と $\hat{\beta}$ は複素数の固有値の逆数における実部と虚部を示す．）
+\begin{gather}
+    h^{-1} \gamma^{-1} M -J
+    \\
+    \begin{pmatrix}
+        h^{-1} \hat{\alpha} M - J & h^{-1} \hat{\beta} M      \\
+        -h^{-1} \hat{\beta} M     & h^{-1} \hat{\alpha} M - J
+    \end{pmatrix}
+\end{gather}
+
+さらに，複素数の固有値について，
+\begin{equation}
+    \begin{pmatrix}
+        h^{-1} \hat{\alpha} M - J & h^{-1} \hat{\beta} M      \\
+        -h^{-1} \hat{\beta} M     & h^{-1} \hat{\alpha} M - J
+    \end{pmatrix}
+    \begin{pmatrix}
+        \bm{w}_a \\
+        \bm{w}_b
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \bm{r}_a \\
+        \bm{r}_b
+    \end{pmatrix}
+\end{equation}
+は複素数を用いて
+\begin{equation}
+    (h^{-1} (\hat{\alpha} - i \hat{\beta}) M - J) (\bm{w}_a + i \bm{w}_b)
+    = \bm{r}_a + i \bm{r}_b
+\end{equation}
+と変形することもできる．
+
+見た目は複雑な更新式だが，ブロックごとに方程式を解くことができるため，
+LU 分解の計算量が次元の 3 乗オーダーであることを踏まえると，
+次元の少ない方程式に分解することで全体の計算量を抑えることができる．
 
 \subsection{Jacobian の計算が困難な場合}\label{sec:ode_runge-kutta_without-jacobian}
 
