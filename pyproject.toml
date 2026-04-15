@@ -12,9 +12,9 @@ packages = [{ include = "num_anal_plots" }]
 
 [tool.poetry.dependencies]
 python = ">=3.13,<3.14"
-click = "^8.3.1"
-plotly = "^6.6.0"
-pandas = "^3.0.1"
+click = "^8.3.2"
+plotly = "^6.7.0"
+pandas = "^3.0.2"
 kaleido = "^1.2.0"
 msgpack = "^1.1.2"
 scipy = "^1.17.1"
@@ -40,7 +40,7 @@ sphinx-autobuild = "^2025.8.25"
 isort = "^8.0.1"
 pylint = "^4.0.5"
 flake8 = "^7.3.0"
-mypy = "^1.19.1"
+mypy = "^1.20.1"
 pandas-stubs = "^3.0.0.260204"
 playwright = "^1.58.0"
 

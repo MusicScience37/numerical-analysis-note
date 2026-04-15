@@ -23,18 +23,6 @@
       ]
     },
     {
-      "name": "tectonic-short",
-      "command": "tectonic",
-      "args": [
-        "--keep-intermediates",
-        "--keep-logs",
-        "--synctex",
-        "--reruns",
-        "1",
-        "%DOCFILE%.tex"
-      ]
-    },
-    {
       "name": "upmendex",
       "command": "upmendex",
       "args": ["-s", "jpbase", "-o", "%DOCFILE%.ind", "%DOCFILE%.idx"]
@@ -43,11 +31,7 @@
   "latex-workshop.latex.recipes": [
     {
       "name": "tectonic-full",
-      "tools": ["tectonic", "upmendex", "tectonic-short"]
-    },
-    {
-      "name": "tectonic-short",
-      "tools": ["tectonic-short", "upmendex", "tectonic-once"]
+      "tools": ["tectonic", "upmendex", "tectonic"]
     },
     {
       "name": "tectonic-quick",
