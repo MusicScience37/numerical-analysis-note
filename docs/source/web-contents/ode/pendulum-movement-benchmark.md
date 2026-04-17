@@ -28,9 +28,15 @@ $$
     - `ARK4(3)-ESDIRK`：ARK4(3)6L[2]SA-ESDIRK 公式 {cite:p}`Kennedy2003`
     - `ARK5(4)-ESDIRK`：ARK5(4)6L[2]SA-ESDIRK 公式 {cite:p}`Kennedy2003`
     - `ESDIRK45c`：ESDIRK45c 公式 {cite:p}`Jorgensen2018`
+  - 陰的公式
+    - `LobattoIIIC4`：Lobatto IIIC 4 次の公式 {cite:p}`Hairer1991`
+    - `LobattoIIIC6`：Lobatto IIIC 6 次の公式 {cite:p}`Hairer1991`
+    - `RadauIIA3`：Radau IIA 3 次の公式 {cite:p}`Hairer1991`
+    - `RadauIIA5`：Radau IIA 5 次の公式 {cite:p}`Hairer1991`
 - Rosenbrock 法
   - `ROS3w` 公式：ROS3w 公式 {cite:p}`Rang2005`
-  - `ROS34PW3` 公式：ROS3w 公式 {cite:p}`Rang2005`
+  - `ROS34PRw` 公式：ROS34PRw 公式 {cite:p}`Rang2015`
+  - `ROS34PW3` 公式：ROS34PW3 公式 {cite:p}`Rang2005`
   - `RODASP` 公式：RODASP 公式 {cite:p}`Steinebach2022`
   - `RODASPR` 公式：RODASPR 公式 {cite:p}`Rang2015`
 - 平均ベクトル場法 {cite:p}`Quispel2008`
@@ -45,7 +51,7 @@ $$
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-pendulum-movement-auto-step-all-work-error", version=1)
+show_plot_in_jupyter("ode-pendulum-movement-auto-step-all-work-error", version=2)
 ```
 
 ## ステップ幅固定のソルバーに対するベンチマーク結果
@@ -55,6 +61,11 @@ show_plot_in_jupyter("ode-pendulum-movement-auto-step-all-work-error", version=1
 - Runge-Kutta 法
   - 陽的公式
     - `RK4`：古典的な 4 次の Runge-Kutta 法 {cite:p}`Mitsui1993`
+  - 陰的公式
+    - `LobattoIIIC4`：Lobatto IIIC 4 次の公式 {cite:p}`Hairer1991`
+    - `LobattoIIIC6`：Lobatto IIIC 6 次の公式 {cite:p}`Hairer1991`
+    - `RadauIIA3`：Radau IIA 3 次の公式 {cite:p}`Hairer1991`
+    - `RadauIIA5`：Radau IIA 5 次の公式 {cite:p}`Hairer1991`
 - シンプレクティック積分法
   - 陽的公式
     - `LeapFrog`：Leap-frog 法 {cite:p}`Forest1990`
@@ -77,9 +88,9 @@ show_plot_in_jupyter("ode-pendulum-movement-fixed-step-work-error", version=1)
 ## 環境
 
 - CPU: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
-- コンパイラ：Clang 17.0.2
+- コンパイラ：Clang 21.1.8
 
 ## ソースコード
 
 numerical-collection-cpp リポジトリ {cite:p}`NumericalCollectionCpp`
-のコミット `f4488124c9121787879ed70a0975523e4b545586` 時点のものを使用した．
+のコミット `aada5a2ffd442f3ce90121ac78fac102a17b602d` 時点のものを使用した．

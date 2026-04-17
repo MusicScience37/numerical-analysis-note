@@ -21,15 +21,15 @@ Kaps の問題
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-kaps-problem-work-error", version=2)
+show_plot_in_jupyter("ode-kaps-problem-work-error", version=3)
 ```
 
 ## 環境
 
 - CPU: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
-- コンパイラ：Clang 17.0.2
+- コンパイラ：Clang 21.1.8
 
 ## ソースコード
 
 numerical-collection-cpp リポジトリ {cite:p}`NumericalCollectionCpp`
-のコミット `f4488124c9121787879ed70a0975523e4b545586` 時点のものを使用した．
+のコミット `aada5a2ffd442f3ce90121ac78fac102a17b602d` 時点のものを使用した．

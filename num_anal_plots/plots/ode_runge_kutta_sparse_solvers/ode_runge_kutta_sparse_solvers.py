@@ -22,7 +22,7 @@ def ode_runge_kutta_sparse_solvers() -> plotly.graph_objects.Figure:
 
     data_list = []
     for measurement in results["measurements"]:
-        if measurement["measurer_name"] != "Mean Processing Time":
+        if measurement["measurement_type"] != "Mean Processing Time":
             continue
 
         if measurement["case_name"] == "repeated_gmres":
@@ -76,7 +76,7 @@ def ode_runge_kutta_sparse_solvers_gmres() -> plotly.graph_objects.Figure:
 
     data_list = []
     for measurement in results["measurements"]:
-        if measurement["measurer_name"] != "Mean Processing Time":
+        if measurement["measurement_type"] != "Mean Processing Time":
             continue
 
         if measurement["case_name"] == "repeated_gmres":
