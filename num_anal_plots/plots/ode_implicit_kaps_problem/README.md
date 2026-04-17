@@ -1,4 +1,4 @@
-# 振り子の運動を用いた常微分方程式解法のベンチマーク
+# 陰的な Kaps の問題を用いた常微分方程式解法のベンチマーク
 
 ## 環境
 
@@ -11,6 +11,5 @@ numerical-collection-cpp のコミット aada5a2ffd442f3ce90121ac78fac102a17b602
 以下のコマンドを実行した．
 
 ```shell
-./build/Release/bin/bench_ode_pendulum_movement results
-./build/Release/bin/bench_ode_pendulum_movement_fixed_step results
+./build/Release/bin/bench_ode_implicit_kaps_problem results
 ```

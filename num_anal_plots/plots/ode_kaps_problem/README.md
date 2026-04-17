@@ -11,5 +11,5 @@ numerical-collection-cpp のコミット aada5a2ffd442f3ce90121ac78fac102a17b602
 以下のコマンドを実行した．
 
 ```shell
-./build/Release/bin/num_collect_bench_ode_kaps_problem results
+./build/Release/bin/bench_ode_kaps_problem results
 ```
