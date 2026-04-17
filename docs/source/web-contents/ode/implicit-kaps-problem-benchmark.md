@@ -22,7 +22,7 @@ $\varepsilon = 0$ で微分代数方程式になる．
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-implicit-kaps-problem-work-error", version=2)
+show_plot_in_jupyter("ode-implicit-kaps-problem-work-error", version=3)
 ```
 
 ## 環境

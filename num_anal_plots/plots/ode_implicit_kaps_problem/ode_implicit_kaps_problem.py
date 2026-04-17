@@ -8,8 +8,6 @@ import pandas
 import plotly.express as px
 import plotly.graph_objects
 
-from num_anal_plots.plots.ode_common import MAIN_SOLVERS
-
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -99,8 +97,6 @@ def ode_implicit_kaps_problem_work_error() -> plotly.graph_objects.Figure:
     """
     data_frame = load_data()
 
-    data_frame = data_frame[data_frame["Solver"].isin(MAIN_SOLVERS)]
-
     figure = px.line(
         data_frame,
         x="Time [sec]",
@@ -114,5 +110,5 @@ def ode_implicit_kaps_problem_work_error() -> plotly.graph_objects.Figure:
         log_y=True,
         title="Work-Error Diagram of ODE solvers for Implicit Kaps' Problem",
     )
-    figure.update_layout(height=1100)
+    figure.update_layout(height=900)
     return figure

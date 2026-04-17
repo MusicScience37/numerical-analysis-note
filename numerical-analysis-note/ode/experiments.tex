@@ -34,10 +34,18 @@
                         \item[ARK5(4)-ESDIRK] ARK5(4)6L[2]SA-ESDIRK 公式 \cite{Kennedy2003}
                         \item[ESDIRK45c] ESDIRK45c 公式 \cite{Jorgensen2018}
                     \end{description}
+              \item 陰的公式
+                    \begin{description}
+                        \item[LobattoIIIC4] Lobatto IIIC 4 次の公式 \cite{Hairer1991}
+                        \item[LobattoIIIC6] Lobatto IIIC 6 次の公式 \cite{Hairer1991}
+                        \item[RadauIIA3] Radau IIA 3 次の公式 \cite{Hairer1991}
+                        \item[RadauIIA5] Radau IIA 5 次の公式 \cite{Hairer1991}
+                    \end{description}
           \end{itemize}
     \item Rosenbrock 法（\ref{sec:ode_rosenbrock} 章）
           \begin{description}
               \item[ROS3w] ROS3w 公式 \cite{Rang2005}
+              \item[ROS34PRw] ROS34PRw 公式 \cite{Rang2015}
               \item[ROS34PW3] ROS34PW3 公式 \cite{Rang2005}
               \item[RODASP] RODASP 公式 \cite{Steinebach2022}
               \item[RODASPR] RODASPR 公式 \cite{Rang2015}
@@ -98,8 +106,12 @@ $t=0$ における初期値 $\theta = 1$ をもとに $t=10$ における $\thet
 その Runge-Kutta 法の陽的公式 3 種類ではおおよそ同等の性能となった．
 Runge-Kutta 法の半陰的公式の中では
 性能向上が行われている SDIRK, ESDIRK の公式による解法が比較的速かった．
-SDIRK からアルゴリズム自体も変更して性能向上が行われている Rosenbrock 法は SDIRK よりもさらに速かった．
-平均ベクトル場法は計算が少し複雑になるため，性能は比較的悪くなった．
+一方，計算量の多めな陰的公式でも RadauIIA5 は比較的速かった．
+陰的公式は 1 ステップの計算量が多くなるが，高い次数によりステップ数を削減できるため，
+そのバランスにより公式によっては速くなるものと思われる．
+SDIRK からアルゴリズム自体も変更して性能向上が行われている Rosenbrock 法は速く，
+RODASP, RODASPR 公式は陰的公式でありながら Runge-Kutta 法の陽的公式に近い性能を示した．
+平均ベクトル場法は計算が比較的複雑になるため，性能は比較的悪くなった．
 
 \begin{figure}[tp]
     \centering
@@ -116,12 +128,14 @@ $t=0$ における初期値 $\theta = 1$ をもとに $t=100$ における $\the
 \ref{fig:ode_experiments_pendulum-movement_fixed-step-work-error}
 に示す．
 シンプレクティック積分法 2 種類の中では 4 次の解法（Forest4）の方が速かった．
+その他の公式についてはステップ幅を自動決定する場合と同様の結果になっている．
 
 % 話題を切り替える前に一旦全てを出力しておく．
 \clearpage
 
 \section{Kaps の問題（硬い系の例）}
 
+\index{Kaps のもんだい@Kaps の問題}
 Kaps の問題 (Kaps' problem) は
 文献 \cite{Kennedy2003} において常微分方程式の解法の比較に用いられており，
 以下の式で表される．
@@ -140,7 +154,7 @@ $\epsilon$ の値に関係なく以下の解をもつ．
 \begin{figure}[tp]
     \centering
     \includegraphics[width=0.99\linewidth]{plots/ode-kaps-problem-work-error.pdf}
-    \caption{Kaps の問題にに数値解法を適用したときの計算時間と誤差%
+    \caption{Kaps の問題に数値解法を適用したときの計算時間と誤差%
         （ステップ幅の自動調整機能 \cite{Gustafsson1991} 付きの解法によるもの）}
     \label{fig:ode_experiments_kaps-problem_work-error}
 \end{figure}
@@ -156,3 +170,73 @@ $\epsilon$ が小さくなると陽的解法は計算に時間がかかるよう
 この結果により，硬い系では陽的解法で安定した解を求めるために必要となるステップ幅が小さくなり，
 同じ時刻の数値解を求めるために必要な計算時間が長くなってしまうという事実を確認することができた．
 なお，$\epsilon$ の値と関係なく陰的解法の中では Rosenbrock 法の RODASP, RODASPR 公式が速かった．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/ode-implicit-kaps-problem-work-error.pdf}
+    \caption{陰的な Kaps の問題に数値解法を適用したときの計算時間と誤差%
+        （ステップ幅の自動調整機能 \cite{Gustafsson1991} 付きの解法によるもの）}
+    \label{fig:ode_experiments_implicit-kaps-problem_work-error}
+\end{figure}
+
+Kaps の問題の 1 個目の式に $\epsilon$ を掛けて方程式自体を陰的にした
+\begin{align}
+    \epsilon \dot{y_1} & = -(1 + 2 \epsilon) y_1 + y_2^2 \\
+    \dot{y_2}          & = y_1 - y_2 - y_2^2
+\end{align}
+は $\epsilon = 0$ のときに微分代数方程式（インデックス 1）になる．
+\index{びぶんだいすうほうていしき@微分代数方程式}
+この方程式について，$\epsilon$ をいくつか変更しながら微分代数方程式に対応した数値解法を適用した結果を図
+\ref{fig:ode_experiments_implicit-kaps-problem_work-error}
+に示す．
+微分代数方程式に対応した手法では $\epsilon$ を 0 まで小さくしても問題なく数値解を求めることができた．
+この微分代数方程式においても特に性能が良かった公式は RODASP, RODASPR であった．
+
+% 話題を切り替える前に一旦全てを出力しておく．
+\clearpage
+
+\section{2 次元における拡散方程式の時間発展}
+
+\index{かくさんほうていしき@拡散方程式}
+2 次元の拡散方程式
+\begin{equation}
+    \frac{\partial u}{\partial t} = \triangle u
+\end{equation}
+について，空間微分は RBF-FD 法（\ref{sec:interp_kernel_rbf-fd} 節）で離散化し，
+時間微分に常微分方程式解法を適用する method of lines \index{Method of lines} を用いて数値解を求めた．
+
+実験はディリクレ境界条件とノイマン境界条件について行った．
+ディリクレ境界条件の場合は
+領域 $[0, 1] \times [0, 1]$ において，境界では値が 0 とするディリクレ境界条件を設定した．
+ノイマン境界条件の場合は
+領域 $[0, 1] \times [0, 0.5]$ において，
+$y = 0.5$ の境界では $\frac{\partial u}{\partial y} = 0$ とするノイマン境界条件を設定し，
+その他の境界では値が 0 とするディリクレ境界条件を設定した．
+どちらの場合も初期値は以下のように設定した．
+\begin{equation}
+    u(x, y, 0) = \sin(\pi x) \sin(\pi y)
+\end{equation}
+
+空間微分の離散化に使用する点群は領域内に 2,500 点，境界上に 200 点配置した．
+領域内の点群は RBF において比較的良いとされる Halton 点群 \cite{Fornberg2015} を用いて配置し，
+境界上の点群は等間隔に配置した．
+
+ディリクレ境界条件の場合は領域内のみの $u$ の値を計算する常微分方程式を解き，
+ノイマン境界条件の場合は境界上の $u$ の値も含めて境界条件をそのまま方程式にした微分代数方程式を解いた．
+微分代数方程式については使用できる数値解法が限られるため，
+ディリクレ境界条件の場合に使用した常微分方程式解法の一部はノイマン境界条件に適用していない．
+また，誤差は常微分方程式解法の誤差だけでなく空間微分の離散化誤差も含む．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/ode-diffusion2d-work-error.pdf}
+    \caption{2 次元の拡散方程式に数値解法を適用したときの計算時間と誤差%
+        （ステップ幅の自動調整機能 \cite{Gustafsson1991} 付きの解法によるもの）}
+    \label{fig:ode_experiments_diffusion2d_work-error}
+\end{figure}
+
+実験結果を図 \ref{fig:ode_experiments_diffusion2d_work-error} に示す．
+Runge-Kutta 法において比較的計算量が少ない ESDIRK45c, SDIRK4 と
+Rosenbrock 法の RODASP, RODASPR 公式は高速で精度が良かった．
+次元の大きい問題において特に計算量が増えやすい陰的公式 Radau, Lobatto については比較的性能が悪かった．
+また，陽的公式 RKF45 は遅かった．この問題は硬い系になっているものと思われる．
