@@ -15,6 +15,11 @@ from num_anal_plots.plots.integ_finite.integ_finite_gauss_legendre_kronrod impor
 )
 from num_anal_plots.plots.laplacian_2d_grid.laplacian_2d_grid import laplacian_2d_grid
 from num_anal_plots.plots.legendre_function.legendre_function import legendre_function
+from num_anal_plots.plots.ode_diffusion2d.ode_diffusion2d import (
+    ode_diffusion2d_dirichlet_work_error,
+    ode_diffusion2d_neumann_work_error,
+    ode_diffusion2d_work_error,
+)
 from num_anal_plots.plots.ode_implicit_kaps_problem.ode_implicit_kaps_problem import (
     ode_implicit_kaps_problem_work_error,
 )
@@ -93,6 +98,18 @@ PLOT_INFO_LIST = [
         name="ode-implicit-kaps-problem-work-error",
         figure_factory=ode_implicit_kaps_problem_work_error,
     ),
+    PlotInfo(
+        name="ode-diffusion2d-dirichlet-work-error",
+        figure_factory=ode_diffusion2d_dirichlet_work_error,
+    ),
+    PlotInfo(
+        name="ode-diffusion2d-neumann-work-error",
+        figure_factory=ode_diffusion2d_neumann_work_error,
+    ),
+    PlotInfo(
+        name="ode-diffusion2d-work-error",
+        figure_factory=ode_diffusion2d_work_error,
+    ),
     # Special Functions.
     PlotInfo(name="legendre-function", figure_factory=legendre_function),
     PlotInfo(name="gamma-function", figure_factory=gamma_function),
@@ -148,4 +165,5 @@ PLOT_INFO_LIST = [
 
 PLOT_NAMES = [info.name for info in PLOT_INFO_LIST]
 
+PLOT_INFO_DICT = {info.name: info for info in PLOT_INFO_LIST}
 PLOT_INFO_DICT = {info.name: info for info in PLOT_INFO_LIST}

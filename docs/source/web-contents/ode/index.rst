@@ -8,3 +8,4 @@
     pendulum-movement-benchmark
     kaps-problem-benchmark
     implicit-kaps-problem-benchmark
+    diffusion2d
