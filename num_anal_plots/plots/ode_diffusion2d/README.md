@@ -1,4 +1,4 @@
-# 振り子の運動を用いた常微分方程式解法のベンチマーク
+# 2次元拡散方程式による常微分方程式の数値解法のベンチマーク
 
 ## 環境
 
@@ -11,6 +11,6 @@ numerical-collection-cpp のコミット aada5a2ffd442f3ce90121ac78fac102a17b602
 以下のコマンドを実行した．
 
 ```shell
-./build/Release/bin/bench_ode_pendulum_movement results
-./build/Release/bin/bench_ode_pendulum_movement_fixed_step results
+./build/Release/bin/bench_ode_diffusion2d_dirichlet results
+./build/Release/bin/bench_ode_diffusion2d_neumann results
 ```

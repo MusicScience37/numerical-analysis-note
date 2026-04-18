@@ -3,13 +3,13 @@
 ## 環境
 
 - CPU: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
-- コンパイラ：Clang 17.0.2
+- コンパイラ：Clang 21.1.8
 
 ## 実施内容
 
-numerical-collection-cpp のコミット f4488124c9121787879ed70a0975523e4b545586 において，
+numerical-collection-cpp のコミット aada5a2ffd442f3ce90121ac78fac102a17b602d において，
 以下のコマンドを実行した．
 
 ```shell
-./build/Release/bin/num_collect_bench_ode_kaps_problem results
+./build/Release/bin/bench_ode_kaps_problem results
 ```

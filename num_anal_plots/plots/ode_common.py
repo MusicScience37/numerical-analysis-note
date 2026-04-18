@@ -7,6 +7,7 @@ MAIN_SOLVERS = [
     "Tanaka2",
     "SDIRK4",
     "ESDIRK45c",
+    "RadauIIA5",
     "RODASP",
     "RODASPR",
     "AVF3",
@@ -29,11 +30,19 @@ IMPLICIT_RUNGE_KUTTA_SOLVERS = [
     "ARK4(3)-ESDIRK",
     "ARK5(4)-ESDIRK",
     "ESDIRK45c",
+    "LobattoIIIC4",
+    "LobattoIIIC6",
+    "RadauIIA3",
+    "RadauIIA5",
+    "RadauIIA9",
+    "RadauIIA13",
+    "RadauIIA17",
 ]
 
 # Rosenbrock 法のソルバー。
 ROSENBROCK_SOLVERS = [
     "ROS3w",
+    "ROS34PRw",
     "ROS34PW3",
     "RODASP",
     "RODASPR",
