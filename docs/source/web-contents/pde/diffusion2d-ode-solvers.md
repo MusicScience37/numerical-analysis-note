@@ -53,5 +53,5 @@ $$
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-diffusion2d-work-error", version=3)
+show_plot_in_jupyter("pde-diffusion2d-ode-solvers-work-error", version=3)
 ```

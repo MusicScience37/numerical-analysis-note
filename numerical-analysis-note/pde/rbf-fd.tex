@@ -1,7 +1,7 @@
-% !TEX root = ../../main.tex
+% !TEX root = ../main.tex
 %
 
-\section{RBF-FD 法}\label{sec:interp_kernel_rbf-fd}
+\chapter{RBF-FD 法}\label{chap:pde_rbf-fd}
 \index{RBF-FD ほう@RBF-FD 法}
 
 偏微分方程式を解くため，
@@ -9,13 +9,15 @@ $m$ 個の点 $\bm{r}_1, \bm{r}_2, \ldots, \bm{r}_m$ と点 $\bm{r}_c$ につい
 点における線型作用素 $L$ （主に 1 階以上の微分を含むもの）を
 \begin{equation}
     L f(\bm{r}) |_{\bm{r} = \bm{r}_c} \approx \sum_{i=1}^m w_i f(\bm{r}_i)
-    \label{eq:rbf_rbf-fd_approximation-formula}
+    \label{eq:pde_rbf-fd_approximation-formula}
 \end{equation}
 となるように近似する係数 $w_i$ を求める方法の 1 つに
 RBF-FD (Radial Basis Function Finite Difference) 法がある
 \cite{Fornberg2015}．
 
 多項式項を含む RBF 補間
+\footnote{RBF 補間については \ref{sec:interp_kernel_rbf} 節を，%
+    多項式項については \ref{sec:interp_kernel_additional-terms} 節を参照．}%
 \begin{equation}
     f(\bm{r}) = \sum_{i=1}^m c_i \phi\left(\frac{\|\bm{r} - \bm{r}_i\|_2}{c}\right) + \sum_{i=1}^M d_i p_i(\bm{r})
 \end{equation}
@@ -51,4 +53,4 @@ RBF-FD (Radial Basis Function Finite Difference) 法がある
 
 方程式には追加の係数 $w_{m+1}, \ldots, w_{m+M}$ が含まれているが，
 これらは方程式を立てるために使用しているだけで，
-RBF-FD 法による近似の計算（式 \eqref{eq:rbf_rbf-fd_approximation-formula}）では不要である．
+RBF-FD 法による近似の計算（式 \eqref{eq:pde_rbf-fd_approximation-formula}）では不要である．
