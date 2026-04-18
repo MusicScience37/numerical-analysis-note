@@ -1,0 +1,58 @@
+% !TEX root = ../../main.tex
+%
+
+\chapter{数値実験}\label{chap:pde_experiments}
+
+偏微分方程式の数値解法について，数値実験を行った結果を示す．
+
+\section{2 次元における拡散方程式の時間発展}
+
+\index{かくさんほうていしき@拡散方程式}
+2 次元の拡散方程式
+\begin{equation}
+    \frac{\partial u}{\partial t} = \triangle u
+\end{equation}
+について，数値実験を行った結果を示す．
+
+実験はディリクレ境界条件とノイマン境界条件について行った．
+ディリクレ境界条件の場合は
+領域 $[0, 1] \times [0, 1]$ において，境界では値が 0 とするディリクレ境界条件を設定した．
+ノイマン境界条件の場合は
+領域 $[0, 1] \times [0, 0.5]$ において，
+$y = 0.5$ の境界では $\frac{\partial u}{\partial y} = 0$ とするノイマン境界条件を設定し，
+その他の境界では値が 0 とするディリクレ境界条件を設定した．
+どちらの場合も初期値は以下のように設定した．
+\begin{equation}
+    u(x, y, 0) = \sin(\pi x) \sin(\pi y)
+\end{equation}
+
+\subsection{常微分方程式の数値解法の性能評価}
+
+常微分方程式の数値解法を比較するため，
+空間微分は RBF-FD 法（\ref{chap:pde_rbf-fd} 章）で離散化し，
+時間微分に常微分方程式解法を適用する method of lines \index{Method of lines} を用いて数値解を求めた．
+
+空間微分の離散化に使用する点群は領域内に 2,500 点，境界上に 200 点配置した．
+領域内の点群は RBF において比較的良いとされる Halton 点群 \cite{Fornberg2015} を用いて配置し，
+境界上の点群は等間隔に配置した．
+
+ディリクレ境界条件の場合は領域内のみの $u$ の値を計算する常微分方程式を解き，
+ノイマン境界条件の場合は境界上の $u$ の値も含めて境界条件をそのまま方程式にした微分代数方程式を解いた．
+微分代数方程式については使用できる数値解法が限られるため，
+ディリクレ境界条件の場合に使用した常微分方程式解法の一部はノイマン境界条件に適用していない．
+また，誤差は常微分方程式解法の誤差だけでなく空間微分の離散化誤差も含む．
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/ode-diffusion2d-work-error.pdf}
+    \caption{2 次元の拡散方程式に数値解法を適用したときの計算時間と誤差%
+        （ステップ幅の自動調整機能 \cite{Gustafsson1991} 付きの解法によるもの）}
+    \label{fig:pde_experiments_diffusion2d_work-error}
+\end{figure}
+
+実験結果を図 \ref{fig:pde_experiments_diffusion2d_work-error} に示す．
+凡例で記載している常微分方程式の数値解法については \ref{sec:ode_experiments_targeted-solvers} 節に記載している．
+Runge-Kutta 法において比較的計算量が少ない ESDIRK45c, SDIRK4 と
+Rosenbrock 法の RODASP, RODASPR 公式は高速で精度が良かった．
+次元の大きい問題において特に計算量が増えやすい陰的公式 Radau, Lobatto については比較的性能が悪かった．
+また，陽的公式 RKF45 は遅かった．この問題は硬い系になっているものと思われる．
