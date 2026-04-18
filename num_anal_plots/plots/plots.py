@@ -15,11 +15,6 @@ from num_anal_plots.plots.integ_finite.integ_finite_gauss_legendre_kronrod impor
 )
 from num_anal_plots.plots.laplacian_2d_grid.laplacian_2d_grid import laplacian_2d_grid
 from num_anal_plots.plots.legendre_function.legendre_function import legendre_function
-from num_anal_plots.plots.ode_diffusion2d.ode_diffusion2d import (
-    ode_diffusion2d_dirichlet_work_error,
-    ode_diffusion2d_neumann_work_error,
-    ode_diffusion2d_work_error,
-)
 from num_anal_plots.plots.ode_implicit_kaps_problem.ode_implicit_kaps_problem import (
     ode_implicit_kaps_problem_work_error,
 )
@@ -52,6 +47,9 @@ from num_anal_plots.plots.opt_random_multi_quadratic_function.opt_random_multi_q
 from num_anal_plots.plots.opt_single_variate_multi_optima_function.opt_single_variate_multi_optima_function import (
     opt_single_variate_multi_optima_function_evaluations,
     opt_single_variate_multi_optima_function_time,
+)
+from num_anal_plots.plots.pde_diffusion2d_ode_solvers.pde_diffusion2d_ode_solvers import (
+    pde_diffusion2d_ode_solvers_work_error,
 )
 from num_anal_plots.plots.rbf_wendland_csrbf.rbf_wendland_csrbf import (
     rbf_wendland_csrbf,
@@ -98,17 +96,10 @@ PLOT_INFO_LIST = [
         name="ode-implicit-kaps-problem-work-error",
         figure_factory=ode_implicit_kaps_problem_work_error,
     ),
+    # PDE.
     PlotInfo(
-        name="ode-diffusion2d-dirichlet-work-error",
-        figure_factory=ode_diffusion2d_dirichlet_work_error,
-    ),
-    PlotInfo(
-        name="ode-diffusion2d-neumann-work-error",
-        figure_factory=ode_diffusion2d_neumann_work_error,
-    ),
-    PlotInfo(
-        name="ode-diffusion2d-work-error",
-        figure_factory=ode_diffusion2d_work_error,
+        name="pde-diffusion2d-ode-solvers-work-error",
+        figure_factory=pde_diffusion2d_ode_solvers_work_error,
     ),
     # Special Functions.
     PlotInfo(name="legendre-function", figure_factory=legendre_function),
