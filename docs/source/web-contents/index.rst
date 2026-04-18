@@ -7,9 +7,10 @@ Web コンテンツ
 .. toctree::
     :maxdepth: 2
 
-    matrix-computation/index
-    ode/index
-    integration/index
-    interpolation/index
-    opt/index
     special-functions/index
+    matrix-computation/index
+    integration/index
+    opt/index
+    interpolation/index
+    ode/index
+    pde/index
