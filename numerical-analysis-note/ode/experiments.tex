@@ -1,7 +1,7 @@
 % !TEX root = ../../main.tex
 %
 
-\chapter{数値実験}
+\chapter{数値実験}\label{chap:ode_experiments}
 
 この部において説明してきた常微分方程式の数値解法について，数値実験を行った結果を示す．
 
@@ -136,6 +136,7 @@ $t=0$ における初期値 $\theta = 1$ をもとに $t=100$ における $\the
 \section{Kaps の問題（硬い系の例）}
 
 \index{Kaps のもんだい@Kaps の問題}
+\index{かたいけい@硬い系}%
 Kaps の問題 (Kaps' problem) は
 文献 \cite{Kennedy2003} において常微分方程式の解法の比較に用いられており，
 以下の式で表される．
@@ -186,6 +187,7 @@ Kaps の問題の 1 個目の式に $\epsilon$ を掛けて方程式自体を陰
 \end{align}
 は $\epsilon = 0$ のときに微分代数方程式（インデックス 1）になる．
 \index{びぶんだいすうほうていしき@微分代数方程式}
+\index{インデックス@インデックス}%
 この方程式について，$\epsilon$ をいくつか変更しながら微分代数方程式に対応した数値解法を適用した結果を図
 \ref{fig:ode_experiments_implicit-kaps-problem_work-error}
 に示す．

@@ -1,0 +1,89 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{導入}
+
+\index{じょうびぶんほうていしき@常微分方程式}
+\index{ordinary differential equation|see{常微分方程式}}
+この部では，主に常微分方程式 (ordinary differential equation, ODE) の数値解法をまとめる．
+
+関数 $\bm{y}(t)$ の常微分方程式は一般に
+\begin{equation}
+    \bm{f}(t, \bm{y}, \dot{\bm{y}}, \ddot{\bm{y}}, \dddot{\bm{y}}, \ddddot{\bm{y}}, \ldots) = \bm{0}
+\end{equation}
+のように書ける．
+常微分方程式の解法においては，主に
+\begin{equation}
+    \dot{\bm{y}} = \bm{f}(t, \bm{y})
+\end{equation}
+の形に書き換えた方程式を扱う．
+\index{しつりょうぎょうれつ@質量行列}%
+\index{mass matrix|see{質量行列}}%
+質量行列 (mass matrix) $M$ （$t$ または $\bm{y}$ に依存する場合もある）を用いて
+\begin{equation}
+    M \dot{\bm{y}} = \bm{f}(t, \bm{y})
+\end{equation}
+のように書ける方程式を扱う場合もある．
+
+\section{陽的な解法と陰的な解法}
+
+本章で紹介する数値解法には，
+解法自体の計算に方程式を解く必要のない陽的な解法 (explicit method) と，
+方程式を解く必要のある陰的な解法 (implicit method) がある．
+陽的な解法の方が 1 回の計算量は少ないが，適用範囲が比較的限られており，
+陰的な解法の方が 1 回の計算量は多いが，適用範囲が比較的広い．
+また，目的の時刻までの解を求めるのに必要な計算回数は陰的な解法の方が少なくなりやすいため，
+全体の計算時間は陰的な解法の方が短くなる場合がある．
+このような性質については \ref{chap:ode_experiments} 章において実際に計算時間を計測した例を示す．
+
+\section{硬い系}\label{sec:ode_intro_stiff}
+
+\index{かたいけい@硬い系}%
+\index{stiff problem|see{硬い系}}%
+前節の陽的な解法と陰的な解法の違いが出やすい場合の 1 つは方程式が硬い (stiff) 場合である．
+
+常微分方程式
+\begin{equation}
+    \dot{\bm{y}} = \bm{f}(t, \bm{y})
+\end{equation}
+において，数値解法の安定性には関数 $\bm{f}$ の Jacobian
+\begin{equation}
+    J = \frac{\partial \bm{f}}{\partial \bm{y}}
+\end{equation}
+の固有値が関係する \cite{Hairer1991,Mitsui1993}．
+Jacobian の固有値のうち，実部の絶対値が最も大きいもの $\lambda_\mathrm{max}$ と
+最も小さいもの $\lambda_\mathrm{min}$ の比
+\begin{equation}
+    \frac{|\Re \lambda_\mathrm{max}|}{|\Re \lambda_\mathrm{min}|}
+\end{equation}
+は硬度比 (stiffness ratio)
+\index{こうどひ@硬度比}%
+\index{stiffness ratio|see{硬度比}}%
+と呼ばれ，この値が大きいほど方程式が硬いとされる \cite{Mitsui1993}．
+方程式を硬い系とみなす基準として，硬度比が $10^4$ 以上であることが挙げられる \cite{Mitsui1993}．
+
+硬い系において，陽的な解法は安定性のために非常に小さな時間の刻み幅を必要とすることがあり，
+その結果，目的の時刻までの解を求めるのに必要な計算回数が非常に多くなってしまう場合がある．
+
+\section{微分代数方程式}\label{sec:ode_intro_dae}
+
+\index{びぶんだいすうほうていしき@微分代数方程式}
+\index{differential-algebraic equation|see{微分代数方程式}}
+
+方程式が
+\begin{align}
+    \dot{\bm{y}} & = \bm{f}(t, \bm{y}, \bm{z}) \\
+    \bm{0}       & = \bm{g}(t, \bm{y}, \bm{z})
+\end{align}
+のように微分方程式となる部分と代数方程式となる部分を併せ持つ場合，
+微分代数方程式 (differential-algebraic equation, DAE) と呼ぶ \cite{Hairer1991}．
+微分代数方程式は，代数方程式の部分を微分して整理していくことで陽的な
+\begin{equation}
+    \dot{\bm{y}} = \bm{f}(t, \bm{y})
+\end{equation}
+の形に書き換えられる場合，そこで必要となった微分の回数 $n$ を用いて「インデックス $n$」 (index $n$)
+\index{インデックス@インデックス}%
+\index{index|see{インデックス}}%
+などと呼ばれる \cite{Hairer1991}．
+このインデックスが高いほど，数値解法の適用が難しくなる．
+特に，陽的な解法は微分代数方程式へそのまま適用することができない．
