@@ -7,7 +7,7 @@
 
 ## 実施内容
 
-numerical-collection-cpp のコミット aada5a2ffd442f3ce90121ac78fac102a17b602d において，
+numerical-collection-cpp のコミット 369425a4ec99515c58f9c04ed0209d9683d45d8b において，
 以下のコマンドを実行した．
 
 ```shell

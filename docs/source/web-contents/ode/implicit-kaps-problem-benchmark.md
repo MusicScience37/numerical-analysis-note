@@ -22,7 +22,7 @@ $\varepsilon = 0$ で微分代数方程式になる．
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-implicit-kaps-problem-work-error", version=3)
+show_plot_in_jupyter("ode-implicit-kaps-problem-work-error", version=4)
 ```
 
 ## 環境
@@ -33,4 +33,4 @@ show_plot_in_jupyter("ode-implicit-kaps-problem-work-error", version=3)
 ## ソースコード
 
 numerical-collection-cpp リポジトリ {cite:p}`NumericalCollectionCpp`
-のコミット `aada5a2ffd442f3ce90121ac78fac102a17b602d` 時点のものを使用した．
+のコミット `369425a4ec99515c58f9c04ed0209d9683d45d8b` 時点のものを使用した．
