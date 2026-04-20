@@ -590,7 +590,7 @@ LU 分解の計算量が次元の 3 乗オーダーであるため，
     M \bm{k}_i = \bm{f}\left(t + b_i h, \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j \right)
 \end{equation}
 を使用する必要があるため，この方程式に同様の手法を適用することを考える．
-まず，Kronecker 積を用いて方程式を以下のように書き換える．
+まず，簡単のため質量行列を定数として Kronecker 積を用いて方程式を以下のように書き換える．
 \begin{equation}
     (I \otimes M) \bm{k} = \bm{f}\left(h (A \otimes I) \bm{k}\right)
 \end{equation}
@@ -610,10 +610,12 @@ $A = T \Lambda T^{-1}$
 さらに左から $(h^{-1} \Lambda^{-1} T^{-1} \otimes I)$ を掛けると，
 \begin{equation}
     (h^{-1} \Lambda^{-1} \otimes M - I \otimes J) \Delta \bm{w}
-    = (h^{-1} \Lambda \otimes I)
+    = (h^{-1} \Lambda^{-1} \otimes I)
     \left(-(I \otimes M) \bm{w} + (T^{-1} \otimes I) \bm{f}(h (T \Lambda \otimes I) \bm{w}) \right)
 \end{equation}
 となる．
+定数でない質量行列を使用する場合，右辺の残差の計算における $M$ の計算は
+正しい質量行列を使用するようにすることで，Newton 法を近似的に適用することができる．
 
 \subsection{Jacobian の計算が困難な場合}\label{sec:ode_runge-kutta_without-jacobian}
 
