@@ -505,7 +505,7 @@ stiffly accurate \index{stiffly accurate} であると言われる
 
 \subsection{陰的公式における Newton 法の高速化}
 
-質量行列がある場合の陰的公式における方程式
+定数の質量行列がある場合の陰的公式における方程式
 \begin{equation}
     M \bm{z}_i = h \sum_{j = 1}^s a_{ij} \bm{f}\left(t + b_j h, \bm{y}(t) + \bm{z}_j \right)
 \end{equation}
@@ -584,6 +584,36 @@ LU 分解の計算量が次元の 3 乗オーダーであるため，
 
 見た目は複雑な更新式だが，ブロックごとに方程式を解くことができるため，
 次元の少ない方程式に分解することで全体の計算量を抑えることができる．
+
+定数でない質量行列がある場合は方程式
+\begin{equation}
+    M \bm{k}_i = \bm{f}\left(t + b_i h, \bm{y}(t) + h \sum_{j = 1}^i a_{ij} \bm{k}_j \right)
+\end{equation}
+を使用する必要があるため，この方程式に同様の手法を適用することを考える．
+まず，Kronecker 積を用いて方程式を以下のように書き換える．
+\begin{equation}
+    (I \otimes M) \bm{k} = \bm{f}\left(h (A \otimes I) \bm{k}\right)
+\end{equation}
+この方程式を Newton 法で解くための更新量 $\Delta \bm{k}$ は
+\begin{equation}
+    (I \otimes M - h A \otimes J) \Delta \bm{k} = -(I \otimes M) \bm{k} + \bm{f}\left(h (A \otimes I) \bm{k}\right)
+\end{equation}
+となる．行列 $A$ を固有値分解して
+$A = T \Lambda T^{-1}$
+とすると，
+\begin{equation}
+    (I \otimes M - h (T \Lambda T^{-1}) \otimes J) \Delta \bm{k}
+    = -(I \otimes M) \bm{k} + \bm{f}\left(h ((T \Lambda T^{-1}) \otimes I) \bm{k}\right)
+\end{equation}
+となる．
+変数 $\bm{w} = (T^{-1} \otimes I) \bm{k}$ を導入し，
+さらに左から $(h^{-1} \Lambda^{-1} T^{-1} \otimes I)$ を掛けると，
+\begin{equation}
+    (h^{-1} \Lambda^{-1} \otimes M - I \otimes J) \Delta \bm{w}
+    = (h^{-1} \Lambda \otimes I)
+    \left(-(I \otimes M) \bm{w} + (T^{-1} \otimes I) \bm{f}(h (T \Lambda \otimes I) \bm{w}) \right)
+\end{equation}
+となる．
 
 \subsection{Jacobian の計算が困難な場合}\label{sec:ode_runge-kutta_without-jacobian}
 
