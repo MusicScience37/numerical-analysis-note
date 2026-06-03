@@ -27,5 +27,5 @@ Gamma 関数をプロットしたものを以下に示す．
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("gamma-function", version=1)
+show_plot_in_jupyter("gamma-function", version=2)
 ```

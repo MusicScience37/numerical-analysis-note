@@ -21,7 +21,7 @@ Kaps の問題
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-kaps-problem-work-error", version=3)
+show_plot_in_jupyter("ode-kaps-problem-work-error", version=4)
 ```
 
 ## 環境

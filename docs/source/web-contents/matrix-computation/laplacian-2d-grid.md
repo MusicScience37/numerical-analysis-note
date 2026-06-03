@@ -16,7 +16,7 @@ file_format: mystnb
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("laplacian-2d-grid", version=2)
+show_plot_in_jupyter("laplacian-2d-grid", version=3)
 ```
 
 ## 環境

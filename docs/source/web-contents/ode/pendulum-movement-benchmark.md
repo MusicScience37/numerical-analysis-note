@@ -51,7 +51,7 @@ $$
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-pendulum-movement-auto-step-all-work-error", version=2)
+show_plot_in_jupyter("ode-pendulum-movement-auto-step-all-work-error", version=3)
 ```
 
 ## ステップ幅固定のソルバーに対するベンチマーク結果
@@ -82,7 +82,7 @@ show_plot_in_jupyter("ode-pendulum-movement-auto-step-all-work-error", version=2
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-pendulum-movement-fixed-step-work-error", version=1)
+show_plot_in_jupyter("ode-pendulum-movement-fixed-step-work-error", version=2)
 ```
 
 ## 環境

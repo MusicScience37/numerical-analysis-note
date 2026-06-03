@@ -14,7 +14,7 @@ file_format: mystnb
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("opt-single-variate-multi-optima-function-time", version=2)
+show_plot_in_jupyter("opt-single-variate-multi-optima-function-time", version=3)
 ```
 
 ```{code-cell}
@@ -22,7 +22,7 @@ show_plot_in_jupyter("opt-single-variate-multi-optima-function-time", version=2)
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("opt-single-variate-multi-optima-function-evaluations", version=2)
+show_plot_in_jupyter("opt-single-variate-multi-optima-function-evaluations", version=3)
 ```
 
 ## 環境
