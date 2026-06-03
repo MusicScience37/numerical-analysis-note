@@ -16,7 +16,7 @@ RBF $\phi : [0, \infty) \to \setR$ によるカーネルは
 RBF としては表
 \ref{table:interp_kernel_example-rbfs}
 のようなものが挙げられる
-\cite{Brochu2010,Fornberg2015}．
+\cite{Fasshauer2007,Brochu2010,Fornberg2015}．
 \index{Gaussian RBF}
 \index{Multi-quadric RBF}
 \index{Inverse Multi-quadric RBF}
@@ -25,7 +25,7 @@ RBF としては表
 \index{Bessel RBF}
 
 \begin{table}[bp]
-    \caption{RBF の例 \cite{Brochu2010,Fornberg2015}}
+    \caption{RBF の例 \cite{Fasshauer2007,Brochu2010,Fornberg2015}}
     \label{table:interp_kernel_example-rbfs}
     \centering
     \begin{tabular}{ll}
@@ -42,6 +42,42 @@ RBF としては表
     \end{tabular}
 \end{table}
 
+RBF 補間において，サンプル点に重複がなければ補間に用いる行列が正定値になるような RBF は正定値 (positive definite) と呼ばれる%
+\cite{Fasshauer2007,Fornberg2015}．
+また，サンプル点を $\bm{r}_1, \ldots, \bm{r}_m$ としたとき，
+$n - 1$ 次の任意の多項式 $p$ において
+\begin{equation}
+    \sum_{i=1}^m c_i p(\bm{r}_i) = 0
+\end{equation}
+となる係数ベクトル $\bm{c} \neq \bm{0}$ に対してであれば
+\begin{equation}
+    \sum_{i=1}^m \sum_{j=1}^m c_i c_j K(\bm{r}_i, \bm{r}_j) > 0
+\end{equation}
+が成り立つような RBF は $n$ 次の条件付きで正定値 (conditionally positive definite) と呼ばれる\cite{Fasshauer2007}．
+条件付きで正定値の場合，$m-1$ 次までの多項式を用いた補間（\ref{sec:interp_kernel_additional-terms} 節）において
+補間の係数も算出する方程式が唯一の解を持つ\cite{Fasshauer2007}．
+
+表 \ref{table:interp_kernel_example-rbfs} で挙げた RBF のうち
+以下については正定値であるか，条件付きで正定値である
+ことが知られている\cite{Fasshauer2007,Fornberg2015}%
+\footnote{Sech については正定値かどうか確認できていない．}．
+\begin{itemize}
+    \item 正定値
+          \begin{itemize}
+              \item Gaussian
+              \item Inverse Multi-quadric
+              \item Inverse Quadric
+              \item Bessel（$d$ 次元までの空間に限る）
+              \item Wendland の compactly supported RBF（\ref{sec:interp_kernel_csrbf} 節参照）
+          \end{itemize}
+    \item 条件付きで正定値
+          \begin{itemize}
+              \item Multi-quadric の $-1$ 倍（1 次の条件付きで正定値）
+              \item Polyharmonic spline に係数をつけたもの $(-1)^{k} r^{2k-1}$, $(-1)^{k+1} r^{2k} \log{r}$ ($k=1,2,\ldots$)
+                    （前者は $k$ 次，後者は $k+1$ 次の条件付きで正定値）
+          \end{itemize}
+\end{itemize}
+
 Polyharmonic spline
 \index{Polyharmonic spline}
 \index{PHS|see{Polyharmonic spline}}
@@ -52,6 +88,15 @@ thin plate spline
 におけるカーネルの係数を省略したような形になっている．
 補間の計算をする上では係数に意味がないが，
 thin plate spline では理論上 $r$ の何乗を選択するべきかが決定されているなどの違いがある．
+
+また，polyharmonic spline は式 \eqref{eq:regularization_kernel_kernel-of-rbf} における
+パラメータ $c$ が不要となる性質がある．
+log のない奇数次の polyharmonic spline は式 \eqref{eq:regularization_kernel_kernel-of-rbf} における
+パラメータ $c$ が RBF 全体を定数倍するだけとなり，補間の結果に影響しない．
+一方，log のある偶数次の polyharmonic spline についても，
+多項式を用いた補間（\ref{sec:interp_kernel_additional-terms} 節）を用いる場合，
+$c$ により生じる項が多項式の項に吸収されるためパラメータ $c$ の値が補間の結果に影響しない．
+そのため，polyharmonic spline ではパラメータ $c$ を調整せずに $c=1$ などとおいて補間を行えば良い．
 
 \subsection{Wendland の Compactly Supported RBF}\label{sec:interp_kernel_csrbf}
 
