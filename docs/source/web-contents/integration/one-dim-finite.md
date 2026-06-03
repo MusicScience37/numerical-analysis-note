@@ -29,7 +29,7 @@ Gauss-Legendre 公式 {cite:p}`Mori1993` で
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("integ-gauss-legendre-errors", version=1)
+show_plot_in_jupyter("integ-gauss-legendre-errors", version=2)
 ```
 
 Gauss-Legendre-Kronrod 公式 {cite:p}`Laurie1997` で
@@ -41,7 +41,7 @@ Gauss-Legendre-Kronrod 公式 {cite:p}`Laurie1997` で
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("integ-gauss-legendre-kronrod-time", version=1)
+show_plot_in_jupyter("integ-gauss-legendre-kronrod-time", version=2)
 ```
 
 二重指数関数型公式 {cite:p}`Press2007` で
@@ -53,5 +53,5 @@ show_plot_in_jupyter("integ-gauss-legendre-kronrod-time", version=1)
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("integ-de-finite-time", version=1)
+show_plot_in_jupyter("integ-de-finite-time", version=2)
 ```

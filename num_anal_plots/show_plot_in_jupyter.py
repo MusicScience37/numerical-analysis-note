@@ -2,6 +2,9 @@
 
 import typing
 
+import IPython.display
+import plotly.io
+
 from num_anal_plots.configure_plot_defaults import configure_plot_defaults
 from num_anal_plots.plots.plots import PLOT_INFO_DICT
 
@@ -14,7 +17,7 @@ def _ignore(_: typing.Any) -> None:
     """
 
 
-def show_plot_in_jupyter(name: str, *, version: int = 1) -> None:
+def show_plot_in_jupyter(name: str, *, version: int = 1) -> IPython.display.HTML:
     """Jupyter でプロットを表示する。
 
     Args:
@@ -28,4 +31,11 @@ def show_plot_in_jupyter(name: str, *, version: int = 1) -> None:
 
     info = PLOT_INFO_DICT[name]
     figure = info.figure_factory()
-    figure.show(renderer="notebook_connected")
+    return IPython.display.HTML(
+        plotly.io.to_html(
+            figure,
+            full_html=False,
+            include_plotlyjs="cdn",
+            include_mathjax=False,
+        )
+    )

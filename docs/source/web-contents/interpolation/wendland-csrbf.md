@@ -12,5 +12,5 @@ Wendland „ÅÆ Compactly Supported RBF $\varphi_{l,k}(r)$ {cite:p}`Wendland1995` „
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("rbf-wendland-csrbf", version=2)
+show_plot_in_jupyter("rbf-wendland-csrbf", version=3)
 ```
