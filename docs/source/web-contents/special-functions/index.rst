@@ -6,3 +6,4 @@
 
     gamma-function
     legendre-function
+    bessel-functions
