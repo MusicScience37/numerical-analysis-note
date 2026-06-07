@@ -4,4 +4,4 @@
 .. toctree::
     :maxdepth: 1
 
-    wendland-csrbf
+    rbfs

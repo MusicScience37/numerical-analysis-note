@@ -55,6 +55,7 @@ from num_anal_plots.plots.opt_single_variate_multi_optima_function.opt_single_va
 from num_anal_plots.plots.pde_diffusion2d_ode_solvers.pde_diffusion2d_ode_solvers import (
     pde_diffusion2d_ode_solvers_work_error,
 )
+from num_anal_plots.plots.rbf_general_rbfs.rbf_general_rbfs import rbf_general_rbfs
 from num_anal_plots.plots.rbf_wendland_csrbf.rbf_wendland_csrbf import (
     rbf_wendland_csrbf,
 )
@@ -115,6 +116,7 @@ PLOT_INFO_LIST = [
         name="modified-bessel-functions", figure_factory=modified_bessel_functions
     ),
     # RBF interpolation
+    PlotInfo(name="rbf-general-rbfs", figure_factory=rbf_general_rbfs),
     PlotInfo(name="rbf-wendland-csrbf", figure_factory=rbf_wendland_csrbf),
     # Numerical integration.
     PlotInfo(
