@@ -7,7 +7,7 @@ file_format: mystnb
 0 次から 5 次までの Bessel 関数をプロットしたものを以下に示す．
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
@@ -15,7 +15,7 @@ show_plot_in_jupyter("cylindrical-bessel-functions", version=7)
 ```
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 

@@ -25,7 +25,7 @@ Gauss-Legendre 公式 {cite:p}`Mori1993` で
 計算結果の誤差がどのように変化するか実験した結果は以下のようになる．
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
@@ -37,7 +37,7 @@ Gauss-Legendre-Kronrod 公式 {cite:p}`Laurie1997` で
 適応積分による計算時間がどのように変化するか実験した結果は以下のようになる．
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
@@ -49,7 +49,7 @@ show_plot_in_jupyter("integ-gauss-legendre-kronrod-time", version=2)
 計算結果の誤差がどのように変化するか実験した結果は以下のようになる．
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 

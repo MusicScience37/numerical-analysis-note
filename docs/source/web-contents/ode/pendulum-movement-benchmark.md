@@ -47,7 +47,7 @@ $$
 時刻 $t=0$ における初期値をもとに時刻 $t=10$ における解を求める時間と精度を測定した．
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
@@ -78,7 +78,7 @@ show_plot_in_jupyter("ode-pendulum-movement-auto-step-all-work-error", version=3
 時刻 $t=0$ における初期値をもとに時刻 $t=100$ における解を求める時間と精度を測定した．
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 

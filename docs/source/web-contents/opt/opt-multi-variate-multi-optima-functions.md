@@ -10,7 +10,7 @@ file_format: mystnb
 ## 結果
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
@@ -18,7 +18,7 @@ show_plot_in_jupyter("opt-multi-variate-difficult-multi-optima-function-time", v
 ```
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 

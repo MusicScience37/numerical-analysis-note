@@ -18,7 +18,7 @@ $\varepsilon = 0$ で微分代数方程式になる．
 ## 結果
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 

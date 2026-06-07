@@ -49,7 +49,7 @@ $$
 時刻 $t=0$ における初期値をもとに時刻 $t=1$ における解を求める時間と精度を測定した．
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 

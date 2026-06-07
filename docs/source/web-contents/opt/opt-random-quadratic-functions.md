@@ -9,7 +9,7 @@ file_format: mystnb
 ## 結果
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
@@ -17,7 +17,7 @@ show_plot_in_jupyter("opt-random-multi-quadratic-function-time", version=3)
 ```
 
 ```{code-cell}
-:tags: ["hide-input"]
+:tags: ["remove-input"]
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
