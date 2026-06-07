@@ -13,10 +13,10 @@ RBF $\phi : [0, \infty) \to \setR$ によるカーネルは
     \label{eq:regularization_kernel_kernel-of-rbf}
 \end{equation}
 のように書ける．
-RBF としては表
-\ref{table:interp_kernel_example-rbfs}
-のようなものが挙げられる
+RBF としては表 \ref{table:interp_kernel_example-rbfs} のようなものが挙げられる%
 \cite{Fasshauer2007,Brochu2010,Fornberg2015}．
+表 \ref{table:interp_kernel_example-rbfs} の RBF をプロットしたものを
+図 \ref{fig:rbf_general-rbfs}, \ref{fig:rbf_bessel-rbf}, \ref{fig:rbf_polyharmonic-spline-rbf} に示す．
 \index{Gaussian RBF}
 \index{Multi-quadric RBF}
 \index{Inverse Multi-quadric RBF}
@@ -41,6 +41,27 @@ RBF としては表
         Compactly Supported RBF   & （\ref{sec:interp_kernel_csrbf} 節参照）
     \end{tabular}
 \end{table}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/rbf-general-rbfs.pdf}
+    \caption{パラメータのない RBF (Gaussian, Multi-quadric, Inverse Multi-quadric, Inverse Quadric, Sech) のプロット}
+    \label{fig:rbf_general-rbfs}
+\end{figure}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/rbf-bessel-rbf.pdf}
+    \caption{Bessel RBF のプロット}
+    \label{fig:rbf_bessel-rbf}
+\end{figure}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/rbf-polyharmonic-spline-rbf.pdf}
+    \caption{Polyharmonic Spline RBF のプロット}
+    \label{fig:rbf_polyharmonic-spline-rbf}
+\end{figure}
 
 RBF 補間において，サンプル点に重複がなければ補間に用いる行列が正定値になるような RBF は正定値 (positive definite) と呼ばれる%
 \cite{Fasshauer2007,Fornberg2015}．

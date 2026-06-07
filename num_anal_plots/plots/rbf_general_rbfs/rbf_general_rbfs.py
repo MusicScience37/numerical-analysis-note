@@ -61,5 +61,4 @@ def rbf_general_rbfs() -> plotly.graph_objects.Figure:
         title="RBFs",
         range_y=[0.0, 2.0],
     )
-    figure.update_layout(height=700)
     return figure

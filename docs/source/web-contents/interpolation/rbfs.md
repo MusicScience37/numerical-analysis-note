@@ -13,7 +13,7 @@ file_format: mystnb
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("rbf-general-rbfs", version=2)
+show_plot_in_jupyter("rbf-general-rbfs", version=3)
 ```
 
 ## Bessel RBF
