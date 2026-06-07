@@ -53,7 +53,7 @@ def rbf_general_rbfs() -> plotly.graph_objects.Figure:
         color=function_list,
         line_dash=function_list,
         labels={
-            "x": "x",
+            "x": "r",
             "y": "Value of RBF",
             "color": "RBF",
             "line_dash": "RBF",
