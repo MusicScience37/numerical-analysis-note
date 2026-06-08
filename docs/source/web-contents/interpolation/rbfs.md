@@ -28,6 +28,18 @@ from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 show_plot_in_jupyter("rbf-bessel-rbf", version=2)
 ```
 
+## Matérn RBF
+
+Matérn RBF をいくつかプロットしたものを以下に示す．
+
+```{code-cell}
+:tags: ["remove-input"]
+
+from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
+
+show_plot_in_jupyter("rbf-matern-rbf", version=2)
+```
+
 ## Polyharmonic Spline RBF
 
 Polyharmonic spline RBF をいくつかプロットしたものを以下に示す．
