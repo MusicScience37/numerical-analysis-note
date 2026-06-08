@@ -59,7 +59,7 @@ def cylindrical_bessel_functions() -> plotly.graph_objects.Figure:
 
 
 def modified_bessel_functions() -> plotly.graph_objects.Figure:
-    """修正 Bessel 関数をプロットする。
+    """変形 Bessel 関数をプロットする。
 
     Returns:
         plotly.graph_objects.Figure: プロット結果。
