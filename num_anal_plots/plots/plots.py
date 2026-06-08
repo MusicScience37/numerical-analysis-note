@@ -57,6 +57,7 @@ from num_anal_plots.plots.pde_diffusion2d_ode_solvers.pde_diffusion2d_ode_solver
 )
 from num_anal_plots.plots.rbf_bessel_rbf.rbf_bessel_rbf import rbf_bessel_rbf
 from num_anal_plots.plots.rbf_general_rbfs.rbf_general_rbfs import rbf_general_rbfs
+from num_anal_plots.plots.rbf_matern_rbf.rbf_matern_rbf import rbf_matern_rbf
 from num_anal_plots.plots.rbf_polyharmonic_spline_rbf.rbf_polyharmonic_spline_rbf import (
     rbf_polyharmonic_spline_rbf,
 )
@@ -122,6 +123,7 @@ PLOT_INFO_LIST = [
     # RBF interpolation
     PlotInfo(name="rbf-general-rbfs", figure_factory=rbf_general_rbfs),
     PlotInfo(name="rbf-bessel-rbf", figure_factory=rbf_bessel_rbf),
+    PlotInfo(name="rbf-matern-rbf", figure_factory=rbf_matern_rbf),
     PlotInfo(
         name="rbf-polyharmonic-spline-rbf", figure_factory=rbf_polyharmonic_spline_rbf
     ),

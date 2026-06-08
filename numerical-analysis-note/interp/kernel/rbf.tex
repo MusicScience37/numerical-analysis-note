@@ -16,28 +16,31 @@ RBF $\phi : [0, \infty) \to \setR$ によるカーネルは
 RBF としては表 \ref{table:interp_kernel_example-rbfs} のようなものが挙げられる%
 \cite{Fasshauer2007,Brochu2010,Fornberg2015}．
 表 \ref{table:interp_kernel_example-rbfs} の RBF をプロットしたものを
-図 \ref{fig:rbf_general-rbfs}, \ref{fig:rbf_bessel-rbf}, \ref{fig:rbf_polyharmonic-spline-rbf} に示す．
+図 \ref{fig:rbf_general-rbfs}, \ref{fig:rbf_bessel-rbf}, \ref{fig:rbf_matern-rbf}, \ref{fig:rbf_polyharmonic-spline-rbf} に示す．
+ここで，$J_{\nu}$ は Bessel 関数，$K_{\nu}$ は第 2 種変形 Bessel 関数である．
 \index{Gaussian RBF}
 \index{Multi-quadric RBF}
 \index{Inverse Multi-quadric RBF}
 \index{Inverse Quadric RBF}
 \index{Sech RBF}
 \index{Bessel RBF}
+\index{Matérn RBF}
 
 \begin{table}[bp]
     \caption{RBF の例 \cite{Fasshauer2007,Brochu2010,Fornberg2015}}
     \label{table:interp_kernel_example-rbfs}
     \centering
     \begin{tabular}{ll}
-        名称                        & 関数                                           \\
+        名称                        & 関数                                                              \\
         \hline
-        Gaussian                  & $e^{-r^2}$                                   \\
-        Multi-quadric             & $\sqrt{1 + r^2}$                             \\
-        Inverse Multi-quadric     & $1/\sqrt{1 + r^2}$                           \\
-        Inverse Quadric           & $1 / (1 + r^2)$                              \\
-        Sech                      & $1 / \cosh{r}$                               \\
-        Bessel ($d=1,2,\ldots$)   & $J_{d/2-1}(r) / r^{d/2-1}$                   \\
-        Polyharmonic spline (PHS) & $r^{2k-1}$, $r^{2k}\log{r}$ ($k=1,2,\ldots$) \\
+        Gaussian                  & $e^{-r^2}$                                                      \\
+        Multi-quadric             & $\sqrt{1 + r^2}$                                                \\
+        Inverse Multi-quadric     & $1/\sqrt{1 + r^2}$                                              \\
+        Inverse Quadric           & $1 / (1 + r^2)$                                                 \\
+        Sech                      & $1 / \cosh{r}$                                                  \\
+        Bessel                    & $J_{d/2-1}(r) / r^{d/2-1}$ ($d=1,2,\ldots$)                     \\
+        Matérn                    & $\frac{2^{1-k}}{\Gamma(k)} r^k K_k(r)$ ($k \in \setR$, $k > 0$) \\
+        Polyharmonic spline (PHS) & $r^{2k-1}$, $r^{2k}\log{r}$ ($k=1,2,\ldots$)                    \\
         Compactly Supported RBF   & （\ref{sec:interp_kernel_csrbf} 節参照）
     \end{tabular}
 \end{table}
@@ -54,6 +57,13 @@ RBF としては表 \ref{table:interp_kernel_example-rbfs} のようなものが
     \includegraphics[width=0.99\linewidth]{plots/rbf-bessel-rbf.pdf}
     \caption{Bessel RBF のプロット}
     \label{fig:rbf_bessel-rbf}
+\end{figure}
+
+\begin{figure}[tp]
+    \centering
+    \includegraphics[width=0.99\linewidth]{plots/rbf-matern-rbf.pdf}
+    \caption{Matérn RBF のプロット}
+    \label{fig:rbf_matern-rbf}
 \end{figure}
 
 \begin{figure}[tp]
@@ -89,6 +99,7 @@ $n - 1$ 次の任意の多項式 $p$ において
               \item Inverse Multi-quadric
               \item Inverse Quadric
               \item Bessel（$d$ 次元までの空間に限る）
+              \item Matérn
               \item Wendland の compactly supported RBF（\ref{sec:interp_kernel_csrbf} 節参照）
           \end{itemize}
     \item 条件付きで正定値
