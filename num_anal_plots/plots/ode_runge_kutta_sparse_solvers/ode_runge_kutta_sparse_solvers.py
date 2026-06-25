@@ -22,12 +22,12 @@ def ode_runge_kutta_sparse_solvers() -> plotly.graph_objects.Figure:
 
     data_list = []
     for measurement in results["measurements"]:
-        if measurement["measurement_type"] != "Mean Processing Time":
+        if measurement["measurement_type"] != "Processing Time":
             continue
 
-        if measurement["case_name"] == "repeated_gmres":
+        if measurement["case_name"] == "functional_gmres_preconditioned":
             solver_name = f'Repeated GMRES (m={int(measurement["params"]["sub_dim"])})'
-        elif measurement["case_name"] == "BiCGSTAB":
+        elif measurement["case_name"] == "functional_bicgstab_preconditioned":
             solver_name = "BiCGstab"
         else:
             continue

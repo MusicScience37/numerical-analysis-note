@@ -2,12 +2,12 @@
 
 ## 環境
 
-- CPU: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+- CPU: Intel(R) Core(TM) Ultra 5 125H
 - コンパイラ：Clang 21.1.8
 
 ## 実施内容
 
-numerical-collection-cpp のコミット 369425a4ec99515c58f9c04ed0209d9683d45d8b において，
+numerical-collection-cpp のコミット 1ab776c2c47780ad0e2433dc4d70fe4d336abee1 において，
 以下のコマンドを実行した．
 
 ```shell
