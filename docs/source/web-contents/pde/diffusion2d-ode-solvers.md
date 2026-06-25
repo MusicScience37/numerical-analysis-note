@@ -53,5 +53,15 @@ $$
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("pde-diffusion2d-ode-solvers-work-error", version=4)
+show_plot_in_jupyter("pde-diffusion2d-ode-solvers-work-error", version=7)
 ```
+
+## 環境
+
+- CPU: Intel(R) Core(TM) Ultra 5 125H
+- コンパイラ：Clang 21.1.8
+
+## ソースコード
+
+numerical-collection-cpp リポジトリ {cite:p}`NumericalCollectionCpp`
+のコミット `1ab776c2c47780ad0e2433dc4d70fe4d336abee1` 時点のものを使用した．

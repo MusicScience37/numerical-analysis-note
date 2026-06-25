@@ -49,6 +49,14 @@ def pde_diffusion2d_ode_solvers_work_error() -> plotly.graph_objects.Figure:
         ]
     )
 
+    # 全て含めると多すぎるため、一部結果が良くなく特に言及することもないソルバーを除外する。
+    ignored_solvers = [
+        "ROS34PW3",
+        "RadauIIA9",
+        "RadauIIA13",
+    ]
+    data_frame = data_frame[~data_frame["Solver"].isin(ignored_solvers)]
+
     figure = px.line(
         data_frame,
         x="Time [sec]",
