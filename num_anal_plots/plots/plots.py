@@ -33,7 +33,6 @@ from num_anal_plots.plots.ode_pendulum_movement.ode_pendulum_movement_fixed_step
     ode_pendulum_movement_fixed_step_work_error,
 )
 from num_anal_plots.plots.ode_runge_kutta_sparse_solvers.ode_runge_kutta_sparse_solvers import (
-    ode_runge_kutta_sparse_solvers,
     ode_runge_kutta_sparse_solvers_gmres,
 )
 from num_anal_plots.plots.opt_convex_difficult_functions.opt_convex_difficult_functions import (
@@ -78,10 +77,6 @@ PLOT_INFO_LIST = [
     # Linear Solvers.
     PlotInfo(name="laplacian-2d-grid", figure_factory=laplacian_2d_grid),
     # ODE Solvers.
-    PlotInfo(
-        name="ode-runge-kutta-sparse-solvers",
-        figure_factory=ode_runge_kutta_sparse_solvers,
-    ),
     PlotInfo(
         name="ode-runge-kutta-sparse-solvers-gmres",
         figure_factory=ode_runge_kutta_sparse_solvers_gmres,

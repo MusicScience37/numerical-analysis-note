@@ -4,6 +4,7 @@
 .. toctree::
     :maxdepth: 1
 
+    formulas
     runge-kutta-implicit-solvers
     pendulum-movement-benchmark
     kaps-problem-benchmark

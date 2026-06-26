@@ -6,8 +6,10 @@ MAIN_SOLVERS = [
     "DOPRI5",
     "Tanaka2",
     "SDIRK4",
+    "SDIRK6",
     "ESDIRK45c",
     "RadauIIA5",
+    "ROS3w",
     "RODASP",
     "RODASPR",
     "AVF3",
@@ -24,16 +26,21 @@ EXPLICIT_RUNGE_KUTTA_SOLVERS = [
 
 # 陰的 Runge-Kutta 法のソルバー。
 IMPLICIT_RUNGE_KUTTA_SOLVERS = [
+    "ImplicitEuler",
+    "CrankNicolson",
     "Tanaka1",
     "Tanaka2",
     "SDIRK4",
+    "SDIRK6",
     "ARK4(3)-ESDIRK",
     "ARK5(4)-ESDIRK",
+    "ESDIRK32a",
     "ESDIRK45c",
     "LobattoIIIC4",
     "LobattoIIIC6",
     "RadauIIA3",
     "RadauIIA5",
+    "RadauIIA7",
     "RadauIIA9",
     "RadauIIA13",
     "RadauIIA17",
@@ -42,6 +49,8 @@ IMPLICIT_RUNGE_KUTTA_SOLVERS = [
 # Rosenbrock 法のソルバー。
 ROSENBROCK_SOLVERS = [
     "ROS3w",
+    "ROS3Dw",
+    "ROS3PRL2",
     "ROS34PRw",
     "ROS34PW3",
     "RODASP",
