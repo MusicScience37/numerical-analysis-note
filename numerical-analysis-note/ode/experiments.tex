@@ -29,15 +29,19 @@
                     \end{description}
               \item 半陰的公式
                     \begin{description}
+                        \item[ImplicitEuler] 陰的 Euler 法
+                        \item[CrankNicolson] Crank-Nicolson 法
                         \item[Tanaka1] 田中 Formula1 公式 \cite{Togawa2007}
                               （表 \ref{table:ode_runge-kutta_butcher-array-tanaka-formula1}）
                         \item[Tanaka2] 田中 Formula2 公式 \cite{Togawa2007}
                               （表 \ref{table:ode_runge-kutta_butcher-array-tanaka-formula2}）
                         \item[SDIRK4] 4 次の SDIRK \cite[Section IV.6.]{Hairer1991}
                               （表 \ref{table:ode_runge-kutta_butcher-array-sdirk-4}）
+                        \item[SDIRK6] SDIRK(9,6)[1]SAL-[(9,5)A] 公式 \cite{Alamri2023}
                         \item[ARK4(3)-ESDIRK] ARK4(3)6L[2]SA-ESDIRK 公式 \cite{Kennedy2003}
                               （表 \ref{table:ode_runge-kutta_butcher-array-ark436l2sa-esdirk}）
                         \item[ARK5(4)-ESDIRK] ARK5(4)6L[2]SA-ESDIRK 公式 \cite{Kennedy2003}
+                        \item[ESDIRK32a] ESDIRK 3/2 a 公式 \cite{Kvaerno2004}
                         \item[ESDIRK45c] ESDIRK45c 公式 \cite{Jorgensen2018}
                     \end{description}
               \item 陰的公式
@@ -46,11 +50,17 @@
                         \item[LobattoIIIC6] Lobatto IIIC 6 次の公式 \cite{Hairer1991}
                         \item[RadauIIA3] Radau IIA 3 次の公式 \cite{Hairer1991}
                         \item[RadauIIA5] Radau IIA 5 次の公式 \cite{Hairer1991}
+                        \item[RadauIIA7] Radau IIA 7 次の公式 \cite{Hairer1991}
+                        \item[RadauIIA9] Radau IIA 9 次の公式 \cite{Hairer1991}
+                        \item[RadauIIA13] Radau IIA 13 次の公式 \cite{Hairer1991}
+                        \item[RadauIIA17] Radau IIA 17 次の公式 \cite{Hairer1991}
                     \end{description}
           \end{itemize}
     \item Rosenbrock 法（\ref{sec:ode_rosenbrock} 章）
           \begin{description}
               \item[ROS3w] ROS3w 公式 \cite{Rang2005}
+              \item[ROS3Dw] ROS3Dw 公式 \cite{Rang2005}
+              \item[ROS3PRL2] ROS3PRL2 公式 \cite{Rang2015}
               \item[ROS34PRw] ROS34PRw 公式 \cite{Rang2015}
               \item[ROS34PW3] ROS34PW3 公式 \cite{Rang2005}
               \item[RODASP] RODASP 公式 \cite{Steinebach2022}
@@ -89,7 +99,7 @@
     \centering
     \includegraphics[width=0.99\linewidth]{plots/ode-pendulum-movement-auto-step-all-work-error.pdf}
     \caption{振り子の運動方程式に数値解法を適用したときの計算時間と誤差%
-        （ステップ幅の自動調整機能 \cite{Gustafsson1991} 付きの解法によるもの）}
+        （ステップ幅の自動調整機能付きの解法によるもの）}
     \label{fig:ode_experiments_pendulum-movement_auto-step-all-work-error}
 \end{figure}
 
@@ -102,7 +112,7 @@
 \end{figure}
 
 まず，ステップ幅を自動決定しながら各種数値解法を適用した．
-ここで，ステップ幅は \ref{chap:ode_runge-kutta_auto-next-step-size-pi-controller} 節で示したアルゴリズムにより決定した．
+ここで，ステップ幅は \cite{Blom2013} に記載されているデジタルフィルタに基づくアルゴリズムにより自動で調整した．
 $t=0$ における初期値 $\theta = 1$ をもとに $t=10$ における $\theta$ の値を求めるという初期値問題で評価を行った
 結果を図
 \ref{fig:ode_experiments_pendulum-movement_auto-step-all-work-error},
@@ -112,9 +122,9 @@ $t=0$ における初期値 $\theta = 1$ をもとに $t=10$ における $\thet
 その Runge-Kutta 法の陽的公式 3 種類ではおおよそ同等の性能となった．
 Runge-Kutta 法の半陰的公式の中では
 性能向上が行われている SDIRK, ESDIRK の公式による解法が比較的速かった．
-一方，計算量の多めな陰的公式でも RadauIIA5 は比較的速かった．
+ただし，計算量の多い陰的公式（Radau IIA など）も少し多めに時間がかかる程度であった．
 陰的公式は 1 ステップの計算量が多くなるが，高い次数によりステップ数を削減できるため，
-そのバランスにより公式によっては速くなるものと思われる．
+そのバランスにより性能が良くなっているものと思われる．
 SDIRK からアルゴリズム自体も変更して性能向上が行われている Rosenbrock 法は速く，
 RODASP, RODASPR 公式は陰的公式でありながら Runge-Kutta 法の陽的公式に近い性能を示した．
 平均ベクトル場法は計算が比較的複雑になるため，性能は比較的悪くなった．
@@ -163,12 +173,12 @@ $\epsilon$ の値に関係なく以下の解をもつ．
     \centering
     \includegraphics[width=0.99\linewidth]{plots/ode-kaps-problem-work-error.pdf}
     \caption{Kaps の問題に数値解法を適用したときの計算時間と誤差%
-        （ステップ幅の自動調整機能 \cite{Gustafsson1991} 付きの解法によるもの）}
+        （ステップ幅の自動調整機能付きの解法によるもの）}
     \label{fig:ode_experiments_kaps-problem_work-error}
 \end{figure}
 
 この常微分方程式に対して各種数値解法を適用した．
-ここで，ステップ幅は \ref{chap:ode_runge-kutta_auto-next-step-size-pi-controller} 節で示したアルゴリズムにより決定した．
+ここで，ステップ幅は \cite{Blom2013} に記載されているデジタルフィルタに基づくアルゴリズムにより自動で調整した．
 $t=0$ における初期値をもとに $t=1$ における数値解を求めるという初期値問題で評価を行った結果を図
 \ref{fig:ode_experiments_kaps-problem_work-error}
 に示す．
@@ -185,7 +195,7 @@ Runge-Kutta 法の RadauIIA5 が速かった．
     \centering
     \includegraphics[width=0.99\linewidth]{plots/ode-implicit-kaps-problem-work-error.pdf}
     \caption{陰的な Kaps の問題に数値解法を適用したときの計算時間と誤差%
-        （ステップ幅の自動調整機能 \cite{Gustafsson1991} 付きの解法によるもの）}
+        （ステップ幅の自動調整機能付きの解法によるもの）}
     \label{fig:ode_experiments_implicit-kaps-problem_work-error}
 \end{figure}
 
@@ -203,4 +213,4 @@ Kaps の問題の 1 個目の式に $\epsilon$ を掛けて方程式自体を陰
 $\epsilon = 0$ の場合は微分代数方程式に対応した数値解法のみを適用しているため，
 凡例にある数値解法の一部は $\epsilon = 0$ の結果に含まれていない．
 微分代数方程式に対応した手法では $\epsilon$ を 0 まで小さくしても問題なく数値解を求めることができた．
-この微分代数方程式においても特に性能が良かった公式は RODASP, RODASPR であった．
+この微分代数方程式においても特に速かった公式は RODASP, RODASPR であった．
