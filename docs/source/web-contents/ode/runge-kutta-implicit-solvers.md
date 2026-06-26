@@ -9,8 +9,6 @@ file_format: mystnb
 
 - GMRES 法 {cite:p}`Golub2013` {cite:p}`Blom2013`
   （numerical-collection-cpp リポジトリ {cite:p}`NumericalCollectionCpp` の実装）
-- BiCGstab 法 {cite:p}`Golub2013`
-  （numerical-collection-cpp リポジトリ {cite:p}`NumericalCollectionCpp` の実装）
 
 ## 結果
 
@@ -19,7 +17,7 @@ file_format: mystnb
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-runge-kutta-sparse-solvers", version=9)
+show_plot_in_jupyter("ode-runge-kutta-sparse-solvers-gmres", version=9)
 ```
 
 ## 環境
