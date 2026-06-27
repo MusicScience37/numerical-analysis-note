@@ -12,8 +12,7 @@ $m$ 個の点 $\bm{r}_1, \bm{r}_2, \ldots, \bm{r}_m$ と点 $\bm{r}_c$ につい
     \label{eq:pde_rbf-fd_approximation-formula}
 \end{equation}
 となるように近似する係数 $w_i$ を求める方法の 1 つに
-RBF-FD (Radial Basis Function Finite Difference) 法がある
-\cite{Fornberg2015}．
+RBF-FD (Radial Basis Function Finite Difference) 法がある \cite{Fornberg2015}．
 
 多項式項を含む RBF 補間
 \footnote{RBF 補間については \ref{sec:interp_kernel_rbf} 節を，%
@@ -53,4 +52,38 @@ RBF-FD (Radial Basis Function Finite Difference) 法がある
 
 方程式には追加の係数 $w_{m+1}, \ldots, w_{m+M}$ が含まれているが，
 これらは方程式を立てるために使用しているだけで，
-RBF-FD 法による近似の計算（式 \eqref{eq:pde_rbf-fd_approximation-formula}）では不要である．
+RBF-FD 法による近似の計算（式 \eqref{eq:pde_rbf-fd_approximation-formula}）では不要である
+（詳細は \cite{Fornberg2015} 参照）．
+
+上述のような離散化を偏微分方程式の境界以外の各点と偏微分が必要な Neumann 境界条件の点に対して適用することで，
+偏微分方程式を離散化する．
+時間発展を含む偏微分方程式の場合，
+時間発展は別途常微分方程式の数値解法（\ref{part:ode} 部）を適用する method of lines などによって行う．
+\index{method of lines}
+
+\section{超粘性による移流項の安定化}\label{sec:pde_rbf-fd_hyperviscosity}
+\index{ちょうねんせい@超粘性}
+\index{hyperviscosity|see{超粘性}}
+
+移流項 $\bm{v} \cdot \nabla u$ は普通に離散化しただけでは数値的に不安定になることが知られており，
+単純な有限差分法や有限体積法においては風上差分を用いた安定化が知られている \cite{Tabata1994,Arakawa1994}．
+風上差分は実質的には人工的な粘性を導入していることに相当することが示されている．
+一方，RBF-FD 法のように単純な差分を用いない手法の場合にも使用可能な安定化手法として，
+超粘性 (hyperviscosity) という高次の粘性による粘性項を加える手法が知られている \cite{Shankar2018,Vaupotic2024,Rot2026}．
+
+超粘性を用いた安定化では，移流項を含む方程式
+\begin{equation}
+    \frac{\partial u}{\partial t} + \bm{v} \cdot \nabla u = \text{（その他の項）}
+\end{equation}
+に以下のように超粘性項を加える．
+\begin{equation}
+    \frac{\partial u}{\partial t} + \bm{v} \cdot \nabla u = (-1)^{\alpha + 1} \gamma \nabla^{2\alpha} u + \text{（その他の項）}
+\end{equation}
+ここで，$\alpha$ は正の整数であり，$\alpha = 1$ は通常の粘性項に相当する．
+文献 \cite{Shankar2018} では $\alpha$ を状況に応じて選択するようにしている一方，
+文献 \cite{Vaupotic2024} では $\alpha=3$ で，
+文献 \cite{Rot2026} では $\alpha=2,3,4$ で数値実験を行っている．
+$\gamma$ は正の定数であり，文献ではいくつかの決定方法が挙げられている．
+単純なものとしては，離散化に用いる点群の間隔 $h$ と正の定数 $c$ を用いて
+$\gamma = c h^{2\alpha}$ とする方法があり，
+文献 \cite{Rot2026} では $c \in [0.1, 1]$ の範囲で調整されている．
