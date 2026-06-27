@@ -17,7 +17,7 @@ file_format: mystnb
 
 from num_anal_plots.show_plot_in_jupyter import show_plot_in_jupyter
 
-show_plot_in_jupyter("ode-runge-kutta-sparse-solvers-gmres", version=9)
+show_plot_in_jupyter("ode-runge-kutta-sparse-solvers-gmres", version=11)
 ```
 
 ## 環境
@@ -28,4 +28,4 @@ show_plot_in_jupyter("ode-runge-kutta-sparse-solvers-gmres", version=9)
 ## ソースコード
 
 numerical-collection-cpp リポジトリ {cite:p}`NumericalCollectionCpp`
-のコミット `1ab776c2c47780ad0e2433dc4d70fe4d336abee1` 時点のものを使用した．
+のコミット `6630c05aefc5802f289ef4b12c4bb87386e8dadf` 時点のものを使用した．
