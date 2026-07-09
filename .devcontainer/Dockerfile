@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/musicscience37projects/docker/tectonic-python-docker:noble
+FROM registry.gitlab.com/musicscience37projects/docker/tectonic-python-docker:resolute
 
 ARG USERNAME=ubuntu
 ARG USER_UID=1000
