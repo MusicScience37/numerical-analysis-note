@@ -1,4 +1,4 @@
-image: registry.gitlab.com/musicscience37projects/docker/tectonic-python-docker:noble
+image: registry.gitlab.com/musicscience37projects/docker/tectonic-python-docker:resolute
 
 stages:
   - test
