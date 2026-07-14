@@ -1,0 +1,42 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{移流の安定化}\label{chap:pde_convection}
+
+空気や水のような流れる媒体における方程式では，その流れの速度 $\bm{v}$ を含む
+\begin{equation}
+    \frac{\partial u}{\partial t} + \bm{v} \cdot \nabla u = \text{（その他の項）}
+\end{equation}
+のような形式が現れることがある．
+例えば，陽的な解を得ることができていないことから数値解法が重要となる方程式の 1 つである
+流体力学の Navier-Stokes 方程式も上記のような形になっている．
+しかし，このような方程式に現れる移流項 $\bm{v} \cdot \nabla u$ は，
+普通に離散化しただけでは数値的に不安定になることが知られており，
+単純な有限差分法や有限体積法においては風上差分を用いた安定化が用いられる \cite{Tabata1994,Arakawa1994}．
+一方，前章までに示した有限要素法と RBF-FD 法において，単純な風上差分は使用できない．
+そこで，移流項の安定化において使用される他の手法について本章で紹介する．
+
+\section{超粘性による移流項の安定化}\label{sec:pde_convection_hyperviscosity}
+\index{ちょうねんせい@超粘性}
+\index{hyperviscosity|see{超粘性}}
+
+風上差分は実質的には人工的な粘性を導入していることに相当することが示されている \cite{Arakawa1994}．
+そこで，超粘性 (hyperviscosity) という高次の微分による粘性項を加える手法が考えられている%
+\cite{Shankar2018,Vaupotic2024,Rot2026}．
+
+超粘性を用いた安定化では，移流項を含む方程式
+\begin{equation}
+    \frac{\partial u}{\partial t} + \bm{v} \cdot \nabla u = \text{（その他の項）}
+\end{equation}
+に以下のように超粘性項を加える．
+\begin{equation}
+    \frac{\partial u}{\partial t} + \bm{v} \cdot \nabla u = (-1)^{\alpha + 1} \gamma \nabla^{2\alpha} u + \text{（その他の項）}
+\end{equation}
+ここで，$\alpha$ は正の整数であり，$\alpha = 1$ は通常の粘性項に相当する．
+文献 \cite{Shankar2018} では $\alpha$ を状況に応じて選択するようにしている一方，
+文献 \cite{Vaupotic2024} では $\alpha=3$ で，
+文献 \cite{Rot2026} では $\alpha=2,3,4$ で数値実験を行っている．
+$\gamma$ は正の定数であり，文献ではいくつかの決定方法が挙げられている．
+単純なものとしては，離散化に用いる点群の間隔 $h$ と正の定数 $c$ を用いて
+$\gamma = c h^{2\alpha}$ とする方法があり，
+文献 \cite{Rot2026} では $c \in [0.1, 1]$ の範囲で調整されている．
