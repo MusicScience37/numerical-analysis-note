@@ -1,0 +1,88 @@
+% !TEX root = ../main.tex
+%
+
+\chapter{有限要素法}\label{chap:pde_fem}
+\index{ゆうげんようそほう@有限要素法}
+\index{FEM|see{有限要素法}}
+
+本章では有限要素法の概要を示す．
+有限要素法では，偏微分方程式を解きたい領域を小さな三角形や四角形，四面体などの要素の集まり（メッシュ）に分割し，
+各要素内で多項式などにより解となる関数を近似することで，領域全体における解を近似する．
+そして，偏微分方程式から弱形式と呼ばれる積分形式の方程式を立て，それを要素ごとの近似関数により表現することで，
+離散化した方程式を得る．
+有限要素法は，対象となる領域を三角形や四面体などで分割できれば適用が可能なため，
+特に複雑な形状における偏微分方程式の数値解を求めたい場合に便利な手法である．
+
+有限要素法において使用される要素としては以下のようなものが挙げられる \cite{Tosaka1991,Knabner2003,FreeFEMDoc}．
+
+\begin{itemize}
+    \item 1 次元
+          \begin{itemize}
+              \item 区間における 1 次要素（1 次関数による補間）
+              \item 区間における 2 次要素（2 次関数による補間）
+          \end{itemize}
+    \item 2 次元
+          \begin{itemize}
+              \item 三角形における 1 次要素（1 次関数による補間）
+              \item 三角形における 2 次要素（2 次関数による補間）
+              \item 三角形における気泡関数付き 1 次要素（詳細は \cite{Tosaka1991,FreeFEMDoc} 参照）
+              \item 三角形における定数要素（三角形ごとに定数となる近似）
+              \item 四角形におけるバイリニア要素（バイリニア補間）
+          \end{itemize}
+    \item 3 次元
+          \begin{itemize}
+              \item 四面体における 1 次要素（1 次関数による補間）
+              \item 四面体における 2 次要素（2 次関数による補間）
+          \end{itemize}
+\end{itemize}
+
+これらの要素について，要素の端点など何点かの関数値に合わせて補間することで，要素内における関数の近似を行う．
+上記のような要素においては，節点 $\bm{r}_i$ ごとにその節点では 1，他の節点では 0 となる関数 $\phi_i$ を定義することができ，
+その関数の線型結合により関数を
+\begin{equation}
+    u(\bm{r}) = \sum_i u_i \phi_i(\bm{r})
+\end{equation}
+のように近似することができる．
+このような近似を有限要素近似と呼び，
+関数 $\phi_i$ を形状関数（shape function）と呼ぶ．
+\index{けいじょうかんすう@形状関数}
+\index{shape function|see{形状関数}}
+
+有限要素近似を用いて偏微分方程式を離散化するにあたって，偏微分方程式に対する弱形式と呼ばれる方程式を求める．
+例えば，Poisson 方程式
+\begin{equation}
+    -\nabla^2 u = f
+\end{equation}
+の場合，両辺に関数 $v$ を掛けて領域 $\Omega$ 上で積分することで
+\begin{equation}
+    -\int_{\Omega} v \nabla^2 u \, d\Omega = \int_{\Omega} f v \, d\Omega
+\end{equation}
+とし，左辺を部分積分した
+\begin{equation}
+    \int_{\Omega} \nabla u \cdot \nabla v \, d\Omega
+    = \int_{\partial \Omega} v \bm{n} \cdot \nabla u \, d\Gamma
+    + \int_{\Omega} f v \, d\Omega
+\end{equation}
+が弱形式と呼ばれる．
+部分積分をしているのは，
+$u$ と $v$ 両方の微分を含んでいる第 1 項を $u$ と $v$ について対称な形にするためで，
+これにより最終的に離散化して得られる線型方程式の係数行列が対称行列となる効果がある．
+ここで，解 $u$ 以外に追加された関数 $v$ はテスト関数と呼ばれる．
+
+弱形式のうち $u$ を有限要素近似で置き換え，$v$ を節点 $j$ に対する形状関数 $\phi_j$ で置き換えると，
+\begin{equation}
+    \sum_i u_i \int_{\Omega} \nabla \phi_i \cdot \nabla \phi_j \, d\Omega
+    = \int_{\partial \Omega} \phi_j \bm{n} \cdot \nabla u \, d\Gamma
+    + \int_{\Omega} f \phi_j \, d\Omega
+\end{equation}
+となる．
+ここで，右辺の第 1 項にある $\nabla u$ については境界条件となるためそのまま残しておく．
+ただし，Dirichlet 境界条件 $u = g$ となっている箇所は $v = 0$ とすることで，
+$\nabla u$ の値が不要となるようにする．
+上記の方程式は，各項にある積分が解 $u$ に依存せず計算できるため，
+積分を計算しておくことで
+\begin{equation}
+    \sum_i u_i A_{ij} = b_j
+\end{equation}
+のような形の $u_i$ に関する線型方程式を得ることができる．
+係数行列は疎行列になるため，疎行列向けのアルゴリズムを使用することで節点の数が多くても解を求めることができる．
