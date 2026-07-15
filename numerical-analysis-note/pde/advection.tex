@@ -71,6 +71,9 @@
 それぞれによる時間発展を別々に計算した結果を足し合わせることによっても得られる．
 そのように項を分割して時間発展を計算する手法は operator splitting と呼ばれる \cite{Press2007}．
 
+ここで紹介した特性曲線法では，元々の $u$ の値を使用するため，
+その仕組み上，移流項に関する計算では解の発散が起こりえず，移流項の安定化に有効である．
+
 \section{超粘性による移流項の安定化}\label{sec:pde_advection_hyperviscosity}
 \index{ちょうねんせい@超粘性}
 \index{hyperviscosity|see{超粘性}}
