@@ -15,23 +15,25 @@
 単純な有限差分法や有限体積法においては風上差分を用いた安定化が用いられる \cite{Tabata1994,Arakawa1994}．
 一方，前章までに示した有限要素法と RBF-FD 法において，単純な風上差分は使用できない．
 そこで，移流項の安定化において使用される他の手法について本章で紹介する．
+なお，上記の式の左辺は物質微分 (material derivative) と呼ばれる．
+\index{ぶっしつびぶん@物質微分}
+\index{material derivative|see{物質微分}}
 
 \section{特性曲線法による移流の算出}\label{sec:pde_advection_characteristics}
 \index{とくせいきょくせんほう@特性曲線法}
-\index{characteristics method|see{特性曲線法}}
 
 移流項を安定して計算する方法の 1 つとして，移流項のみの時間発展による方程式（移流方程式）
 \begin{equation}
     \frac{\partial u}{\partial t} + \bm{v} \cdot \nabla u = 0
 \end{equation}
-の解を用いる特性曲線法がある \cite{Knabner2003}．
+の解が変化しない曲線を用いる特性曲線法がある \cite{Knabner2003}．
 
 特性曲線法では，
 \begin{equation}
     \frac{d \bm{X}(t)}{dt} = \bm{v}(\bm{X}(t), t)
 \end{equation}
 を満たすような曲線 $\bm{X}(t)$ を考える．
-このとき，
+このとき，移流方程式を満たす $u$ においては
 \begin{align}
     \frac{d}{dt} u(\bm{X}(t), t)
      & = \frac{\partial u}{\partial t} + \frac{d \bm{X}(t)}{dt} \cdot \nabla u \notag \\
@@ -41,15 +43,33 @@
 となり，曲線 $\bm{X}(t)$ に沿った $u$ の値は時間に依存しないことがわかる．
 このことを利用して，
 \begin{equation}
-    u(\bm{X}(t), t + \Delta t) = u(\bm{X}(t - \Delta t), t)
+    u(\bm{X}(t), t) = u(\bm{X}(t - \Delta t), t - \Delta t)
 \end{equation}
 のように曲線 $\bm{X}(t)$ 上をさかのぼった点の値を用いて移流方程式の時間発展を計算することができる．
-このような曲線 $\bm{X}(t)$ は特性曲線と呼ばれる．
+このような曲線 $\bm{X}(t)$ は特性曲線 (characteristics) と呼ばれる．
+ここまで近似は行っていないが，実際の計算では曲線 $X(t)$ の微分方程式の数値解を近似的に求めるため，
+計算される $u$ の値は近似値となる．
+\index{とくせいきょくせん@特性曲線}
+\index{characteristics|see{特性曲線}}
 
-移流方程式以外の右辺に追加の項を持つ方程式においては，
-方程式を移流項とそれ以外に分けて，
-それぞれによる時間発展を別々に計算した結果を足し合わせることで
-方程式全体の時間発展を計算する operator splitting と呼ばれる手法が用いられる \cite{Press2007}．
+続いて，移流方程式以外の右辺に追加の項を持つ方程式
+\begin{equation}
+    \frac{\partial u}{\partial t} + \bm{v} \cdot \nabla u = f(\bm{x}, t)
+\end{equation}
+を考える．左辺は $d\bm{X}/dt$ で置き換えることができるため，それを後退 Euler 法で近似すると
+\begin{equation}
+    \frac{u(\bm{X}(t), t) - u(\bm{X}(t - \Delta t), t - \Delta t)}{\Delta t} = f(\bm{X}(t), t)
+\end{equation}
+のような近似式が得られる．
+さらに $\bm{X}(t - \Delta t)$ を 1 次近似すると
+\begin{equation}
+    \frac{u(\bm{r}, t) - u(\bm{r} - \bm{v} \Delta t, t - \Delta t)}{\Delta t} = f(\bm{r}, t)
+\end{equation}
+となる．
+後退 Euler 法も 1 次近似であるため，上記の式の精度は 1 次である．
+また，このような近似は，方程式を移流項とそれ以外に分けて，
+それぞれによる時間発展を別々に計算した結果を足し合わせることによっても得られる．
+そのように項を分割して時間発展を計算する手法は operator splitting と呼ばれる \cite{Press2007}．
 
 \section{超粘性による移流項の安定化}\label{sec:pde_advection_hyperviscosity}
 \index{ちょうねんせい@超粘性}
